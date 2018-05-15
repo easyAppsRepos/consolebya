@@ -28,8 +28,8 @@ var DashboardRoutingModule = (function () {
     }
     DashboardRoutingModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
-            imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */].forChild(routes)],
-            exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */]]
+            imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* RouterModule */].forChild(routes)],
+            exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* RouterModule */]]
         })
     ], DashboardRoutingModule);
     return DashboardRoutingModule;
@@ -42,7 +42,7 @@ var DashboardRoutingModule = (function () {
 /***/ "../../../../../src/app/dashboard/dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "  <div class=\"card mb-4\" style=\"    background: transparent;\n    border: none !important;\">\n    \n\n    <div style=\"margin-top: 80px;text-align:center; width:100%\">\n<!--     <img style=\"\n    width: 252px;margin-bottom:30px\" src=\"assets/logoGrande.png\"> -->\n\n    <h1 > BeYou para negocios</h1>\n</div>\n\n    </div>"
+module.exports = "  <div  style=\"   background: rgb(229,111,144); height: 100%; width: 100%; position: fixed;left: 0\">\n    \n\n    <div style=\"margin-top: 80px;text-align:center; width:100%\">\n<!--     <img style=\"\n    width: 252px;margin-bottom:30px\" src=\"assets/logoGrande.png\"> -->\n\n    \t   <img style=\"\n    width: 252px;margin-bottom:30px\" src=\"assets/logo.png\">\n\n        <h3 style=\"color:#fafafa !important\">Administrador / Bienvenido {{currentUser.nombre}}</h3>\n\n\n                  <div class=\"col\" style=\"text-align: center; margin-top: 40px\">\n    <div ngbDropdown class=\"d-inline-block\">\n      <button style='font-size: 14px;' class=\"btn btn-outline-light\" id=\"dropdownBasic1\" ngbDropdownToggle>{{centroSeleccionado || \"Selecciona un negocio\"}}</button>\n      <div ngbDropdownMenu aria-labelledby=\"dropdownBasic1\">\n\n        <button *ngFor=\"let e of centrosUsuario\" \n        (click)='cambiarCentro(e.idCentro, e.nombre)' class=\"dropdown-item\">{{e.nombre}}</button>\n\n    \n      </div>\n    </div>\n  </div>\n\n\n</div>\n\n    </div>"
 
 /***/ }),
 
@@ -53,6 +53,7 @@ module.exports = "  <div class=\"card mb-4\" style=\"    background: transparent
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DashboardComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_services_alert_service__ = __webpack_require__("../../../../../src/app/shared/services/alert.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__endpoints_service__ = __webpack_require__("../../../../../src/app/endpoints.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -64,19 +65,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var DashboardComponent = (function () {
     // public status: { isopen: boolean } = { isopen: false };
-    function DashboardComponent(alertService) {
+    function DashboardComponent(alertService, endpointsService) {
         this.alertService = alertService;
+        this.endpointsService = endpointsService;
         this.title = 'Dashboard'; // ToDo recheck need
+        this.currentUser = JSON.parse(localStorage.getItem('currentUser'))[0];
+        this.centroSeleccionado = '';
+        this.centrosUsuario = [];
+        this.seleccionCentro = false;
     }
-    // public toggleDropdown($event:MouseEvent):void {
-    //   $event.preventDefault();
-    //   $event.stopPropagation();
-    //   this.status.isopen = !this.status.isopen;
-    // }
     DashboardComponent.prototype.ngOnInit = function () {
-        this.alertService.success('Bienvenido');
+        this.getCentrosUsuario();
+        //this.alertService.success('Bienvenido');
         // this.alertService.info('info');
         // this.alertService.warning('warning');
         // this.alertService.danger('danger');
@@ -85,11 +88,40 @@ var DashboardComponent = (function () {
         // this.alertService.light('light');
         // this.alertService.dark('dark');
     };
+    DashboardComponent.prototype.getCentrosUsuario = function () {
+        var _this = this;
+        var datE = { idUsuario: this.currentUser['idUsuarioConsola'] };
+        this.endpointsService.getCentrosUsuario(datE)
+            .then(function (data) {
+            _this.centrosUsuario = data;
+            var nombre = '';
+            data.forEach(function (item) {
+                if (item.idCentro == localStorage.getItem('idCentroBY')) {
+                    nombre = item.nombre;
+                }
+            });
+            if (nombre !== '') {
+                _this.centroSeleccionado = nombre;
+                _this.seleccionCentro = true;
+            }
+            else {
+                console.log('centroNOselec');
+                _this.seleccionCentro = false;
+            }
+            console.log(_this.centrosUsuario);
+        });
+    };
+    DashboardComponent.prototype.cambiarCentro = function (idCentro, nombre) {
+        this.centroSeleccionado = nombre;
+        localStorage.setItem('idCentroBY', idCentro);
+        window.location.reload();
+        console.log(localStorage.getItem('idCentroBY'));
+    };
     DashboardComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             template: __webpack_require__("../../../../../src/app/dashboard/dashboard.component.html")
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__shared_services_alert_service__["a" /* AlertService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__shared_services_alert_service__["a" /* AlertService */], __WEBPACK_IMPORTED_MODULE_2__endpoints_service__["a" /* EndpointsService */]])
     ], DashboardComponent);
     return DashboardComponent;
 }());

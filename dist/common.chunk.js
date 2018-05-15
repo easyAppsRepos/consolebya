@@ -33,16 +33,16 @@ var SharedLazyModule = (function () {
             imports: [
                 __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["b" /* HttpClientModule */],
                 __WEBPACK_IMPORTED_MODULE_2__angular_common__["CommonModule"],
-                __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormsModule */],
-                __WEBPACK_IMPORTED_MODULE_4__angular_router__["c" /* RouterModule */],
+                __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormsModule */],
+                __WEBPACK_IMPORTED_MODULE_4__angular_router__["d" /* RouterModule */],
                 __WEBPACK_IMPORTED_MODULE_5__ng_bootstrap_ng_bootstrap__["a" /* NgbModule */],
                 __WEBPACK_IMPORTED_MODULE_6__ngx_translate_core__["b" /* TranslateModule */].forChild(),
             ],
             declarations: [],
             exports: [
                 __WEBPACK_IMPORTED_MODULE_2__angular_common__["CommonModule"],
-                __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormsModule */],
-                __WEBPACK_IMPORTED_MODULE_4__angular_router__["c" /* RouterModule */],
+                __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormsModule */],
+                __WEBPACK_IMPORTED_MODULE_4__angular_router__["d" /* RouterModule */],
                 __WEBPACK_IMPORTED_MODULE_6__ngx_translate_core__["b" /* TranslateModule */],
                 __WEBPACK_IMPORTED_MODULE_5__ng_bootstrap_ng_bootstrap__["a" /* NgbModule */],
             ]
