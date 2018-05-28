@@ -31,6 +31,541 @@ module.exports = webpackAsyncContext;
 
 /***/ }),
 
+/***/ "../../../../../src/app/admincentros/admincentros.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "\n <div class=\"card mb-4\" style=\"margin-top: 20px\">\n    \n <div >\n    <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\">\n\n\n\n    \t<div class=\"card-block-big card-status\">\n<h3>Negocios</h3>\n\n</div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n   <button  style='margin-right: 15px;margin-top: 20px;margin-bottom: 20px;' class=\" btn btn-primary float-right\" (click)='claseSeleccionada={};selected = [];'>Crear nuevo negocio</button>\n\n    </div>\n\n  </div>\n</div>\n\n\n\n\n\n      <div  style='float:left;width:100%'>\n        <div class=\"info\">\n          <p></p>\n        </div>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n       \n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect($event)'>\n\n\n                            <ngx-datatable-column prop=\"nombre\" name='Nombre Negocio' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                            <ngx-datatable-column prop=\"email\" name='Email' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"telefono\" name='Telefono' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"nombreTitular\" name='Nombre Registro' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                         <ngx-datatable-column prop=\"estado\" name='Estado' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value == 1 ? 'Publicado' : value == 2 ? 'Pendiente Revision' : 'No Publicado'}}\n          </ng-template>\n        </ngx-datatable-column>\n\n                 <ngx-datatable-column    [cellClass]=\"getCellClass\"  prop=\"estado\" name='' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n          <i *ngIf='value==2'  class=\"fa fa-exclamation-triangle\" aria-hidden=\"true\">\n          \t\n          </i>  {{value == 1 ? 'Publicado' : value == 2 ? 'Pendiente Revision' : 'No Publicado'}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n\n        </ngx-datatable>\n      </div>\n</div>\n\n<div *ngIf='!claseSeleccionada[\"idCentro\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  \n <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Crear nuevo Negocio</h3>\n\n<form  #form='ngForm' name=\"form\" class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreN.valid}\" [(ngModel)]=\"nuevaClase.nombre\" name=\"nombreN\" type=\"text\" class=\"form-control\" #nombreN=\"ngModel\" required>\n    \n    </div>\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Email</label>\n      <input  [ngClass]=\"{'is-invalid':!emailN.valid}\" [(ngModel)]=\"nuevaClase.email\" name=\"emailN\" type=\"text\" class=\"form-control\" #emailN=\"ngModel\" required>\n    \n    </div>\n\n        <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Telefono</label>\n      <input  [ngClass]=\"{'is-invalid':!telefonoN.valid}\" [(ngModel)]=\"nuevaClase.telefono\" name=\"telefonoN\" type=\"text\" class=\"form-control\" #telefonoN=\"ngModel\" required>\n    \n    </div>\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre Registro</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreTitularN.valid}\" [(ngModel)]=\"nuevaClase.nombreTitular\" name=\"nombreTitularN\" type=\"text\" class=\"form-control\" #nombreTitularN=\"ngModel\" required>\n    \n    </div>\n\n\n\n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select   [ngClass]=\"{'is-invalid':!estadoN.valid}\"  [(ngModel)]=\"nuevaClase.estado\" name=\"estadoN\" #estadoN=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\" >\n                <option value=\"1\">Publicado</option>\n        <option value=\"2\">Pendiente de Revision</option>\n         <option value=\"3\">No Publicado</option>\n      </select>\n    </div>\n</div>\n\n\n  <button  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' type='submit' class=\"btn btn-primary\" [disabled]=\"!form.valid\"  (click)='guardarNuevaClase()'>Crear negocio</button>\n\n\n</form>\n\n\n\n\n\n\n          </div>\n\n</div>\n\n<div *ngIf='claseSeleccionada[\"idCentro\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3>Informacion del Negocio</h3>\n\n  </div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n    <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    {{isCollapsed ? 'Mostrar mas' : 'Mostrar menos'}}\n  </button>\n\n    </div>\n\n  </div>\n</div>\n\n\n<!--\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Informacion de la clase</h3>\n\n<p>\n  <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    Toggle\n  </button>\n</p>\n <div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n  <div class=\"card\">\n    <div class=\"card-body\">\n      You can collapse this card by clicking Toggle\n    </div>\n  </div>\n</div>\n -->\n\n<div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n\n<form class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre negocio</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.nombre\" name=\"nombre\" type=\"text\" class=\"form-control\">\n    </div>\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Email</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.email\" name=\"email\" type=\"text\" class=\"form-control\">\n    </div>\n\n\n    <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Telefono</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.telefono\" name=\"tel\" type=\"text\" class=\"form-control\">\n    </div>\n\n        <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre Registro</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.nombreTitular\" name=\"nombreTitular\" type=\"text\" class=\"form-control\">\n    </div>\n\n\n<!--    <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Dificultad</label>\n\n\n                         <select [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.dificultad\" name=\"dificultad\" type=\"number\" class=\"form-control\">\n        <option value=\"10\">10%</option>\n        <option value=\"25\">25%</option>\n        <option value=\"40\">40%</option>\n        <option value=\"50\">50%</option>\n        <option value=\"70\">70%</option>\n        <option value=\"85\">85%</option>\n        <option value=\"90\">90%</option>\n        <option value=\"100\">100%</option>\n\n      </select> \n\n\n\n    </div>\n\n -->\n      \n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select [disabled]=\"!editar\" [(ngModel)]=\"claseSeleccionada.estado\" class=\"form-control custom-select mr-sm-2\" name='estado'>\n      \n        <option value=\"1\">Publicado</option>\n        <option value=\"2\">Pendiente de Revision</option>\n         <option value=\"3\">No Publicado</option>\n      </select>\n    </div>\n\n\n\n     \n\n\n\n\n  </div>\n\n\n</form>\n\n<div *ngIf='claseSeleccionada.idCentro' >\n\n  <button  [hidden]=\"editar\" (click)='editar = !editar' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Editar</button>\n\n\n\n\n  <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n   <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n</div>\n</div>\n          </div>\n        </div>\n\n\n\n\n\n\n\n\n\n\n\n\n         <div  *ngIf='claseSeleccionada[\"idCentro\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n   <ngx-loading [show]=\"loading2\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;'>Usuario Administrador</h3>\n\n  </div>\n\n</div>\n\n\n\n          <table  style='    ' class='table material'>\n            <thead>\n            \t <th>Nombre</th>\n                <th>Email</th>\n                \n                <th></th>\n            </thead>\n            <tbody>\n                <tr *ngFor=\"let e  of negociosAsignados || []\">\n                    <td>{{e.nombre}}</td>\n                     <td>{{e.email}}</td>\n               \n                    <td><button (click)='eliminarNegocioUsuario(e.idUsuarioConsolaCentro)' class=\"btn btn-danger\">Eliminar</button></td>\n                </tr>\n            </tbody>\n        </table>\n\n        <div style=\"margin:20px\" >\n          <h5>Asignar Administrador</h5>\n          <div class=\"col-md-3 mb-3 ff\" style=\"    display: inline-block;\n    margin-right: 15px !important;\n    padding-left: 0px;\n    margin-top: 20px;\">\n\n\n          <label for=\"validationCustom01\"></label>\n          <select   [(ngModel)]=\"seleccionCentro.idUsuarioConsola\" name=\"idUsuarioConsola\" #idUsuarioConsola=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\">\n\n              <option *ngFor=\"let c of negociosParent\" \n              [value]=\"c.idUsuarioConsola\" \n              >\n              {{c.nombre}} / {{c.email}}\n              </option>\n          </select>\n          </div>\n\n          <button [hidden]='!seleccionCentro.idUsuarioConsola' (click)='agregarNegocioUsuario(seleccionCentro.idUsuarioConsola)' class=\"btn btn-success\">Agregar</button>\n        </div>\n\n      </div>\n\n\n\n</div>\n\n\n\n\n    </div> \n\n\n\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/admincentros/admincentros.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/admincentros/admincentros.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdmincentrosComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__endpoints_service__ = __webpack_require__("../../../../../src/app/endpoints.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var AdmincentrosComponent = (function () {
+    function AdmincentrosComponent(endpointsService, router) {
+        this.endpointsService = endpointsService;
+        this.router = router;
+        this.rows = [];
+        this.rowsUsuarios = [];
+        this.negociosParent = [];
+        this.negociosAsignados = [];
+        this.seleccionCentro = {};
+        this.categorias = [];
+        this.selected = [];
+        this.editar = false;
+        this.claseSeleccionada = {};
+        this.nuevaClase = {};
+        this.cu = JSON.parse(localStorage.getItem('currentUser'));
+        this.loading = false;
+        this.loading2 = false;
+        this.isCollapsed = false;
+        this.rowsHorarios = [];
+        this.selectedHorario = [];
+        this.columnsHorarios = [
+            { prop: 'idReservaClase', name: '#ID Reserva' },
+            { prop: 'soloFecha', name: 'Fecha Clase' },
+            { prop: 'soloHora', name: 'Hora Clase' },
+            { prop: 'estado', name: 'Estado' },
+            { prop: 'usuariosAnotados', name: 'Usuarios Anotados' },
+        ];
+        this.originalData = [];
+        this.columns = [
+            { prop: 'nombre', name: 'Nombre' },
+            { prop: 'email', name: 'Email' },
+            { prop: 'estado', name: 'Estado' },
+        ];
+        if (this.cu[0]['tipo'] !== 3) {
+            console.log('usuario no deseado');
+            this.router.navigate(['/dashboard']);
+        }
+    }
+    AdmincentrosComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        console.log('d');
+        this.getCentrosAll();
+        this.endpointsService.cargaUsuariosConsolaAd()
+            .then(function (data) {
+            //console.log(data);
+            _this.negociosParent = data;
+            // this.originalData = data;
+        });
+    };
+    AdmincentrosComponent.prototype.getCellClass = function (_a) {
+        var row = _a.row, column = _a.column, value = _a.value;
+        return {
+            'class1': (value) === 2,
+            'parpadea': (value) === 2
+        };
+    };
+    AdmincentrosComponent.prototype.getCentroServicios = function () {
+        var _this = this;
+        this.endpointsService.getCentroServicios({ idCentro: localStorage.getItem('idCentroBY') })
+            .then(function (data) {
+            //console.log(data);
+            _this.rows = data.servicios;
+            _this.originalData = data;
+        });
+    };
+    AdmincentrosComponent.prototype.agregarNegocioUsuario = function (fe) {
+        var _this = this;
+        this.loading2 = true;
+        console.log(fe);
+        var dataEF = { idUsuarioConsola: fe, idCentro: this.claseSeleccionada["idCentro"] };
+        console.log(fe);
+        this.endpointsService.agregarNegocioUsuario(dataEF)
+            .then(function (data) {
+            console.log(data);
+            _this.cargarNegocios(_this.claseSeleccionada["idCentro"]);
+            _this.loading2 = false;
+        });
+    };
+    AdmincentrosComponent.prototype.eliminarNegocioUsuario = function (fe) {
+        var _this = this;
+        console.log(fe);
+        this.endpointsService.eliminarNegocioUsuario({ idUsuarioConsolaCentro: fe })
+            .then(function (data) {
+            console.log(data);
+            _this.cargarNegocios(_this.claseSeleccionada["idCentro"]);
+        });
+    };
+    AdmincentrosComponent.prototype.eliminarUsuario = function (fe) {
+        var _this = this;
+        console.log(fe);
+        this.endpointsService.eliminarUsuarioC({ idUsuarioConsola: fe })
+            .then(function (data) {
+            console.log(data);
+            if (data.affectedRows > 0) {
+                alert('Eliminado Correctamente');
+                _this.cargaUsuarios();
+                _this.claseSeleccionada = {};
+            }
+            else {
+                alert('Ha ocurrido un error inesperado');
+            }
+            //this.cargarNegocios(this.claseSeleccionada['idUsuarioConsola']);
+        });
+    };
+    AdmincentrosComponent.prototype.cargaHorarios = function () {
+        var _this = this;
+        this.endpointsService.cargaHorariosClase({ idClase: this.claseSeleccionada['idClase'] })
+            .then(function (data) {
+            //console.log(data);
+            _this.rowsHorarios = data;
+            // this.originalData = data;
+        });
+    };
+    AdmincentrosComponent.prototype.cargaUsuarios = function () {
+        var _this = this;
+        console.log(this.cu[0]['idUsuarioConsola']);
+        this.endpointsService.cargaUsuariosConsola({ idUsuario: this.cu[0]['idUsuarioConsola'] })
+            .then(function (data) {
+            //console.log(data);
+            _this.rows = data;
+            // this.originalData = data;
+        });
+    };
+    AdmincentrosComponent.prototype.getCentrosAll = function () {
+        var _this = this;
+        console.log(this.cu[0]['idUsuarioConsola']);
+        this.endpointsService.getCentrosAll()
+            .then(function (data) {
+            //console.log(data);
+            _this.rows = data;
+            // this.originalData = data;
+        });
+    };
+    AdmincentrosComponent.prototype.guardarNuevaClase = function () {
+        var _this = this;
+        this.loading = true;
+        console.log(this.nuevaClase);
+        this.nuevaClase['parentUser'] = this.cu[0]['idUsuarioConsola'];
+        this.nuevaClase['nombre2'] = this.nuevaClase['nombreTitular'];
+        this.endpointsService.addNegocio(this.nuevaClase)
+            .then(function (data) {
+            console.log(data);
+            _this.loading = false;
+            _this.getCentrosAll();
+            alert('Agregado correctamente');
+            _this.editar = false;
+            _this.nuevaClase = {};
+        }, function (msg) {
+            console.log(msg);
+            _this.loading = false;
+        });
+    };
+    AdmincentrosComponent.prototype.cargaCategorias = function () {
+        var _this = this;
+        this.endpointsService.categoriasHome()
+            .then(function (data) {
+            console.log(data);
+            _this.categorias = data;
+        });
+    };
+    AdmincentrosComponent.prototype.onSelectHorario = function (_a) {
+        var selectedHorario = _a.selectedHorario;
+        console.log(this.selectedHorario[0]);
+        // this.rows = this.originalData;
+        // this.test = JSON.parse(JSON.stringify(this.selected[0]));
+        // this.claseSeleccionada = JSON.parse(JSON.stringify(this.selected[0]));
+        //  this.cargaUsuarios(this.selectedHorario[0]['idReservaClase']);
+    };
+    AdmincentrosComponent.prototype.onSelect = function (_a) {
+        var selected = _a.selected;
+        console.log(this.selected[0]);
+        this.selectedHorario = [];
+        // this.rows = this.originalData;
+        // this.test = JSON.parse(JSON.stringify(this.selected[0]));
+        this.claseSeleccionada = JSON.parse(JSON.stringify(this.selected[0]));
+        this.cargarNegocios(this.claseSeleccionada['idCentro']);
+    };
+    AdmincentrosComponent.prototype.onActivate = function (event) {
+        console.log('Activate Event', event);
+    };
+    AdmincentrosComponent.prototype.cargarNegocios = function (idC) {
+        var _this = this;
+        this.loading2 = true;
+        this.endpointsService.cargaUsuariosSA({ idCentro: idC })
+            .then(function (data) {
+            console.log(data);
+            _this.negociosAsignados = data;
+            _this.loading2 = false;
+            // this.originalData = data;
+        });
+    };
+    AdmincentrosComponent.prototype.guardarEdicion = function () {
+        var _this = this;
+        this.loading = true;
+        console.log(this.claseSeleccionada);
+        this.endpointsService.editNegocio(this.claseSeleccionada)
+            .then(function (data) {
+            console.log(data);
+            _this.loading = false;
+            _this.getCentrosAll();
+            alert('Editado correctamente');
+            _this.editar = false;
+        }, function (msg) {
+            console.log(msg);
+            // this.loading = false;
+        });
+    };
+    AdmincentrosComponent.prototype.onChangeColor2 = function (er) {
+        console.log(er);
+        this.claseSeleccionada['color'] = er;
+    };
+    AdmincentrosComponent.prototype.onChangeColor = function (er) {
+        console.log(er);
+        this.nuevaClase['color'] = er;
+    };
+    AdmincentrosComponent.prototype.cancelarEdicion = function () {
+        //  this.rows = this.originalData;
+        // console.log(this.test);
+    };
+    AdmincentrosComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'tox-admincentros',
+            template: __webpack_require__("../../../../../src/app/admincentros/admincentros.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/admincentros/admincentros.component.scss")]
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */]])
+    ], AdmincentrosComponent);
+    return AdmincentrosComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/adminusers/adminusers.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "\n <div class=\"card mb-4\" style=\"margin-top: 20px\">\n    \n <div >\n    <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\">\n\n\n\n    \t<div class=\"card-block-big card-status\">\n<h3>Usuarios</h3>\n\n</div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n   <button  style='margin-right: 15px;margin-top: 20px;margin-bottom: 20px;' class=\" btn btn-primary float-right\" (click)='claseSeleccionada={};selected = [];'>Crear nuevo usuario</button>\n\n    </div>\n\n  </div>\n</div>\n\n\n\n\n\n      <div  style='float:left;width:100%'>\n        <div class=\"info\">\n          <p></p>\n        </div>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n          [columns]=\"columns\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect($event)'>\n        </ngx-datatable>\n      </div>\n</div>\n\n<div *ngIf='!claseSeleccionada[\"idUsuarioConsola\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  \n <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Crear nuevo Usuario</h3>\n\n<form  #form='ngForm' name=\"form\" class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreN.valid}\" [(ngModel)]=\"nuevaClase.nombre\" name=\"nombreN\" type=\"text\" class=\"form-control\" #nombreN=\"ngModel\" required>\n    \n    </div>\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Email</label>\n      <input  [ngClass]=\"{'is-invalid':!emailN.valid}\" [(ngModel)]=\"nuevaClase.email\" name=\"emailN\" type=\"text\" class=\"form-control\" #emailN=\"ngModel\" required>\n    \n    </div>\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Codigo Acceso</label>\n      <input  [ngClass]=\"{'is-invalid':!passwordN.valid}\" [(ngModel)]=\"nuevaClase.password\" name=\"passwordN\" type=\"text\" class=\"form-control\" #passwordN=\"ngModel\" required>\n    \n    </div>\n\n\n\n\n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select   [ngClass]=\"{'is-invalid':!estadoN.valid}\"  [(ngModel)]=\"nuevaClase.estado\" name=\"estadoN\" #estadoN=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\" >\n        <option value=\"1\">Activo</option>\n        <option value=\"2\">Desactivado</option>\n      </select>\n    </div>\n</div>\n\n\n  <button  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' type='submit' class=\"btn btn-primary\" [disabled]=\"!form.valid\"  (click)='guardarNuevaClase()'>Crear usuario consola</button>\n\n\n</form>\n\n\n\n\n\n\n          </div>\n\n</div>\n\n<div *ngIf='claseSeleccionada[\"idUsuarioConsola\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3>Informacion del usuario</h3>\n\n  </div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n    <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    {{isCollapsed ? 'Mostrar mas' : 'Mostrar menos'}}\n  </button>\n\n    </div>\n\n  </div>\n</div>\n\n\n<!--\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Informacion de la clase</h3>\n\n<p>\n  <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    Toggle\n  </button>\n</p>\n <div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n  <div class=\"card\">\n    <div class=\"card-body\">\n      You can collapse this card by clicking Toggle\n    </div>\n  </div>\n</div>\n -->\n\n<div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n\n<form class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre servicio</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.nombre\" name=\"nombre\" type=\"text\" class=\"form-control\">\n    </div>\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Email</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.email\" name=\"email\" type=\"text\" class=\"form-control\">\n    </div>\n\n\n    <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Codigo Acceso</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.password\" name=\"password\" type=\"text\" class=\"form-control\">\n    </div>\n\n<!--    <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Dificultad</label>\n\n\n                         <select [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.dificultad\" name=\"dificultad\" type=\"number\" class=\"form-control\">\n        <option value=\"10\">10%</option>\n        <option value=\"25\">25%</option>\n        <option value=\"40\">40%</option>\n        <option value=\"50\">50%</option>\n        <option value=\"70\">70%</option>\n        <option value=\"85\">85%</option>\n        <option value=\"90\">90%</option>\n        <option value=\"100\">100%</option>\n\n      </select> \n\n\n\n    </div>\n\n -->\n      \n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select [disabled]=\"!editar\" [(ngModel)]=\"claseSeleccionada.estado\" class=\"form-control custom-select mr-sm-2\" name='estado'>\n      \n        <option value=\"1\">Activo</option>\n        <option value=\"2\">Desactivado</option>\n      </select>\n    </div>\n\n\n\n     \n\n\n\n\n  </div>\n\n\n</form>\n\n<div *ngIf='claseSeleccionada.idUsuarioConsola' >\n\n  <button  [hidden]=\"editar\" (click)='editar = !editar' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Editar</button>\n\n    <button  [hidden]=\"editar\" (click)='eliminarUsuario(claseSeleccionada.idUsuarioConsola)' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-danger\" >Eliminar</button>\n\n\n  <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n   <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n</div>\n</div>\n          </div>\n        </div>\n\n\n\n\n\n\n\n\n<!-- \n\n\n\n         <div  *ngIf='claseSeleccionada[\"idUsuarioConsola\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n   \n <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;'>Negocios que administra</h3>\n\n  </div>\n\n</div>\n\n\n\n          <table  style='    ' class='table material'>\n            <thead>\n                <th>Nombre del negocio</th>\n                \n                <th></th>\n            </thead>\n            <tbody>\n                <tr *ngFor=\"let e  of negociosAsignados || []\">\n                    <td>{{e.nombre}}</td>\n               \n                    <td><button (click)='eliminarNegocioUsuario(e.idUsuarioConsolaCentro)' class=\"btn btn-danger\">Eliminar</button></td>\n                </tr>\n            </tbody>\n        </table>\n\n        <div style=\"margin:20px\" >\n          <h5>Asignar Negocio</h5>\n          <div class=\"col-md-3 mb-3 ff\" style=\"    display: inline-block;\n    margin-right: 15px !important;\n    padding-left: 0px;\n    margin-top: 20px;\">\n\n\n          <label for=\"validationCustom01\"></label>\n          <select   [(ngModel)]=\"seleccionCentro.idCentro\" name=\"idCentro\" #idCentro=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\">\n\n              <option *ngFor=\"let c of negociosParent\" \n              [value]=\"c.idCentro\" \n              >\n              {{c.nombre}}\n              </option>\n          </select>\n          </div>\n\n          <button [disabled]='!seleccionCentro.idCentro' (click)='agregarNegocioUsuario(seleccionCentro)' class=\"btn btn-success\">Agregar</button>\n        </div>\n\n      </div>\n\n\n\n</div>\n\n\n -->\n\n    </div> \n\n\n\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/adminusers/adminusers.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/adminusers/adminusers.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminusersComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__endpoints_service__ = __webpack_require__("../../../../../src/app/endpoints.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var AdminusersComponent = (function () {
+    function AdminusersComponent(endpointsService, router) {
+        this.endpointsService = endpointsService;
+        this.router = router;
+        this.rows = [];
+        this.rowsUsuarios = [];
+        this.negociosParent = [];
+        this.negociosAsignados = [];
+        this.seleccionCentro = {};
+        this.categorias = [];
+        this.selected = [];
+        this.editar = false;
+        this.claseSeleccionada = {};
+        this.nuevaClase = {};
+        this.cu = JSON.parse(localStorage.getItem('currentUser'));
+        this.loading = false;
+        this.isCollapsed = false;
+        this.rowsHorarios = [];
+        this.selectedHorario = [];
+        this.columnsHorarios = [
+            { prop: 'idReservaClase', name: '#ID Reserva' },
+            { prop: 'soloFecha', name: 'Fecha Clase' },
+            { prop: 'soloHora', name: 'Hora Clase' },
+            { prop: 'estado', name: 'Estado' },
+            { prop: 'usuariosAnotados', name: 'Usuarios Anotados' },
+        ];
+        this.originalData = [];
+        this.columns = [
+            { prop: 'nombre', name: 'Nombre' },
+            { prop: 'email', name: 'Email' },
+            { prop: 'estado', name: 'Estado' },
+        ];
+        if (this.cu[0]['tipo'] !== 3) {
+            console.log('usuario no deseado');
+            this.router.navigate(['/dashboard']);
+        }
+    }
+    AdminusersComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        console.log('d');
+        this.cargaUsuarios();
+        this.endpointsService.cargarNegocios({ idUsuarioConsola: this.cu[0]['idUsuarioConsola'] })
+            .then(function (data) {
+            //console.log(data);
+            _this.negociosParent = data;
+            // this.originalData = data;
+        });
+    };
+    AdminusersComponent.prototype.getCentroServicios = function () {
+        var _this = this;
+        this.endpointsService.getCentroServicios({ idCentro: localStorage.getItem('idCentroBY') })
+            .then(function (data) {
+            //console.log(data);
+            _this.rows = data.servicios;
+            _this.originalData = data;
+        });
+    };
+    AdminusersComponent.prototype.agregarNegocioUsuario = function (fe) {
+        var _this = this;
+        console.log(fe);
+        fe.idUsuarioConsola = this.claseSeleccionada['idUsuarioConsola'];
+        console.log(fe);
+        this.endpointsService.agregarNegocioUsuario(fe)
+            .then(function (data) {
+            console.log(data);
+            _this.cargarNegocios(_this.claseSeleccionada['idUsuarioConsola']);
+        });
+    };
+    AdminusersComponent.prototype.eliminarNegocioUsuario = function (fe) {
+        var _this = this;
+        console.log(fe);
+        this.endpointsService.eliminarNegocioUsuario({ idUsuarioConsolaCentro: fe })
+            .then(function (data) {
+            console.log(data);
+            _this.cargarNegocios(_this.claseSeleccionada['idUsuarioConsola']);
+        });
+    };
+    AdminusersComponent.prototype.eliminarUsuario = function (fe) {
+        var _this = this;
+        console.log(fe);
+        this.endpointsService.eliminarUsuarioC({ idUsuarioConsola: fe })
+            .then(function (data) {
+            console.log(data);
+            if (data.affectedRows > 0) {
+                alert('Eliminado Correctamente');
+                _this.cargaUsuarios();
+                _this.claseSeleccionada = {};
+            }
+            else {
+                alert('Ha ocurrido un error inesperado');
+            }
+            //this.cargarNegocios(this.claseSeleccionada['idUsuarioConsola']);
+        });
+    };
+    AdminusersComponent.prototype.cargaHorarios = function () {
+        var _this = this;
+        this.endpointsService.cargaHorariosClase({ idClase: this.claseSeleccionada['idClase'] })
+            .then(function (data) {
+            //console.log(data);
+            _this.rowsHorarios = data;
+            // this.originalData = data;
+        });
+    };
+    AdminusersComponent.prototype.cargaUsuarios = function () {
+        var _this = this;
+        console.log(this.cu[0]['idUsuarioConsola']);
+        this.endpointsService.cargaUsuariosConsolaAd()
+            .then(function (data) {
+            //console.log(data);
+            _this.rows = data;
+            // this.originalData = data;
+        });
+    };
+    AdminusersComponent.prototype.guardarNuevaClase = function () {
+        var _this = this;
+        this.loading = true;
+        console.log(this.nuevaClase);
+        this.endpointsService.nuevoUsuarioCAD(this.nuevaClase)
+            .then(function (data) {
+            console.log(data);
+            _this.loading = false;
+            _this.cargaUsuarios();
+            alert('Guardado correctamente');
+            _this.editar = false;
+            _this.nuevaClase = {};
+        }, function (msg) {
+            console.log(msg);
+            _this.loading = false;
+        });
+    };
+    AdminusersComponent.prototype.cargaCategorias = function () {
+        var _this = this;
+        this.endpointsService.categoriasHome()
+            .then(function (data) {
+            console.log(data);
+            _this.categorias = data;
+        });
+    };
+    AdminusersComponent.prototype.onSelectHorario = function (_a) {
+        var selectedHorario = _a.selectedHorario;
+        console.log(this.selectedHorario[0]);
+        // this.rows = this.originalData;
+        // this.test = JSON.parse(JSON.stringify(this.selected[0]));
+        // this.claseSeleccionada = JSON.parse(JSON.stringify(this.selected[0]));
+        //  this.cargaUsuarios(this.selectedHorario[0]['idReservaClase']);
+    };
+    AdminusersComponent.prototype.onSelect = function (_a) {
+        var selected = _a.selected;
+        console.log(this.selected[0]);
+        this.selectedHorario = [];
+        // this.rows = this.originalData;
+        // this.test = JSON.parse(JSON.stringify(this.selected[0]));
+        this.claseSeleccionada = JSON.parse(JSON.stringify(this.selected[0]));
+        this.cargarNegocios(this.claseSeleccionada['idUsuarioConsola']);
+    };
+    AdminusersComponent.prototype.onActivate = function (event) {
+        console.log('Activate Event', event);
+    };
+    AdminusersComponent.prototype.cargarNegocios = function (idUsuarioConsola) {
+        var _this = this;
+        console.log(idUsuarioConsola);
+        this.endpointsService.cargarNegocios({ idUsuarioConsola: idUsuarioConsola })
+            .then(function (data) {
+            console.log(data);
+            _this.negociosAsignados = data;
+            // this.originalData = data;
+        });
+    };
+    AdminusersComponent.prototype.guardarEdicion = function () {
+        var _this = this;
+        this.loading = true;
+        console.log(this.claseSeleccionada);
+        this.endpointsService.editarUC(this.claseSeleccionada)
+            .then(function (data) {
+            console.log(data);
+            _this.loading = false;
+            _this.cargaUsuarios();
+            alert('Editado correctamente');
+            _this.editar = false;
+        }, function (msg) {
+            console.log(msg);
+            // this.loading = false;
+        });
+    };
+    AdminusersComponent.prototype.onChangeColor2 = function (er) {
+        console.log(er);
+        this.claseSeleccionada['color'] = er;
+    };
+    AdminusersComponent.prototype.onChangeColor = function (er) {
+        console.log(er);
+        this.nuevaClase['color'] = er;
+    };
+    AdminusersComponent.prototype.cancelarEdicion = function () {
+        //  this.rows = this.originalData;
+        // console.log(this.test);
+    };
+    AdminusersComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'tox-adminusers',
+            template: __webpack_require__("../../../../../src/app/adminusers/adminusers.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/adminusers/adminusers.component.scss")]
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */]])
+    ], AdminusersComponent);
+    return AdminusersComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "../../../../../src/app/app-routing.module.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -49,10 +584,14 @@ module.exports = webpackAsyncContext;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__manejousuarios_manejousuarios_component__ = __webpack_require__("../../../../../src/app/manejousuarios/manejousuarios.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__staf_staf_component__ = __webpack_require__("../../../../../src/app/staf/staf.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ejercicios_ejercicios_component__ = __webpack_require__("../../../../../src/app/ejercicios/ejercicios.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__profesores_profesores_component__ = __webpack_require__("../../../../../src/app/profesores/profesores.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__maquinas_maquinas_component__ = __webpack_require__("../../../../../src/app/maquinas/maquinas.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__novedades_novedades_component__ = __webpack_require__("../../../../../src/app/novedades/novedades.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__service_authguard_service__ = __webpack_require__("../../../../../src/app/service/authguard.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__horario_horario_component__ = __webpack_require__("../../../../../src/app/horario/horario.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__rutina_rutina_component__ = __webpack_require__("../../../../../src/app/rutina/rutina.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__admincentros_admincentros_component__ = __webpack_require__("../../../../../src/app/admincentros/admincentros.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__adminusers_adminusers_component__ = __webpack_require__("../../../../../src/app/adminusers/adminusers.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__profesores_profesores_component__ = __webpack_require__("../../../../../src/app/profesores/profesores.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__maquinas_maquinas_component__ = __webpack_require__("../../../../../src/app/maquinas/maquinas.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__novedades_novedades_component__ = __webpack_require__("../../../../../src/app/novedades/novedades.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__service_authguard_service__ = __webpack_require__("../../../../../src/app/service/authguard.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -64,6 +603,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 // Layouts
 
 // import { LayoutSimpleComponent } from './shared/layouts/simple/simple.component';
+
+
+
+
 
 
 
@@ -92,7 +635,7 @@ var routes = [
     },
     {
         path: '',
-        component: __WEBPACK_IMPORTED_MODULE_2__shared_components_layout_admin_layout_admin_component__["a" /* LayoutAdminComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_16__service_authguard_service__["a" /* AuthguardService */]],
+        component: __WEBPACK_IMPORTED_MODULE_2__shared_components_layout_admin_layout_admin_component__["a" /* LayoutAdminComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_20__service_authguard_service__["a" /* AuthguardService */]],
         children: [
             {
                 path: '',
@@ -114,7 +657,7 @@ var routes = [
             },
             {
                 path: 'calendario',
-                component: __WEBPACK_IMPORTED_MODULE_13__profesores_profesores_component__["a" /* ProfesoresComponent */]
+                component: __WEBPACK_IMPORTED_MODULE_17__profesores_profesores_component__["a" /* ProfesoresComponent */]
                 // loadChildren: './plong/plong.module#PlongModule'
             },
             {
@@ -132,19 +675,34 @@ var routes = [
                 component: __WEBPACK_IMPORTED_MODULE_12__ejercicios_ejercicios_component__["a" /* EjerciciosComponent */]
                 // loadChildren: './plong/plong.module#PlongModule'
             },
-            //      {
-            //   path: 'cupones',
-            //   component: RutinaComponent
-            // loadChildren: './plong/plong.module#PlongModule'
-            //  },
+            {
+                path: 'horario',
+                component: __WEBPACK_IMPORTED_MODULE_13__horario_horario_component__["a" /* HorarioComponent */]
+                // loadChildren: './plong/plong.module#PlongModule'
+            },
+            {
+                path: 'cupones',
+                component: __WEBPACK_IMPORTED_MODULE_14__rutina_rutina_component__["a" /* RutinaComponent */],
+                loadChildren: './plong/plong.module#PlongModule'
+            },
             {
                 path: 'uconsola',
                 component: __WEBPACK_IMPORTED_MODULE_10__manejousuarios_manejousuarios_component__["a" /* ManejousuariosComponent */]
                 // loadChildren: './plong/plong.module#PlongModule'
             },
             {
+                path: 'adminusers',
+                component: __WEBPACK_IMPORTED_MODULE_16__adminusers_adminusers_component__["a" /* AdminusersComponent */]
+                // loadChildren: './plong/plong.module#PlongModule'
+            },
+            {
+                path: 'admincentros',
+                component: __WEBPACK_IMPORTED_MODULE_15__admincentros_admincentros_component__["a" /* AdmincentrosComponent */]
+                // loadChildren: './plong/plong.module#PlongModule'
+            },
+            {
                 path: 'profesores',
-                component: __WEBPACK_IMPORTED_MODULE_13__profesores_profesores_component__["a" /* ProfesoresComponent */]
+                component: __WEBPACK_IMPORTED_MODULE_17__profesores_profesores_component__["a" /* ProfesoresComponent */]
                 // loadChildren: './plong/plong.module#PlongModule'
             },
             {
@@ -169,12 +727,12 @@ var routes = [
             },
             {
                 path: 'maquinas',
-                component: __WEBPACK_IMPORTED_MODULE_14__maquinas_maquinas_component__["a" /* MaquinasComponent */]
+                component: __WEBPACK_IMPORTED_MODULE_18__maquinas_maquinas_component__["a" /* MaquinasComponent */]
                 // loadChildren: './plong/plong.module#PlongModule'
             },
             {
                 path: 'novedades',
-                component: __WEBPACK_IMPORTED_MODULE_15__novedades_novedades_component__["a" /* NovedadesComponent */]
+                component: __WEBPACK_IMPORTED_MODULE_19__novedades_novedades_component__["a" /* NovedadesComponent */]
                 // loadChildren: './plong/plong.module#PlongModule'
             },
         ]
@@ -299,31 +857,36 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_ap_angular2_fullcalendar__ = __webpack_require__("../../../../ap-angular2-fullcalendar/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_ap_angular2_fullcalendar___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13_ap_angular2_fullcalendar__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_ngx_color_picker__ = __webpack_require__("../../../../ngx-color-picker/dist/ngx-color-picker.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__shared_shared_module__ = __webpack_require__("../../../../../src/app/shared/shared.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__shared_services_services_module__ = __webpack_require__("../../../../../src/app/shared/services/services.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__shared_components_shared_components_module__ = __webpack_require__("../../../../../src/app/shared/components/shared-components.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__gestionclases_gestionclases_component__ = __webpack_require__("../../../../../src/app/gestionclases/gestionclases.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__programar_clase_programar_clase_component__ = __webpack_require__("../../../../../src/app/programar-clase/programar-clase.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__usuarios_usuarios_component__ = __webpack_require__("../../../../../src/app/usuarios/usuarios.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ejercicios_ejercicios_component__ = __webpack_require__("../../../../../src/app/ejercicios/ejercicios.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__rutina_rutina_component__ = __webpack_require__("../../../../../src/app/rutina/rutina.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__asignar_asignar_component__ = __webpack_require__("../../../../../src/app/asignar/asignar.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__profesores_profesores_component__ = __webpack_require__("../../../../../src/app/profesores/profesores.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__maquinas_maquinas_component__ = __webpack_require__("../../../../../src/app/maquinas/maquinas.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__novedades_novedades_component__ = __webpack_require__("../../../../../src/app/novedades/novedades.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__sort_pipe__ = __webpack_require__("../../../../../src/app/sort.pipe.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__login_login_component__ = __webpack_require__("../../../../../src/app/login/login.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__opiniones_opiniones_component__ = __webpack_require__("../../../../../src/app/opiniones/opiniones.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__centro_centro_component__ = __webpack_require__("../../../../../src/app/centro/centro.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__ventas_ventas_component__ = __webpack_require__("../../../../../src/app/ventas/ventas.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__manejousuarios_manejousuarios_component__ = __webpack_require__("../../../../../src/app/manejousuarios/manejousuarios.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__staf_staf_component__ = __webpack_require__("../../../../../src/app/staf/staf.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__agm_core__ = __webpack_require__("../../../../@agm/core/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__shared_shared_module__ = __webpack_require__("../../../../../src/app/shared/shared.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__shared_services_services_module__ = __webpack_require__("../../../../../src/app/shared/services/services.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__shared_components_shared_components_module__ = __webpack_require__("../../../../../src/app/shared/components/shared-components.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__gestionclases_gestionclases_component__ = __webpack_require__("../../../../../src/app/gestionclases/gestionclases.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__programar_clase_programar_clase_component__ = __webpack_require__("../../../../../src/app/programar-clase/programar-clase.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__usuarios_usuarios_component__ = __webpack_require__("../../../../../src/app/usuarios/usuarios.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__ejercicios_ejercicios_component__ = __webpack_require__("../../../../../src/app/ejercicios/ejercicios.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__rutina_rutina_component__ = __webpack_require__("../../../../../src/app/rutina/rutina.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__asignar_asignar_component__ = __webpack_require__("../../../../../src/app/asignar/asignar.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__profesores_profesores_component__ = __webpack_require__("../../../../../src/app/profesores/profesores.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__maquinas_maquinas_component__ = __webpack_require__("../../../../../src/app/maquinas/maquinas.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__novedades_novedades_component__ = __webpack_require__("../../../../../src/app/novedades/novedades.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__sort_pipe__ = __webpack_require__("../../../../../src/app/sort.pipe.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__login_login_component__ = __webpack_require__("../../../../../src/app/login/login.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__opiniones_opiniones_component__ = __webpack_require__("../../../../../src/app/opiniones/opiniones.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__centro_centro_component__ = __webpack_require__("../../../../../src/app/centro/centro.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__ventas_ventas_component__ = __webpack_require__("../../../../../src/app/ventas/ventas.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__manejousuarios_manejousuarios_component__ = __webpack_require__("../../../../../src/app/manejousuarios/manejousuarios.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__staf_staf_component__ = __webpack_require__("../../../../../src/app/staf/staf.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__horario_horario_component__ = __webpack_require__("../../../../../src/app/horario/horario.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__admincentros_admincentros_component__ = __webpack_require__("../../../../../src/app/admincentros/admincentros.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__adminusers_adminusers_component__ = __webpack_require__("../../../../../src/app/adminusers/adminusers.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -360,6 +923,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
+
+
 // shared pipes module
 var AppModule = (function () {
     function AppModule() {
@@ -368,24 +934,27 @@ var AppModule = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["NgModule"])({
             declarations: [
                 __WEBPACK_IMPORTED_MODULE_5__app_component__["a" /* AppComponent */],
-                __WEBPACK_IMPORTED_MODULE_18__gestionclases_gestionclases_component__["a" /* GestionclasesComponent */],
-                __WEBPACK_IMPORTED_MODULE_19__programar_clase_programar_clase_component__["a" /* ProgramarClaseComponent */],
-                __WEBPACK_IMPORTED_MODULE_20__usuarios_usuarios_component__["a" /* UsuariosComponent */],
-                __WEBPACK_IMPORTED_MODULE_21__ejercicios_ejercicios_component__["a" /* EjerciciosComponent */],
-                __WEBPACK_IMPORTED_MODULE_22__rutina_rutina_component__["a" /* RutinaComponent */],
-                __WEBPACK_IMPORTED_MODULE_23__asignar_asignar_component__["a" /* AsignarComponent */],
-                __WEBPACK_IMPORTED_MODULE_24__profesores_profesores_component__["a" /* ProfesoresComponent */],
-                __WEBPACK_IMPORTED_MODULE_25__maquinas_maquinas_component__["a" /* MaquinasComponent */],
-                __WEBPACK_IMPORTED_MODULE_26__novedades_novedades_component__["a" /* NovedadesComponent */],
+                __WEBPACK_IMPORTED_MODULE_19__gestionclases_gestionclases_component__["a" /* GestionclasesComponent */],
+                __WEBPACK_IMPORTED_MODULE_20__programar_clase_programar_clase_component__["a" /* ProgramarClaseComponent */],
+                __WEBPACK_IMPORTED_MODULE_21__usuarios_usuarios_component__["a" /* UsuariosComponent */],
+                __WEBPACK_IMPORTED_MODULE_22__ejercicios_ejercicios_component__["a" /* EjerciciosComponent */],
+                __WEBPACK_IMPORTED_MODULE_23__rutina_rutina_component__["a" /* RutinaComponent */],
+                __WEBPACK_IMPORTED_MODULE_24__asignar_asignar_component__["a" /* AsignarComponent */],
+                __WEBPACK_IMPORTED_MODULE_25__profesores_profesores_component__["a" /* ProfesoresComponent */],
+                __WEBPACK_IMPORTED_MODULE_26__maquinas_maquinas_component__["a" /* MaquinasComponent */],
+                __WEBPACK_IMPORTED_MODULE_27__novedades_novedades_component__["a" /* NovedadesComponent */],
                 __WEBPACK_IMPORTED_MODULE_8_jqwidgets_scripts_jqwidgets_ts_angular_jqxscheduler__["a" /* jqxSchedulerComponent */],
                 __WEBPACK_IMPORTED_MODULE_9_jqwidgets_scripts_jqwidgets_ts_angular_jqxcombobox__["a" /* jqxComboBoxComponent */],
-                __WEBPACK_IMPORTED_MODULE_27__sort_pipe__["a" /* SortPipe */],
-                __WEBPACK_IMPORTED_MODULE_28__login_login_component__["a" /* LoginComponent */],
-                __WEBPACK_IMPORTED_MODULE_29__opiniones_opiniones_component__["a" /* OpinionesComponent */],
-                __WEBPACK_IMPORTED_MODULE_30__centro_centro_component__["a" /* CentroComponent */],
-                __WEBPACK_IMPORTED_MODULE_31__ventas_ventas_component__["a" /* VentasComponent */],
-                __WEBPACK_IMPORTED_MODULE_32__manejousuarios_manejousuarios_component__["a" /* ManejousuariosComponent */],
-                __WEBPACK_IMPORTED_MODULE_33__staf_staf_component__["a" /* StafComponent */]
+                __WEBPACK_IMPORTED_MODULE_28__sort_pipe__["a" /* SortPipe */],
+                __WEBPACK_IMPORTED_MODULE_29__login_login_component__["a" /* LoginComponent */],
+                __WEBPACK_IMPORTED_MODULE_30__opiniones_opiniones_component__["a" /* OpinionesComponent */],
+                __WEBPACK_IMPORTED_MODULE_31__centro_centro_component__["a" /* CentroComponent */],
+                __WEBPACK_IMPORTED_MODULE_32__ventas_ventas_component__["a" /* VentasComponent */],
+                __WEBPACK_IMPORTED_MODULE_33__manejousuarios_manejousuarios_component__["a" /* ManejousuariosComponent */],
+                __WEBPACK_IMPORTED_MODULE_34__staf_staf_component__["a" /* StafComponent */],
+                __WEBPACK_IMPORTED_MODULE_35__horario_horario_component__["a" /* HorarioComponent */],
+                __WEBPACK_IMPORTED_MODULE_36__admincentros_admincentros_component__["a" /* AdmincentrosComponent */],
+                __WEBPACK_IMPORTED_MODULE_37__adminusers_adminusers_component__["a" /* AdminusersComponent */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_13_ap_angular2_fullcalendar__["CalendarModule"],
@@ -397,9 +966,12 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_12__angular_common_http__["b" /* HttpClientModule */],
                 __WEBPACK_IMPORTED_MODULE_10__angular_forms__["b" /* FormsModule */],
                 __WEBPACK_IMPORTED_MODULE_10__angular_forms__["e" /* ReactiveFormsModule */],
-                __WEBPACK_IMPORTED_MODULE_15__shared_shared_module__["a" /* SharedModule */],
-                __WEBPACK_IMPORTED_MODULE_16__shared_services_services_module__["a" /* ServicesModule */].forRoot(),
-                __WEBPACK_IMPORTED_MODULE_17__shared_components_shared_components_module__["a" /* SharedComponentsModule */],
+                __WEBPACK_IMPORTED_MODULE_16__shared_shared_module__["a" /* SharedModule */],
+                __WEBPACK_IMPORTED_MODULE_17__shared_services_services_module__["a" /* ServicesModule */].forRoot(),
+                __WEBPACK_IMPORTED_MODULE_18__shared_components_shared_components_module__["a" /* SharedComponentsModule */],
+                __WEBPACK_IMPORTED_MODULE_15__agm_core__["a" /* AgmCoreModule */].forRoot({
+                    apiKey: 'AIzaSyAT-tTbOja69paXaiAgAtNi9nGHRh75bzk'
+                })
             ],
             providers: [
                 __WEBPACK_IMPORTED_MODULE_2__endpoints_service__["a" /* EndpointsService */],
@@ -603,7 +1175,7 @@ var AsignarComponent = (function () {
 /***/ "../../../../../src/app/centro/centro.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n\n\n\n<!-- <div class=\"col-md-12\">\n<div class=\"card\">\n<div class=\"card-block\">\n<h5>Reset Order</h5>\n</div>\n<div class=\"card-block reset-table p-t-0\">\n<div class=\"table-responsive\">\n<table class=\"table\">\n<thead>\n<tr class=\"text-uppercase\">\n<th>Image</th>\n<th>Product Name</th>\n<th>Product Code</th>\n<th>Status</th>\n<th>Purchased on</th>\n<th>Price</th>\n<th>Quantity</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><a href=\"#!\"><img class=\"img-responsive\" src=\"assets/images/widget/prod1.jpg\" alt=\"chat-user\"></a>\n</td>\n<td>Leisure Suit Casual</td>\n<td>3BSD59</td>\n<td><button type=\"button\" class=\"btn btn-success btn-round\">Pending</button></td>\n<td>27 Sep 2015</td>\n<td>$99.00</td>\n<td>2</td>\n</tr>\n<tr>\n<td><a href=\"#!\"><img class=\"img-responsive\" src=\"assets/images/widget/prod4.jpg\" alt=\"chat-user\"></a>\n</td>\n<td>Leisure Suit Casual</td>\n<td>3BSD59</td>\n<td><button type=\"button\" class=\"btn btn-primary btn-round\">Process</button></td>\n<td>27 Sep 2015</td>\n<td>$99.00</td>\n<td>2</td>\n</tr>\n<tr>\n<td><a href=\"#!\"><img class=\"img-responsive\" src=\"assets/images/widget/prod2.jpg\" alt=\"chat-user\"></a>\n</td>\n<td>Leisure Suit Casual</td>\n<td>3BSD59</td>\n<td><button type=\"button\" class=\"btn btn-warning btn-round\">Failed</button></td>\n<td>27 Sep 2015</td>\n<td>$99.00</td>\n<td>2</td>\n</tr>\n<tr>\n<td><a href=\"#!\"><img class=\"img-responsive\" src=\"assets/images/widget/prod3.jpg\" alt=\"chat-user\"></a>\n</td>\n<td>Leisure Suit Casual</td>\n<td>3BSD59</td>\n<td><button type=\"button\" class=\"btn btn-primary btn-round\">Process</button></td>\n<td>27 Sep 2015</td>\n<td>$99.00</td>\n<td>2</td>\n</tr>\n</tbody>\n</table>\n</div>\n</div>\n</div>\n</div>\n -->\n\n\n<div class=\"col-sm-12\">\n<div class=\"user-card-block card\">\n<div class=\"card-block\">\n<div class=\"top-card text-center\">\n<img src=\"assets/tiendaLogo.png\" class=\"img-responsive\" alt=\"\">\n</div>\n<div class=\"card-contain text-center p-t-40\">\n<h5 class=\"text-capitalize p-b-10\">{{dataCentro?.nombre}}</h5>\n<p class=\"text-muted\">{{dataCentro?.direccion}}</p>\n</div>\n<div class=\"card-data m-t-40\">\n<div class=\"row\">\n<div class=\"col-3 b-r-default text-center\">\n<p class=\"text-muted\">Programadas</p>\n<span>{{dataCentro?.programadas}}</span>\n</div>\n<div class=\"col-3 b-r-default text-center\">\n<p class=\"text-muted\">Completadas</p>\n<span>{{dataCentro?.completadas}}</span>\n</div>\n<div class=\"col-3 b-r-default text-center\">\n<p class=\"text-muted\">Puntuacion</p>\n<span>{{dataCentro?.rate}}</span>\n</div>\n<div class=\"col-3 text-center\">\n<p class=\"text-muted\">Clientes</p>\n<span>{{dataCentro?.clientesActivos}}</span>\n</div>\n</div>\n</div>\n\n</div>\n</div>\n</div>\n\n\n<div class=\"col-md-12 col-xl-4\">\n\n<div class=\"row\">\n<div class=\"col-xl-12 col-md-6\">\n<div class=\"card\">\n<div class=\"card-block-big card-status\">\n<h5>Ingresos Totales</h5>\n<div class=\"card-block text-center\">\n<h2 class=\"text-primary\">${{ventasCentro?.total}}</h2>\n</div>\n\n</div>\n</div>\n</div>\n<div class=\"col-xl-12 col-md-6\">\n<div class=\"card\">\n<div class=\"card-block-big card-status\">\n<h5>Reserva promedio</h5>\n<div class=\"card-block text-center\">\n<h2 class=\"text-warning\">${{ventasCentro?.promedio}}</h2>\n</div>\n\n</div>\n</div>\n</div>\n</div>\n</div>\n\n\n\n<div class=\"col-md-12 col-xl-8\">\n<div class=\"card\">\n<div class=\"card-block\">\n<h5>Mejores Clientes</h5>\n</div>\n\n\n<div class=\"card-block client-card table-1-card p-t-0\">\n<div class=\"table-responsive\">\n<table class=\"table\">\n<thead>\n<tr class=\"text-capitalize\">\n<th>Nombre</th>\n<th>Email</th>\n<th>Visitas</th>\n<th>Total</th>\n\n</tr>\n</thead>\n<tbody>\n\n<tr  *ngFor=\"let e of clientes\" >\n<td class=\"photo-table img\">\n<a href=\"#!\"><img class=\"img-circle\" src=\"assets/user.png\" alt=\"chat-user\"></a>\n<p>{{e.nombre}}</p>\n</td>\n<td>{{e.email}}</td>\n<td>{{e.cantidad}}</td>\n\n<td class=\"text-success\">${{e.total}}</td>\n</tr>\n\n\n\n\n\n</tbody>\n</table>\n</div>\n</div>\n</div>\n</div>\n\n\n\n\n<div class=\"col-sm-12\">\n\n<div class=\"card ng-trigger ng-trigger-cardClose\" style=\"opacity: 1;\">\n  <!----><div class=\"card-header ng-tns-c4-22\">\n    <h5 class=\"ng-tns-c4-22\">Informacion del Negocio</h5>\n    <!----><span class=\"ng-tns-c4-22\">Esta informacion será visible en el app</span>\n    <!---->\n\n  </div>\n\n  <div class=\"ng-tns-c4-22 ng-trigger ng-trigger-cardToggle\" style=\"\">\n    <div class=\"card-body\">\n      \n      <form _ngcontent-c15=\"\" novalidate=\"\" class=\"ng-invalid ng-dirty ng-touched\">\n        <div _ngcontent-c15=\"\" class=\"form-group row\">\n          <label _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Nombre</label>\n          <div _ngcontent-c15=\"\" class=\"col-sm-10\">\n\n            <input [disabled]=\"!editarOn\"  _ngcontent-c15=\"\" class=\"form-control tooltip-form ng-dirty ng-valid ng-touched\"  \n            [(ngModel)]=\"dataCentro.nombre\" formcontrolname=\"nombreP\" id=\"nombreP\" name=\"Nombre\" type=\"text\">\n            <!---->\n          </div>\n        </div>\n        <div _ngcontent-c15=\"\" class=\"form-group row\">\n          <label _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Telefono de contacto</label>\n          <div _ngcontent-c15=\"\" class=\"col-sm-10\">\n\n            <input  [disabled]=\"!editarOn\" _ngcontent-c15=\"\" class=\"form-control tooltip-form ng-invalid ng-dirty ng-touched\"  [(ngModel)]=\"dataCentro.telefono\" formcontrolname=\"telefonoP\" id=\"telefonoP\" name=\"telefono\"  type=\"text\">\n            <!---->\n          </div>\n        </div>\n\n                <div _ngcontent-c15=\"\" class=\"form-group row\">\n          <label _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Email de contacto</label>\n          <div _ngcontent-c15=\"\" class=\"col-sm-10\">\n            <input  [disabled]=\"!editarOn\" _ngcontent-c15=\"\" class=\"form-control tooltip-form ng-invalid ng-dirty ng-touched\" [(ngModel)]=\"dataCentro.email\" formcontrolname=\"emailP\" id=\"emailP\" name=\"email\"  type=\"text\">\n            <!---->\n          </div>\n        </div>\n\n                        <div _ngcontent-c15=\"\" class=\"form-group row\">\n          <label _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Horario resumen</label>\n          <div _ngcontent-c15=\"\" class=\"col-sm-10\">\n            <input  [disabled]=\"!editarOn\" _ngcontent-c15=\"\" class=\"form-control tooltip-form ng-invalid ng-dirty ng-touched\"  [(ngModel)]=\"dataCentro.horarioAppBanner\"  formcontrolname=\"horarioP\" id=\"horarioP\" name=\"horario\" type=\"text\">\n            <!---->\n          </div>\n        </div>\n\n\n\n                <div _ngcontent-c15=\"\" class=\"form-group row\">\n          <label _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Latitud</label>\n          <div _ngcontent-c15=\"\" class=\"col-sm-10\">\n            <input  [disabled]=\"!editarOn\" _ngcontent-c15=\"\" class=\"form-control tooltip-form ng-invalid ng-dirty ng-touched\"  [(ngModel)]=\"dataCentro.latitud\"  formcontrolname=\"latitudP\" id=\"latitudP\" name=\"latitud\"  type=\"number\">\n            <!---->\n          </div>\n        </div>\n\n                <div _ngcontent-c15=\"\" class=\"form-group row\">\n          <label _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Longitud</label>\n          <div _ngcontent-c15=\"\" class=\"col-sm-10\">\n            <input  [disabled]=\"!editarOn\" _ngcontent-c15=\"\" class=\"form-control tooltip-form ng-invalid ng-dirty ng-touched\" [(ngModel)]=\"dataCentro.longitud\" formcontrolname=\"longitudP\" id=\"longitudP\" name=\"longitud\"  type=\"number\">\n            <!---->\n          </div>\n        </div>\n\n\n                                <div _ngcontent-c15=\"\" class=\"form-group row\">\n          <label _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Sobre Nosotros</label>\n          <div _ngcontent-c15=\"\" class=\"col-sm-10\">\n            <input  [disabled]=\"!editarOn\" _ngcontent-c15=\"\" class=\"form-control tooltip-form ng-invalid ng-dirty ng-touched\"\n            [(ngModel)]=\"dataCentro.sobreNosotros\" formcontrolname=\"sobreNosotrosP\" id=\"sobreNosotrosP\" name=\"sobreNosotros\"  type=\"text\">\n            <!---->\n          </div>\n        </div>\n\n\n                                <div _ngcontent-c15=\"\" class=\"form-group row\">\n          <label _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Direccion</label>\n          <div _ngcontent-c15=\"\" class=\"col-sm-10\">\n            <input  [disabled]=\"!editarOn\" _ngcontent-c15=\"\" class=\"form-control tooltip-form ng-invalid ng-dirty ng-touched\" \n            [(ngModel)]=\"dataCentro.direccion\" formcontrolname=\"direccionP\" id=\"direccionP\" name=\"direccion\"  type=\"text\">\n            <!---->\n          </div>\n        </div>\n\n\n                        <div _ngcontent-c15=\"\" class=\"form-group row\">\n          <label _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Facebook Link</label>\n          <div _ngcontent-c15=\"\" class=\"col-sm-10\">\n            <input  [disabled]=\"!editarOn\" _ngcontent-c15=\"\" class=\"form-control tooltip-form ng-invalid ng-dirty ng-touched\"  [(ngModel)]=\"dataCentro.fbLink\"  formcontrolname=\"fbLinkP\" id=\"fbLinkP\" name=\"fbLink\"  type=\"text\">\n            <!---->\n          </div>\n        </div>\n\n\n\n\n\n\n\n        <div _ngcontent-c15=\"\" class=\"row\">\n          <label _ngcontent-c15=\"\" class=\"col-sm-2\"></label>\n          <div _ngcontent-c15=\"\" class=\"col-sm-10\">\n            \n\n            <button  [hidden]=\"editarOn\" _ngcontent-c15=\"\" class=\"btn btn-primary m-b-0\"  \n            (click)='editarOn = !editarOn'  >Editar</button>\n\n            <button  [hidden]=\"!editarOn\" _ngcontent-c15=\"\" class=\"btn btn-primary m-b-0\"  \n            (click)='getInfoCentro();'  >Cancelar</button>\n\n\n            <button  [disabled]=\"!editarOn\" _ngcontent-c15=\"\" class=\"btn btn-primary m-b-0\" \n             (click)='actualizarDatos()' >Actualizar Datos</button>\n          </div>\n        </div>\n      </form>\n    \n    </div>\n  </div>\n</div>\n</div>\n\n\n</div>"
+module.exports = "<div class=\"row\">\n\n\n\n<!-- <div class=\"col-md-12\">\n<div class=\"card\">\n<div class=\"card-block\">\n<h5>Reset Order</h5>\n</div>\n<div class=\"card-block reset-table p-t-0\">\n<div class=\"table-responsive\">\n<table class=\"table\">\n<thead>\n<tr class=\"text-uppercase\">\n<th>Image</th>\n<th>Product Name</th>\n<th>Product Code</th>\n<th>Status</th>\n<th>Purchased on</th>\n<th>Price</th>\n<th>Quantity</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><a href=\"#!\"><img class=\"img-responsive\" src=\"assets/images/widget/prod1.jpg\" alt=\"chat-user\"></a>\n</td>\n<td>Leisure Suit Casual</td>\n<td>3BSD59</td>\n<td><button type=\"button\" class=\"btn btn-success btn-round\">Pending</button></td>\n<td>27 Sep 2015</td>\n<td>$99.00</td>\n<td>2</td>\n</tr>\n<tr>\n<td><a href=\"#!\"><img class=\"img-responsive\" src=\"assets/images/widget/prod4.jpg\" alt=\"chat-user\"></a>\n</td>\n<td>Leisure Suit Casual</td>\n<td>3BSD59</td>\n<td><button type=\"button\" class=\"btn btn-primary btn-round\">Process</button></td>\n<td>27 Sep 2015</td>\n<td>$99.00</td>\n<td>2</td>\n</tr>\n<tr>\n<td><a href=\"#!\"><img class=\"img-responsive\" src=\"assets/images/widget/prod2.jpg\" alt=\"chat-user\"></a>\n</td>\n<td>Leisure Suit Casual</td>\n<td>3BSD59</td>\n<td><button type=\"button\" class=\"btn btn-warning btn-round\">Failed</button></td>\n<td>27 Sep 2015</td>\n<td>$99.00</td>\n<td>2</td>\n</tr>\n<tr>\n<td><a href=\"#!\"><img class=\"img-responsive\" src=\"assets/images/widget/prod3.jpg\" alt=\"chat-user\"></a>\n</td>\n<td>Leisure Suit Casual</td>\n<td>3BSD59</td>\n<td><button type=\"button\" class=\"btn btn-primary btn-round\">Process</button></td>\n<td>27 Sep 2015</td>\n<td>$99.00</td>\n<td>2</td>\n</tr>\n</tbody>\n</table>\n</div>\n</div>\n</div>\n</div>\n -->\n\n\n<div class=\"col-sm-12\">\n<div class=\"user-card-block card\">\n<div class=\"card-block\">\n<div class=\"top-card text-center\">\n<img src=\"{{this.dataCentro['imageLogo']}}\"\n      onError=\"this.src='assets/tiendaLogo.png';\" class=\"img-responsive\" alt=\"\">\n</div>\n<div class=\"card-contain text-center p-t-40\">\n<h5 class=\"text-capitalize p-b-10\">{{dataCentro?.nombre}}</h5>\n<p class=\"text-muted\">{{dataCentro?.direccion}}</p>\n</div>\n<div class=\"card-data m-t-40\">\n<div class=\"row\">\n<div class=\"col-3 b-r-default text-center\">\n<p class=\"text-muted\">Programadas</p>\n<span>{{dataCentro?.programadas}}</span>\n</div>\n<div class=\"col-3 b-r-default text-center\">\n<p class=\"text-muted\">Completadas</p>\n<span>{{dataCentro?.completadas}}</span>\n</div>\n<div class=\"col-3 b-r-default text-center\">\n<p class=\"text-muted\">Puntuacion</p>\n<span>{{dataCentro?.rate}}</span>\n</div>\n<div class=\"col-3 text-center\">\n<p class=\"text-muted\">Clientes</p>\n<span>{{dataCentro?.clientesActivos}}</span>\n</div>\n</div>\n</div>\n\n</div>\n</div>\n</div>\n\n\n<div class=\"col-md-12 col-xl-4\">\n\n<div class=\"row\">\n<div class=\"col-xl-12 col-md-6\">\n<div class=\"card\">\n<div class=\"card-block-big card-status\">\n<h5>Ingresos Totales</h5>\n<div class=\"card-block text-center\">\n<h2 class=\"text-primary\">${{ventasCentro?.total?.toFixed(2)}}</h2>\n</div>\n\n</div>\n</div>\n</div>\n<div class=\"col-xl-12 col-md-6\">\n<div class=\"card\">\n<div class=\"card-block-big card-status\">\n<h5>Reserva promedio</h5>\n<div class=\"card-block text-center\">\n<h2 class=\"text-warning\">${{ventasCentro?.promedio?.toFixed(2)}}</h2>\n</div>\n\n</div>\n</div>\n</div>\n</div>\n</div>\n\n\n\n<div class=\"col-md-12 col-xl-8\">\n<div class=\"card\">\n<div class=\"card-block\">\n<h5>Mejores Clientes</h5>\n</div>\n\n\n<div class=\"card-block client-card table-1-card p-t-0\">\n<div class=\"table-responsive\">\n<table class=\"table\">\n<thead>\n<tr class=\"text-capitalize\">\n<th>Nombre</th>\n<th>Email</th>\n<th>Visitas</th>\n<th>Total</th>\n\n</tr>\n</thead>\n<tbody>\n\n<tr  *ngFor=\"let e of clientes\" >\n<td class=\"photo-table img\">\n<a href=\"#!\"><img class=\"img-circle\" src=\"assets/user.png\" alt=\"chat-user\"></a>\n<p>{{e.nombre}}</p>\n</td>\n<td>{{e.email}}</td>\n<td>{{e.cantidad}}</td>\n\n<td class=\"text-success\">${{e.total?.toFixed(2)}}</td>\n</tr>\n\n\n\n\n\n</tbody>\n</table>\n</div>\n</div>\n</div>\n</div>\n\n\n\n\n<div class=\"col-sm-12\">\n\n<div class=\"card ng-trigger ng-trigger-cardClose\" style=\"opacity: 1;\">\n  <!----><div class=\"card-header ng-tns-c4-22\">\n    <h5 class=\"ng-tns-c4-22\">Informacion del Negocio</h5>\n    <!----><span class=\"ng-tns-c4-22\">Esta informacion será visible en el app</span>\n    <!---->\n\n  </div>\n\n  <div class=\"ng-tns-c4-22 ng-trigger ng-trigger-cardToggle\" style=\"\">\n    <div class=\"card-body\">\n\n\n       \n          <form [formGroup]=\"form\">\n<div _ngcontent-c15=\"\" class=\"form-group row\">\n            <label _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Imagen / Logo\n          <span style='color:lightgray' class=\"ng-tns-c4-22\">Dimensiones recomendadas: 80×80 </span></label>\n             <img style=\"    height: 80px;\n    width: 80px;\" \n      src=\"{{this.dataCentro['imageLogo']}}\"\n      onError=\"this.src='assets/tiendaLogo.png';\">\n\n      \n      <input  [disabled]=\"!editarOn\"  style='margin-left: 20px;display: none'  type=\"file\" name=\"imageU\" id=\"imageU\" (change)=\"onFileChange($event)\" #fileInput >\n          <label [hidden]=\"!editarOn\" style='    margin-left: 8px;\n    border: solid 1px lightgray;\n    padding: 6px;\n    height: 32px;' for=\"imageU\">Seleccionar imagen</label>\n     </div>\n\n\n\n     <div _ngcontent-c15=\"\" class=\"form-group row\">\n            <label _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Banner App\n          <span style='color:lightgray' class=\"ng-tns-c4-22\">Dimensiones recomendadas: 375×230 </span></label>\n             <img style=\"    height: 230px;\n    width: 375px;\" \n      src=\"{{this.dataCentro['imageB']}}\"\n      onError=\"this.src='assets/fotoProfile.png';\">\n\n      \n      <input  [disabled]=\"!editarOn\"  style='margin-left: 20px;display: none'  type=\"file\" name=\"imageB\" id=\"imageB\" (change)=\"onFileChangeB($event)\" #fileInputB >\n          <label [hidden]=\"!editarOn\" style='    margin-left: 8px;\n    border: solid 1px lightgray;\n    padding: 6px;\n    height: 32px;'  for=\"imageB\">Seleccionar imagen</label>\n     </div>\n\n\n      </form>\n    \n\n      <form _ngcontent-c15=\"\" novalidate=\"\" class=\"ng-invalid ng-dirty ng-touched\">\n        <div _ngcontent-c15=\"\" class=\"form-group row\">\n          <label _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Nombre</label>\n          <div _ngcontent-c15=\"\" class=\"col-sm-10\">\n\n            <input [disabled]=\"!editarOn\"  _ngcontent-c15=\"\" class=\"form-control tooltip-form ng-dirty ng-valid ng-touched\"  \n            [(ngModel)]=\"dataCentro.nombre\" formcontrolname=\"nombreP\" id=\"nombreP\" name=\"Nombre\" type=\"text\">\n            <!---->\n          </div>\n        </div>\n        <div _ngcontent-c15=\"\" class=\"form-group row\">\n          <label _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Telefono de contacto</label>\n          <div _ngcontent-c15=\"\" class=\"col-sm-10\">\n\n            <input  [disabled]=\"!editarOn\" _ngcontent-c15=\"\" class=\"form-control tooltip-form ng-invalid ng-dirty ng-touched\"  [(ngModel)]=\"dataCentro.telefono\" formcontrolname=\"telefonoP\" id=\"telefonoP\" name=\"telefono\"  type=\"text\">\n            <!---->\n          </div>\n        </div>\n\n                <div _ngcontent-c15=\"\" class=\"form-group row\">\n          <label _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Email de contacto</label>\n          <div _ngcontent-c15=\"\" class=\"col-sm-10\">\n            <input  [disabled]=\"!editarOn\" _ngcontent-c15=\"\" class=\"form-control tooltip-form ng-invalid ng-dirty ng-touched\" [(ngModel)]=\"dataCentro.email\" formcontrolname=\"emailP\" id=\"emailP\" name=\"email\"  type=\"text\">\n            <!---->\n          </div>\n        </div>\n\n                        <div _ngcontent-c15=\"\" class=\"form-group row\">\n          <label _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Horario resumen</label>\n          <div _ngcontent-c15=\"\" class=\"col-sm-10\">\n            <input  [disabled]=\"!editarOn\" _ngcontent-c15=\"\" class=\"form-control tooltip-form ng-invalid ng-dirty ng-touched\"  [(ngModel)]=\"dataCentro.horarioAppBanner\"  formcontrolname=\"horarioP\" id=\"horarioP\" name=\"horario\" type=\"text\">\n            <!---->\n          </div>\n        </div>\n\n\n\n                <div _ngcontent-c15=\"\" class=\"form-group row\">\n          <label _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Latitud</label>\n          <div _ngcontent-c15=\"\" class=\"col-sm-10\">\n            <input  [disabled]=\"true\" _ngcontent-c15=\"\" class=\"form-control tooltip-form ng-invalid ng-dirty ng-touched\"  [(ngModel)]=\"dataCentro.latitud\"  formcontrolname=\"latitudP\" id=\"latitudP\" name=\"latitud\"  type=\"number\">\n            <!---->\n          </div>\n        </div>\n\n                <div _ngcontent-c15=\"\" class=\"form-group row\">\n          <label _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Longitud</label>\n          <div _ngcontent-c15=\"\" class=\"col-sm-10\">\n            <input  [disabled]=\"true\" _ngcontent-c15=\"\" class=\"form-control tooltip-form ng-invalid ng-dirty ng-touched\" [(ngModel)]=\"dataCentro.longitud\" formcontrolname=\"longitudP\" id=\"longitudP\" name=\"longitud\"  type=\"number\">\n            <!---->\n          </div>\n        </div>\n\n\n  <div _ngcontent-c15=\"\" class=\"form-group row\">\n\n     <label _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Ubicacion en el mapa</label>\n\n    <div _ngcontent-c15=\"\" class=\"col-sm-10\">\n<agm-map style='height: 400px; width: 100%' \n  [latitude]=\"dataCentro.latitud\"\n  [longitude]=\"dataCentro.longitud\"\n  [zoom]=\"zoom\"\n  [disableDefaultUI]=\"false\"\n  [zoomControl]=\"false\"\n  [mapDraggable]=\"editarOn\"\n  \n  (mapClick)=\"mapClicked($event)\">\n \n  <agm-marker \n      *ngFor=\"let m of markers; let i = index\"\n      (markerClick)=\"clickedMarker(m.label, i)\"\n      [latitude]=\"m.lat\"\n      [longitude]=\"m.lng\"\n      [label]=\"m.label\"\n      [markerDraggable]=\"m.draggable\"\n      (dragEnd)=\"markerDragEnd(m, $event)\">\n      \n    <agm-info-window>\n      <strong>InfoWindow content</strong>\n    </agm-info-window>\n    \n  </agm-marker> \n  <!--\n  <agm-circle [latitude]=\"lat + 0.3\" [longitude]=\"lng\" \n      [radius]=\"5000\"\n      [fillColor]=\"'red'\"\n      [circleDraggable]=\"true\"\n      [editable]=\"true\">\n  </agm-circle>\n-->\n</agm-map>\n</div>\n</div>\n\n\n                                <div _ngcontent-c15=\"\" class=\"form-group row\">\n          <label _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Sobre Nosotros</label>\n          <div _ngcontent-c15=\"\" class=\"col-sm-10\">\n            <input  [disabled]=\"!editarOn\" _ngcontent-c15=\"\" class=\"form-control tooltip-form ng-invalid ng-dirty ng-touched\"\n            [(ngModel)]=\"dataCentro.sobreNosotros\" formcontrolname=\"sobreNosotrosP\" id=\"sobreNosotrosP\" name=\"sobreNosotros\"  type=\"text\">\n            <!---->\n          </div>\n        </div>\n\n\n                                <div _ngcontent-c15=\"\" class=\"form-group row\">\n          <label _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Direccion</label>\n          <div _ngcontent-c15=\"\" class=\"col-sm-10\">\n            <input  [disabled]=\"!editarOn\" _ngcontent-c15=\"\" class=\"form-control tooltip-form ng-invalid ng-dirty ng-touched\" \n            [(ngModel)]=\"dataCentro.direccion\" formcontrolname=\"direccionP\" id=\"direccionP\" name=\"direccion\"  type=\"text\">\n            <!---->\n          </div>\n        </div>\n\n\n                        <div _ngcontent-c15=\"\" class=\"form-group row\">\n          <label _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Facebook Link</label>\n          <div _ngcontent-c15=\"\" class=\"col-sm-10\">\n            <input  [disabled]=\"!editarOn\" _ngcontent-c15=\"\" class=\"form-control tooltip-form ng-invalid ng-dirty ng-touched\"  [(ngModel)]=\"dataCentro.fbLink\"  formcontrolname=\"fbLinkP\" id=\"fbLinkP\" name=\"fbLink\"  type=\"text\">\n            <!---->\n          </div>\n        </div>\n\n\n\n\n\n\n\n        <div _ngcontent-c15=\"\" class=\"row\">\n          <label _ngcontent-c15=\"\" class=\"col-sm-2\"></label>\n          <div _ngcontent-c15=\"\" class=\"col-sm-10\">\n            \n\n            <button  [hidden]=\"editarOn\" _ngcontent-c15=\"\" class=\"btn btn-primary m-b-0\"  \n            (click)='editarOn = !editarOn'  >Editar</button>\n\n            <button  [hidden]=\"!editarOn\" _ngcontent-c15=\"\" class=\"btn btn-primary m-b-0\"  \n            (click)='getInfoCentro();'  >Cancelar</button>\n\n\n            <button  [disabled]=\"!editarOn\" _ngcontent-c15=\"\" class=\"btn btn-primary m-b-0\" \n             (click)='actualizarDatos()' >Actualizar Datos</button>\n          </div>\n        </div>\n      </form>\n    \n    </div>\n  </div>\n</div>\n</div>\n\n\n</div>"
 
 /***/ }),
 
@@ -632,6 +1204,8 @@ module.exports = module.exports.toString();
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CentroComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__endpoints_service__ = __webpack_require__("../../../../../src/app/endpoints.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("../../../forms/esm5/forms.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -643,14 +1217,64 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+
 var CentroComponent = (function () {
-    function CentroComponent(endpointsService) {
+    function CentroComponent(endpointsService, fb, router) {
         this.endpointsService = endpointsService;
+        this.fb = fb;
+        this.router = router;
+        this.globalImage = 'http://50.116.17.150:3000/';
+        this.cu = JSON.parse(localStorage.getItem('currentUser'));
+        this.dataFile = '';
+        this.dataFileB = '';
+        this.zoom = 16;
+        // initial center position for the map
+        this.lat = 51.673858;
+        this.lng = 7.815982;
+        this.markers = [];
         this.clientes = [];
         this.dataCentro = {};
         this.ventasCentro = {};
         this.editarOn = false;
+        if (this.cu[0]['tipo'] !== 1) {
+            console.log('usuario no deseado');
+            this.router.navigate(['/dashboard']);
+        }
+        this.createForm();
     }
+    CentroComponent.prototype.clickedMarker = function (label, index) {
+        console.log("clicked the marker: " + (label || index));
+    };
+    CentroComponent.prototype.mapClicked = function ($event) {
+        if (this.editarOn) {
+            this.dataCentro['longitud'] = $event.coords.lng;
+            this.dataCentro['latitud'] = $event.coords.lat;
+            this.markers[0] = {
+                lat: $event.coords.lat,
+                lng: $event.coords.lng,
+                label: 'Nueva Ubicacion',
+                draggable: true
+            };
+        }
+    };
+    /*
+    {
+     lat: 51.673858,
+     lng: 7.815982,
+     label: 'A',
+     draggable: true
+   }
+ */
+    CentroComponent.prototype.markerDragEnd = function (m, $event) {
+        console.log('dragEnd', m, $event);
+    };
+    CentroComponent.prototype.createForm = function () {
+        this.form = this.fb.group({
+            imageU: null,
+            imageB: null
+        });
+    };
     CentroComponent.prototype.ngOnInit = function () {
         this.getInfoCentro();
     };
@@ -660,14 +1284,69 @@ var CentroComponent = (function () {
             .then(function (data) {
             console.log(data);
             _this.dataCentro = data.info[0];
+            _this.dataCentro['imageLogo'] = _this.globalImage + _this.dataCentro['idFoto'];
+            _this.dataCentro['imageB'] = _this.globalImage + _this.dataCentro['imagenBanner'];
             _this.clientes = data.clientes;
             _this.ventasCentro = data.dataV[0];
             _this.editarOn = false;
+            _this.markers[0] = {
+                lat: _this.dataCentro['latitud'],
+                lng: _this.dataCentro['longitud'],
+                label: _this.dataCentro['nombre'],
+                draggable: true
+            };
         });
+    };
+    CentroComponent.prototype.onFileChange = function (event) {
+        var _this = this;
+        if (event.target.files.length > 0) {
+            var file = event.target.files[0];
+            //this.form.get('imageU').setValue(file);
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                _this.dataCentro['imageLogo'] = event.target.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+            this.dataFile = file;
+        }
+    };
+    CentroComponent.prototype.onFileChangeB = function (event) {
+        var _this = this;
+        if (event.target.files.length > 0) {
+            var file = event.target.files[0];
+            //this.form.get('imageU').setValue(file);
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                _this.dataCentro['imageB'] = event.target.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+            this.dataFileB = file;
+        }
+    };
+    CentroComponent.prototype.prepareSave = function (centro) {
+        var input = new FormData();
+        if (this.dataFile) {
+            input.append('imageU', this.dataFile);
+        }
+        if (this.dataFileB) {
+            input.append('imageB', this.dataFileB);
+        }
+        input.append('nombre', centro.nombre);
+        input.append('email', centro.email);
+        input.append('fbLink', centro.fbLink);
+        input.append('latitud', centro.latitud);
+        input.append('longitud', centro.longitud);
+        input.append('horarioAppBanner', centro.horarioAppBanner);
+        input.append('sobreNosotros', centro.sobreNosotros);
+        input.append('direccion', centro.direccion);
+        input.append('telefono', centro.telefono);
+        input.append('idCentro', centro.idCentro);
+        return input;
     };
     CentroComponent.prototype.actualizarDatos = function () {
         var _this = this;
-        this.endpointsService.actualizarDCentro(this.dataCentro)
+        var formModel = this.prepareSave(this.dataCentro);
+        this.endpointsService.actualizarDCentro(formModel)
             .then(function (data) {
             if (data.affectedRows && data.affectedRows > 0) {
                 alert('Editado correctamente');
@@ -679,13 +1358,21 @@ var CentroComponent = (function () {
         });
         console.log(this.dataCentro);
     };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('fileInput'),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"])
+    ], CentroComponent.prototype, "fileInput", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('fileInputB'),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"])
+    ], CentroComponent.prototype, "fileInputB", void 0);
     CentroComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'tox-centro',
             template: __webpack_require__("../../../../../src/app/centro/centro.component.html"),
             styles: [__webpack_require__("../../../../../src/app/centro/centro.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__angular_router__["c" /* Router */]])
     ], CentroComponent);
     return CentroComponent;
 }());
@@ -697,7 +1384,7 @@ var CentroComponent = (function () {
 /***/ "../../../../../src/app/ejercicios/ejercicios.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "  <div class=\"card mb-4\" style=\"    background: transparent;\n    border: none !important;\">\n    \n\n\n\n\n\n\n<div   class=\"card mb-4\" style=\"    margin-top: 42px;\">\n    <div class=\"card-body\">\n    <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3 style=\"margin-bottom: 20px\">Citas</h3>\n\n  </div>\n\n</div>\n <ngx-loading [show]=\"loading2\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n\n<ngb-tabset (tabChange)=\"fetchNews($event)\" style='padding: 30px !important' type=\"pills\">\n\n\n\n  <ngb-tab   *ngFor=\"let d of keysRutina; let i = index\" title=\"{{getTitulo(d)}} ({{diasRutina[i].length}})\">\n\n    <ng-template ngbTabContent  >\n\n  <!--         <table  style='    margin-top: 30px;' class='table material'>\n            <thead>\n                <th>Usuario</th>\n                <th>Email</th>\n                  <th>Telefono</th>\n                <th>Staff</th>\n                <th></th>\n            </thead>\n            <tbody>\n                <tr *ngFor=\"let e  of diasRutina[i] || []\">\n                    <td>{{e.nombreCliente}}</td>\n                    <td>{{e.email}}</td>\n                    <td>{{e.telefono}}</td>\n                    <td>{{e.nombreEmpleado || 'Cualquiera'}}</td>\n                    <td>\n\n          <button *ngIf='d==1' class=\"btn btn-success\">Confirmar</button>\n          <button *ngIf='d==2' class=\"btn btn-success\">Completar</button>\n           <span *ngIf='d==3' ><b>${{e.total || '-'}}</b></span>\n\n\n                    </td>\n                </tr>\n            </tbody>\n        </table>\n -->\n\n\n        <ngx-datatable style=\"    margin-top: 30px;\"\n          class=\"material\"\n          [rows]=\"diasRutina[i]\"\n          [columnMode]=\"'force'\"\n\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect($event)'>\n\n\n\n                  <ngx-datatable-column prop=\"nombreCliente\" name='Cliente' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n          <ngx-datatable-column prop=\"telefono\" name='Telefono' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n           <ngx-datatable-column prop=\"email\" name='Email' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}} \n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column prop=\"nombreEmpleado\" name='Staff' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column prop=\"total\" name='Total' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n         <b>  ${{value}} </b>\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n\n </ngx-datatable>\n\n\n\n    </ng-template>\n  </ngb-tab>\n</ngb-tabset>\n</div>\n</div>\n\n\n\n\n\n\n\n\n<div  *ngIf='usuarioSeleccionado[\"idCita\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n\n\n           <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3 style=\"margin-bottom: 20px\">Programacion cita</h3>\n\n  </div>\n\n</div>\n\n\n<div *ngIf='usuarioSeleccionado[\"idCita\"]' id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n\n<form class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-4 mb-4 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Fecha y hora</label>\n      <div class=\"input-group\">\n          <input  [disabled]=\"!editar\" [ngClass]=\"{'is-invalid':!fecha.valid }\" [(ngModel)]=\"usuarioSeleccionado.fechaF\" name=\"fecha\"  #fecha=\"ngModel\" class=\"form-control\" placeholder=\"yyyy-mm-dd\"\n             ngbDatepicker #d=\"ngbDatepicker\" required [minDate]='minDatse'>\n          <div class=\"input-group-append\">\n            <button class=\"btn btn-outline-secondary\" (click)=\"d.toggle()\" type=\"button\">\n              <img src=\"https://ng-bootstrap.github.io/img/calendar-icon.svg\" style=\"width: 1.2rem; height: 1rem; cursor: pointer;\"/>\n            </button>\n          </div>\n        </div>\n  </div>\n\n\n      <div class=\"col-md-3 mb-3 ff\" style=\"    margin-top: -9px;margin-left: 15px !important;margin-right: 15px !important;\">\n\n\n      <ngb-timepicker required [disabled]=\"!editar\" [(ngModel)]=\"usuarioSeleccionado.horaF\" name=\"tiempo\" #tiempo=\"ngModel\"  [seconds]=\"false\"\n    [hourStep]=\"1\" [minuteStep]=\"15\"  ></ngb-timepicker>\n    <div style=\"    color: #ff2c2c7a;\n    font-size: 13px;\" *ngIf=\"!tiempo.valid && editar\">selecciona una hora</div>\n\n  </div>\n\n  </div>\n\n\n</form>\n<div *ngIf='usuarioSeleccionado.idCita && (usuarioSeleccionado[\"estado\"] == 5)' >\n  <div style=\"    margin-left: 15px;\">\nEsperando confirmacion del usuario\n</div>\n  <button [disabled]=\"false\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-warning\" >Enviar Recordatorio al app</button>\n\n    <button [disabled]=\"false\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-danger\" >Cancelar Cita</button>\n\n\n\n</div>\n<div *ngIf='usuarioSeleccionado.idCita && (usuarioSeleccionado[\"estado\"] == 1 || \nusuarioSeleccionado[\"estado\"] == 2)' >\n\n\n   <button *ngIf='usuarioSeleccionado[\"estado\"] == 1' (click)='confirmarCita()'  class=\"btn btn-success\">Confirmar</button>\n\n   <button *ngIf='usuarioSeleccionado[\"estado\"] == 2' (click)='completarCita()'  class=\"btn btn-success\">Completar</button>\n\n\n  <button  [disabled]=\"editar\" (click)='editar = !editar' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Reprogramar</button>\n  <button [disabled]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n   <button (click)='editar = !editar' [disabled]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n</div>\n</div>\n          </div>\n\n</div>\n <div  *ngIf='usuarioSeleccionado[\"idCita\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n   \n <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3 style=\"margin-bottom: 20px\">Servicios</h3>\n\n  </div>\n\n</div>\n\n\n\n          <table  style='    ' class='table material'>\n            <thead>\n                <th>Servicio</th>\n                <th>Duracion</th>\n                <th></th>\n            </thead>\n            <tbody>\n                <tr *ngFor=\"let e  of serviciosSeleccionado || []\">\n                    <td>{{e.nombre}}</td>\n                    <td>{{e.duracion}}min</td>\n                    <td><button [disabled]=\"usuarioSeleccionado['estado'] == 4 ||  usuarioSeleccionado['estado'] == 3\"  (click)='borrarServicioCita(e.idServicioCita)' class=\"btn btn-danger\">Eliminar</button></td>\n                </tr>\n            </tbody>\n        </table>\n\n\n        <div style=\"margin:20px\" [hidden]=\"usuarioSeleccionado['estado'] == 4 || usuarioSeleccionado['estado'] == 3\">\n          <h5>Agregar Servicio</h5>\n          <div class=\"col-md-3 mb-3 ff\" style=\"    display: inline-block;\n    margin-right: 15px !important;\n    padding-left: 0px;\n    margin-top: 20px;\">\n\n\n          <label for=\"validationCustom01\">Servicio</label>\n          <select   [(ngModel)]=\"agregarEjercicio.idServicio\" name=\"idServicio\" #idServicio=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\">\n\n              <option *ngFor=\"let c of serviciosCentro\" \n              [value]=\"c.idServicio\" \n              >\n              {{c.nombre}} / ${{c.precio}}\n              </option>\n          </select>\n          </div>\n\n          <button [disabled]='!idServicio.valid' (click)='agregarServicioCita(agregarEjercicio.idServicio)' class=\"btn btn-success\">Agregar</button>\n        </div>\n\n      </div>\n\n\n\n</div>\n\n\n\n\n\n\n    </div> \n\n"
+module.exports = " <ng-template #content let-c=\"close\" let-d=\"dismiss\">\n  <div class=\"modal-header\">\n   <h5 style=\"margin-bottom: 20px\">Agregar Servicio</h5>\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n  <div class=\"modal-body\">\n\n     <label >Categoria</label>\n              <select   (change)=\"onChangeS($event.target.value)\"  name=\"nombreCat\"  required  class=\"form-control custom-select mr-sm-2\">\n                <option [value]=\"false\"  selected></option>\n              <option *ngFor=\"let c of categoriasCentro; let i = index\" \n              [value]=\"i\" \n              >\n              {{c}}\n              </option>\n          </select>\n\n\n           <label  style=\"margin-top: 14px\" [hidden]='!serviciosCat?.length>0'   for=\"idServicio\">Servicios</label>\n              <select   [hidden]='!serviciosCat?.length>0' [(ngModel)]=\"agregarEjercicio.idServicio\" name=\"idServicio\" #idServicio=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\">\n\n              <option *ngFor=\"let c of serviciosCat\" \n              [value]=\"c.idServicio\" \n              >\n              {{c.nombre}} / ${{c.precio}}\n              </option>\n          </select>\n          \n\n  </div>\n  <div class=\"modal-footer\">\n\n     <button [hidden]='!agregarEjercicio.idServicio' (click)='agregarServicioCita(agregarEjercicio.idServicio)' class=\"btn btn-success\">Agregar</button>\n\n    <button type=\"button\" class=\"btn btn-light\" (click)=\"c('Close click')\">Close</button>\n  </div>\n</ng-template>\n\n\n  <div class=\"card mb-4\" style=\"    background: transparent;\n    border: none !important;\">\n    \n\n\n\n\n\n\n<div   class=\"card mb-4\" style=\"    margin-top: 42px;\">\n    <div class=\"card-body\">\n    <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3 style=\"margin-bottom: 20px\">Citas</h3>\n\n  </div>\n\n</div>\n\n\n\n\n <ngx-loading [show]=\"loading2\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div style='margin: auto 17px;' _ngcontent-c28=\"\" class=\"checkbox-color checkbox-danger\">\n              <input (change)='cambiarC(estadoCheck)'  [(ngModel)]=\"estadoCheck\" name='lunesC' id=\"lunesC\" type=\"checkbox\">\n              <label _ngcontent-c28=\"\" for=\"lunesC\">\n                Solo en fecha\n              </label>\n            </div>\n\n\n  <div style='   margin-left: 17px; width: 300px;'  class=\"input-group\">\n          <input  [(ngModel)]=\"fechaFiltro\"  [ngClass]=\"{'is-invalid':!fechaFi.valid }\" name=\"fechaFi\"  #fechaFi=\"ngModel\" class=\"form-control\" placeholder=\"yyyy-mm-dd\" (ngModelChange)='citasCentroFiltro(fechaFiltro)'\n             ngbDatepicker #d=\"ngbDatepicker\" required [minDate]='minDatse' [disabled]=\"!estadoCheck\">\n          <div class=\"input-group-append\">\n            <button class=\"btn btn-outline-secondary\" (click)=\"d.toggle()\" type=\"button\">\n              <img src=\"https://ng-bootstrap.github.io/img/calendar-icon.svg\" style=\"width: 1.2rem; height: 1rem; cursor: pointer;\"/>\n            </button>\n          </div>\n        </div>\n\n\n<ngb-tabset (tabChange)=\"fetchNews($event)\" style='padding: 30px !important' type=\"pills\">\n\n\n\n  <ngb-tab   *ngFor=\"let d of keysRutina; let i = index\" title=\"{{getTitulo(d)}} ({{diasRutina[i].length}})\">\n\n    <ng-template ngbTabContent  >\n\n\n  <span>Buscar:</span><input\n        type='text'\n        style='padding:8px;margin:15px 13px;width:30%;'\n        placeholder='ID Reserva, Cliente o Empleado'\n        (keyup)='updateFilter($event,i)'\n      />\n\n\n  <!--         <table  style='    margin-top: 30px;' class='table material'>\n            <thead>\n                <th>Usuario</th>\n                <th>Email</th>\n                  <th>Telefono</th>\n                <th>Staff</th>\n                <th></th>\n            </thead>\n            <tbody>\n                <tr *ngFor=\"let e  of diasRutina[i] || []\">\n                    <td>{{e.nombreCliente}}</td>\n                    <td>{{e.email}}</td>\n                    <td>{{e.telefono}}</td>\n                    <td>{{e.nombreEmpleado || 'Cualquiera'}}</td>\n                    <td>\n\n          <button *ngIf='d==1' class=\"btn btn-success\">Confirmar</button>\n          <button *ngIf='d==2' class=\"btn btn-success\">Completar</button>\n           <span *ngIf='d==3' ><b>${{e.total || '-'}}</b></span>\n\n\n                    </td>\n                </tr>\n            </tbody>\n        </table>\n -->\n\n\n        <ngx-datatable style=\"    margin-top: 30px;\"\n          class=\"material\"\n          [rows]=\"diasRutina[i]\"\n          [columnMode]=\"'force'\"\n\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect($event)'>\n\n\n\n\n                  <ngx-datatable-column prop=\"idCita\" name='ID Reserva' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                  <ngx-datatable-column prop=\"nombreCliente\" name='Cliente' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n          <ngx-datatable-column prop=\"telefono\" name='Telefono' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n           <ngx-datatable-column prop=\"email\" name='Email' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}} \n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column prop=\"nombreEmpleado\" name='Staff' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column prop=\"precioEsperado\" name='Total' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n         <b>  ${{value}} </b>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column prop=\"descuento\" name='Descuento' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n         <b [hidden]='!value'>  {{value}} %</b>\n         <b [hidden]='value'>-</b>\n          </ng-template>\n        </ngx-datatable-column>\n\n\n </ngx-datatable>\n\n\n\n    </ng-template>\n  </ngb-tab>\n</ngb-tabset>\n</div>\n</div>\n\n\n\n\n\n\n\n\n<div  *ngIf='usuarioSeleccionado[\"idCita\"]' class=\"card mb-4\" style=\" background: transparent !important;\n    margin-top: 42px;\n    border: none;\">\n\n<div class=\"row\" style=\"background: transparent\">\n<div class=\"col-md-12 col-xl-4\">\n\n<div class=\"row\">\n<div class=\"col-xl-12 col-md-6\">\n<div class=\"card\">\n\n\n\n           <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n  <h5 style=\"margin-bottom: 20px\">Programacion cita</h5>\n\n  </div>\n\n</div>\n\n\n<div *ngIf='usuarioSeleccionado[\"idCita\"]' id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n\n<form class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n   \n      <label for=\"validationCustom01\">Fecha y hora</label>\n      <div class=\"input-group\">\n          <input  [disabled]=\"!editar\" [ngClass]=\"{'is-invalid':!fecha.valid }\" [(ngModel)]=\"usuarioSeleccionado.fechaF\" name=\"fecha\"  #fecha=\"ngModel\" class=\"form-control\" placeholder=\"yyyy-mm-dd\"\n             ngbDatepicker #d=\"ngbDatepicker\" required [minDate]='minDatse'>\n          <div class=\"input-group-append\">\n            <button class=\"btn btn-outline-secondary\" (click)=\"d.toggle()\" type=\"button\">\n              <img src=\"https://ng-bootstrap.github.io/img/calendar-icon.svg\" style=\"width: 1.2rem; height: 1rem; cursor: pointer;\"/>\n            </button>\n          </div>\n        </div>\n\n\n\n     \n\n\n      <ngb-timepicker required [disabled]=\"!editar\" [(ngModel)]=\"usuarioSeleccionado.horaF\" name=\"tiempo\" #tiempo=\"ngModel\"  (ngModelChange)=\"actualizarHora($event)\" [seconds]=\"false\"\n    [hourStep]=\"1\" [minuteStep]=\"15\"  ></ngb-timepicker>\n\n<span style=\"margin: auto 10px\">A</span>\n\n          <ngb-timepicker style=\"margin: auto 10px\" [spinners]=\"false\" [disabled]=\"true\" [(ngModel)]=\"usuarioSeleccionado.horaFinalEsperadoF\" name=\"horaFinalEsperado\" #horaFinalEsperado=\"ngModel\"  [seconds]=\"false\"\n    [hourStep]=\"1\" [minuteStep]=\"15\"  ></ngb-timepicker>\n\n\n    <div style=\"    color: #ff2c2c7a;\n    font-size: 13px;\" *ngIf=\"!tiempo.valid && editar\">selecciona una hora</div>\n\n\n  </div>\n\n\n</form>\n<div *ngIf='usuarioSeleccionado.idCita && (usuarioSeleccionado[\"estado\"] == 5)' >\n  <div style=\"    \">\nEsperando confirmacion del usuario\n</div>\n  <button [disabled]=\"false\" style='margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-warning\" >Enviar Recordatorio al app</button>\n\n\n\n\n\n</div>\n\n\n\n          <div class=\"form-group row\" *ngIf='editar && usuarioSeleccionado[\"estado\"] == 1'>\n          <label style=\"margin-left: 15px;\">Nota de reprogramacion</label>\n          <div  class=\"col-sm-10\">\n            <textarea  style=\"resize: none;height: 90px\" [disabled]=\"!editar\"  class=\"form-control tooltip-form ng-invalid ng-dirty ng-touched\" \n            [(ngModel)]=\"usuarioSeleccionado['comentarioEstado']\" formcontrolname=\"direccionP\" id=\"direccionP\" name=\"direccion\"  type=\"text\"></textarea>\n            <!---->\n          </div>\n        </div>\n\n\n\n<div *ngIf='usuarioSeleccionado.idCita && (usuarioSeleccionado[\"estado\"] == 1 || \nusuarioSeleccionado[\"estado\"] == 2)' >\n\n\n   <button [hidden]=\"editar\" *ngIf='usuarioSeleccionado[\"estado\"] == 1' (click)='confirmarCita()'  class=\"btn btn-success\">Confirmar</button>\n\n   <button [hidden]=\"editar\" *ngIf='usuarioSeleccionado[\"estado\"] == 2' (click)='completarCita()'  class=\"btn btn-success\">Completar</button>\n\n\n  <button [hidden]=\"editar\"  [disabled]=\"editar\" (click)='editar = !editar' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Reprogramar</button>\n\n\n  <button [hidden]=\"!editar\" [disabled]=\"!editar\" style='margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n   <button (click)='editar = !editar' [hidden]=\"!editar\" [disabled]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n</div>\n</div>\n          </div>\n\n\n</div>\n</div>\n\n\n</div>\n</div>\n\n<div class=\"col-md-12 col-xl-8\">\n   <ngx-loading [show]=\"loading3\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n\n<div class=\"card\">\n<div class=\"card-block\">\n<h5>Servicios</h5>\n</div>\n\n\n<div class=\"card-block client-card table-1-card p-t-0\">\n<div class=\"table-responsive\">\n<table class=\"table\">\n<thead>\n<tr class=\"text-capitalize\">\n<th>Nombre</th>\n<th>Duracion</th>\n<th>Precio</th>\n<th></th>\n\n</tr>\n</thead>\n<tbody>\n\n<tr  *ngFor=\"let e of serviciosSeleccionado || []\" >\n<td class=\"\">\n{{e.nombre}}\n</td>\n<td>{{e.duracion}}min</td>\n<td class=\"text-success\">\n\n  <span [hidden]=\"!(usuarioSeleccionado['descuento']>0)\"  style=\"color: #777;text-decoration: line-through;\">${{e.precio.toFixed(2)}}</span>\n<br>\n    <span >${{getPrecioDescuento(e.precio)}}</span>\n\n\n\n</td>\n<td>\n<button [disabled]=\"usuarioSeleccionado['estado'] == 4 ||  usuarioSeleccionado['estado'] == 3\"  (click)='borrarServicioCita(e.idServicio,e.idServicioCita)' class=\"btn btn-danger\">Eliminar</button>\n  \n\n</td>\n\n</tr>\n\n\n<tr  >\n<td class=\"\">\n\n</td>\n<td></td>\n<td><span style=\"font-size: 16px\">Total: <b class=\"text-success\">${{usuarioSeleccionado['precioEsperado']?.toFixed(2)}}</b></span></td>\n<td></td>\n\n</tr>\n\n\n</tbody>\n</table>\n</div>\n<!--   <button [disabled]='!idServicio.valid' (click)='agregarServicioCita(agregarEjercicio.idServicio)' class=\"btn btn-success\">Agregar Servicio</button> -->\n<button  class=\"btn btn-outline-primary mb-2 mr-2\" (click)=\"openVerticallyCentered(content)\">Agregar Servicio</button>\n\n \n</div>\n</div>\n</div>\n\n\n\n\n</div>\n\n<!--            <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3 style=\"margin-bottom: 20px\">Programacion cita</h3>\n\n  </div>\n\n</div>\n\n\n<div *ngIf='usuarioSeleccionado[\"idCita\"]' id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n\n<form class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-4 mb-4 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Fecha y hora</label>\n      <div class=\"input-group\">\n          <input  [disabled]=\"!editar\" [ngClass]=\"{'is-invalid':!fecha.valid }\" [(ngModel)]=\"usuarioSeleccionado.fechaF\" name=\"fecha\"  #fecha=\"ngModel\" class=\"form-control\" placeholder=\"yyyy-mm-dd\"\n             ngbDatepicker #d=\"ngbDatepicker\" required [minDate]='minDatse'>\n          <div class=\"input-group-append\">\n            <button class=\"btn btn-outline-secondary\" (click)=\"d.toggle()\" type=\"button\">\n              <img src=\"https://ng-bootstrap.github.io/img/calendar-icon.svg\" style=\"width: 1.2rem; height: 1rem; cursor: pointer;\"/>\n            </button>\n          </div>\n        </div>\n  </div>\n\n\n      <div class=\"col-md-3 mb-3 ff\" style=\"    margin-top: -9px;margin-left: 15px !important;margin-right: 15px !important;\">\n\n\n      <ngb-timepicker required [disabled]=\"!editar\" [(ngModel)]=\"usuarioSeleccionado.horaF\" name=\"tiempo\" #tiempo=\"ngModel\"  [seconds]=\"false\"\n    [hourStep]=\"1\" [minuteStep]=\"15\"  ></ngb-timepicker>\n    <div style=\"    color: #ff2c2c7a;\n    font-size: 13px;\" *ngIf=\"!tiempo.valid && editar\">selecciona una hora</div>\n\n  </div>\n\n  </div>\n\n\n</form>\n<div *ngIf='usuarioSeleccionado.idCita && (usuarioSeleccionado[\"estado\"] == 5)' >\n  <div style=\"    margin-left: 15px;\">\nEsperando confirmacion del usuario\n</div>\n  <button [disabled]=\"false\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-warning\" >Enviar Recordatorio al app</button>\n\n\n\n\n\n</div>\n<div *ngIf='usuarioSeleccionado.idCita && (usuarioSeleccionado[\"estado\"] == 1 || \nusuarioSeleccionado[\"estado\"] == 2)' >\n\n\n   <button *ngIf='usuarioSeleccionado[\"estado\"] == 1' (click)='confirmarCita()'  class=\"btn btn-success\">Confirmar</button>\n\n   <button *ngIf='usuarioSeleccionado[\"estado\"] == 2' (click)='completarCita()'  class=\"btn btn-success\">Completar</button>\n\n\n  <button  [disabled]=\"editar\" (click)='editar = !editar' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Reprogramar</button>\n  <button [disabled]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n   <button (click)='editar = !editar' [disabled]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n</div>\n</div> \n          </div>\n-->\n</div>\n\n\n\n\n\n\n    </div> \n\n"
 
 /***/ }),
 
@@ -726,8 +1413,9 @@ module.exports = module.exports.toString();
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EjerciciosComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__endpoints_service__ = __webpack_require__("../../../../../src/app/endpoints.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery__ = __webpack_require__("../../../../jquery/dist/jquery.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_jquery__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ng_bootstrap_ng_bootstrap__ = __webpack_require__("../../../../@ng-bootstrap/ng-bootstrap/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_jquery__ = __webpack_require__("../../../../jquery/dist/jquery.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_jquery__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -740,13 +1428,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-window["$"] = __WEBPACK_IMPORTED_MODULE_2_jquery__;
-window["jQuery"] = __WEBPACK_IMPORTED_MODULE_2_jquery__;
+
+window["$"] = __WEBPACK_IMPORTED_MODULE_3_jquery__;
+window["jQuery"] = __WEBPACK_IMPORTED_MODULE_3_jquery__;
 var EjerciciosComponent = (function () {
-    function EjerciciosComponent(endpointsService) {
+    function EjerciciosComponent(endpointsService, modalService) {
         this.endpointsService = endpointsService;
+        this.modalService = modalService;
+        this.serviciosCategoria = [];
         this.rows = [];
         this.selected = [];
+        this.categoriasCentro = [];
         this.editar = false;
         this.loadingI = false;
         this.selectedHorario = [];
@@ -757,6 +1449,10 @@ var EjerciciosComponent = (function () {
         this.ejerciciosSelect = [];
         this.serviciosCentro = [];
         this.serviciosSeleccionado = [];
+        this.serviciosCat = [];
+        this.temp = [];
+        this.filtroData = [];
+        this.estadoCheck = false;
         this.dateObj = new Date();
         this.minDatse = { year: (this.dateObj.getUTCFullYear()), month: (this.dateObj.getUTCMonth() + 1), day: (this.dateObj.getUTCDate()) };
         this.minDats2 = (this.dateObj.getUTCFullYear()) + '-' + (this.dateObj.getUTCMonth() + 1) + '-' + (this.dateObj.getUTCDate());
@@ -777,14 +1473,18 @@ var EjerciciosComponent = (function () {
         this.rowsHorarios = [];
         this.loading = false;
         this.loading2 = false;
+        this.loading3 = false;
         this.isCollapsed = false;
+        //this.temp = [...data];
+        this.serviciosCat = [];
+        this.estadoCheck = false;
     }
     EjerciciosComponent.prototype.onCalendarInit = function (initialized) {
         console.log('Calendar initialized');
     };
     EjerciciosComponent.prototype.ngOnInit = function () {
         this.citasCentro();
-        this.cargaServicios();
+        //this.cargaServicios();
     };
     EjerciciosComponent.prototype.getCuponesCentro = function () {
         var _this = this;
@@ -832,14 +1532,89 @@ var EjerciciosComponent = (function () {
         }
         ;
     };
+    EjerciciosComponent.prototype.cambiarC = function (ee) {
+        console.log(ee);
+        if (ee) {
+            // this.citasCentroFiltro();
+        }
+        else {
+            this.citasCentro();
+        }
+    };
+    EjerciciosComponent.prototype.getMinutosCita = function () {
+        var duracionMinutos = 0;
+        this.serviciosSeleccionado.forEach(function (item) {
+            duracionMinutos += item.duracion;
+        });
+        console.log(duracionMinutos);
+        return duracionMinutos;
+    };
+    EjerciciosComponent.prototype.formatTime = function (n) {
+        return n > 9 ? "" + n : "0" + n;
+    };
+    //n > 9 ? "" + n: "0" + n;
+    EjerciciosComponent.prototype.actualizarHora = function (hora) {
+        console.log(hora);
+        var horaSeleccionada = this.usuarioSeleccionado['fechaF']['year'] + '-' +
+            this.pad2(this.usuarioSeleccionado['fechaF']['month']) + '-' +
+            this.pad2(this.usuarioSeleccionado['fechaF']['day']) + ' ' +
+            this.pad2(hora['hour']) + ':' +
+            this.pad2(hora['minute']) + ':00';
+        console.log(horaSeleccionada);
+        /*
+                let ti2 = {
+                "hour": h2,
+                "minute": m2,
+                "second": s2
+                }
+        
+        */
+        var theAdd = new Date(horaSeleccionada);
+        if (isNaN(Date.parse(String(theAdd)))) {
+            console.log('ifTrue');
+            if (hora !== '') {
+                ///theAdd = new Date(this.fechaCalendario+'T'+hora+':00Z');
+                ///theAdd.setMinutes(theAdd.getMinutes() + this.getMinutosCita());
+                ///this.horaFinalizacion =new Date(theAdd).toISOString();
+            }
+        }
+        else {
+            console.log('ifFalse');
+            console.log(theAdd);
+            theAdd.setMinutes(theAdd.getMinutes() + this.getMinutosCita());
+            this.usuarioSeleccionado['horaFinalEsperadoF'] = {
+                "hour": theAdd.getHours(),
+                "minute": theAdd.getMinutes(),
+                "second": 0
+            };
+            //theAdd.toISOString();
+        }
+    };
     EjerciciosComponent.prototype.citasCentro = function () {
         var _this = this;
         this.loadingI = true;
         this.endpointsService.citasCentroC({ idCentro: localStorage.getItem('idCentroBY') })
             .then(function (data) {
             console.log(data);
+            _this.filtroData = JSON.parse(JSON.stringify(Object.values(data)));
             _this.diasRutina = Object.values(data);
             _this.keysRutina = Object.keys(data);
+            _this.loadingI = false;
+        });
+    };
+    EjerciciosComponent.prototype.citasCentroFiltro = function (fecha) {
+        var _this = this;
+        console.log(fecha);
+        this.loadingI = true;
+        var fechaFixx = fecha['year'] + '-' + this.pad2(fecha['month']) + '-' + this.pad2(fecha['day']);
+        console.log(fechaFixx);
+        this.endpointsService.citasCentroFiltro({ idCentro: localStorage.getItem('idCentroBY'), fecha: fechaFixx })
+            .then(function (data) {
+            console.log(data);
+            _this.filtroData = JSON.parse(JSON.stringify(Object.values(data)));
+            _this.diasRutina = Object.values(data);
+            _this.keysRutina = Object.keys(data);
+            _this.usuarioSeleccionado = {};
             _this.loadingI = false;
         });
     };
@@ -877,8 +1652,25 @@ var EjerciciosComponent = (function () {
             // this.loading = false;
         });
     };
+    EjerciciosComponent.prototype.getPrecioDescuento = function (precio) {
+        var retorno = 0;
+        if (this.usuarioSeleccionado['descuento']) {
+            var descuento = this.usuarioSeleccionado['descuento'];
+            var precioN = precio;
+            retorno = precioN - (precioN * (descuento / 100));
+        }
+        else {
+            retorno = precio;
+        }
+        return retorno.toFixed(2);
+    };
+    EjerciciosComponent.prototype.openVerticallyCentered = function (content) {
+        this.modalReference = this.modalService.open(content);
+    };
     EjerciciosComponent.prototype.onSelect = function (_a) {
         var selected = _a.selected;
+        //console.log(selected);
+        //console.log(JSON.parse(JSON.stringify(this.selected[0])));
         // this.loadingI=true;
         this.keyFixed = [];
         this.diasRutinaFixed = [];
@@ -892,20 +1684,42 @@ var EjerciciosComponent = (function () {
             "minute": m,
             "second": s
         };
-        console.log(ti);
+        var h2 = this.usuarioSeleccionado['horaFinalEsperado'].split('T')[1].split(':')[0];
+        var m2 = this.usuarioSeleccionado['horaFinalEsperado'].split('T')[1].split(':')[1];
+        var s2 = '00';
+        var ti2 = {
+            "hour": h2,
+            "minute": m2,
+            "second": s2
+        };
         var dateObj = new Date(this.usuarioSeleccionado['horaInicio']);
         this.usuarioSeleccionado['fechaF'] = { year: (dateObj.getUTCFullYear()), month: (dateObj.getUTCMonth() + 1), day: (dateObj.getUTCDate()) };
         this.usuarioSeleccionado['horaF'] = ti;
-        console.log(this.usuarioSeleccionado['idCita']);
+        this.usuarioSeleccionado['horaFinalEsperadoF'] = ti2;
+        console.log(this.usuarioSeleccionado);
         this.getServiciosCita(this.usuarioSeleccionado['idCita']);
+    };
+    EjerciciosComponent.prototype.onChangeS = function (deviceValue) {
+        console.log(deviceValue);
+        if (deviceValue) {
+            this.serviciosCat = this.serviciosCategoria[deviceValue];
+        }
+        else {
+            this.serviciosCat = [];
+        }
+        this.agregarEjercicio['idServicio'] = undefined;
     };
     EjerciciosComponent.prototype.getServiciosCita = function (id) {
         var _this = this;
-        var dataER = { idCita: id };
+        var dataER = { idCita: id, idCentro: localStorage.getItem('idCentroBY') };
         this.endpointsService.getServiciosCita(dataER)
             .then(function (data) {
             console.log(data);
+            _this.usuarioSeleccionado['precioEsperado'] = data['servicios'][0]['precioEsperado'];
             _this.serviciosSeleccionado = data['servicios'];
+            _this.categoriasCentro = Object.keys(data['categorias']);
+            _this.serviciosCategoria = Object.values(data['categorias']);
+            _this.actualizarHora(_this.usuarioSeleccionado['horaF']);
         }, function (msg) {
             console.log(msg);
         });
@@ -918,6 +1732,11 @@ var EjerciciosComponent = (function () {
             this.pad2(this.usuarioSeleccionado['fechaF']['day']) + ' ' +
             this.pad2(this.usuarioSeleccionado['horaF']['hour']) + ':' +
             this.pad2(this.usuarioSeleccionado['horaF']['minute']) + ':00';
+        this.usuarioSeleccionado['horaFinalEsperado'] = this.usuarioSeleccionado['fechaF']['year'] + '-' +
+            this.pad2(this.usuarioSeleccionado['fechaF']['month']) + '-' +
+            this.pad2(this.usuarioSeleccionado['fechaF']['day']) + ' ' +
+            this.pad2(this.usuarioSeleccionado['horaFinalEsperadoF']['hour']) + ':' +
+            this.pad2(this.usuarioSeleccionado['horaFinalEsperadoF']['minute']) + ':00';
         console.log(this.usuarioSeleccionado);
         this.endpointsService.reprogramarCita(this.usuarioSeleccionado)
             .then(function (data) {
@@ -957,6 +1776,35 @@ var EjerciciosComponent = (function () {
             console.log(msg);
             _this.loading = false;
         });
+    };
+    EjerciciosComponent.prototype.updateFiltersss = function (event, i) {
+        var val = event.target.value.toLowerCase();
+        // filter our data
+        var temp = this.filtroData[i].filter(function (d) {
+            return d.nombreCliente.toLowerCase().indexOf(val) !== -1 || !val;
+        });
+        // update the rows
+        this.diasRutina[i] = temp;
+        // Whenever the filter changes, always go back to the first page
+        //this.table.offset = 0;
+    };
+    EjerciciosComponent.prototype.updateFilter = function (event, f) {
+        var keys = ['nombreCliente', 'nombreEmpleado', 'idCita'];
+        var val = event.target.value.toLowerCase();
+        console.log(val);
+        // filter our data
+        var temp = this.filtroData[f].filter(function (item) {
+            //
+            console.log(item);
+            for (var i = 0; i < 3; i++) {
+                if (String(item[keys[i]]).toLowerCase().indexOf(val) !== -1 || !val) {
+                    // found match, return true to add to result set
+                    return true;
+                }
+            }
+            //return d.nombreCliente.toLowerCase().indexOf(val) !== -1 || !val;
+        });
+        this.diasRutina[f] = temp;
     };
     EjerciciosComponent.prototype.getEjerciciosRutina = function () {
         var _this = this;
@@ -1003,10 +1851,13 @@ var EjerciciosComponent = (function () {
             // this.rowsHorarios = data;
         });
     };
-    EjerciciosComponent.prototype.borrarServicioCita = function (id) {
+    EjerciciosComponent.prototype.borrarServicioCita = function (idSer, id) {
         var _this = this;
-        var dataER = { idServicioCita: id };
-        this.endpointsService.borrarServicioCita(dataER)
+        this.loading3 = true;
+        var dataERs = { 'idServicioCita': id,
+            'idServicio': idSer,
+            'idCita': this.usuarioSeleccionado['idCita'] };
+        this.endpointsService.borrarServicioCita(dataERs)
             .then(function (data) {
             console.log(data);
             //this.getEjerciciosRutina();
@@ -1014,16 +1865,21 @@ var EjerciciosComponent = (function () {
             //this.agregarEjercicio={};
             _this.citasCentro();
             _this.getServiciosCita(_this.usuarioSeleccionado['idCita']);
+            //this.modalReference.close();
             alert('Borrado correctamente');
+            _this.loading3 = false;
         }, function (msg) {
             console.log(msg);
         });
     };
     EjerciciosComponent.prototype.agregarServicioCita = function (da) {
         var _this = this;
+        this.loading3 = true;
+        this.modalReference.close();
         var dataER = { idServicio: da, idCita: this.usuarioSeleccionado['idCita'] };
         this.endpointsService.agregarServicioCita(dataER)
             .then(function (data) {
+            _this.loading3 = false;
             console.log(data);
             //this.getEjerciciosRutina();
             //this.editar = false;
@@ -1031,6 +1887,8 @@ var EjerciciosComponent = (function () {
             //   this.getServiciosCita(this.usuarioSeleccionado['idCita']);
             _this.citasCentro();
             _this.getServiciosCita(_this.usuarioSeleccionado['idCita']);
+            //['second'] = 12;
+            // this.modalService.close();
             alert('Agregado correctamente');
         }, function (msg) {
             console.log(msg);
@@ -1050,7 +1908,7 @@ var EjerciciosComponent = (function () {
             template: __webpack_require__("../../../../../src/app/ejercicios/ejercicios.component.html"),
             styles: [__webpack_require__("../../../../../src/app/ejercicios/ejercicios.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_2__ng_bootstrap_ng_bootstrap__["a" /* NgbModal */]])
     ], EjerciciosComponent);
     return EjerciciosComponent;
 }());
@@ -1128,6 +1986,16 @@ var EndpointsService = (function () {
             });
         });
     };
+    EndpointsService.prototype.editarStafImagen = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/editarStafImagen', dataE).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
     EndpointsService.prototype.getStaff = function (dataE) {
         var _this = this;
         return new Promise(function (resolve) {
@@ -1148,6 +2016,66 @@ var EndpointsService = (function () {
             });
         });
     };
+    EndpointsService.prototype.getCC = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/getCC', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.agregarCuponCentro = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/agregarCuponCentro', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.eliminarCuponCentro = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/eliminarCuponCentro', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.buscarServiciosFiltro = function () {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/buscarServiciosFiltro', JSON.stringify({ da: 'd' }), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.getCuponesAll = function () {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/getCuponesAll', { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.subirImagen = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/subirImagen', dataE).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
     EndpointsService.prototype.getInfoCentro = function (dataE) {
         var _this = this;
         return new Promise(function (resolve) {
@@ -1158,10 +2086,50 @@ var EndpointsService = (function () {
             });
         });
     };
+    EndpointsService.prototype.getHorarios = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/getHorario', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.actulizarHorario = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/actulizarHorario', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
     EndpointsService.prototype.cargaUsuariosConsola = function (dataE) {
         var _this = this;
         return new Promise(function (resolve) {
             _this.http.post(_this.api2 + '/cargaUsuariosConsola', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.cargaUsuariosConsolaAd = function () {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/cargaUsuariosConsolaAd', { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.getCentrosAll = function () {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/getCentrosAll', { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
                 resolve(data);
             }, function (err) {
                 console.log(err);
@@ -1188,6 +2156,36 @@ var EndpointsService = (function () {
             });
         });
     };
+    EndpointsService.prototype.addNegocio = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/addNegocio', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.editNegocio = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/editNegocio', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.cargaUsuariosSA = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/cargaUsuariosSA', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
     EndpointsService.prototype.agregarNegocioUsuario = function (dataE) {
         var _this = this;
         return new Promise(function (resolve) {
@@ -1208,6 +2206,16 @@ var EndpointsService = (function () {
             });
         });
     };
+    EndpointsService.prototype.eliminarUsuarioC = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/eliminarUsuarioC', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
     EndpointsService.prototype.nuevoUsuarioC = function (dataE) {
         var _this = this;
         return new Promise(function (resolve) {
@@ -1218,10 +2226,20 @@ var EndpointsService = (function () {
             });
         });
     };
+    EndpointsService.prototype.nuevoUsuarioCAD = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/nuevoUsuarioCAD', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
     EndpointsService.prototype.actualizarDCentro = function (dataE) {
         var _this = this;
         return new Promise(function (resolve) {
-            _this.http.post(_this.api2 + '/actualizarDCentro', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+            _this.http.post(_this.api2 + '/actualizarDCentro', dataE).subscribe(function (data) {
                 resolve(data);
             }, function (err) {
                 console.log(err);
@@ -1408,6 +2426,16 @@ var EndpointsService = (function () {
             });
         });
     };
+    EndpointsService.prototype.citasCentroFiltro = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/citasCentroFiltro', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
     EndpointsService.prototype.citasCentroC2 = function (dataE) {
         var _this = this;
         return new Promise(function (resolve) {
@@ -1421,7 +2449,7 @@ var EndpointsService = (function () {
     EndpointsService.prototype.reprogramarCita = function (dataE) {
         var _this = this;
         return new Promise(function (resolve) {
-            _this.http.post(_this.api2 + '/reprogramarCita', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+            _this.http.post(_this.api2 + '/reprogramarCita2', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
                 resolve(data);
             }, function (err) {
                 console.log(err);
@@ -1471,7 +2499,7 @@ var EndpointsService = (function () {
     EndpointsService.prototype.borrarServicioCita = function (idAc) {
         var _this = this;
         return new Promise(function (resolve) {
-            _this.http.post(_this.api2 + '/borrarServicioCita', JSON.stringify(idAc), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+            _this.http.post(_this.api2 + '/borrarServicioCita2', JSON.stringify(idAc), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
                 resolve(data);
             }, function (err) {
                 console.log(err);
@@ -1971,6 +2999,177 @@ var GestionclasesComponent = (function () {
 
 /***/ }),
 
+/***/ "../../../../../src/app/horario/horario.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "\n\n<div class=\"col-sm-12\"  >\n\n<div class=\"card ng-trigger ng-trigger-cardClose\" style=\"opacity: 1;\">\n  <!----><div class=\"card-header ng-tns-c4-22\">\n    <h5 class=\"ng-tns-c4-22\">Horario</h5>\n    <!----><span class=\"ng-tns-c4-22\"></span>\n    <!---->\n\n  </div>\n\n  <div class=\"ng-tns-c4-22 ng-trigger ng-trigger-cardToggle\" style=\"\">\n    <div class=\"card-body\">\n\n\n\n\n      <form _ngcontent-c15=\"\" novalidate=\"\" class=\"ng-invalid ng-dirty ng-touched\">\n\n\n\n\n\n        <div _ngcontent-c15=\"\" class=\"form-group row\">\n          <label style=\"margin: auto 0px;\" _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Lunes</label>\n        \n <span style=\"margin: auto 10px;\"> De </span>\n\n\n                 <ngb-timepicker [disabled]='lunes.editar' [spinners]=\"!lunes.editar\" style='margin: auto 0px;' required [(ngModel)]=\"lunes.horaAbrir\" name=\"horaAbrir\" #horaAbrir=\"ngModel\"  [seconds]=\"false\"\n            [hourStep]=\"1\" [minuteStep]=\"15\"  ></ngb-timepicker>\n            <!---->\n       \n\n            <span style=\"margin: auto 10px;\"> A </span>\n\n                   <ngb-timepicker  [disabled]='lunes.editar' [spinners]=\"!lunes.editar\" style='margin: auto 0px;' required [(ngModel)]=\"lunes.horaCerrar\" name=\"horaCerrar\" #horaCerrar=\"ngModel\"  [seconds]=\"false\"\n              [hourStep]=\"1\" [minuteStep]=\"15\"  ></ngb-timepicker>\n\n              <div style='margin: auto 17px;' _ngcontent-c28=\"\" class=\"checkbox-color checkbox-danger\">\n              <input _ngcontent-c28=\"\" [disabled]='lunes.editar' [(ngModel)]=\"lunes.estadoCheck\" name='lunesC' id=\"lunesC\" type=\"checkbox\">\n              <label _ngcontent-c28=\"\" for=\"lunesC\">\n                CERRADO\n              </label>\n            </div>\n\n<div style=\"    margin: auto 25px;\">\n              <button (click)='lunes.editar=!lunes.editar' [hidden]='!lunes.editar' class=\" cambiarbnss btn-primary btn  m-b-0\"><i class=\" fa fa-edit fa-lg\"></i> </button>\n\n              <button [disabled]='(lunes.horaAbrir?.hour>lunes.horaCerrar?.hour) || \n              (lunes.horaAbrir?.hour==lunes.horaCerrar?.hour && lunes.horaAbrir?.minute>lunes.horaCerrar?.minute)' (click)='guardarHorario(lunes)' [hidden]='lunes.editar' class=\" cambiarbn btn-primary btn  m-b-0\" >Guardar</button>\n              <button (click)='lunes.editar=!lunes.editar;getHorarios()' [hidden]='lunes.editar' class=\" cambiarbn btn-primary btn  m-b-0\" >Cancelar</button>\n\n\n</div>\n\n              <!---->\n        \n        </div>\n\n\n\n\n\n\n        <div _ngcontent-c15=\"\" class=\"form-group row\">\n          <label style=\"margin: auto 0px;\" _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Martes</label>\n        \n <span style=\"margin: auto 10px;\"> De </span>\n                 <ngb-timepicker  [disabled]='martes.editar' [spinners]=\"!martes.editar\" style='margin: auto 0px;' required [(ngModel)]=\"martes.horaAbrir\" name=\"horaAbrirM\" #horaAbrirM=\"ngModel\"  [seconds]=\"false\"\n            [hourStep]=\"1\" [minuteStep]=\"15\"  ></ngb-timepicker>\n            <!---->\n       \n\n            <span style=\"margin: auto 10px;\" > A </span>\n\n                   <ngb-timepicker required [disabled]='martes.editar' [spinners]=\"!martes.editar\" style='margin: auto 0px;' [(ngModel)]=\"martes.horaCerrar\"  name=\"horaCerrarM\" #horaCerrarM=\"ngModel\"  [seconds]=\"false\"\n              [hourStep]=\"1\" [minuteStep]=\"15\"  ></ngb-timepicker>\n              <!---->\n        \n\n              <div style='margin: auto 17px;' _ngcontent-c28=\"\" class=\"checkbox-color checkbox-danger\">\n              <input [disabled]='martes.editar' _ngcontent-c28=\"\" [(ngModel)]=\"martes.estadoCheck\" name='martesC' id=\"martesC\" type=\"checkbox\">\n              <label _ngcontent-c28=\"\" for=\"martesC\">\n                CERRADO\n              </label>\n            </div>\n\n\n\n<div style=\"    margin: auto 25px;\">\n              <button (click)='martes.editar=!martes.editar' [hidden]='!martes.editar' class=\" cambiarbnss btn-primary btn  m-b-0\"><i class=\" fa fa-edit fa-lg\"></i> </button>\n\n              <button [disabled]='(martes.horaAbrir?.hour>martes.horaCerrar?.hour) || \n              (martes.horaAbrir?.hour==martes.horaCerrar?.hour && martes.horaAbrir?.minute>martes.horaCerrar?.minute)' (click)='guardarHorario(martes)' [hidden]='martes.editar' class=\" cambiarbn btn-primary btn  m-b-0\" >Guardar</button>\n              <button (click)='martes.editar=!martes.editar;getHorarios()' [hidden]='martes.editar' class=\" cambiarbn btn-primary btn  m-b-0\" >Cancelar</button>\n\n\n</div>\n\n\n        </div>\n\n\n\n               <div _ngcontent-c15=\"\" class=\"form-group row\">\n          <label style=\"margin: auto 0px;\" _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Miercoles</label>\n        \n <span style=\"margin: auto 10px;\"> De </span>\n                 <ngb-timepicker [disabled]='miercoles.editar' [spinners]=\"!miercoles.editar\" style='margin: auto 0px;' required [(ngModel)]=\"miercoles.horaAbrir\" name=\"horaAbrirMM\" #horaAbrirMM=\"ngModel\"  [seconds]=\"false\"\n            [hourStep]=\"1\" [minuteStep]=\"15\"  ></ngb-timepicker>\n            <!---->\n       \n\n            <span style=\"margin: auto 10px;\" > A </span>\n\n                   <ngb-timepicker [disabled]='miercoles.editar' [spinners]=\"!miercoles.editar\" style='margin: auto 0px;'  required [(ngModel)]=\"miercoles.horaCerrar\"  name=\"horaCerrarMM\" #horaCerrarMM=\"ngModel\"  [seconds]=\"false\"\n              [hourStep]=\"1\" [minuteStep]=\"15\"  ></ngb-timepicker>\n        \n\n              <div style='margin: auto 17px;' _ngcontent-c28=\"\" class=\"checkbox-color checkbox-danger\">\n              <input  [disabled]='miercoles.editar' _ngcontent-c28=\"\" [(ngModel)]=\"miercoles.estadoCheck\" name='miercolesC' id=\"miercolesC\" type=\"checkbox\">\n              <label _ngcontent-c28=\"\" for=\"miercolesC\">\n                CERRADO\n              </label>\n            </div>\n\n\n<div style=\"    margin: auto 25px;\">\n              <button (click)='miercoles.editar=!miercoles.editar' [hidden]='!miercoles.editar' class=\" cambiarbnss btn-primary btn  m-b-0\"><i class=\" fa fa-edit fa-lg\"></i> </button>\n\n              <button [disabled]='(miercoles.horaAbrir?.hour>miercoles.horaCerrar?.hour) || \n              (miercoles.horaAbrir?.hour==miercoles.horaCerrar?.hour && miercoles.horaAbrir?.minute>miercoles.horaCerrar?.minute)' (click)='guardarHorario(miercoles)' [hidden]='miercoles.editar' class=\" cambiarbn btn-primary btn  m-b-0\" >Guardar</button>\n              <button (click)='miercoles.editar=!miercoles.editar;getHorarios()' [hidden]='miercoles.editar' class=\" cambiarbn btn-primary btn  m-b-0\" >Cancelar</button>\n\n\n</div>\n\n      <!---->\n        \n        </div>\n\n\n\n        <div _ngcontent-c15=\"\" class=\"form-group row\">\n          <label style=\"margin: auto 0px;\" _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Jueves</label>\n        \n <span style=\"margin: auto 10px;\"> De </span>\n                 <ngb-timepicker [disabled]='jueves.editar' [spinners]=\"!jueves.editar\" style='margin: auto 0px;' required [(ngModel)]=\"jueves.horaAbrir\" name=\"horaAbrirJ\" #horaAbrirJ=\"ngModel\"  [seconds]=\"false\"\n            [hourStep]=\"1\" [minuteStep]=\"15\"  ></ngb-timepicker>\n            <!---->\n       \n\n            <span style=\"margin: auto 10px;\" > A </span>\n\n                   <ngb-timepicker [disabled]='jueves.editar' [spinners]=\"!jueves.editar\" style='margin: auto 0px;' required [(ngModel)]=\"jueves.horaCerrar\"  name=\"horaCerrarJ\" #horaCerrarJ=\"ngModel\"  [seconds]=\"false\"\n              [hourStep]=\"1\" [minuteStep]=\"15\"  ></ngb-timepicker>\n\n\n\n              <div style='margin: auto 17px;' _ngcontent-c28=\"\" class=\"checkbox-color checkbox-danger\">\n              <input [disabled]='jueves.editar' _ngcontent-c28=\"\" [(ngModel)]=\"jueves.estadoCheck\" name='juevesC' id=\"juevesC\" type=\"checkbox\">\n              <label _ngcontent-c28=\"\" for=\"juevesC\">\n                CERRADO\n              </label>\n            </div>\n\n\n              <!---->\n        \n<div style=\"    margin: auto 25px;\">\n              <button (click)='jueves.editar=!jueves.editar' [hidden]='!jueves.editar' class=\" cambiarbnss btn-primary btn  m-b-0\"><i class=\" fa fa-edit fa-lg\"></i> </button>\n\n              <button [disabled]='(jueves.horaAbrir?.hour>jueves.horaCerrar?.hour) || \n              (jueves.horaAbrir?.hour==jueves.horaCerrar?.hour && jueves.horaAbrir?.minute>jueves.horaCerrar?.minute)' (click)='guardarHorario(jueves)' [hidden]='jueves.editar' class=\" cambiarbn btn-primary btn  m-b-0\" >Guardar</button>\n              <button (click)='jueves.editar=!jueves.editar;getHorarios()' [hidden]='jueves.editar' class=\" cambiarbn btn-primary btn  m-b-0\" >Cancelar</button>\n\n\n</div>\n\n        </div>\n\n\n\n        <div _ngcontent-c15=\"\" class=\"form-group row\">\n          <label style=\"margin: auto 0px;\" _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Viernes</label>\n        \n <span style=\"margin: auto 10px;\"> De </span>\n                 <ngb-timepicker [disabled]='viernes.editar' [spinners]=\"!viernes.editar\" style='margin: auto 0px;' required [(ngModel)]=\"viernes.horaAbrir\" name=\"horaAbrirV\" #horaAbrirV=\"ngModel\"  [seconds]=\"false\"\n            [hourStep]=\"1\" [minuteStep]=\"15\"  ></ngb-timepicker>\n            <!---->\n       \n\n            <span style=\"margin: auto 10px;\" > A </span>\n\n                   <ngb-timepicker [disabled]='viernes.editar'[spinners]=\"!viernes.editar\" style='margin: auto 0px;'  required [(ngModel)]=\"viernes.horaCerrar\"  name=\"horaCerrarV\" #horaCerrarV=\"ngModel\"  [seconds]=\"false\"\n              [hourStep]=\"1\" [minuteStep]=\"15\"  ></ngb-timepicker>\n\n\n              <div style='margin: auto 17px;' _ngcontent-c28=\"\" class=\"checkbox-color checkbox-danger\">\n              <input [disabled]='viernes.editar'  _ngcontent-c28=\"\" [(ngModel)]=\"viernes.estadoCheck\" name='viernesC' id=\"viernesC\" type=\"checkbox\">\n              <label _ngcontent-c28=\"\" for=\"viernesC\">\n                CERRADO\n              </label>\n            </div>\n\n\n              <!---->\n<div style=\"    margin: auto 25px;\">\n              <button (click)='viernes.editar=!viernes.editar' [hidden]='!viernes.editar' class=\" cambiarbnss btn-primary btn  m-b-0\"><i class=\" fa fa-edit fa-lg\"></i> </button>\n\n              <button [disabled]='(viernes.horaAbrir?.hour>viernes.horaCerrar?.hour) || \n              (viernes.horaAbrir?.hour==viernes.horaCerrar?.hour && viernes.horaAbrir?.minute>viernes.horaCerrar?.minute)' (click)='guardarHorario(viernes)' [hidden]='viernes.editar' class=\" cambiarbn btn-primary btn  m-b-0\" >Guardar</button>\n              <button (click)='viernes.editar=!viernes.editar;getHorarios()' [hidden]='viernes.editar' class=\" cambiarbn btn-primary btn  m-b-0\" >Cancelar</button>\n\n\n</div>\n\n        </div>\n\n\n        <div _ngcontent-c15=\"\" class=\"form-group row\">\n          <label style=\"margin: auto 0px;\" _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Sabado</label>\n        \n <span style=\"margin: auto 10px;\"> De </span>\n                 <ngb-timepicker [disabled]='sabado.editar' [spinners]=\"!sabado.editar\" style='margin: auto 0px;' required [(ngModel)]=\"sabado.horaAbrir\" name=\"horaAbrirS\" #horaAbrirS=\"ngModel\"  [seconds]=\"false\"\n            [hourStep]=\"1\" [minuteStep]=\"15\"  ></ngb-timepicker>\n            <!---->\n       \n\n            <span style=\"margin: auto 10px;\" > A </span>\n\n                   <ngb-timepicker [disabled]='sabado.editar' [spinners]=\"!sabado.editar\" style='margin: auto 0px;' required [(ngModel)]=\"sabado.horaCerrar\"  name=\"horaCerrarS\" #horaCerrarS=\"ngModel\"  [seconds]=\"false\"\n              [hourStep]=\"1\" [minuteStep]=\"15\"  ></ngb-timepicker>\n\n\n\n              <div style='margin: auto 17px;' _ngcontent-c28=\"\" class=\"checkbox-color checkbox-danger\">\n              <input  [disabled]='sabado.editar' _ngcontent-c28=\"\" [(ngModel)]=\"sabado.estadoCheck\" name='sabadoC' id=\"sabadoC\" type=\"checkbox\">\n              <label _ngcontent-c28=\"\" for=\"sabadoC\">\n                CERRADO\n              </label>\n            </div>\n\n\n<div style=\"    margin: auto 25px;\">\n              <button (click)='sabado.editar=!sabado.editar' [hidden]='!sabado.editar' class=\"  btn-primary btn  m-b-0 cambiarbnss\" > <i class=\" fa fa-edit fa-lg\"></i> </button>\n\n              <button [disabled]='(sabado.horaAbrir?.hour>sabado.horaCerrar?.hour) || \n              (sabado.horaAbrir?.hour==sabado.horaCerrar?.hour && sabado.horaAbrir?.minute>sabado.horaCerrar?.minute)' (click)='guardarHorario(sabado)' [hidden]='sabado.editar' class=\" cambiarbn btn-primary btn  m-b-0\" >Guardar</button>\n              <button (click)='sabado.editar=!sabado.editar;getHorarios()' [hidden]='sabado.editar' class=\" cambiarbn btn-primary btn  m-b-0\" >Cancelar</button>\n\n\n</div>\n\n        </div>\n\n\n        <div _ngcontent-c15=\"\" class=\"form-group row\">\n          <label style=\"margin: auto 0px;\" _ngcontent-c15=\"\" class=\"col-sm-2 col-form-label\">Domingo</label>\n        \n <span style=\"margin: auto 10px;\"> De </span>\n                 <ngb-timepicker [disabled]='domingo.editar' [spinners]=\"!domingo.editar\" style='margin: auto 0px;' required [(ngModel)]=\"domingo.horaAbrir\" name=\"horaAbrirD\" #horaAbrirD=\"ngModel\"  [seconds]=\"false\"\n            [hourStep]=\"1\" [minuteStep]=\"15\"  ></ngb-timepicker>\n            <!---->\n\n\n            <span style=\"margin: auto 10px;\" > A </span>\n\n                   <ngb-timepicker [disabled]='domingo.editar' [spinners]=\"!domingo.editar\" style='margin: auto 0px;'  required [(ngModel)]=\"domingo.horaCerrar\"  name=\"horaCerrarD\" #horaCerrarD=\"ngModel\"  [seconds]=\"false\"\n              [hourStep]=\"1\" [minuteStep]=\"15\"  ></ngb-timepicker>\n              <!---->\n               \n\n              <div style='margin: auto 17px;' _ngcontent-c28=\"\" class=\"checkbox-color checkbox-danger\">\n              <input [disabled]='domingo.editar' _ngcontent-c28=\"\" [(ngModel)]=\"domingo.estadoCheck\" name='domingoC' id=\"domingoC\" type=\"checkbox\">\n              <label _ngcontent-c28=\"\" for=\"domingoC\">\n                CERRADO\n              </label>\n            </div>\n\n\n<div style=\"    margin: auto 25px;\">\n              <button (click)='domingo.editar=!domingo.editar' [hidden]='!domingo.editar' class=\" cambiarbnss btn-primary btn  m-b-0\"><i class=\" fa fa-edit fa-lg\"></i> </button>\n\n              <button [disabled]='(domingo.horaAbrir?.hour>domingo.horaCerrar?.hour) || \n              (domingo.horaAbrir?.hour==domingo.horaCerrar?.hour && domingo.horaAbrir?.minute>domingo.horaCerrar?.minute)' (click)='guardarHorario(domingo)' [hidden]='domingo.editar' class=\" cambiarbn btn-primary btn  m-b-0\" >Guardar</button>\n              <button (click)='domingo.editar=!domingo.editar;getHorarios()' [hidden]='domingo.editar' class=\" cambiarbn btn-primary btn  m-b-0\" >Cancelar</button>\n\n\n</div>\n        </div>\n\n\n\n\n\n\n<!-- \n        <div _ngcontent-c15=\"\" class=\"row\">\n          <label _ngcontent-c15=\"\" class=\"col-sm-2\"></label>\n          <div _ngcontent-c15=\"\" class=\"col-sm-10\">\n            \n\n            <button  [hidden]=\"editarOn\" _ngcontent-c15=\"\" class=\"btn btn-primary m-b-0\"  \n            (click)='editarOn = !editarOn'  >Editar</button>\n\n            <button  [hidden]=\"!editarOn\" _ngcontent-c15=\"\" class=\"btn btn-primary m-b-0\"  \n            (click)='getInfoCentro();'  >Cancelar</button>\n\n\n            <button  [disabled]=\"!editarOn\" _ngcontent-c15=\"\" class=\"btn btn-primary m-b-0\" \n             (click)='actualizarDatos()' >Actualizar Datos</button>\n          </div>\n        </div> -->\n      </form>\n    \n    </div>\n  </div>\n</div>\n</div>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/horario/horario.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".cambiarbn {\n  font-size: 11px;\n  background: transparent;\n  color: #0073aa;\n  vertical-align: middle; }\n\n.cambiarbnss {\n  font-size: 16px;\n  background: transparent;\n  color: #0073aa;\n  vertical-align: middle;\n  padding: 8px;\n  border: none; }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/horario/horario.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HorarioComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__endpoints_service__ = __webpack_require__("../../../../../src/app/endpoints.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("../../../forms/esm5/forms.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_jquery__ = __webpack_require__("../../../../jquery/dist/jquery.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_jquery__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+window["$"] = __WEBPACK_IMPORTED_MODULE_3_jquery__;
+window["jQuery"] = __WEBPACK_IMPORTED_MODULE_3_jquery__;
+var HorarioComponent = (function () {
+    function HorarioComponent(endpointsService, fb) {
+        this.endpointsService = endpointsService;
+        this.fb = fb;
+        this.horario = [];
+        this.lunes = {};
+        this.martes = {};
+        this.miercoles = {};
+        this.jueves = {};
+        this.viernes = {};
+        this.sabado = {};
+        this.domingo = {};
+        this.lunes = { diaSemana: 1 };
+        this.martes = { diaSemana: 2 };
+        this.miercoles = { diaSemana: 3 };
+        this.jueves = { diaSemana: 4 };
+        this.viernes = { diaSemana: 5 };
+        this.sabado = { diaSemana: 6 };
+        this.domingo = { diaSemana: 0 };
+        this.getHorarios();
+    }
+    HorarioComponent.prototype.ngOnInit = function () {
+    };
+    HorarioComponent.prototype.pad2 = function (number) {
+        return (number < 10 ? '0' : '') + number;
+    };
+    HorarioComponent.prototype.cambiarCB = function (event) {
+        console.log(event);
+    };
+    HorarioComponent.prototype.guardarHorario = function (dia) {
+        var _this = this;
+        dia.idCentro = localStorage.getItem('idCentroBY');
+        //dia.estado = dia.estadoCheck == true ? 1 : 0;
+        if (dia.estadoCheck == true) {
+            dia.estado = 0;
+        }
+        else {
+            dia.estado = 1;
+        }
+        var hAP = this.pad2(dia.horaAbrir.hour) + ':' + this.pad2(dia.horaAbrir.minute) + ':00';
+        var hCP = this.pad2(dia.horaCerrar.hour) + ':' + this.pad2(dia.horaCerrar.minute) + ':00';
+        dia.horaAbrir = hAP;
+        dia.horaCerrar = hCP;
+        console.log(dia);
+        this.endpointsService.actulizarHorario(dia)
+            .then(function (data) {
+            if (data.affectedRows > 0) {
+                alert('Editado correctamente');
+                _this.getHorarios();
+            }
+            else {
+                alert('Ha ocurrido un error inesperado');
+                _this.getHorarios();
+            }
+            console.log(data);
+        });
+    };
+    HorarioComponent.prototype.getHorarios = function () {
+        var _this = this;
+        this.endpointsService.getHorarios({ idCentro: localStorage.getItem('idCentroBY') })
+            .then(function (data) {
+            console.log(data);
+            data.forEach(function (item, index) {
+                console.log(item);
+                var hA = {
+                    "hour": item.horaAbrir.split(':')[0],
+                    "minute": item.horaAbrir.split(':')[1]
+                };
+                item.horaAbrir = hA;
+                var hC = {
+                    "hour": item.horaCerrar.split(':')[0],
+                    "minute": item.horaCerrar.split(':')[1]
+                };
+                item.horaCerrar = hC;
+                item.editar = true;
+                if (item.estado == 0) {
+                    item.estadoCheck = true;
+                }
+                else {
+                    item.estadoCheck = false;
+                }
+                if (item.diaSemana == 0) {
+                    _this.domingo = item;
+                }
+                if (item.diaSemana == 1) {
+                    _this.lunes = item;
+                }
+                if (item.diaSemana == 2) {
+                    _this.martes = item;
+                }
+                if (item.diaSemana == 3) {
+                    _this.miercoles = item;
+                }
+                if (item.diaSemana == 4) {
+                    _this.jueves = item;
+                }
+                if (item.diaSemana == 5) {
+                    _this.viernes = item;
+                }
+                if (item.diaSemana == 6) {
+                    _this.sabado = item;
+                }
+            });
+            _this.horario = data;
+        });
+    };
+    HorarioComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'tox-horario',
+            template: __webpack_require__("../../../../../src/app/horario/horario.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/horario/horario.component.scss")]
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]])
+    ], HorarioComponent);
+    return HorarioComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "../../../../../src/app/login/login.component.html":
 /***/ (function(module, exports) {
 
@@ -2096,7 +3295,7 @@ var LoginComponent = (function () {
 /***/ "../../../../../src/app/manejousuarios/manejousuarios.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n <div class=\"card mb-4\" style=\"margin-top: 20px\">\n    \n <div >\n    <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\">\n\n\n\n    \t<div class=\"card-block-big card-status\">\n<h3>Usuarios</h3>\n\n</div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n   <button  style='margin-right: 15px;margin-top: 20px;margin-bottom: 20px;' class=\" btn btn-primary float-right\" (click)='claseSeleccionada={};selected = [];'>Crear nuevo usuario</button>\n\n    </div>\n\n  </div>\n</div>\n\n\n\n\n\n      <div  style='float:left;width:100%'>\n        <div class=\"info\">\n          <p></p>\n        </div>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n          [columns]=\"columns\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect($event)'>\n        </ngx-datatable>\n      </div>\n</div>\n\n<div *ngIf='!claseSeleccionada[\"idUsuarioConsola\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  \n <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Crear nuevo Usuario</h3>\n\n<form  #form='ngForm' name=\"form\" class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreN.valid}\" [(ngModel)]=\"nuevaClase.nombre\" name=\"nombreN\" type=\"text\" class=\"form-control\" #nombreN=\"ngModel\" required>\n    \n    </div>\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Email</label>\n      <input  [ngClass]=\"{'is-invalid':!emailN.valid}\" [(ngModel)]=\"nuevaClase.email\" name=\"emailN\" type=\"text\" class=\"form-control\" #emailN=\"ngModel\" required>\n    \n    </div>\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Codigo Acceso</label>\n      <input  [ngClass]=\"{'is-invalid':!passwordN.valid}\" [(ngModel)]=\"nuevaClase.password\" name=\"passwordN\" type=\"text\" class=\"form-control\" #passwordN=\"ngModel\" required>\n    \n    </div>\n\n\n\n\n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select   [ngClass]=\"{'is-invalid':!estadoN.valid}\"  [(ngModel)]=\"nuevaClase.estado\" name=\"estadoN\" #estadoN=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\" >\n        <option value=\"1\">Activo</option>\n        <option value=\"2\">Desactivado</option>\n      </select>\n    </div>\n</div>\n\n\n  <button  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' type='submit' class=\"btn btn-primary\" [disabled]=\"!form.valid\"  (click)='guardarNuevaClase()'>Crear usuario consola</button>\n\n\n</form>\n\n\n\n\n\n\n          </div>\n\n</div>\n\n<div *ngIf='claseSeleccionada[\"idUsuarioConsola\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3>Informacion del usuario</h3>\n\n  </div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n    <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    {{isCollapsed ? 'Mostrar mas' : 'Mostrar menos'}}\n  </button>\n\n    </div>\n\n  </div>\n</div>\n\n\n<!--\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Informacion de la clase</h3>\n\n<p>\n  <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    Toggle\n  </button>\n</p>\n <div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n  <div class=\"card\">\n    <div class=\"card-body\">\n      You can collapse this card by clicking Toggle\n    </div>\n  </div>\n</div>\n -->\n\n<div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n\n<form class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre servicio</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.nombre\" name=\"nombre\" type=\"text\" class=\"form-control\">\n    </div>\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Email</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.email\" name=\"email\" type=\"text\" class=\"form-control\">\n    </div>\n\n\n    <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Codigo Acceso</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.password\" name=\"password\" type=\"text\" class=\"form-control\">\n    </div>\n\n<!--    <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Dificultad</label>\n\n\n                         <select [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.dificultad\" name=\"dificultad\" type=\"number\" class=\"form-control\">\n        <option value=\"10\">10%</option>\n        <option value=\"25\">25%</option>\n        <option value=\"40\">40%</option>\n        <option value=\"50\">50%</option>\n        <option value=\"70\">70%</option>\n        <option value=\"85\">85%</option>\n        <option value=\"90\">90%</option>\n        <option value=\"100\">100%</option>\n\n      </select> \n\n\n\n    </div>\n\n -->\n      \n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select [disabled]=\"!editar\" [(ngModel)]=\"claseSeleccionada.estado\" class=\"form-control custom-select mr-sm-2\" name='estado'>\n      \n        <option value=\"1\">Activo</option>\n        <option value=\"2\">Desactivado</option>\n      </select>\n    </div>\n\n\n\n     \n\n\n\n\n  </div>\n\n\n</form>\n\n<div *ngIf='claseSeleccionada.idUsuarioConsola' >\n\n  <button  [disabled]=\"editar\" (click)='editar = !editar' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Editar</button>\n  <button [disabled]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n   <button (click)='editar = !editar' [disabled]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n</div>\n</div>\n          </div>\n        </div>\n\n\n\n\n\n\n\n\n\n\n\n\n         <div  *ngIf='claseSeleccionada[\"idUsuarioConsola\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n   \n <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;'>Negocios que administra</h3>\n\n  </div>\n\n</div>\n\n\n\n          <table  style='    ' class='table material'>\n            <thead>\n                <th>Nombre del negocio</th>\n                \n                <th></th>\n            </thead>\n            <tbody>\n                <tr *ngFor=\"let e  of negociosAsignados || []\">\n                    <td>{{e.nombre}}</td>\n               \n                    <td><button (click)='eliminarNegocioUsuario(e.idUsuarioConsolaCentro)' class=\"btn btn-danger\">Eliminar</button></td>\n                </tr>\n            </tbody>\n        </table>\n\n        <div style=\"margin:20px\" >\n          <h5>Asignar Negocio</h5>\n          <div class=\"col-md-3 mb-3 ff\" style=\"    display: inline-block;\n    margin-right: 15px !important;\n    padding-left: 0px;\n    margin-top: 20px;\">\n\n\n          <label for=\"validationCustom01\"></label>\n          <select   [(ngModel)]=\"seleccionCentro.idCentro\" name=\"idCentro\" #idCentro=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\">\n\n              <option *ngFor=\"let c of negociosParent\" \n              [value]=\"c.idCentro\" \n              >\n              {{c.nombre}}\n              </option>\n          </select>\n          </div>\n\n          <button [disabled]='!seleccionCentro.idCentro' (click)='agregarNegocioUsuario(seleccionCentro)' class=\"btn btn-success\">Agregar</button>\n        </div>\n\n      </div>\n\n\n\n</div>\n\n\n\n\n    </div> \n\n\n\n"
+module.exports = "\n <div class=\"card mb-4\" style=\"margin-top: 20px\">\n    \n <div >\n    <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\">\n\n\n\n    \t<div class=\"card-block-big card-status\">\n<h3>Usuarios</h3>\n\n</div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n   <button  style='margin-right: 15px;margin-top: 20px;margin-bottom: 20px;' class=\" btn btn-primary float-right\" (click)='claseSeleccionada={};selected = [];'>Crear nuevo usuario</button>\n\n    </div>\n\n  </div>\n</div>\n\n\n\n\n\n      <div  style='float:left;width:100%'>\n        <div class=\"info\">\n          <p></p>\n        </div>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n          [columns]=\"columns\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect($event)'>\n        </ngx-datatable>\n      </div>\n</div>\n\n<div *ngIf='!claseSeleccionada[\"idUsuarioConsola\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  \n <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Crear nuevo Usuario</h3>\n\n<form  #form='ngForm' name=\"form\" class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreN.valid}\" [(ngModel)]=\"nuevaClase.nombre\" name=\"nombreN\" type=\"text\" class=\"form-control\" #nombreN=\"ngModel\" required>\n    \n    </div>\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Email</label>\n      <input  [ngClass]=\"{'is-invalid':!emailN.valid}\" [(ngModel)]=\"nuevaClase.email\" name=\"emailN\" type=\"text\" class=\"form-control\" #emailN=\"ngModel\" required>\n    \n    </div>\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Codigo Acceso</label>\n      <input  [ngClass]=\"{'is-invalid':!passwordN.valid}\" [(ngModel)]=\"nuevaClase.password\" name=\"passwordN\" type=\"text\" class=\"form-control\" #passwordN=\"ngModel\" required>\n    \n    </div>\n\n\n\n\n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select   [ngClass]=\"{'is-invalid':!estadoN.valid}\"  [(ngModel)]=\"nuevaClase.estado\" name=\"estadoN\" #estadoN=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\" >\n        <option value=\"1\">Activo</option>\n        <option value=\"2\">Desactivado</option>\n      </select>\n    </div>\n</div>\n\n\n  <button  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' type='submit' class=\"btn btn-primary\" [disabled]=\"!form.valid\"  (click)='guardarNuevaClase()'>Crear usuario consola</button>\n\n\n</form>\n\n\n\n\n\n\n          </div>\n\n</div>\n\n<div *ngIf='claseSeleccionada[\"idUsuarioConsola\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3>Informacion del usuario</h3>\n\n  </div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n    <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    {{isCollapsed ? 'Mostrar mas' : 'Mostrar menos'}}\n  </button>\n\n    </div>\n\n  </div>\n</div>\n\n\n<!--\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Informacion de la clase</h3>\n\n<p>\n  <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    Toggle\n  </button>\n</p>\n <div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n  <div class=\"card\">\n    <div class=\"card-body\">\n      You can collapse this card by clicking Toggle\n    </div>\n  </div>\n</div>\n -->\n\n<div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n\n<form class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre servicio</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.nombre\" name=\"nombre\" type=\"text\" class=\"form-control\">\n    </div>\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Email</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.email\" name=\"email\" type=\"text\" class=\"form-control\">\n    </div>\n\n\n    <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Codigo Acceso</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.password\" name=\"password\" type=\"text\" class=\"form-control\">\n    </div>\n\n<!--    <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Dificultad</label>\n\n\n                         <select [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.dificultad\" name=\"dificultad\" type=\"number\" class=\"form-control\">\n        <option value=\"10\">10%</option>\n        <option value=\"25\">25%</option>\n        <option value=\"40\">40%</option>\n        <option value=\"50\">50%</option>\n        <option value=\"70\">70%</option>\n        <option value=\"85\">85%</option>\n        <option value=\"90\">90%</option>\n        <option value=\"100\">100%</option>\n\n      </select> \n\n\n\n    </div>\n\n -->\n      \n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select [disabled]=\"!editar\" [(ngModel)]=\"claseSeleccionada.estado\" class=\"form-control custom-select mr-sm-2\" name='estado'>\n      \n        <option value=\"1\">Activo</option>\n        <option value=\"2\">Desactivado</option>\n      </select>\n    </div>\n\n\n\n     \n\n\n\n\n  </div>\n\n\n</form>\n\n<div *ngIf='claseSeleccionada.idUsuarioConsola' >\n\n  <button  [hidden]=\"editar\" (click)='editar = !editar' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Editar</button>\n\n    <button  [hidden]=\"editar\" (click)='eliminarUsuario(claseSeleccionada.idUsuarioConsola)' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-danger\" >Eliminar</button>\n\n\n  <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n   <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n</div>\n</div>\n          </div>\n        </div>\n\n\n\n\n\n\n\n\n\n\n\n\n         <div  *ngIf='claseSeleccionada[\"idUsuarioConsola\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n   \n <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;'>Negocios que administra</h3>\n\n  </div>\n\n</div>\n\n\n\n          <table  style='    ' class='table material'>\n            <thead>\n                <th>Nombre del negocio</th>\n                \n                <th></th>\n            </thead>\n            <tbody>\n                <tr *ngFor=\"let e  of negociosAsignados || []\">\n                    <td>{{e.nombre}}</td>\n               \n                    <td><button (click)='eliminarNegocioUsuario(e.idUsuarioConsolaCentro)' class=\"btn btn-danger\">Eliminar</button></td>\n                </tr>\n            </tbody>\n        </table>\n\n        <div style=\"margin:20px\" >\n          <h5>Asignar Negocio</h5>\n          <div class=\"col-md-3 mb-3 ff\" style=\"    display: inline-block;\n    margin-right: 15px !important;\n    padding-left: 0px;\n    margin-top: 20px;\">\n\n\n          <label for=\"validationCustom01\"></label>\n          <select   [(ngModel)]=\"seleccionCentro.idCentro\" name=\"idCentro\" #idCentro=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\">\n\n              <option *ngFor=\"let c of negociosParent\" \n              [value]=\"c.idCentro\" \n              >\n              {{c.nombre}}\n              </option>\n          </select>\n          </div>\n\n          <button [disabled]='!seleccionCentro.idCentro' (click)='agregarNegocioUsuario(seleccionCentro)' class=\"btn btn-success\">Agregar</button>\n        </div>\n\n      </div>\n\n\n\n</div>\n\n\n\n\n    </div> \n\n\n\n"
 
 /***/ }),
 
@@ -2125,6 +3324,7 @@ module.exports = module.exports.toString();
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ManejousuariosComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__endpoints_service__ = __webpack_require__("../../../../../src/app/endpoints.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2136,9 +3336,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var ManejousuariosComponent = (function () {
-    function ManejousuariosComponent(endpointsService) {
+    function ManejousuariosComponent(endpointsService, router) {
         this.endpointsService = endpointsService;
+        this.router = router;
         this.rows = [];
         this.rowsUsuarios = [];
         this.negociosParent = [];
@@ -2167,6 +3369,10 @@ var ManejousuariosComponent = (function () {
             { prop: 'email', name: 'Email' },
             { prop: 'estado', name: 'Estado' },
         ];
+        if (this.cu[0]['tipo'] !== 1) {
+            console.log('usuario no deseado');
+            this.router.navigate(['/dashboard']);
+        }
     }
     ManejousuariosComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -2206,6 +3412,23 @@ var ManejousuariosComponent = (function () {
             .then(function (data) {
             console.log(data);
             _this.cargarNegocios(_this.claseSeleccionada['idUsuarioConsola']);
+        });
+    };
+    ManejousuariosComponent.prototype.eliminarUsuario = function (fe) {
+        var _this = this;
+        console.log(fe);
+        this.endpointsService.eliminarUsuarioC({ idUsuarioConsola: fe })
+            .then(function (data) {
+            console.log(data);
+            if (data.affectedRows > 0) {
+                alert('Eliminado Correctamente');
+                _this.cargaUsuarios();
+                _this.claseSeleccionada = {};
+            }
+            else {
+                alert('Ha ocurrido un error inesperado');
+            }
+            //this.cargarNegocios(this.claseSeleccionada['idUsuarioConsola']);
         });
     };
     ManejousuariosComponent.prototype.cargaHorarios = function () {
@@ -2317,7 +3540,7 @@ var ManejousuariosComponent = (function () {
             template: __webpack_require__("../../../../../src/app/manejousuarios/manejousuarios.component.html"),
             styles: [__webpack_require__("../../../../../src/app/manejousuarios/manejousuarios.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */]])
     ], ManejousuariosComponent);
     return ManejousuariosComponent;
 }());
@@ -3089,7 +4312,7 @@ var ProgramarClaseComponent = (function () {
 /***/ "../../../../../src/app/rutina/rutina.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "  <div class=\"card mb-4\" style=\"    background: transparent;\n    border: none !important;\">\n    \n\n    <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <div  style=\"    padding-top: 20px;\n    padding-left: 15px;\n    font-size: 31px;\">Cupones</div>\n\n  </div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n   <button  style='margin-right: 15px;margin-top: 20px;margin-bottom: 20px;' class=\" btn btn-primary float-right\" (click)='usuarioSeleccionado={};selected = [];'>Crear nuevo Cupon</button>\n\n    </div>\n\n  </div>\n</div>\n\n\n\n\n\n      <div style='float:left;width:100%'>\n      <ngx-loading [show]=\"loadingI\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n        <div class=\"info\">\n          <p></p>\n        </div>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect($event)'>\n\n\n\n                  <ngx-datatable-column prop=\"nombre\" name='Nombre' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n          <ngx-datatable-column prop=\"codigo\" name='Codigo' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n           <ngx-datatable-column prop=\"porcentajeDescuento\" name='% Descuento' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}} %\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column prop=\"soloFecha\" name='Fecha Expiracion' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n           <ngx-datatable-column prop=\"estado\" name='Estado' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n<!-- \n\n                 <ngx-datatable-column prop=\"estado\" name='Estado' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value == 1 ? \"Visible\" : \"No visible\"}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n -->\n\n\n\n        </ngx-datatable>\n\n      </div>\n\n\n<div *ngIf='!usuarioSeleccionado[\"idCupon\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  \n <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Crear nuevo Cupon</h3>\n\n<form  #form='ngForm' name=\"form\" class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreN.valid}\" [(ngModel)]=\"nuevoUsuario.nombre\" name=\"nombreN\" type=\"text\" class=\"form-control\" #nombreN=\"ngModel\" required>\n    \n    </div>\n\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Codigo</label>\n      <input  [ngClass]=\"{'is-invalid':!codigoN.valid}\" [(ngModel)]=\"nuevoUsuario.codigo\" name=\"codigoN\" type=\"text\" class=\"form-control\" #codigoN=\"ngModel\" required>\n    \n    </div>\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">% Descuento</label>\n      <input  [ngClass]=\"{'is-invalid':!porcentajeDescuento.valid}\" [(ngModel)]=\"nuevoUsuario.porcentajeDescuento\" name=\"porcentajeDescuentoN\" type=\"number\" class=\"form-control\" #porcentajeDescuento=\"ngModel\" required>\n    \n    </div>\n\n\n\n    <div class=\"col-md-4 mb-4 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Fecha expiracion</label>\n      <div class=\"input-group\">\n          <input  [ngClass]=\"{'is-invalid':!soloFecha.valid }\" [(ngModel)]=\"nuevoUsuario.soloFecha\" name=\"soloFecha\"  #soloFecha=\"ngModel\" class=\"form-control\" placeholder=\"yyyy-mm-dd\"\n             ngbDatepicker #d=\"ngbDatepicker\" required [minDate]='minDatse'>\n          <div class=\"input-group-append\">\n            <button class=\"btn btn-outline-secondary\" (click)=\"d.toggle()\" type=\"button\">\n              <img src=\"https://ng-bootstrap.github.io/img/calendar-icon.svg\" style=\"width: 1.2rem; height: 1rem; cursor: pointer;\"/>\n            </button>\n          </div>\n        </div>\n  </div>\n\n\n\n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select   [ngClass]=\"{'is-invalid':!estadoN.valid}\"  [(ngModel)]=\"nuevoUsuario.estado\" name=\"estadoN\" #estadoN=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\" >\n        <option value=\"1\">Visible</option>\n        <option value=\"2\">No - Visible</option>\n      </select>\n    </div>\n\n\n\n\n<!--      <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select   [ngClass]=\"{'is-invalid':!estadoN.valid}\"  [(ngModel)]=\"nuevoUsuario.estado\" name=\"estadoN\" #estadoN=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\" >\n        <option value=\"1\">Visible</option>\n        <option value=\"2\">No - Visible</option>\n      </select>\n    </div>\n -->\n\n  </div>\n\n\n  <button  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' type='submit' class=\"btn btn-primary\" [disabled]=\"!form.valid\"  (click)='nuevoCupon()'>Crear Cupon</button>\n\n\n</form>\n\n\n\n\n\n\n          </div>\n\n</div>\n\n<div *ngIf='usuarioSeleccionado[\"idCupon\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <div  style=\"    padding-bottom: 20px;\n    padding-left: 15px;\n    font-size: 31px;\">Informacion de Cupon</div>\n\n  </div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n    <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    {{isCollapsed ? 'Mostrar mas' : 'Mostrar menos'}}\n  </button>\n\n    </div>\n\n  </div>\n</div>\n\n\n<div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n\n<form class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"usuarioSeleccionado.nombre\" name=\"nombre\" type=\"text\" class=\"form-control\">\n    </div>\n\n        <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Codigo</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"usuarioSeleccionado.codigo\" name=\"codigo\" type=\"text\" class=\"form-control\">\n    </div>\n\n\n\n\n     <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">% Descuento</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"usuarioSeleccionado.porcentajeDescuento\" name=\"porcentajeDescuento\" type=\"number\" class=\"form-control\">\n    </div>\n\n\n      <div class=\"col-md-4 mb-4 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Fecha expiracion</label>\n      <div class=\"input-group\">\n          <input  [disabled]=\"!editar\" [(ngModel)]=\"usuarioSeleccionado.soloFecha\" name=\"soloFecha\"   class=\"form-control\" placeholder=\"yyyy-mm-dd\"\n             ngbDatepicker #d=\"ngbDatepicker\"  [minDate]='minDatse'>\n          <div class=\"input-group-append\">\n            <button class=\"btn btn-outline-secondary\" (click)=\"d.toggle()\" type=\"button\">\n              <img src=\"https://ng-bootstrap.github.io/img/calendar-icon.svg\" style=\"width: 1.2rem; height: 1rem; cursor: pointer;\"/>\n            </button>\n          </div>\n        </div>\n  </div>\n\n\n \n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select   [disabled]=\"!editar\"  [(ngModel)]=\"usuarioSeleccionado.estado\" name=\"estado\"   class=\"form-control custom-select mr-sm-2\" >\n        <option value=\"1\">Visible</option>\n        <option value=\"2\">No - Visible</option>\n      </select>\n    </div>\n\n \n<!--      <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select [disabled]=\"!editar\" [(ngModel)]=\"usuarioSeleccionado.estado\" class=\"form-control custom-select mr-sm-2\" name='estado'>\n\n        <option value=\"1\">Visible</option>\n        <option value=\"2\">No visible</option>\n      </select>\n    </div>\n -->\n\n  </div>\n\n\n</form>\n\n<div *ngIf='usuarioSeleccionado.idCupon' >\n\n  <button  [disabled]=\"editar\" (click)='editar = !editar' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Editar</button>\n  <button [disabled]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n   <button (click)='editar = !editar' [disabled]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n</div>\n</div>\n          </div>\n        </div> \n\n\n\n\n\n\n\n\n<!-- \n\n\n\n<div  *ngIf='usuarioSeleccionado.idCupon' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 20px;margin-top: 20px;' class=\"card-title\">  {{usuarioSeleccionado.nombre}} - Ejercicios de la rutina</h3>\n\n\n\n      <div style='float:left;width:100%'>\n        <div class=\"info\">\n          <p></p>\n        </div>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rowsHorarios\"\n          [columnMode]=\"'force'\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selectedHorario\"\n          [selectionType]=\"'single'\"\n          [sorts]=\"[{prop:'diaNumero', dir:'asc'}]\"\n          \n          (select)='onSelectHorario($event)'>\n\n    \n\n            <ngx-datatable-column prop=\"nombre\" name='Ejercicio' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n            <ngx-datatable-column name=\"Dia #\" prop='diaNumero' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n        </ngx-datatable>\n      </div>\n\n\n</div>\n\n\n\n\n -->\n\n\n\n\n\n\n\n<div  *ngIf='usuarioSeleccionado[\"idCupon\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n\n\n <ngx-loading [show]=\"loading2\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n\n<ngb-tabset style='padding: 30px !important' type=\"pills\">\n\n\n\n  <ngb-tab   *ngFor=\"let d of keysRutina; let i = index\" title=\"{{getTitulo(d)}}\">\n    <ng-template ngbTabContent>\n\n    \t    <table  style='    margin-top: 30px;' class='table material'>\n\t\t        <thead>\n\t\t            <th>Usuario</th>\n\t\t            <th>Email</th>\n                <th>Fecha de activacion</th>\n         \n\t\t        </thead>\n\t\t        <tbody>\n\t\t            <tr *ngFor=\"let e  of diasRutina[i] || []\">\n\t\t                <td>{{e.nombreCliente}}</td>\n                    <td>{{e.email}}</td>\n                    <td>{{e.fechaActivacion}}</td>\n\t\t            <!--     <td><button  (click)='borrarEjercicioRutina(e.idCuponActividad)' class=\"btn btn-danger\">Eliminar</button></td> -->\n\t\t            </tr>\n\t\t        </tbody>\n    \t\t</table>\n\n<!-- \n    \t\t<div style=\"margin-top:20px\">\n    \t\t\t<h4>Agregar Ejercicio a dia {{d}}</h4>\n\t\t\t\t\t<div class=\"col-md-3 mb-3 ff\" style=\"    display: inline-block;\n    margin-right: 15px !important;\n    padding-left: 0px;\n    margin-top: 20px;\">\n\n\n\t\t\t\t\t<label for=\"validationCustom01\">Ejercicio</label>\n\t\t\t\t\t<select   [(ngModel)]=\"agregarEjercicio.ejercicioId\" name=\"ejercicioId\" #ejercicioId=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\">\n\n\t\t\t\t\t\t\t<option *ngFor=\"let c of ejerciciosSelect\" \n\t\t\t\t\t\t\t[value]=\"c.idActividad\" \n\t\t\t\t\t\t\t>\n\t\t\t\t\t\t\t{{c.nombre}}\n\t\t\t\t\t\t\t</option>\n\t\t\t\t\t</select>\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<button [disabled]='!ejercicioId.valid' (click)='agregarEjercicioRutina(d,agregarEjercicio.ejercicioId)' class=\"btn btn-success\">Agregar</button>\n    \t\t</div>\n -->\n\n    </ng-template>\n  </ngb-tab>\n</ngb-tabset>\n</div>\n\n\n\n\n\n\n\n    </div> \n\n"
+module.exports = "  <div class=\"card mb-4\" style=\"    background: transparent;\n    border: none !important;\">\n    \n\n    <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <div  style=\"    padding-top: 20px;\n    padding-left: 15px;\n    font-size: 31px;\">Cupones</div>\n\n  </div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n   <button  style='margin-right: 15px;margin-top: 20px;margin-bottom: 20px;' class=\" btn btn-primary float-right\" (click)='usuarioSeleccionado={};selected = [];'>Crear nuevo Cupon</button>\n\n    </div>\n\n  </div>\n</div>\n\n\n\n\n\n      <div style='float:left;width:100%'>\n      <ngx-loading [show]=\"loadingI\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n        <div class=\"info\">\n          <p></p>\n        </div>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect($event)'>\n\n\n\n                  <ngx-datatable-column prop=\"nombre\" name='Nombre' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n          <ngx-datatable-column prop=\"codigo\" name='Codigo' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n           <ngx-datatable-column prop=\"porcentajeDescuento\" name='% Descuento' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}} %\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column prop=\"soloFecha\" name='Fecha Expiracion' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n           <ngx-datatable-column prop=\"estado\" name='Estado' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n<!-- \n\n                 <ngx-datatable-column prop=\"estado\" name='Estado' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value == 1 ? \"Visible\" : \"No visible\"}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n -->\n\n\n\n        </ngx-datatable>\n\n      </div>\n\n\n<div *ngIf='!usuarioSeleccionado[\"idCupon\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  \n <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Crear nuevo Cupon</h3>\n\n<form  #form='ngForm' name=\"form\" class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreN.valid}\" [(ngModel)]=\"nuevoUsuario.nombre\" name=\"nombreN\" type=\"text\" class=\"form-control\" #nombreN=\"ngModel\" required>\n    \n    </div>\n\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Codigo</label>\n      <input  [ngClass]=\"{'is-invalid':!codigoN.valid}\" [(ngModel)]=\"nuevoUsuario.codigo\" name=\"codigoN\" type=\"text\" class=\"form-control\" #codigoN=\"ngModel\" required>\n    \n    </div>\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">% Descuento</label>\n      <input  [ngClass]=\"{'is-invalid':!porcentajeDescuento.valid}\" [(ngModel)]=\"nuevoUsuario.porcentajeDescuento\" name=\"porcentajeDescuentoN\" type=\"number\" class=\"form-control\" #porcentajeDescuento=\"ngModel\" required>\n    \n    </div>\n\n\n\n    <div class=\"col-md-4 mb-4 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Fecha expiracion</label>\n      <div class=\"input-group\">\n          <input  [ngClass]=\"{'is-invalid':!soloFecha.valid }\" [(ngModel)]=\"nuevoUsuario.soloFecha\" name=\"soloFecha\"  #soloFecha=\"ngModel\" class=\"form-control\" placeholder=\"yyyy-mm-dd\"\n             ngbDatepicker #d=\"ngbDatepicker\" required [minDate]='minDatse'>\n          <div class=\"input-group-append\">\n            <button class=\"btn btn-outline-secondary\" (click)=\"d.toggle()\" type=\"button\">\n              <img src=\"https://ng-bootstrap.github.io/img/calendar-icon.svg\" style=\"width: 1.2rem; height: 1rem; cursor: pointer;\"/>\n            </button>\n          </div>\n        </div>\n  </div>\n\n\n\n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select   [ngClass]=\"{'is-invalid':!estadoN.valid}\"  [(ngModel)]=\"nuevoUsuario.estado\" name=\"estadoN\" #estadoN=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\" >\n        <option value=\"1\">Visible</option>\n        <option value=\"2\">No - Visible</option>\n      </select>\n    </div>\n\n\n\n\n<!--      <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select   [ngClass]=\"{'is-invalid':!estadoN.valid}\"  [(ngModel)]=\"nuevoUsuario.estado\" name=\"estadoN\" #estadoN=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\" >\n        <option value=\"1\">Visible</option>\n        <option value=\"2\">No - Visible</option>\n      </select>\n    </div>\n -->\n\n  </div>\n\n\n  <button  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' type='submit' class=\"btn btn-primary\" [disabled]=\"!form.valid\"  (click)='nuevoCupon()'>Crear Cupon</button>\n\n\n</form>\n\n\n\n\n\n\n          </div>\n\n</div>\n\n<div *ngIf='usuarioSeleccionado[\"idCupon\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <div  style=\"    padding-bottom: 20px;\n    padding-left: 15px;\n    font-size: 31px;\">Informacion de Cupon</div>\n\n  </div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n    <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    {{isCollapsed ? 'Mostrar mas' : 'Mostrar menos'}}\n  </button>\n\n    </div>\n\n  </div>\n</div>\n\n\n<div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n\n<form class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"usuarioSeleccionado.nombre\" name=\"nombre\" type=\"text\" class=\"form-control\">\n    </div>\n\n        <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Codigo</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"usuarioSeleccionado.codigo\" name=\"codigo\" type=\"text\" class=\"form-control\">\n    </div>\n\n\n\n\n     <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">% Descuento</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"usuarioSeleccionado.porcentajeDescuento\" name=\"porcentajeDescuento\" type=\"number\" class=\"form-control\">\n    </div>\n\n\n      <div class=\"col-md-4 mb-4 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Fecha expiracion</label>\n      <div class=\"input-group\">\n          <input  [disabled]=\"!editar\" [(ngModel)]=\"usuarioSeleccionado.soloFecha\" name=\"soloFecha\"   class=\"form-control\" placeholder=\"yyyy-mm-dd\"\n             ngbDatepicker #d=\"ngbDatepicker\"  [minDate]='minDatse'>\n          <div class=\"input-group-append\">\n            <button class=\"btn btn-outline-secondary\" (click)=\"d.toggle()\" type=\"button\">\n              <img src=\"https://ng-bootstrap.github.io/img/calendar-icon.svg\" style=\"width: 1.2rem; height: 1rem; cursor: pointer;\"/>\n            </button>\n          </div>\n        </div>\n  </div>\n\n\n \n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select   [disabled]=\"!editar\"  [(ngModel)]=\"usuarioSeleccionado.estado\" name=\"estado\"   class=\"form-control custom-select mr-sm-2\" >\n        <option value=\"1\">Visible</option>\n        <option value=\"2\">No - Visible</option>\n      </select>\n    </div>\n\n\n  </div>\n\n\n</form>\n\n<div *ngIf='usuarioSeleccionado.idCupon' >\n\n  <button  [disabled]=\"editar\" (click)='editar = !editar' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Editar</button>\n  <button [disabled]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n   <button (click)='editar = !editar' [disabled]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n</div>\n</div>\n          </div>\n        </div> \n\n\n\n\n\n         <div  *ngIf='usuarioSeleccionado[\"idCupon\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n   <ngx-loading [show]=\"loading2\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;'>Negocios donde aplica</h3>\n\n  </div>\n\n</div>\n\n\n\n          <table  style='    ' class='table material'>\n            <thead>\n               <th>Nombre</th>\n                 <th>Cupon</th>\n           \n                \n                <th></th>\n            </thead>\n            <tbody>\n                <tr *ngFor=\"let e  of centroCupones || []\">\n                    <td>{{e.nombre}}</td>\n                    <td>{{e.nombreCupon}}</td>\n\n               \n                    <td><button (click)='eliminarNegocioUsuario(e.idCentro)' class=\"btn btn-danger\">Eliminar</button></td>\n                </tr>\n            </tbody>\n        </table>\n\n        <div style=\"margin:20px\" >\n          <h5>Asignar a Negocio</h5>\n          <div class=\"col-md-3 mb-3 ff\" style=\"    display: inline-block;\n    margin-right: 15px !important;\n    padding-left: 0px;\n    margin-top: 20px;\">\n\n\n          <label for=\"validationCustom01\"></label>\n          <select   [(ngModel)]=\"seleccionCentro.idCentroC\" name=\"idCentroC\" #idCentroC=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\">\n\n              <option  *ngFor=\"let c of negociosParent\" \n              [value]=\"c.idCentro\" [hidden]='c.estado!==1'\n              >\n              {{c.nombre}} \n              </option>\n          </select>\n          </div>\n\n          <button [hidden]='!seleccionCentro.idCentroC' (click)='agregarNegocioUsuario(seleccionCentro.idCentroC)' class=\"btn btn-success\">Agregar</button>\n        </div>\n\n      </div>\n\n\n\n</div>\n\n\n\n\n    </div> \n\n"
 
 /***/ }),
 
@@ -3118,6 +4341,7 @@ module.exports = module.exports.toString();
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RutinaComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__endpoints_service__ = __webpack_require__("../../../../../src/app/endpoints.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3129,10 +4353,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var RutinaComponent = (function () {
-    function RutinaComponent(endpointsService) {
+    function RutinaComponent(endpointsService, router) {
         this.endpointsService = endpointsService;
+        this.router = router;
+        this.cu = JSON.parse(localStorage.getItem('currentUser'));
+        this.seleccionCentro = {};
         this.rows = [];
+        this.centroCupones = [];
+        this.negociosParent = [];
         this.selected = [];
         this.editar = false;
         this.loadingI = false;
@@ -3149,16 +4379,40 @@ var RutinaComponent = (function () {
         this.loading = false;
         this.loading2 = false;
         this.isCollapsed = false;
+        if (this.cu[0]['tipo'] !== 3) {
+            console.log('usuario no deseado');
+            this.router.navigate(['/dashboard']);
+        }
     }
     RutinaComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.getCuponesCentro();
         //  this.cargaEjercicios();
+        this.endpointsService.getCentrosAll()
+            .then(function (data) {
+            //console.log(data);
+            _this.negociosParent = data;
+            // this.originalData = data;
+        });
+    };
+    RutinaComponent.prototype.agregarNegocioUsuario = function (fe) {
+        var _this = this;
+        this.loading2 = true;
+        console.log(fe);
+        var dataEF = { idCentro: fe, idCupon: this.usuarioSeleccionado["idCupon"] };
+        console.log(fe);
+        this.endpointsService.agregarCuponCentro(dataEF)
+            .then(function (data) {
+            console.log(data);
+            _this.getClienteCupones(_this.usuarioSeleccionado["idCupon"]);
+            _this.loading2 = false;
+        });
     };
     RutinaComponent.prototype.getCuponesCentro = function () {
         var _this = this;
-        var dataE = { idCentro: localStorage.getItem('idCentroBY') };
-        this.endpointsService.getCuponesCentro(dataE)
+        this.endpointsService.getCuponesAll()
             .then(function (data) {
+            console.log(data);
             _this.rows = data.cupones;
         });
     };
@@ -3187,12 +4441,22 @@ var RutinaComponent = (function () {
     RutinaComponent.prototype.getClienteCupones = function (id) {
         var _this = this;
         this.loadingI = true;
-        this.endpointsService.getClienteCupones({ idCupon: id })
+        this.endpointsService.getCC({ idCupon: id })
             .then(function (data) {
             console.log(data);
-            _this.diasRutina = Object.values(data);
-            _this.keysRutina = Object.keys(data);
+            _this.centroCupones = data;
+            // this.diasRutina = Object.values(data);
+            // this.keysRutina = Object.keys(data);
             _this.loadingI = false;
+        });
+    };
+    RutinaComponent.prototype.eliminarNegocioUsuario = function (fe) {
+        var _this = this;
+        console.log(fe);
+        this.endpointsService.eliminarCuponCentro({ idCentro: fe, idCupon: this.usuarioSeleccionado["idCupon"] })
+            .then(function (data) {
+            console.log(data);
+            _this.getClienteCupones(_this.usuarioSeleccionado["idCupon"]);
         });
     };
     RutinaComponent.prototype.onSelect = function (_a) {
@@ -3345,7 +4609,7 @@ var RutinaComponent = (function () {
             template: __webpack_require__("../../../../../src/app/rutina/rutina.component.html"),
             styles: [__webpack_require__("../../../../../src/app/rutina/rutina.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */]])
     ], RutinaComponent);
     return RutinaComponent;
 }());
@@ -3720,7 +4984,7 @@ var SharedComponentsModule = (function () {
 /***/ "../../../../../src/app/shared/components/sidebar/sidebar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<style type=\"text/css\">\n  .noLi{\n    pointer-events:none !important; opacity:0.3  !important;\n  }\n</style>\n\n<div class=\"sb\">\n  <!--<div class=\"sb-header\">sb-header</div>-->\n  <div class=\"sb-body\" >\n\n\n    <ul class=\"nav flex-column\">\n      <li   style=\"margin-bottom: 20px;margin-top: 10px\">\n          <div class=\"col\" style=\"text-align: center\">\n    <div ngbDropdown class=\"d-inline-block\">\n      <button style='font-size: 14px;' class=\"btn btn-outline-light\" id=\"dropdownBasic1\" ngbDropdownToggle>{{centroSeleccionado || \"Selecciona un negocio\"}}</button>\n      <div ngbDropdownMenu aria-labelledby=\"dropdownBasic1\">\n\n        <button *ngFor=\"let e of centrosUsuario\" \n        (click)='cambiarCentro(e.idCentro, e.nombre)' class=\"dropdown-item\">{{e.nombre}}</button>\n\n    \n      </div>\n    </div>\n  </div>\n\n      </li>\n      <li [hidden]=\"currentUser['tipo'] == 2 &&  ((menuItem.path == '/uconsola') || (menuItem.path == '/centro') ) \" [ngClass]=\"{'noLi':!seleccionCentro}\" style=' ' *ngFor=\"let menuItem of menuItems\" class=\"nav-item\">\n        <a  class=\"nav-link p-3\" [routerLink]=\"[menuItem.path]\" routerLinkActive=\"active\">\n          <i class=\"mr-1 {{menuItem.iconClass}}\"></i>\n          <span >{{menuItem.title}}\n\n\n\n\n\n          </span>\n        </a>\n      </li>\n    </ul>\n\n  </div>\n  <!--<div class=\"sb-footer\">sb-footer</div>-->\n</div>\n"
+module.exports = "\n<style type=\"text/css\">\n  .noLi{\n    pointer-events:none !important; opacity:0.3  !important;\n  }\n</style>\n\n<div class=\"sb\">\n  <!--<div class=\"sb-header\">sb-header</div>-->\n  <div class=\"sb-body\" >\n\n\n    <ul class=\"nav flex-column\">\n\n      <li  [hidden]=\"currentUser['tipo']==3\"   style=\"margin-bottom: 20px;margin-top: 10px\">\n          <div class=\"col\" style=\"text-align: center\">\n    <div ngbDropdown class=\"d-inline-block\">\n      <button style='font-size: 14px;' class=\"btn btn-outline-light\" id=\"dropdownBasic1\" ngbDropdownToggle>{{centroSeleccionado || \"Selecciona un negocio\"}}</button>\n      <div ngbDropdownMenu aria-labelledby=\"dropdownBasic1\">\n\n        <button *ngFor=\"let e of centrosUsuario\" \n        (click)='cambiarCentro(e.idCentro, e.nombre)' class=\"dropdown-item\">{{e.nombre}}</button>\n\n    \n      </div>\n    </div>\n  </div>\n\n      </li>\n\n\n      <li [hidden]=\"currentUser['tipo'] == 3 || (currentUser['tipo'] == 2 &&  ((menuItem.path == '/uconsola') || (menuItem.path == '/centro'))) \" [ngClass]=\"{'noLi':!seleccionCentro}\" style=' ' *ngFor=\"let menuItem of menuItems\" class=\"nav-item\">\n        <a  class=\"nav-link p-3\" [routerLink]=\"[menuItem.path]\" routerLinkActive=\"active\">\n          <i class=\"mr-1 {{menuItem.iconClass}}\"></i>\n          <span >{{menuItem.title}}\n\n\n\n\n\n          </span>\n        </a>\n      </li>\n\n\n\n\n          <li [hidden]=\"currentUser['tipo'] !== 3\"  style=' ' *ngFor=\"let menuItem of menuItems2\" class=\"nav-item\">\n        <a  class=\"nav-link p-3\" [routerLink]=\"[menuItem.path]\" routerLinkActive=\"active\">\n          <i class=\"mr-1 {{menuItem.iconClass}}\"></i>\n          <span >{{menuItem.title}}\n\n\n\n\n\n          </span>\n        </a>\n      </li>\n\n\n\n    </ul>\n\n  </div>\n  <!--<div class=\"sb-footer\">sb-footer</div>-->\n</div>\n"
 
 /***/ }),
 
@@ -3728,6 +4992,7 @@ module.exports = "\n<style type=\"text/css\">\n  .noLi{\n    pointer-events:none
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export ROUTES2 */
 /* unused harmony export ROUTES */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SidebarComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
@@ -3744,6 +5009,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 // duplicates to routing configs ... i know
+var ROUTES2 = [
+    { path: '/admincentros', title: 'Gestion Negocios', iconClass: 'fa fa-area-chart' },
+    { path: '/adminusers', title: 'Gestion Administradores', iconClass: 'fa fa-users' },
+    { path: '/cupones', title: 'Cupones', iconClass: ' fa fa-ticket' },
+];
 var ROUTES = [
     //{path: '/dashboard', title: 'Informacion', iconClass: 'fa fa-info-circle'},
     // {path: '/plong', title: 'Plong', iconClass: 'fa fa-tachometer'},
@@ -3754,6 +5024,7 @@ var ROUTES = [
     { path: '/calendario', title: 'Calendario', iconClass: 'fa fa-calendar-plus-o' },
     { path: '/centro', title: 'Perfil de Negocio', iconClass: 'fa fa-area-chart' },
     { path: '/uconsola', title: 'Usuarios Consola', iconClass: 'fa fa-users' },
+    { path: '/horario', title: 'Horario', iconClass: 'fa fa-calendar' },
 ];
 // routing for -----
 var SidebarComponent = (function () {
@@ -3767,6 +5038,7 @@ var SidebarComponent = (function () {
     SidebarComponent.prototype.ngOnInit = function () {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'))[0];
         this.menuItems = ROUTES.filter(function (menuItem) { return menuItem; });
+        this.menuItems2 = ROUTES2.filter(function (menuItem2) { return menuItem2; });
         // this.getSolicitudesEspera();
         this.getCentrosUsuario();
     };
@@ -4103,7 +5375,7 @@ var SharedModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_2__angular_common__["CommonModule"],
                 __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormsModule */],
                 __WEBPACK_IMPORTED_MODULE_4__angular_router__["d" /* RouterModule */],
-                __WEBPACK_IMPORTED_MODULE_5__ng_bootstrap_ng_bootstrap__["a" /* NgbModule */].forRoot(),
+                __WEBPACK_IMPORTED_MODULE_5__ng_bootstrap_ng_bootstrap__["b" /* NgbModule */].forRoot(),
                 __WEBPACK_IMPORTED_MODULE_6__ngx_translate_core__["b" /* TranslateModule */].forRoot({
                     loader: {
                         provide: __WEBPACK_IMPORTED_MODULE_6__ngx_translate_core__["a" /* TranslateLoader */],
@@ -4118,7 +5390,7 @@ var SharedModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormsModule */],
                 __WEBPACK_IMPORTED_MODULE_4__angular_router__["d" /* RouterModule */],
                 __WEBPACK_IMPORTED_MODULE_6__ngx_translate_core__["b" /* TranslateModule */],
-                __WEBPACK_IMPORTED_MODULE_5__ng_bootstrap_ng_bootstrap__["a" /* NgbModule */],
+                __WEBPACK_IMPORTED_MODULE_5__ng_bootstrap_ng_bootstrap__["b" /* NgbModule */],
             ]
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6__ngx_translate_core__["c" /* TranslateService */]])
@@ -4164,7 +5436,7 @@ var SortPipe = (function () {
 /***/ "../../../../../src/app/staf/staf.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n <div class=\"card mb-4\" style=\"    background: transparent;\n    border: none !important;\">\n    \n\n    <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n   <button  style='margin-right: 15px;margin-top: 20px;margin-bottom: 20px;' class=\" btn btn-primary float-right\" (click)='claseSeleccionada={};selected = [];'>Crear nuevo Empleado</button>\n\n    </div>\n\n  </div>\n</div>\n\n\n\n\n\n\n        <div  class=\"card mb-4\">\n\n          <div class=\"card-body\">\n            <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n      <h3 style=\"margin-bottom: 20px\">Empleados del negocio\t</h3>\n\n  </div>\n\n\n        <div class=\"info\">\n          <p></p>\n        </div>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n          [columns]=\"columns\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect($event)'>\n        </ngx-datatable>\n      </div>\n    </div>\n      \n\n\n<div *ngIf='!claseSeleccionada[\"idEmpleado\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  \n <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Crear nuevo Empleado</h3>\n\n<form  #form='ngForm' name=\"form\" class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreN.valid}\" [(ngModel)]=\"nuevaClase.nombre\" name=\"nombreN\" type=\"text\" class=\"form-control\" #nombreN=\"ngModel\" required>\n    \n    </div>\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Descripcion</label>\n      <input  [ngClass]=\"{'is-invalid':!descripcionN.valid}\" [(ngModel)]=\"nuevaClase.descripcion\" name=\"descripcionN\" type=\"text\" class=\"form-control\" #descripcionN=\"ngModel\" required>\n    \n    </div>\n\n\n    \n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select   [ngClass]=\"{'is-invalid':!estadoN.valid}\"  [(ngModel)]=\"nuevaClase.estado\" name=\"estadoN\" #estadoN=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\" >\n        <option value=\"1\">Visible</option>\n        <option value=\"2\">No - Visible</option>\n      </select>\n    </div>\n</div>\n\n\n  <button  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' type='submit' class=\"btn btn-primary\" [disabled]=\"!form.valid\"  (click)='guardarNuevaClase()'>Crear empleado</button>\n\n\n</form>\n\n\n\n\n\n\n          </div>\n\n</div>\n\n<div *ngIf='claseSeleccionada[\"idEmpleado\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3 style=\"margin-bottom: 20px\">Informacion del empleado</h3>\n\n  </div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n    <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    {{isCollapsed ? 'Mostrar mas' : 'Mostrar menos'}}\n  </button>\n\n    </div>\n\n  </div>\n</div>\n\n\n<!--\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Informacion de la clase</h3>\n\n<p>\n  <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    Toggle\n  </button>\n</p>\n <div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n  <div class=\"card\">\n    <div class=\"card-body\">\n      You can collapse this card by clicking Toggle\n    </div>\n  </div>\n</div>\n -->\n\n<div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n\n<form class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre servicio</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.nombre\" name=\"nombre\" type=\"text\" class=\"form-control\">\n    </div>\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Descripcion</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.descripcion\" name=\"descripcion\" type=\"text\" class=\"form-control\">\n    </div>\n\n\n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select [disabled]=\"!editar\" [(ngModel)]=\"claseSeleccionada.estado\" class=\"form-control custom-select mr-sm-2\" name='estado'>\n      \n        <option value=\"1\">Visible</option>\n        <option value=\"2\">No - Visible</option>\n      </select>\n    </div>\n\n\n\n     \n\n\n\n\n  </div>\n\n\n</form>\n\n<div *ngIf='claseSeleccionada.idEmpleado' >\n\n  <button  [disabled]=\"editar\" (click)='editar = !editar' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Editar</button>\n  <button [disabled]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n   <button (click)='editar = !editar' [disabled]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n</div>\n</div>\n          </div>\n        </div>\n\n    </div> \n\n\n\n"
+module.exports = "\n <div class=\"card mb-4\" style=\"    background: transparent;\n    border: none !important;\">\n    \n\n    <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n   <button  style='margin-right: 15px;margin-top: 20px;margin-bottom: 20px;' class=\" btn btn-primary float-right\" (click)='claseSeleccionada={};selected = [];'>Crear nuevo Empleado</button>\n\n    </div>\n\n  </div>\n</div>\n\n\n\n\n\n\n        <div  class=\"card mb-4\">\n\n          <div class=\"card-body\">\n            <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n      <h3 style=\"margin-bottom: 20px\">Empleados del negocio\t</h3>\n\n  </div>\n\n\n        <div class=\"info\">\n          <p></p>\n        </div>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n          [columns]=\"columns\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect($event)'>\n        </ngx-datatable>\n      </div>\n    </div>\n      \n\n\n<div *ngIf='!claseSeleccionada[\"idEmpleado\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  \n <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Crear nuevo Empleado</h3>\n\n<form  #form='ngForm' name=\"form\" class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreN.valid}\" [(ngModel)]=\"nuevaClase.nombre\" name=\"nombreN\" type=\"text\" class=\"form-control\" #nombreN=\"ngModel\" required>\n    \n    </div>\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Descripcion</label>\n      <input  [ngClass]=\"{'is-invalid':!descripcionN.valid}\" [(ngModel)]=\"nuevaClase.descripcion\" name=\"descripcionN\" type=\"text\" class=\"form-control\" #descripcionN=\"ngModel\" required>\n    \n    </div>\n\n\n    \n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select   [ngClass]=\"{'is-invalid':!estadoN.valid}\"  [(ngModel)]=\"nuevaClase.estado\" name=\"estadoN\" #estadoN=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\" >\n        <option value=\"1\">Visible</option>\n        <option value=\"2\">No - Visible</option>\n      </select>\n    </div>\n</div>\n\n\n  <button  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' type='submit' class=\"btn btn-primary\" [disabled]=\"!form.valid\"  (click)='guardarNuevaClase()'>Crear empleado</button>\n\n\n</form>\n\n\n\n\n\n\n          </div>\n\n</div>\n\n<div *ngIf='claseSeleccionada[\"idEmpleado\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3 style=\"margin-bottom: 20px\">Informacion del empleado</h3>\n\n  </div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n    <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    {{isCollapsed ? 'Mostrar mas' : 'Mostrar menos'}}\n  </button>\n\n    </div>\n\n  </div>\n</div>\n\n\n<!--\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Informacion de la clase</h3>\n\n<p>\n  <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    Toggle\n  </button>\n</p>\n <div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n  <div class=\"card\">\n    <div class=\"card-body\">\n      You can collapse this card by clicking Toggle\n    </div>\n  </div>\n</div>\n -->\n\n<div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n\n<form class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n     <div class=\"col col-lg-2\" style=\"text-align: center;\">\n<!--      <img style=\"    height: 90px;\n    width: 90px;border-radius: 100px;\" \n     (error)=\"setDefaultPic()\" src=\"{{globalImage}}/{{claseSeleccionada.idFoto}}\"\n      onError=\"this.src='assets/user.png';\"> -->\n       <img style=\"    height: 90px;\n    width: 90px;border-radius: 100px;\" \n      src=\"{{this.dataImagen}}\"\n      onError=\"this.src='assets/user.png';\">\n\n      <form [formGroup]=\"form\">\n      <input  [disabled]=\"!editar\"  style='margin-left: 20px;display: none'  type=\"file\" name=\"imageU\" id=\"imageU\" (change)=\"onFileChange($event)\" #fileInput >\n      <label for=\"imageU\">Seleccionar imagen</label>\n      </form>\n </div>\n\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.nombre\" name=\"nombre\" type=\"text\" class=\"form-control\">\n    </div>\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Descripcion</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.descripcion\" name=\"descripcion\" type=\"text\" class=\"form-control\">\n    </div>\n\n\n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select [disabled]=\"!editar\" [(ngModel)]=\"claseSeleccionada.estado\" class=\"form-control custom-select mr-sm-2\" name='estado'>\n      \n        <option value=\"1\">Visible</option>\n        <option value=\"2\">No - Visible</option>\n      </select>\n    </div>\n\n\n\n     \n\n\n\n\n  </div>\n\n\n</form> \n\n\n\n<div *ngIf='claseSeleccionada.idEmpleado' >\n\n  <button  [hidden]=\"editar\" (click)='editar=!editar' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Editar</button>\n  <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n   <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n</div>\n</div>\n          </div>\n        </div>\n\n    </div> \n\n\n\n"
 
 /***/ }),
 
@@ -4193,6 +5465,7 @@ module.exports = module.exports.toString();
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StafComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__endpoints_service__ = __webpack_require__("../../../../../src/app/endpoints.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("../../../forms/esm5/forms.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4204,11 +5477,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var StafComponent = (function () {
-    function StafComponent(endpointsService) {
+    function StafComponent(endpointsService, fb) {
         this.endpointsService = endpointsService;
+        this.fb = fb;
+        this.globalImage = 'http://50.116.17.150:3000/';
         this.rows = [];
         this.rowsUsuarios = [];
+        this.dataImagen = '';
+        this.dataFile = '';
+        this.url = '';
         this.categorias = [];
         this.selected = [];
         this.editar = false;
@@ -4230,7 +5509,13 @@ var StafComponent = (function () {
             { prop: 'nombre', name: 'Nombre' },
             { prop: 'descripcion', name: 'Descripcion' }
         ];
+        this.createForm();
     }
+    StafComponent.prototype.createForm = function () {
+        this.form = this.fb.group({
+            imageU: null
+        });
+    };
     StafComponent.prototype.ngOnInit = function () {
         console.log('d');
         this.getStaff();
@@ -4251,6 +5536,46 @@ var StafComponent = (function () {
             //console.log(data);
             _this.rowsUsuarios = data;
             // this.originalData = data;
+        });
+    };
+    StafComponent.prototype.onFileChange = function (event) {
+        var _this = this;
+        if (event.target.files.length > 0) {
+            var file = event.target.files[0];
+            //this.form.get('imageU').setValue(file);
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                _this.dataImagen = event.target.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+            this.dataFile = file;
+        }
+    };
+    StafComponent.prototype.readUrl = function (event) {
+        var _this = this;
+        if (event.target.files && event.target.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                _this.url = event.target.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    };
+    StafComponent.prototype.prepareSave = function (empleado) {
+        var input = new FormData();
+        input.append('imageU', this.dataFile);
+        input.append('nombre', empleado.nombre);
+        input.append('descripcion', empleado.descripcion);
+        input.append('estado', empleado.estado);
+        input.append('idEmpleado', empleado.idEmpleado);
+        return input;
+    };
+    StafComponent.prototype.onSubmit = function () {
+        var formModel = this.prepareSave(this.claseSeleccionada);
+        console.log(formModel);
+        this.endpointsService.subirImagen(formModel)
+            .then(function (data) {
+            console.log(data);
         });
     };
     StafComponent.prototype.guardarNuevaClase = function () {
@@ -4294,6 +5619,7 @@ var StafComponent = (function () {
         // this.rows = this.originalData;
         // this.test = JSON.parse(JSON.stringify(this.selected[0]));
         this.claseSeleccionada = JSON.parse(JSON.stringify(this.selected[0]));
+        this.dataImagen = this.globalImage + this.claseSeleccionada['idFoto'];
         // this.cargaHorarios();
     };
     StafComponent.prototype.onActivate = function (event) {
@@ -4303,17 +5629,33 @@ var StafComponent = (function () {
         var _this = this;
         this.loading = true;
         console.log(this.claseSeleccionada);
-        this.endpointsService.editarStaf(this.claseSeleccionada)
-            .then(function (data) {
-            console.log(data);
-            _this.loading = false;
-            _this.getStaff();
-            alert('Editado correctamente');
-            _this.editar = false;
-        }, function (msg) {
-            console.log(msg);
-            // this.loading = false;
-        });
+        if (this.dataFile) {
+            var formModel = this.prepareSave(this.claseSeleccionada);
+            this.endpointsService.editarStafImagen(formModel)
+                .then(function (data) {
+                console.log(data);
+                _this.loading = false;
+                _this.getStaff();
+                alert('Editado correctamente');
+                _this.editar = false;
+            }, function (msg) {
+                console.log(msg);
+                // this.loading = false;
+            });
+        }
+        else {
+            this.endpointsService.editarStaf(this.claseSeleccionada)
+                .then(function (data) {
+                console.log(data);
+                _this.loading = false;
+                _this.getStaff();
+                alert('Editado correctamente');
+                _this.editar = false;
+            }, function (msg) {
+                console.log(msg);
+                // this.loading = false;
+            });
+        }
     };
     StafComponent.prototype.onChangeColor2 = function (er) {
         console.log(er);
@@ -4327,13 +5669,17 @@ var StafComponent = (function () {
         //  this.rows = this.originalData;
         // console.log(this.test);
     };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('fileInput'),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"])
+    ], StafComponent.prototype, "fileInput", void 0);
     StafComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'tox-staf',
             template: __webpack_require__("../../../../../src/app/staf/staf.component.html"),
             styles: [__webpack_require__("../../../../../src/app/staf/staf.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]])
     ], StafComponent);
     return StafComponent;
 }());
