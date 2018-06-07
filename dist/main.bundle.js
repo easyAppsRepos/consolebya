@@ -31,10 +31,271 @@ module.exports = webpackAsyncContext;
 
 /***/ }),
 
+/***/ "../../../../../src/app/addcategorias/addcategorias.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "\n <div class=\"card mb-4\" style=\"    background: transparent;\n    border: none !important;\">\n    \n\n    <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n   <button  style='margin-right: 15px;margin-top: 20px;margin-bottom: 20px;' class=\" btn btn-primary float-right\" (click)='claseSeleccionada={};selected = [];'>Crear nueva Categoria</button>\n\n    </div>\n\n  </div>\n</div>\n\n\n\n\n\n\n        <div  class=\"card mb-4\">\n\n          <div class=\"card-body\">\n            <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n      <h3 style=\"margin-bottom: 20px\">\t</h3>\n\n  </div>\n\n\n        <div class=\"info\">\n          <p></p>\n        </div>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n          [columns]=\"columns\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect($event)'>\n        </ngx-datatable>\n      </div>\n    </div>\n      \n\n\n<div *ngIf='!claseSeleccionada[\"idCategoria\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  \n <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n           \n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n\n<span style=\"        font-size: 21px;\n    color: #0073aa;\n    margin: 20px;\n    display: block;\">Crear nueva Categoria</span>\n  </div>\n\n\n<form  #form='ngForm' name=\"form\" class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreN.valid}\" [(ngModel)]=\"nuevaClase.nombre\" name=\"nombreN\" type=\"text\" class=\"form-control\" #nombreN=\"ngModel\" required>\n    \n    </div>\n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select   [ngClass]=\"{'is-invalid':!estadoN.valid}\"  [(ngModel)]=\"nuevaClase.estado\" name=\"estadoN\" #estadoN=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\" >\n        <option value=\"1\">Visible</option>\n        <option value=\"2\">No - Visible</option>\n      </select>\n    </div>\n</div>\n\n\n  <button  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' type='submit' class=\"btn btn-primary\" [disabled]=\"!form.valid\"  (click)='guardarNuevaClase()'>Crear categoria</button>\n\n\n</form>\n\n\n\n\n\n\n          </div>\n\n</div>\n\n<div *ngIf='claseSeleccionada[\"idCategoria\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3 style=\"margin-bottom: 20px\">Categoria</h3>\n\n  </div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n    <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    {{isCollapsed ? 'Mostrar mas' : 'Mostrar menos'}}\n  </button>\n\n    </div>\n\n  </div>\n</div>\n\n\n<!--\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Informacion de la clase</h3>\n\n<p>\n  <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    Toggle\n  </button>\n</p>\n <div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n  <div class=\"card\">\n    <div class=\"card-body\">\n      You can collapse this card by clicking Toggle\n    </div>\n  </div>\n</div>\n -->\n\n<div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n\n<form class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n     <div class=\"col col-lg-2\" style=\"text-align: center;\">\n<!--      <img style=\"    height: 90px;\n    width: 90px;border-radius: 100px;\" \n     (error)=\"setDefaultPic()\" src=\"{{globalImage}}/{{claseSeleccionada.idFoto}}\"\n      onError=\"this.src='assets/user.png';\"> -->\n       <img style=\"    height: 90px;\n    width: 90px;\" \n      src=\"{{this.dataImagen}}\"\n      onError=\"this.src='assets/categoria.png';\">\n\n      <form [formGroup]=\"form\">\n      <input  [disabled]=\"!editar\"  style='margin-left: 20px;display: none'  type=\"file\" name=\"imageU\" id=\"imageU\" (change)=\"onFileChange($event)\" #fileInput >\n      <label for=\"imageU\">Seleccionar imagen</label>\n      </form>\n </div>\n\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.nombre\" name=\"nombre\" type=\"text\" class=\"form-control\">\n    </div>\n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select [disabled]=\"!editar\" [(ngModel)]=\"claseSeleccionada.estado\" class=\"form-control custom-select mr-sm-2\" name='estado'>\n      \n        <option value=\"1\">Visible</option>\n        <option value=\"2\">No - Visible</option>\n      </select>\n    </div>\n\n\n\n     \n\n\n\n\n  </div>\n\n\n</form> \n\n\n\n<div *ngIf='claseSeleccionada.idCategoria' >\n\n  <button  [hidden]=\"editar\" (click)='editar=!editar' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Editar</button>\n  <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n   <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n</div>\n</div>\n          </div>\n        </div>\n\n    </div> \n\n\n\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/addcategorias/addcategorias.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/addcategorias/addcategorias.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddcategoriasComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__endpoints_service__ = __webpack_require__("../../../../../src/app/endpoints.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("../../../forms/esm5/forms.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var AddcategoriasComponent = (function () {
+    function AddcategoriasComponent(endpointsService, fb, router) {
+        this.endpointsService = endpointsService;
+        this.fb = fb;
+        this.router = router;
+        this.globalImage = 'http://50.116.17.150:3000/';
+        this.rows = [];
+        this.rowsUsuarios = [];
+        this.dataImagen = '';
+        this.dataFile = '';
+        this.url = '';
+        this.categorias = [];
+        this.selected = [];
+        this.editar = false;
+        this.claseSeleccionada = {};
+        this.nuevaClase = {};
+        this.cu = JSON.parse(localStorage.getItem('currentUser'));
+        this.loading = false;
+        this.isCollapsed = false;
+        this.rowsHorarios = [];
+        this.selectedHorario = [];
+        this.columnsHorarios = [
+            { prop: 'idReservaClase', name: '#ID Reserva' },
+            { prop: 'soloFecha', name: 'Fecha Clase' },
+            { prop: 'soloHora', name: 'Hora Clase' },
+            { prop: 'estado', name: 'Estado' },
+            { prop: 'usuariosAnotados', name: 'Usuarios Anotados' },
+        ];
+        this.originalData = [];
+        this.columns = [
+            { prop: 'nombre', name: 'Nombre' },
+            { prop: 'cantServicios', name: 'Cantidad de Servicios' }
+        ];
+        this.createForm();
+        if (this.cu[0]['tipo'] !== 3) {
+            console.log('usuario no deseado');
+            this.router.navigate(['/dashboard']);
+        }
+    }
+    AddcategoriasComponent.prototype.createForm = function () {
+        this.form = this.fb.group({
+            imageU: null
+        });
+    };
+    AddcategoriasComponent.prototype.ngOnInit = function () {
+        console.log('d');
+        this.getStaff();
+    };
+    AddcategoriasComponent.prototype.getStaff = function () {
+        var _this = this;
+        this.endpointsService.getCategoriasAllSA()
+            .then(function (data) {
+            console.log(data);
+            _this.rows = data;
+            _this.originalData = data;
+        });
+    };
+    AddcategoriasComponent.prototype.cargaUsuarios = function (id) {
+        var _this = this;
+        this.endpointsService.getUsuariosAnotadosClase({ idReserva: id })
+            .then(function (data) {
+            //console.log(data);
+            _this.rowsUsuarios = data;
+            // this.originalData = data;
+        });
+    };
+    AddcategoriasComponent.prototype.onFileChange = function (event) {
+        var _this = this;
+        if (event.target.files.length > 0) {
+            var file = event.target.files[0];
+            //this.form.get('imageU').setValue(file);
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                _this.dataImagen = event.target.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+            this.dataFile = file;
+        }
+    };
+    AddcategoriasComponent.prototype.readUrl = function (event) {
+        var _this = this;
+        if (event.target.files && event.target.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                _this.url = event.target.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    };
+    AddcategoriasComponent.prototype.prepareSave = function (empleado) {
+        var input = new FormData();
+        input.append('imageU', this.dataFile);
+        input.append('nombre', empleado.nombre);
+        input.append('estado', empleado.estado);
+        input.append('idCategoria', empleado.idCategoria);
+        return input;
+    };
+    AddcategoriasComponent.prototype.onSubmit = function () {
+        var formModel = this.prepareSave(this.claseSeleccionada);
+        console.log(formModel);
+        this.endpointsService.subirImagen(formModel)
+            .then(function (data) {
+            console.log(data);
+        });
+    };
+    AddcategoriasComponent.prototype.guardarNuevaClase = function () {
+        var _this = this;
+        this.loading = true;
+        console.log(this.nuevaClase);
+        this.endpointsService.nuevaCategoria(this.nuevaClase)
+            .then(function (data) {
+            console.log(data);
+            _this.loading = false;
+            _this.getStaff();
+            alert('Guardado correctamente');
+            _this.editar = false;
+            _this.nuevaClase = {};
+        }, function (msg) {
+            console.log(msg);
+            _this.loading = false;
+        });
+    };
+    AddcategoriasComponent.prototype.cargaCategorias = function () {
+        var _this = this;
+        this.endpointsService.categoriasHome()
+            .then(function (data) {
+            console.log(data);
+            _this.categorias = data;
+        });
+    };
+    AddcategoriasComponent.prototype.onSelectHorario = function (_a) {
+        var selectedHorario = _a.selectedHorario;
+        console.log(this.selectedHorario[0]);
+        // this.rows = this.originalData;
+        // this.test = JSON.parse(JSON.stringify(this.selected[0]));
+        // this.claseSeleccionada = JSON.parse(JSON.stringify(this.selected[0]));
+        this.cargaUsuarios(this.selectedHorario[0].idReservaClase);
+    };
+    AddcategoriasComponent.prototype.onSelect = function (_a) {
+        var selected = _a.selected;
+        console.log(this.selected[0]);
+        this.selectedHorario = [];
+        // this.rows = this.originalData;
+        // this.test = JSON.parse(JSON.stringify(this.selected[0]));
+        this.claseSeleccionada = JSON.parse(JSON.stringify(this.selected[0]));
+        this.dataImagen = this.globalImage + this.claseSeleccionada['idFoto'];
+        // this.cargaHorarios();
+    };
+    AddcategoriasComponent.prototype.onActivate = function (event) {
+        console.log('Activate Event', event);
+    };
+    AddcategoriasComponent.prototype.guardarEdicion = function () {
+        var _this = this;
+        this.loading = true;
+        console.log(this.claseSeleccionada);
+        if (this.dataFile) {
+            var formModel = this.prepareSave(this.claseSeleccionada);
+            this.endpointsService.editarCategoriaImagen(formModel)
+                .then(function (data) {
+                console.log(data);
+                _this.loading = false;
+                _this.getStaff();
+                alert('Editado correctamente');
+                _this.editar = false;
+            }, function (msg) {
+                console.log(msg);
+                // this.loading = false;
+            });
+        }
+        else {
+            this.endpointsService.editarCategoriaN(this.claseSeleccionada)
+                .then(function (data) {
+                console.log(data);
+                _this.loading = false;
+                _this.getStaff();
+                alert('Editado correctamente');
+                _this.editar = false;
+            }, function (msg) {
+                console.log(msg);
+                // this.loading = false;
+            });
+        }
+    };
+    AddcategoriasComponent.prototype.onChangeColor2 = function (er) {
+        console.log(er);
+        this.claseSeleccionada['color'] = er;
+    };
+    AddcategoriasComponent.prototype.onChangeColor = function (er) {
+        console.log(er);
+        this.nuevaClase['color'] = er;
+    };
+    AddcategoriasComponent.prototype.cancelarEdicion = function () {
+        //  this.rows = this.originalData;
+        // console.log(this.test);
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('fileInput'),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"])
+    ], AddcategoriasComponent.prototype, "fileInput", void 0);
+    AddcategoriasComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'tox-addcategorias',
+            template: __webpack_require__("../../../../../src/app/addcategorias/addcategorias.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/addcategorias/addcategorias.component.scss")]
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__angular_router__["c" /* Router */]])
+    ], AddcategoriasComponent);
+    return AddcategoriasComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "../../../../../src/app/admincentros/admincentros.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n <div class=\"card mb-4\" style=\"margin-top: 20px\">\n    \n <div >\n    <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\">\n\n\n\n    \t<div class=\"card-block-big card-status\">\n<h3>Negocios</h3>\n\n</div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n   <button  style='margin-right: 15px;margin-top: 20px;margin-bottom: 20px;' class=\" btn btn-primary float-right\" (click)='claseSeleccionada={};selected = [];'>Crear nuevo negocio</button>\n\n    </div>\n\n  </div>\n</div>\n\n\n\n\n\n      <div  style='float:left;width:100%'>\n        <div class=\"info\">\n          <p></p>\n        </div>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n       \n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect($event)'>\n\n\n                            <ngx-datatable-column prop=\"nombre\" name='Nombre Negocio' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                            <ngx-datatable-column prop=\"email\" name='Email' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"telefono\" name='Telefono' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"nombreTitular\" name='Nombre Registro' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                         <ngx-datatable-column prop=\"estado\" name='Estado' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value == 1 ? 'Publicado' : value == 2 ? 'Pendiente Revision' : 'No Publicado'}}\n          </ng-template>\n        </ngx-datatable-column>\n\n                 <ngx-datatable-column    [cellClass]=\"getCellClass\"  prop=\"estado\" name='' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n          <i *ngIf='value==2'  class=\"fa fa-exclamation-triangle\" aria-hidden=\"true\">\n          \t\n          </i>  {{value == 1 ? 'Publicado' : value == 2 ? 'Pendiente Revision' : 'No Publicado'}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n\n        </ngx-datatable>\n      </div>\n</div>\n\n<div *ngIf='!claseSeleccionada[\"idCentro\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  \n <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Crear nuevo Negocio</h3>\n\n<form  #form='ngForm' name=\"form\" class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreN.valid}\" [(ngModel)]=\"nuevaClase.nombre\" name=\"nombreN\" type=\"text\" class=\"form-control\" #nombreN=\"ngModel\" required>\n    \n    </div>\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Email</label>\n      <input  [ngClass]=\"{'is-invalid':!emailN.valid}\" [(ngModel)]=\"nuevaClase.email\" name=\"emailN\" type=\"text\" class=\"form-control\" #emailN=\"ngModel\" required>\n    \n    </div>\n\n        <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Telefono</label>\n      <input  [ngClass]=\"{'is-invalid':!telefonoN.valid}\" [(ngModel)]=\"nuevaClase.telefono\" name=\"telefonoN\" type=\"text\" class=\"form-control\" #telefonoN=\"ngModel\" required>\n    \n    </div>\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre Registro</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreTitularN.valid}\" [(ngModel)]=\"nuevaClase.nombreTitular\" name=\"nombreTitularN\" type=\"text\" class=\"form-control\" #nombreTitularN=\"ngModel\" required>\n    \n    </div>\n\n\n\n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select   [ngClass]=\"{'is-invalid':!estadoN.valid}\"  [(ngModel)]=\"nuevaClase.estado\" name=\"estadoN\" #estadoN=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\" >\n                <option value=\"1\">Publicado</option>\n        <option value=\"2\">Pendiente de Revision</option>\n         <option value=\"3\">No Publicado</option>\n      </select>\n    </div>\n</div>\n\n\n  <button  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' type='submit' class=\"btn btn-primary\" [disabled]=\"!form.valid\"  (click)='guardarNuevaClase()'>Crear negocio</button>\n\n\n</form>\n\n\n\n\n\n\n          </div>\n\n</div>\n\n<div *ngIf='claseSeleccionada[\"idCentro\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3>Informacion del Negocio</h3>\n\n  </div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n    <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    {{isCollapsed ? 'Mostrar mas' : 'Mostrar menos'}}\n  </button>\n\n    </div>\n\n  </div>\n</div>\n\n\n<!--\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Informacion de la clase</h3>\n\n<p>\n  <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    Toggle\n  </button>\n</p>\n <div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n  <div class=\"card\">\n    <div class=\"card-body\">\n      You can collapse this card by clicking Toggle\n    </div>\n  </div>\n</div>\n -->\n\n<div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n\n<form class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre negocio</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.nombre\" name=\"nombre\" type=\"text\" class=\"form-control\">\n    </div>\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Email</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.email\" name=\"email\" type=\"text\" class=\"form-control\">\n    </div>\n\n\n    <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Telefono</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.telefono\" name=\"tel\" type=\"text\" class=\"form-control\">\n    </div>\n\n        <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre Registro</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.nombreTitular\" name=\"nombreTitular\" type=\"text\" class=\"form-control\">\n    </div>\n\n\n<!--    <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Dificultad</label>\n\n\n                         <select [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.dificultad\" name=\"dificultad\" type=\"number\" class=\"form-control\">\n        <option value=\"10\">10%</option>\n        <option value=\"25\">25%</option>\n        <option value=\"40\">40%</option>\n        <option value=\"50\">50%</option>\n        <option value=\"70\">70%</option>\n        <option value=\"85\">85%</option>\n        <option value=\"90\">90%</option>\n        <option value=\"100\">100%</option>\n\n      </select> \n\n\n\n    </div>\n\n -->\n      \n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select [disabled]=\"!editar\" [(ngModel)]=\"claseSeleccionada.estado\" class=\"form-control custom-select mr-sm-2\" name='estado'>\n      \n        <option value=\"1\">Publicado</option>\n        <option value=\"2\">Pendiente de Revision</option>\n         <option value=\"3\">No Publicado</option>\n      </select>\n    </div>\n\n\n\n     \n\n\n\n\n  </div>\n\n\n</form>\n\n<div *ngIf='claseSeleccionada.idCentro' >\n\n  <button  [hidden]=\"editar\" (click)='editar = !editar' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Editar</button>\n\n\n\n\n  <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n   <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n</div>\n</div>\n          </div>\n        </div>\n\n\n\n\n\n\n\n\n\n\n\n\n         <div  *ngIf='claseSeleccionada[\"idCentro\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n   <ngx-loading [show]=\"loading2\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;'>Usuario Administrador</h3>\n\n  </div>\n\n</div>\n\n\n\n          <table  style='    ' class='table material'>\n            <thead>\n            \t <th>Nombre</th>\n                <th>Email</th>\n                \n                <th></th>\n            </thead>\n            <tbody>\n                <tr *ngFor=\"let e  of negociosAsignados || []\">\n                    <td>{{e.nombre}}</td>\n                     <td>{{e.email}}</td>\n               \n                    <td><button (click)='eliminarNegocioUsuario(e.idUsuarioConsolaCentro)' class=\"btn btn-danger\">Eliminar</button></td>\n                </tr>\n            </tbody>\n        </table>\n\n        <div style=\"margin:20px\" >\n          <h5>Asignar Administrador</h5>\n          <div class=\"col-md-3 mb-3 ff\" style=\"    display: inline-block;\n    margin-right: 15px !important;\n    padding-left: 0px;\n    margin-top: 20px;\">\n\n\n          <label for=\"validationCustom01\"></label>\n          <select   [(ngModel)]=\"seleccionCentro.idUsuarioConsola\" name=\"idUsuarioConsola\" #idUsuarioConsola=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\">\n\n              <option *ngFor=\"let c of negociosParent\" \n              [value]=\"c.idUsuarioConsola\" \n              >\n              {{c.nombre}} / {{c.email}}\n              </option>\n          </select>\n          </div>\n\n          <button [hidden]='!seleccionCentro.idUsuarioConsola' (click)='agregarNegocioUsuario(seleccionCentro.idUsuarioConsola)' class=\"btn btn-success\">Agregar</button>\n        </div>\n\n      </div>\n\n\n\n</div>\n\n\n\n\n    </div> \n\n\n\n"
+module.exports = "\n <div class=\"card mb-4\" style=\"margin-top: 20px\">\n    \n\n\n          <div  style='float:left;width:100%'>\n        <div class=\"info\">\n          <p></p>\n        </div>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows2\"\n          [columnMode]=\"'force'\"\n       \n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect($event)'>\n\n\n                            <ngx-datatable-column prop=\"nombre\" name='Nombre' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                            <ngx-datatable-column prop=\"email\" name='Email' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"sucursales\" name='Sucursales' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n                {{value}}\n\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"activos\" name='Activos' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                            <ngx-datatable-column prop=\"sincerrar\" name='Sin Cerrar' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                            <ngx-datatable-column prop=\"completos\" name='Completos' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n\n\n\n\n\n        </ngx-datatable>\n      </div>\n\n</div>\n <div [hidden]='!test[\"idUsuarioConsola\"]' class=\"card mb-4\" style=\"margin-top: 20px\">\n\n\n\n\n\n <ngx-loading [show]=\"loading2\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n\n<ngb-tabset >\n\n  <ngb-tab title=\"Sucursales\"  >\n\n    <ng-template ngbTabContent>\n\n    \n\n  <div  class=\"input-group\">\n    <div class=\"input-group-prepend\">\n\n   <button  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\" btn btn-primary \" (click)='claseSeleccionada={};selected2 = [];'>Crear Sucursal</button>\n\n    </div>\n\n  </div>\n\n\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n       \n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected2\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect2($event)'>\n\n\n                            <ngx-datatable-column minWidth='220' maxWidth='280' prop=\"nombre\" name='Sucursal' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n                   <div class=\"photo-table img\">\n<img class=\"img-circle\" src=\"http://50.116.17.150:3000/{{row.idFoto}}\" \n  onError=\"this.src='assets/tiendaLogo.png';\"> {{value}}\n</div> \n\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                            <ngx-datatable-column prop=\"email\" name='Email' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"activos\" name='Activos' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"sincerrar\" name='Sin Cerrar' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n                            <ngx-datatable-column prop=\"completos\" name='Completos' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                         <ngx-datatable-column prop=\"estado\" name='Estado' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value == 1 ? 'Activo' : 'Cancelado'}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n\n        </ngx-datatable>\n\n\n\n \n\n\n      <div *ngIf='claseSeleccionada[\"idCentro\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  <ngb-tabset>\n  <ngb-tab title=\"Informacion\">\n    <ng-template ngbTabContent>\n                    <div style='padding: 20px' class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n\n                 <div class=\"photo-table img\">\n<img class=\"img-circle\" src=\"http://50.116.17.150:3000/{{claseSeleccionada['idFoto']}}\" \n  onError=\"this.src='assets/tiendaLogo.png';\"> \n\n  <span style=\"    font-size: 21px;\n    color: #0073aa;\">{{claseSeleccionada[\"nombre\"]}}</span> \n\n\n</div> \n\n\n    \n\n\n \n\n  </div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n    <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    {{isCollapsed ? 'Mostrar mas' : 'Mostrar menos'}}\n  </button>\n\n    </div>\n\n  </div>\n</div>\n\n<div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n\n<form class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Sucursal</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.nombre\" name=\"nombre\" type=\"text\" class=\"form-control\">\n    </div>\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Email</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.email\" name=\"email\" type=\"text\" class=\"form-control\">\n    </div>\n\n\n    <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Telefono</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.telefono\" name=\"tel\" type=\"text\" class=\"form-control\">\n    </div>\n\n\n\n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select [disabled]=\"!editar\" [(ngModel)]=\"claseSeleccionada.estado\" class=\"form-control custom-select mr-sm-2\" name='estado'>\n      \n        <option value=\"1\">Activo</option>\n        <option value=\"2\">Cancelado</option>\n\n      </select>\n    </div>\n\n\n\n     \n\n\n\n\n  </div>\n\n\n</form>\n\n<div *ngIf='claseSeleccionada.idCentro' >\n\n  <button  [hidden]=\"editar\" (click)='editar = !editar' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Editar</button>\n\n\n\n\n  <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n   <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n</div>\n</div>\n    </ng-template>\n  </ngb-tab>\n\n\n  <ngb-tab title=\"Opiniones\" >\n\n    <ng-template ngbTabContent>\n\n              <ngx-datatable \n          class=\"material\"\n          [rows]=\"opiniones\"\n          [columnMode]=\"'force'\"\n       \n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected3\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect3($event)'>\n\n\n                            <ngx-datatable-column prop=\"nombreCliente\" name='Cliente' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                            <ngx-datatable-column prop=\"idCita\" name='ID de Reserva' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"comentario\" name='Comentario' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"puntuacion\" name='Calificacion' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column maxWidth='150' prop=\"estado\" name='' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           <button *ngIf='value == 2'  (click)='ocultarPubli(3,row.idEvaluacionCentro)' type=\"button\" class=\"btn btn-danger btn-sm\">Ocultar</button>\n              <button *ngIf='value == 3' (click)='ocultarPubli(2,row.idEvaluacionCentro)'  type=\"button\" class=\"btn btn-success btn-sm\">Mostrar</button>\n\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n\n        </ngx-datatable>\n\n\n    </ng-template>\n  </ngb-tab>\n  <ngb-tab title=\"Servicios\" >\n\n    <ng-template ngbTabContent>\n\n\n                    <ngx-datatable \n          class=\"material\"\n          [rows]=\"servicios\"\n          [columnMode]=\"'force'\"\n       \n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected4\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect4($event)'>\n\n\n          <ngx-datatable-column  maxWidth='20' prop=\"estado\" name='' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n            <i *ngIf='value==1'  class=\"fa fa-check-square-o\" aria-hidden=\"true\"></i> \n        <i *ngIf='value!==1'  class=\"fa fa-close\" aria-hidden=\"true\"></i> \n\n\n\n          </ng-template>\n        </ngx-datatable-column>\n\n                            <ngx-datatable-column prop=\"nombre\" name='Servicio' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                            <ngx-datatable-column prop=\"nombreCategoria\" name='Asignacion' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"duracion\" name='Tiempo' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}min\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"precio\" name='Costo' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           ${{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n \n\n\n\n\n        </ngx-datatable>\n\n\n    </ng-template>\n  </ngb-tab>\n</ngb-tabset>\n\n\n\n\n\n          \n        </div>\n\n\n<!-- 270- 334-->\n <div *ngIf='!claseSeleccionada[\"idCentro\"] && test[\"idUsuarioConsola\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  \n\n          <div class=\"card-body\">\n            <h5 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Agregar Sucursal a {{test[\"nombre\"]}}</h5>\n\n<form  #form='ngForm' name=\"form\" class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreN.valid}\" [(ngModel)]=\"nuevaClase.nombre\" name=\"nombreN\" type=\"text\" class=\"form-control\" #nombreN=\"ngModel\" required>\n    \n    </div>\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Email</label>\n      <input  [ngClass]=\"{'is-invalid':!emailN.valid}\" [(ngModel)]=\"nuevaClase.email\" name=\"emailN\" type=\"text\" class=\"form-control\" #emailN=\"ngModel\" required>\n    \n    </div>\n\n        <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Telefono</label>\n      <input  [ngClass]=\"{'is-invalid':!telefonoN.valid}\" [(ngModel)]=\"nuevaClase.telefono\" name=\"telefonoN\" type=\"text\" class=\"form-control\" #telefonoN=\"ngModel\" required>\n    \n    </div>\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre Registro</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreTitularN.valid}\" [(ngModel)]=\"nuevaClase.nombreTitular\" name=\"nombreTitularN\" type=\"text\" class=\"form-control\" #nombreTitularN=\"ngModel\" required>\n    \n    </div>\n\n\n\n\n</div>\n\n\n  <button  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' type='submit' class=\"btn btn-primary\" [disabled]=\"!form.valid\"  (click)='guardarNuevaClase()'>Crear sucursal</button>\n\n\n</form>\n\n\n\n\n\n\n          </div>\n\n</div> \n\n    </ng-template>\n  </ngb-tab>\n\n    <ngb-tab title=\"Informacion\" >\n    <ng-template ngbTabContent>\n                      <div class=\"card-body\">\n\n                  <div class=\"mb-4\">\n\n<div [hidden]='currentID !== \"completadas\" ' class=\"row\" style=\"float: right;\n    margin-right: 16px;\">\n<div class=\"col-md-12 col-xl-4\" style=\"    display: contents;\">\n<div >\n<div class=\"card-status\">\n<h5>TOTAL = ${{(dataR[0]['total'])?.toFixed(2)}}</h5>\n\n</div>\n</div>\n</div>\n<div class=\"col-md-12 col-xl-4\" style=\"    display: contents;\">\n<div >\n<div class=\"card-status\">\n<h5>COMISION = ${{(dataR[0]['comision'])?.toFixed(2)}}</h5>\n\n\n</div>\n</div>\n</div>\n</div>\n</div>\n              <ngb-tabset (tabChange)=\"activeTab($event)\">\n\n  <ngb-tab  id=\"confirmadasTab\" title=\"Confirmadas ({{citasConfirmadas.length}})\" [disabled]=\"citasConfirmadas.length==0\">\n    <ng-template ngbTabContent>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"citasConfirmadas\"\n          [columnMode]=\"'force'\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          (select)='getServicios($event)'>\n          <ngx-datatable-column prop=\"idCita\" name='ID de Reserva' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>   \n            {{value}}\n         </ng-template>\n        </ngx-datatable-column>\n\n\n\n\n           <ngx-datatable-column prop=\"nombreCentro\"  minWidth='220' maxWidth='280' name='Sucursal' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n               <div class=\"photo-table img\">\n<img class=\"img-circle\" src=\"http://50.116.17.150:3000/{{row.idFoto}}\" \n  onError=\"this.src='assets/tiendaLogo.png';\"> {{value}}\n</div> \n          </ng-template>\n        </ngx-datatable-column>\n\n                           <ngx-datatable-column prop=\"nombreCliente\" name='Cliente' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n    <ngx-datatable-column prop=\"FechaCita\" name='Fecha' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n          <ngx-datatable-column prop=\"totalServicios\" name='Servicios' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n          <ngx-datatable-column prop=\"precioEsperado\" name='Total' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           ${{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n    </ngx-datatable>\n    </ng-template>\n  </ngb-tab>\n\n\n\n  <ngb-tab id=\"porConfirmarTab\" title=\"Por Confirmar ({{conjuntoCC.length}})\" [disabled]=\"conjuntoCC.length==0\">\n    <ng-template ngbTabContent>\n             <ngx-datatable \n          class=\"material\"\n          [rows]=\"conjuntoCC\"\n          [columnMode]=\"'force'\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          (select)='getServicios($event)'>\n          <ngx-datatable-column prop=\"idCita\" name='ID de Reserva' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>   \n            {{value}}\n         </ng-template>\n        </ngx-datatable-column>\n           <ngx-datatable-column prop=\"nombreCentro\"  minWidth='220' maxWidth='280' name='Sucursal' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n                <div class=\"photo-table img\">\n<img class=\"img-circle\" src=\"http://50.116.17.150:3000/{{row.idFoto}}\" \n  onError=\"this.src='assets/tiendaLogo.png';\"> {{value}}\n</div> \n          </ng-template>\n        </ngx-datatable-column>\n\n                           <ngx-datatable-column prop=\"nombreCliente\" name='Cliente' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n    <ngx-datatable-column prop=\"FechaCita\" name='Fecha' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n                  <ngx-datatable-column prop=\"estado\" name='Parte' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value == 1 ? 'Negocio' :  'Cliente'}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n          <ngx-datatable-column prop=\"totalServicios\" name='Servicios' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n          <ngx-datatable-column prop=\"precioEsperado\" name='Total' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           ${{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n    </ngx-datatable>\n    </ng-template>\n  </ngb-tab>\n\n\n  <ngb-tab id=\"completadas\"  title=\"Completadas ({{citasCompletadas.length}})\" [disabled]=\"citasCompletadas.length==0\">\n    <ng-template ngbTabContent>\n           <ngx-datatable \n          class=\"material\"\n          [rows]=\"citasCompletadas\"\n          [columnMode]=\"'force'\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          (select)='getServicios($event)'>\n          <ngx-datatable-column prop=\"idCita\" name='ID de Reserva' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>   \n           {{value}}\n         </ng-template>\n        </ngx-datatable-column>\n           <ngx-datatable-column prop=\"nombreCentro\"  minWidth='220' maxWidth='280' name='Sucursal' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n                <div class=\"photo-table img\">\n<img class=\"img-circle\" src=\"http://50.116.17.150:3000/{{row.idFoto}}\" \n  onError=\"this.src='assets/tiendaLogo.png';\"> {{value}}\n</div> \n          </ng-template>\n        </ngx-datatable-column>\n\n                           <ngx-datatable-column prop=\"nombreCliente\" name='Cliente' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n    <ngx-datatable-column prop=\"FechaCita\" name='Fecha' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n<!--           <ngx-datatable-column prop=\"totalServicios\" name='Servicios' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column> -->\n\n\n                  <ngx-datatable-column prop=\"valoracion\" name='Puntuacion' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n                  <ngx-datatable-column prop=\"precioEsperado\" name='Total' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           ${{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                  <ngx-datatable-column prop=\"comision\" name='Comision' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           ${{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n    </ngx-datatable>\n    </ng-template>\n  </ngb-tab>\n\n\n  <ngb-tab id=\"canceladas\" title=\"Canceladas ({{citasCanceladas.length}})\" [disabled]=\"citasCanceladas.length==0\">\n    <ng-template ngbTabContent>\n       <ngx-datatable \n          class=\"material\"\n          [rows]=\"citasCanceladas\"\n          [columnMode]=\"'force'\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          (select)='getServicios($event)'>\n          <ngx-datatable-column prop=\"idCita\" name='ID de Reserva' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>   \n            {{value}} \n         </ng-template>\n        </ngx-datatable-column>\n           <ngx-datatable-column prop=\"nombreCentro\"  minWidth='220' maxWidth='280' name='Sucursal' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n                <div class=\"photo-table img\">\n<img class=\"img-circle\" src=\"http://50.116.17.150:3000/{{row.idFoto}}\" \n  onError=\"this.src='assets/tiendaLogo.png';\"> {{value}}\n</div> \n          </ng-template>\n        </ngx-datatable-column>\n    <ngx-datatable-column prop=\"FechaCita\" name='Fecha' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n          <ngx-datatable-column prop=\"totalServicios\" name='Servicios' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n          <ngx-datatable-column prop=\"precioEsperado\" name='Total' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           ${{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n    </ngx-datatable>\n    </ng-template>\n  </ngb-tab>\n\n\n\n\n<!--   <ngb-tab title=\"Disabled\" [disabled]=\"true\">\n    <ng-template ngbTabContent>\n      <p>Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget sodales nibh elit id diam. Nulla facilisi. Donec egestas ligula vitae odio interdum aliquet. Duis lectus turpis, luctus eget tincidunt eu, congue et odio. Duis pharetra et nisl at faucibus. Quisque luctus pulvinar arcu, et molestie lectus ultrices et. Sed diam urna, egestas ut ipsum vel, volutpat volutpat neque. Praesent fringilla tortor arcu. Vivamus faucibus nisl enim, nec tristique ipsum euismod facilisis. Morbi ut bibendum est, eu tincidunt odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris aliquet odio ac lorem aliquet ultricies in eget neque. Phasellus nec tortor vel tellus pulvinar feugiat.</p>\n    </ng-template>\n  </ngb-tab>\n -->\n\n\n</ngb-tabset>\n\n\n\n<div class=\"\" [hidden]='serviciosSeleccionado?.length == 0'>\n\n<div class=\"card\">\n<div class=\"card-block\">\n\n</div>\n\n\n<div class=\"card-block client-card table-1-card p-t-0\">\n<div class=\"table-responsive\">\n<table class=\"table\">\n<thead>\n<tr class=\"text-capitalize\">\n<th>Servicio</th>\n<th>Duracion</th>\n<th>Precio</th>\n\n\n</tr>\n</thead>\n<tbody>\n\n<tr  *ngFor=\"let e of serviciosSeleccionado || []\" >\n<td class=\"\">\n{{e.nombre}}\n</td>\n<td>{{e.duracion}}min</td>\n<td class=\"text-success\">\n<!-- \n  <span [hidden]=\"!(usuarioSeleccionado['descuento']>0)\"  style=\"color: #777;text-decoration: line-through;\">${{e.precio.toFixed(2)}}</span> -->\n<br>\n    <span >${{getPrecioDescuento(e.precio)}}</span>\n\n\n\n</td>\n\n</tr>\n\n\n\n\n</tbody>\n</table>\n</div>\n<!--   <button [disabled]='!idServicio.valid' (click)='agregarServicioCita(agregarEjercicio.idServicio)' class=\"btn btn-success\">Agregar Servicio</button> -->\n\n \n</div>\n</div>\n</div>\n\n\n\n        </div>\n    </ng-template>\n  </ngb-tab>\n\n\n\n\n</ngb-tabset>\n\n\n<!-- \n<div *ngIf='!claseSeleccionada[\"idCentro\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  \n\n          <div class=\"card-body\">\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Crear nuevo Negocio</h3>\n\n<form  #form='ngForm' name=\"form\" class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreN.valid}\" [(ngModel)]=\"nuevaClase.nombre\" name=\"nombreN\" type=\"text\" class=\"form-control\" #nombreN=\"ngModel\" required>\n    \n    </div>\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Email</label>\n      <input  [ngClass]=\"{'is-invalid':!emailN.valid}\" [(ngModel)]=\"nuevaClase.email\" name=\"emailN\" type=\"text\" class=\"form-control\" #emailN=\"ngModel\" required>\n    \n    </div>\n\n        <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Telefono</label>\n      <input  [ngClass]=\"{'is-invalid':!telefonoN.valid}\" [(ngModel)]=\"nuevaClase.telefono\" name=\"telefonoN\" type=\"text\" class=\"form-control\" #telefonoN=\"ngModel\" required>\n    \n    </div>\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre Registro</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreTitularN.valid}\" [(ngModel)]=\"nuevaClase.nombreTitular\" name=\"nombreTitularN\" type=\"text\" class=\"form-control\" #nombreTitularN=\"ngModel\" required>\n    \n    </div>\n\n\n\n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select   [ngClass]=\"{'is-invalid':!estadoN.valid}\"  [(ngModel)]=\"nuevaClase.estado\" name=\"estadoN\" #estadoN=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\" >\n                <option value=\"1\">Publicado</option>\n        <option value=\"2\">Pendiente de Revision</option>\n         <option value=\"3\">No Publicado</option>\n      </select>\n    </div>\n</div>\n\n\n  <button  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' type='submit' class=\"btn btn-primary\" [disabled]=\"!form.valid\"  (click)='guardarNuevaClase()'>Crear negocio</button>\n\n\n</form>\n\n\n\n\n\n\n          </div>\n\n</div>\n -->\n\n\n    </div> \n\n\n\n"
 
 /***/ }),
 
@@ -81,18 +342,37 @@ var AdmincentrosComponent = (function () {
         this.endpointsService = endpointsService;
         this.router = router;
         this.rows = [];
+        this.rows2 = [];
+        this.opiniones = [];
         this.rowsUsuarios = [];
         this.negociosParent = [];
+        this.servicios = [];
+        this.serviciosSeleccionado = [];
+        this.citasPendienteConfirmar = [];
+        this.citasConfirmadas = [];
+        this.citasCompletadas = [];
+        this.citasCanceladas = [];
+        this.conjuntoCC = [];
+        this.citasReprogramads = [];
+        this.currentID = '';
         this.negociosAsignados = [];
         this.seleccionCentro = {};
         this.categorias = [];
         this.selected = [];
+        this.selected2 = [];
+        this.selected3 = [];
+        this.selected4 = [];
         this.editar = false;
         this.claseSeleccionada = {};
+        this.opinionSelect = {};
+        this.citaSelected = {};
+        this.test = {};
+        this.dataR = {};
         this.nuevaClase = {};
         this.cu = JSON.parse(localStorage.getItem('currentUser'));
         this.loading = false;
         this.loading2 = false;
+        this.loadingOpiniones = false;
         this.isCollapsed = false;
         this.rowsHorarios = [];
         this.selectedHorario = [];
@@ -115,13 +395,29 @@ var AdmincentrosComponent = (function () {
         }
     }
     AdmincentrosComponent.prototype.ngOnInit = function () {
-        var _this = this;
         console.log('d');
-        this.getCentrosAll();
-        this.endpointsService.cargaUsuariosConsolaAd()
+        this.cargaUCSA();
+        //this.getCentrosAll();
+    };
+    AdmincentrosComponent.prototype.cargaUCSA = function () {
+        var _this = this;
+        this.endpointsService.cargaUsuariosConsolaSA()
             .then(function (data) {
             //console.log(data);
-            _this.negociosParent = data;
+            //this.negociosParent = data;
+            _this.rows2 = data;
+            // this.originalData = data;
+        });
+    };
+    AdmincentrosComponent.prototype.getOpiniones = function (id) {
+        var _this = this;
+        console.log(id);
+        this.endpointsService.getOpinionesSA({ idCentro: id })
+            .then(function (data) {
+            console.log(data);
+            //this.negociosParent = data;
+            _this.opiniones = data['opiniones'];
+            _this.servicios = data['servicios'];
             // this.originalData = data;
         });
     };
@@ -213,16 +509,18 @@ var AdmincentrosComponent = (function () {
         var _this = this;
         this.loading = true;
         console.log(this.nuevaClase);
-        this.nuevaClase['parentUser'] = this.cu[0]['idUsuarioConsola'];
+        this.nuevaClase['parentUser'] = this.test["idUsuarioConsola"];
         this.nuevaClase['nombre2'] = this.nuevaClase['nombreTitular'];
-        this.endpointsService.addNegocio(this.nuevaClase)
+        console.log(this.nuevaClase);
+        this.endpointsService.addNegocioSA(this.nuevaClase)
             .then(function (data) {
             console.log(data);
             _this.loading = false;
-            _this.getCentrosAll();
             alert('Agregado correctamente');
             _this.editar = false;
             _this.nuevaClase = {};
+            _this.claseSeleccionada = {};
+            _this.cargaUCSA();
         }, function (msg) {
             console.log(msg);
             _this.loading = false;
@@ -244,27 +542,105 @@ var AdmincentrosComponent = (function () {
         // this.claseSeleccionada = JSON.parse(JSON.stringify(this.selected[0]));
         //  this.cargaUsuarios(this.selectedHorario[0]['idReservaClase']);
     };
+    AdmincentrosComponent.prototype.onSelect2 = function (_a) {
+        var selected2 = _a.selected2;
+        console.log(this.selected2[0]);
+        this.claseSeleccionada = JSON.parse(JSON.stringify(this.selected2[0]));
+        this.getOpiniones(this.claseSeleccionada['idCentro']);
+    };
+    AdmincentrosComponent.prototype.ocultarPubli = function (estadoP, idEvaluacionCentroP) {
+        var _this = this;
+        var dataEv = { estado: estadoP, idEvaluacionCentro: idEvaluacionCentroP };
+        //console.log(this.opinionSelect['idEvaluacionCentro']);
+        this.loading2 = true;
+        this.endpointsService.updateOpinionSA(dataEv)
+            .then(function (data) {
+            console.log(data);
+            _this.loading2 = false;
+            _this.getOpiniones(_this.claseSeleccionada['idCentro']);
+            alert('Editado correctamente');
+            //this.editar = false;
+            // this.nuevaClase={};
+            //this.claseSeleccionada={};
+            // this.cargaUCSA();
+        }, function (msg) {
+            console.log(msg);
+            _this.loading2 = false;
+        });
+    };
+    AdmincentrosComponent.prototype.onSelect3 = function (_a) {
+        var selected3 = _a.selected3;
+        console.log(this.selected3[0]);
+        //this.claseSeleccionada = JSON.parse(JSON.stringify(this.selected3[0]));
+        this.opinionSelect = JSON.parse(JSON.stringify(this.selected3[0]));
+    };
+    AdmincentrosComponent.prototype.onSelect4 = function (_a) {
+        var selected4 = _a.selected4;
+        console.log(this.selected4[0]);
+    };
+    AdmincentrosComponent.prototype.activeTab = function (ev) {
+        console.log(ev);
+        this.currentID = ev['nextId'];
+    };
     AdmincentrosComponent.prototype.onSelect = function (_a) {
         var selected = _a.selected;
         console.log(this.selected[0]);
+        //  this.claseSeleccionada = this.selected[0];
         this.selectedHorario = [];
+        this.serviciosSeleccionado = [];
         // this.rows = this.originalData;
-        // this.test = JSON.parse(JSON.stringify(this.selected[0]));
-        this.claseSeleccionada = JSON.parse(JSON.stringify(this.selected[0]));
-        this.cargarNegocios(this.claseSeleccionada['idCentro']);
+        this.test = JSON.parse(JSON.stringify(this.selected[0]));
+        this.claseSeleccionada = {};
+        this.cargarNegocios(this.selected[0]['idUsuarioConsola']);
     };
     AdmincentrosComponent.prototype.onActivate = function (event) {
-        console.log('Activate Event', event);
+        console.log(event);
     };
     AdmincentrosComponent.prototype.cargarNegocios = function (idC) {
         var _this = this;
         this.loading2 = true;
-        this.endpointsService.cargaUsuariosSA({ idCentro: idC })
+        this.endpointsService.cargaCentrosUserSA({ idUsuarioConsola: idC })
             .then(function (data) {
             console.log(data);
-            _this.negociosAsignados = data;
+            _this.rows = data['sucursales'];
+            _this.dataR = data['dataR'];
+            _this.citasPendienteConfirmar = data['info']["1"] || [];
+            _this.citasConfirmadas = data['info']["2"] || [];
+            _this.citasCompletadas = data['info']["3"] || [];
+            _this.citasCanceladas = data['info']["4"] || [];
+            _this.citasReprogramads = data['info']["5"] || [];
+            _this.conjuntoCC = _this.citasPendienteConfirmar.concat(_this.citasReprogramads);
             _this.loading2 = false;
             // this.originalData = data;
+        });
+    };
+    AdmincentrosComponent.prototype.getPrecioDescuento = function (precio) {
+        var retorno = 0;
+        if (this.citaSelected['descuento']) {
+            var descuento = this.citaSelected['descuento'];
+            var precioN = precio;
+            retorno = precioN - (precioN * (descuento / 100));
+        }
+        else {
+            retorno = precio;
+        }
+        return retorno.toFixed(2);
+    };
+    AdmincentrosComponent.prototype.getServicios = function (rowSelected) {
+        var _this = this;
+        console.log(rowSelected['selected'][0]);
+        this.citaSelected = rowSelected['selected'][0];
+        var dataER = { idCita: rowSelected['selected'][0]['idCita'], idCentro: rowSelected['selected'][0]['idCentro'] };
+        this.endpointsService.getServiciosCita(dataER)
+            .then(function (data) {
+            console.log(data);
+            // this.usuarioSeleccionado['precioEsperado'] = data['servicios'][0]['precioEsperado'];
+            _this.serviciosSeleccionado = data['servicios'];
+            //this.categoriasCentro = Object.keys(data['categorias']);
+            //this.serviciosCategoria = Object.values(data['categorias']);
+            //this.actualizarHora(this.usuarioSeleccionado['horaF']);
+        }, function (msg) {
+            console.log(msg);
         });
     };
     AdmincentrosComponent.prototype.guardarEdicion = function () {
@@ -275,7 +651,7 @@ var AdmincentrosComponent = (function () {
             .then(function (data) {
             console.log(data);
             _this.loading = false;
-            _this.getCentrosAll();
+            _this.cargaUCSA();
             alert('Editado correctamente');
             _this.editar = false;
         }, function (msg) {
@@ -313,7 +689,7 @@ var AdmincentrosComponent = (function () {
 /***/ "../../../../../src/app/adminusers/adminusers.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n <div class=\"card mb-4\" style=\"margin-top: 20px\">\n    \n <div >\n    <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\">\n\n\n\n    \t<div class=\"card-block-big card-status\">\n<h3>Usuarios</h3>\n\n</div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n   <button  style='margin-right: 15px;margin-top: 20px;margin-bottom: 20px;' class=\" btn btn-primary float-right\" (click)='claseSeleccionada={};selected = [];'>Crear nuevo usuario</button>\n\n    </div>\n\n  </div>\n</div>\n\n\n\n\n\n      <div  style='float:left;width:100%'>\n        <div class=\"info\">\n          <p></p>\n        </div>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n          [columns]=\"columns\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect($event)'>\n        </ngx-datatable>\n      </div>\n</div>\n\n<div *ngIf='!claseSeleccionada[\"idUsuarioConsola\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  \n <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Crear nuevo Usuario</h3>\n\n<form  #form='ngForm' name=\"form\" class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreN.valid}\" [(ngModel)]=\"nuevaClase.nombre\" name=\"nombreN\" type=\"text\" class=\"form-control\" #nombreN=\"ngModel\" required>\n    \n    </div>\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Email</label>\n      <input  [ngClass]=\"{'is-invalid':!emailN.valid}\" [(ngModel)]=\"nuevaClase.email\" name=\"emailN\" type=\"text\" class=\"form-control\" #emailN=\"ngModel\" required>\n    \n    </div>\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Codigo Acceso</label>\n      <input  [ngClass]=\"{'is-invalid':!passwordN.valid}\" [(ngModel)]=\"nuevaClase.password\" name=\"passwordN\" type=\"text\" class=\"form-control\" #passwordN=\"ngModel\" required>\n    \n    </div>\n\n\n\n\n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select   [ngClass]=\"{'is-invalid':!estadoN.valid}\"  [(ngModel)]=\"nuevaClase.estado\" name=\"estadoN\" #estadoN=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\" >\n        <option value=\"1\">Activo</option>\n        <option value=\"2\">Desactivado</option>\n      </select>\n    </div>\n</div>\n\n\n  <button  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' type='submit' class=\"btn btn-primary\" [disabled]=\"!form.valid\"  (click)='guardarNuevaClase()'>Crear usuario consola</button>\n\n\n</form>\n\n\n\n\n\n\n          </div>\n\n</div>\n\n<div *ngIf='claseSeleccionada[\"idUsuarioConsola\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3>Informacion del usuario</h3>\n\n  </div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n    <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    {{isCollapsed ? 'Mostrar mas' : 'Mostrar menos'}}\n  </button>\n\n    </div>\n\n  </div>\n</div>\n\n\n<!--\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Informacion de la clase</h3>\n\n<p>\n  <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    Toggle\n  </button>\n</p>\n <div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n  <div class=\"card\">\n    <div class=\"card-body\">\n      You can collapse this card by clicking Toggle\n    </div>\n  </div>\n</div>\n -->\n\n<div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n\n<form class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre servicio</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.nombre\" name=\"nombre\" type=\"text\" class=\"form-control\">\n    </div>\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Email</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.email\" name=\"email\" type=\"text\" class=\"form-control\">\n    </div>\n\n\n    <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Codigo Acceso</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.password\" name=\"password\" type=\"text\" class=\"form-control\">\n    </div>\n\n<!--    <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Dificultad</label>\n\n\n                         <select [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.dificultad\" name=\"dificultad\" type=\"number\" class=\"form-control\">\n        <option value=\"10\">10%</option>\n        <option value=\"25\">25%</option>\n        <option value=\"40\">40%</option>\n        <option value=\"50\">50%</option>\n        <option value=\"70\">70%</option>\n        <option value=\"85\">85%</option>\n        <option value=\"90\">90%</option>\n        <option value=\"100\">100%</option>\n\n      </select> \n\n\n\n    </div>\n\n -->\n      \n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select [disabled]=\"!editar\" [(ngModel)]=\"claseSeleccionada.estado\" class=\"form-control custom-select mr-sm-2\" name='estado'>\n      \n        <option value=\"1\">Activo</option>\n        <option value=\"2\">Desactivado</option>\n      </select>\n    </div>\n\n\n\n     \n\n\n\n\n  </div>\n\n\n</form>\n\n<div *ngIf='claseSeleccionada.idUsuarioConsola' >\n\n  <button  [hidden]=\"editar\" (click)='editar = !editar' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Editar</button>\n\n    <button  [hidden]=\"editar\" (click)='eliminarUsuario(claseSeleccionada.idUsuarioConsola)' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-danger\" >Eliminar</button>\n\n\n  <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n   <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n</div>\n</div>\n          </div>\n        </div>\n\n\n\n\n\n\n\n\n<!-- \n\n\n\n         <div  *ngIf='claseSeleccionada[\"idUsuarioConsola\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n   \n <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;'>Negocios que administra</h3>\n\n  </div>\n\n</div>\n\n\n\n          <table  style='    ' class='table material'>\n            <thead>\n                <th>Nombre del negocio</th>\n                \n                <th></th>\n            </thead>\n            <tbody>\n                <tr *ngFor=\"let e  of negociosAsignados || []\">\n                    <td>{{e.nombre}}</td>\n               \n                    <td><button (click)='eliminarNegocioUsuario(e.idUsuarioConsolaCentro)' class=\"btn btn-danger\">Eliminar</button></td>\n                </tr>\n            </tbody>\n        </table>\n\n        <div style=\"margin:20px\" >\n          <h5>Asignar Negocio</h5>\n          <div class=\"col-md-3 mb-3 ff\" style=\"    display: inline-block;\n    margin-right: 15px !important;\n    padding-left: 0px;\n    margin-top: 20px;\">\n\n\n          <label for=\"validationCustom01\"></label>\n          <select   [(ngModel)]=\"seleccionCentro.idCentro\" name=\"idCentro\" #idCentro=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\">\n\n              <option *ngFor=\"let c of negociosParent\" \n              [value]=\"c.idCentro\" \n              >\n              {{c.nombre}}\n              </option>\n          </select>\n          </div>\n\n          <button [disabled]='!seleccionCentro.idCentro' (click)='agregarNegocioUsuario(seleccionCentro)' class=\"btn btn-success\">Agregar</button>\n        </div>\n\n      </div>\n\n\n\n</div>\n\n\n -->\n\n    </div> \n\n\n\n"
+module.exports = "\n <div class=\"card mb-4\" style=\"margin-top: 20px\">\n    \n <div >\n    <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\">\n\n\n\n    \t<div class=\"card-block-big card-status\">\n<span style=\"    font-size: 21px;\n    color: #0073aa;\">Cuenta Centros</span>\n\n</div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n   <button  style='margin-right: 15px;margin-top: 20px;margin-bottom: 20px;' class=\" btn btn-primary float-right\" (click)='claseSeleccionada={};selected = [];'>Crear nuevo usuario</button>\n\n    </div>\n\n  </div>\n</div>\n\n\n\n\n\n      <div  style='float:left;width:100%'>\n        <div class=\"info\">\n          <p></p>\n        </div>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n          [columns]=\"columns\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect($event)'>\n        </ngx-datatable>\n      </div>\n</div>\n\n<div *ngIf='!claseSeleccionada[\"idUsuarioConsola\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  \n <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n        \n\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n\n<span style=\"        font-size: 21px;\n    color: #0073aa;\n    margin: 20px;\n    display: block;\">Crear nuevo Usuario</span>\n  </div>\n\n\n\n\n<form  #form='ngForm' name=\"form\" class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreN.valid}\" [(ngModel)]=\"nuevaClase.nombre\" name=\"nombreN\" type=\"text\" class=\"form-control\" #nombreN=\"ngModel\" required>\n    \n    </div>\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Email</label>\n      <input  [ngClass]=\"{'is-invalid':!emailN.valid}\" [(ngModel)]=\"nuevaClase.email\" name=\"emailN\" type=\"text\" class=\"form-control\" #emailN=\"ngModel\" required>\n    \n    </div>\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Codigo Acceso</label>\n      <input  [ngClass]=\"{'is-invalid':!passwordN.valid}\" [(ngModel)]=\"nuevaClase.password\" name=\"passwordN\" type=\"text\" class=\"form-control\" #passwordN=\"ngModel\" required>\n    \n    </div>\n\n\n\n\n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select   [ngClass]=\"{'is-invalid':!estadoN.valid}\"  [(ngModel)]=\"nuevaClase.estado\" name=\"estadoN\" #estadoN=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\" >\n        <option value=\"1\">Activo</option>\n        <option value=\"2\">Desactivado</option>\n      </select>\n    </div>\n</div>\n\n\n  <button  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' type='submit' class=\"btn btn-primary\" [disabled]=\"!form.valid\"  (click)='guardarNuevaClase()'>Crear usuario consola</button>\n\n\n</form>\n\n\n\n\n\n\n          </div>\n\n</div>\n\n<div *ngIf='claseSeleccionada[\"idUsuarioConsola\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n\n<span style=\"    font-size: 21px;\n    color: #0073aa;\">Informacion del usuario</span>\n  </div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n    <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    {{isCollapsed ? 'Mostrar mas' : 'Mostrar menos'}}\n  </button>\n\n    </div>\n\n  </div>\n</div>\n\n\n<!--\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Informacion de la clase</h3>\n\n<p>\n  <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    Toggle\n  </button>\n</p>\n <div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n  <div class=\"card\">\n    <div class=\"card-body\">\n      You can collapse this card by clicking Toggle\n    </div>\n  </div>\n</div>\n -->\n\n<div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n\n<form class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre servicio</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.nombre\" name=\"nombre\" type=\"text\" class=\"form-control\">\n    </div>\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Email</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.email\" name=\"email\" type=\"text\" class=\"form-control\">\n    </div>\n\n\n    <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Codigo Acceso</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.password\" name=\"password\" type=\"text\" class=\"form-control\">\n    </div>\n\n<!--    <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Dificultad</label>\n\n\n                         <select [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.dificultad\" name=\"dificultad\" type=\"number\" class=\"form-control\">\n        <option value=\"10\">10%</option>\n        <option value=\"25\">25%</option>\n        <option value=\"40\">40%</option>\n        <option value=\"50\">50%</option>\n        <option value=\"70\">70%</option>\n        <option value=\"85\">85%</option>\n        <option value=\"90\">90%</option>\n        <option value=\"100\">100%</option>\n\n      </select> \n\n\n\n    </div>\n\n -->\n      \n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select [disabled]=\"!editar\" [(ngModel)]=\"claseSeleccionada.estado\" class=\"form-control custom-select mr-sm-2\" name='estado'>\n      \n        <option value=\"1\">Activo</option>\n        <option value=\"2\">Desactivado</option>\n      </select>\n    </div>\n\n\n\n     \n\n\n\n\n  </div>\n\n\n</form>\n\n<div *ngIf='claseSeleccionada.idUsuarioConsola' >\n\n  <button  [hidden]=\"editar\" (click)='editar = !editar' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Editar</button>\n\n    <button  [hidden]=\"editar\" (click)='eliminarUsuario(claseSeleccionada.idUsuarioConsola)' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-danger\" >Eliminar</button>\n\n\n  <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n   <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n</div>\n</div>\n          </div>\n        </div>\n\n\n\n\n\n\n\n\n<!-- \n\n\n\n         <div  *ngIf='claseSeleccionada[\"idUsuarioConsola\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n   \n <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;'>Negocios que administra</h3>\n\n  </div>\n\n</div>\n\n\n\n          <table  style='    ' class='table material'>\n            <thead>\n                <th>Nombre del negocio</th>\n                \n                <th></th>\n            </thead>\n            <tbody>\n                <tr *ngFor=\"let e  of negociosAsignados || []\">\n                    <td>{{e.nombre}}</td>\n               \n                    <td><button (click)='eliminarNegocioUsuario(e.idUsuarioConsolaCentro)' class=\"btn btn-danger\">Eliminar</button></td>\n                </tr>\n            </tbody>\n        </table>\n\n        <div style=\"margin:20px\" >\n          <h5>Asignar Negocio</h5>\n          <div class=\"col-md-3 mb-3 ff\" style=\"    display: inline-block;\n    margin-right: 15px !important;\n    padding-left: 0px;\n    margin-top: 20px;\">\n\n\n          <label for=\"validationCustom01\"></label>\n          <select   [(ngModel)]=\"seleccionCentro.idCentro\" name=\"idCentro\" #idCentro=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\">\n\n              <option *ngFor=\"let c of negociosParent\" \n              [value]=\"c.idCentro\" \n              >\n              {{c.nombre}}\n              </option>\n          </select>\n          </div>\n\n          <button [disabled]='!seleccionCentro.idCentro' (click)='agregarNegocioUsuario(seleccionCentro)' class=\"btn btn-success\">Agregar</button>\n        </div>\n\n      </div>\n\n\n\n</div>\n\n\n -->\n\n    </div> \n\n\n\n"
 
 /***/ }),
 
@@ -588,10 +964,13 @@ var AdminusersComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__rutina_rutina_component__ = __webpack_require__("../../../../../src/app/rutina/rutina.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__admincentros_admincentros_component__ = __webpack_require__("../../../../../src/app/admincentros/admincentros.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__adminusers_adminusers_component__ = __webpack_require__("../../../../../src/app/adminusers/adminusers.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__profesores_profesores_component__ = __webpack_require__("../../../../../src/app/profesores/profesores.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__maquinas_maquinas_component__ = __webpack_require__("../../../../../src/app/maquinas/maquinas.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__novedades_novedades_component__ = __webpack_require__("../../../../../src/app/novedades/novedades.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__service_authguard_service__ = __webpack_require__("../../../../../src/app/service/authguard.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__addcategorias_addcategorias_component__ = __webpack_require__("../../../../../src/app/addcategorias/addcategorias.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__parametros_parametros_component__ = __webpack_require__("../../../../../src/app/parametros/parametros.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__profesores_profesores_component__ = __webpack_require__("../../../../../src/app/profesores/profesores.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__maquinas_maquinas_component__ = __webpack_require__("../../../../../src/app/maquinas/maquinas.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__novedades_novedades_component__ = __webpack_require__("../../../../../src/app/novedades/novedades.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__usuarioadmin_usuarioadmin_component__ = __webpack_require__("../../../../../src/app/usuarioadmin/usuarioadmin.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__service_authguard_service__ = __webpack_require__("../../../../../src/app/service/authguard.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -603,6 +982,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 // Layouts
 
 // import { LayoutSimpleComponent } from './shared/layouts/simple/simple.component';
+
+
+
 
 
 
@@ -635,7 +1017,7 @@ var routes = [
     },
     {
         path: '',
-        component: __WEBPACK_IMPORTED_MODULE_2__shared_components_layout_admin_layout_admin_component__["a" /* LayoutAdminComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_20__service_authguard_service__["a" /* AuthguardService */]],
+        component: __WEBPACK_IMPORTED_MODULE_2__shared_components_layout_admin_layout_admin_component__["a" /* LayoutAdminComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_23__service_authguard_service__["a" /* AuthguardService */]],
         children: [
             {
                 path: '',
@@ -657,7 +1039,7 @@ var routes = [
             },
             {
                 path: 'calendario',
-                component: __WEBPACK_IMPORTED_MODULE_17__profesores_profesores_component__["a" /* ProfesoresComponent */]
+                component: __WEBPACK_IMPORTED_MODULE_19__profesores_profesores_component__["a" /* ProfesoresComponent */]
                 // loadChildren: './plong/plong.module#PlongModule'
             },
             {
@@ -696,13 +1078,28 @@ var routes = [
                 // loadChildren: './plong/plong.module#PlongModule'
             },
             {
+                path: 'parametros',
+                component: __WEBPACK_IMPORTED_MODULE_18__parametros_parametros_component__["a" /* ParametrosComponent */]
+                // loadChildren: './plong/plong.module#PlongModule'
+            },
+            {
+                path: 'addcategorias',
+                component: __WEBPACK_IMPORTED_MODULE_17__addcategorias_addcategorias_component__["a" /* AddcategoriasComponent */]
+                // loadChildren: './plong/plong.module#PlongModule'
+            },
+            {
+                path: 'uapp',
+                component: __WEBPACK_IMPORTED_MODULE_22__usuarioadmin_usuarioadmin_component__["a" /* UsuarioadminComponent */]
+                // loadChildren: './plong/plong.module#PlongModule'
+            },
+            {
                 path: 'admincentros',
                 component: __WEBPACK_IMPORTED_MODULE_15__admincentros_admincentros_component__["a" /* AdmincentrosComponent */]
                 // loadChildren: './plong/plong.module#PlongModule'
             },
             {
                 path: 'profesores',
-                component: __WEBPACK_IMPORTED_MODULE_17__profesores_profesores_component__["a" /* ProfesoresComponent */]
+                component: __WEBPACK_IMPORTED_MODULE_19__profesores_profesores_component__["a" /* ProfesoresComponent */]
                 // loadChildren: './plong/plong.module#PlongModule'
             },
             {
@@ -727,12 +1124,12 @@ var routes = [
             },
             {
                 path: 'maquinas',
-                component: __WEBPACK_IMPORTED_MODULE_18__maquinas_maquinas_component__["a" /* MaquinasComponent */]
+                component: __WEBPACK_IMPORTED_MODULE_20__maquinas_maquinas_component__["a" /* MaquinasComponent */]
                 // loadChildren: './plong/plong.module#PlongModule'
             },
             {
                 path: 'novedades',
-                component: __WEBPACK_IMPORTED_MODULE_19__novedades_novedades_component__["a" /* NovedadesComponent */]
+                component: __WEBPACK_IMPORTED_MODULE_21__novedades_novedades_component__["a" /* NovedadesComponent */]
                 // loadChildren: './plong/plong.module#PlongModule'
             },
         ]
@@ -880,6 +1277,9 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__horario_horario_component__ = __webpack_require__("../../../../../src/app/horario/horario.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__admincentros_admincentros_component__ = __webpack_require__("../../../../../src/app/admincentros/admincentros.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__adminusers_adminusers_component__ = __webpack_require__("../../../../../src/app/adminusers/adminusers.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_38__usuarioadmin_usuarioadmin_component__ = __webpack_require__("../../../../../src/app/usuarioadmin/usuarioadmin.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_39__addcategorias_addcategorias_component__ = __webpack_require__("../../../../../src/app/addcategorias/addcategorias.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_40__parametros_parametros_component__ = __webpack_require__("../../../../../src/app/parametros/parametros.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -904,6 +1304,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 // shared components/pipes/services structure ... https://github.com/housseindjirdeh/angular2-hn
 // lazy shared structure ... https://github.com/ngx-translate/core/issues/209
+
+
+
 
 
 
@@ -954,7 +1357,10 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_34__staf_staf_component__["a" /* StafComponent */],
                 __WEBPACK_IMPORTED_MODULE_35__horario_horario_component__["a" /* HorarioComponent */],
                 __WEBPACK_IMPORTED_MODULE_36__admincentros_admincentros_component__["a" /* AdmincentrosComponent */],
-                __WEBPACK_IMPORTED_MODULE_37__adminusers_adminusers_component__["a" /* AdminusersComponent */]
+                __WEBPACK_IMPORTED_MODULE_37__adminusers_adminusers_component__["a" /* AdminusersComponent */],
+                __WEBPACK_IMPORTED_MODULE_38__usuarioadmin_usuarioadmin_component__["a" /* UsuarioadminComponent */],
+                __WEBPACK_IMPORTED_MODULE_39__addcategorias_addcategorias_component__["a" /* AddcategoriasComponent */],
+                __WEBPACK_IMPORTED_MODULE_40__parametros_parametros_component__["a" /* ParametrosComponent */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_13_ap_angular2_fullcalendar__["CalendarModule"],
@@ -1986,10 +2392,30 @@ var EndpointsService = (function () {
             });
         });
     };
+    EndpointsService.prototype.editarCategoriaN = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/editarCategoriaN', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
     EndpointsService.prototype.editarStafImagen = function (dataE) {
         var _this = this;
         return new Promise(function (resolve) {
             _this.http.post(_this.api2 + '/editarStafImagen', dataE).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.editarCategoriaImagen = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/editarCategoriaImagen', dataE).subscribe(function (data) {
                 resolve(data);
             }, function (err) {
                 console.log(err);
@@ -2010,6 +2436,16 @@ var EndpointsService = (function () {
         var _this = this;
         return new Promise(function (resolve) {
             _this.http.post(_this.api2 + '/getCuponesCentro', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.getCentrosCuponSA = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/getCentrosCuponSA', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
                 resolve(data);
             }, function (err) {
                 console.log(err);
@@ -2056,6 +2492,26 @@ var EndpointsService = (function () {
             });
         });
     };
+    EndpointsService.prototype.getCategoriasAllSA = function () {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/getCategoriasAllSA', { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.nuevaCategoria = function (ff) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/nuevaCategoria', JSON.stringify(ff), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
     EndpointsService.prototype.getCuponesAll = function () {
         var _this = this;
         return new Promise(function (resolve) {
@@ -2070,6 +2526,46 @@ var EndpointsService = (function () {
         var _this = this;
         return new Promise(function (resolve) {
             _this.http.post(_this.api2 + '/subirImagen', dataE).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.getServiciosCupon = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/getServiciosCupon', dataE).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.getCentrosSucursales = function () {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/getCentrosSucursales', { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.addServicioCupon = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/addServicioCupon', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.addCentroCupon = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/addCentroCupon', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
                 resolve(data);
             }, function (err) {
                 console.log(err);
@@ -2126,10 +2622,40 @@ var EndpointsService = (function () {
             });
         });
     };
+    EndpointsService.prototype.cargaUsuariosConsolaSA = function () {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/cargaUsuariosConsolaSA', { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
     EndpointsService.prototype.getCentrosAll = function () {
         var _this = this;
         return new Promise(function (resolve) {
             _this.http.post(_this.api2 + '/getCentrosAll', { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.addNegocioSA = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/addNegocioSA', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.cargaCentrosUserSA = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/cargaCentrosUserSA', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
                 resolve(data);
             }, function (err) {
                 console.log(err);
@@ -2416,6 +2942,16 @@ var EndpointsService = (function () {
             });
         });
     };
+    EndpointsService.prototype.citasUserSA = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/citasUserSA', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
     EndpointsService.prototype.citasCentroC = function (dataE) {
         var _this = this;
         return new Promise(function (resolve) {
@@ -2440,6 +2976,26 @@ var EndpointsService = (function () {
         var _this = this;
         return new Promise(function (resolve) {
             _this.http.post(_this.api2 + '/citasCentroC2', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.editarUsuarioSA = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/editarUsuarioSA', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.getUsuariosConsolaSA = function () {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/getUsuariosConsolaSA', { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
                 resolve(data);
             }, function (err) {
                 console.log(err);
@@ -2680,6 +3236,26 @@ var EndpointsService = (function () {
         var _this = this;
         return new Promise(function (resolve) {
             _this.http.post(_this.api2 + '/editarNovedad', JSON.stringify(dataCla), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.updateOpinionSA = function (dataCla) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/updateOpinionSA', JSON.stringify(dataCla), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.getOpinionesSA = function (dataCla) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/getOpinionesSA', JSON.stringify(dataCla), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
                 resolve(data);
             }, function (err) {
                 console.log(err);
@@ -3852,6 +4428,67 @@ var OpinionesComponent = (function () {
 
 /***/ }),
 
+/***/ "../../../../../src/app/parametros/parametros.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  parametros works!\n</p>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/parametros/parametros.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/parametros/parametros.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ParametrosComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var ParametrosComponent = (function () {
+    function ParametrosComponent() {
+    }
+    ParametrosComponent.prototype.ngOnInit = function () {
+    };
+    ParametrosComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'tox-parametros',
+            template: __webpack_require__("../../../../../src/app/parametros/parametros.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/parametros/parametros.component.scss")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], ParametrosComponent);
+    return ParametrosComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "../../../../../src/app/profesores/profesores.component.html":
 /***/ (function(module, exports) {
 
@@ -4312,7 +4949,7 @@ var ProgramarClaseComponent = (function () {
 /***/ "../../../../../src/app/rutina/rutina.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "  <div class=\"card mb-4\" style=\"    background: transparent;\n    border: none !important;\">\n    \n\n    <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <div  style=\"    padding-top: 20px;\n    padding-left: 15px;\n    font-size: 31px;\">Cupones</div>\n\n  </div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n   <button  style='margin-right: 15px;margin-top: 20px;margin-bottom: 20px;' class=\" btn btn-primary float-right\" (click)='usuarioSeleccionado={};selected = [];'>Crear nuevo Cupon</button>\n\n    </div>\n\n  </div>\n</div>\n\n\n\n\n\n      <div style='float:left;width:100%'>\n      <ngx-loading [show]=\"loadingI\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n        <div class=\"info\">\n          <p></p>\n        </div>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect($event)'>\n\n\n\n                  <ngx-datatable-column prop=\"nombre\" name='Nombre' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n          <ngx-datatable-column prop=\"codigo\" name='Codigo' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n           <ngx-datatable-column prop=\"porcentajeDescuento\" name='% Descuento' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}} %\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column prop=\"soloFecha\" name='Fecha Expiracion' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n           <ngx-datatable-column prop=\"estado\" name='Estado' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n<!-- \n\n                 <ngx-datatable-column prop=\"estado\" name='Estado' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value == 1 ? \"Visible\" : \"No visible\"}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n -->\n\n\n\n        </ngx-datatable>\n\n      </div>\n\n\n<div *ngIf='!usuarioSeleccionado[\"idCupon\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  \n <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Crear nuevo Cupon</h3>\n\n<form  #form='ngForm' name=\"form\" class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreN.valid}\" [(ngModel)]=\"nuevoUsuario.nombre\" name=\"nombreN\" type=\"text\" class=\"form-control\" #nombreN=\"ngModel\" required>\n    \n    </div>\n\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Codigo</label>\n      <input  [ngClass]=\"{'is-invalid':!codigoN.valid}\" [(ngModel)]=\"nuevoUsuario.codigo\" name=\"codigoN\" type=\"text\" class=\"form-control\" #codigoN=\"ngModel\" required>\n    \n    </div>\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">% Descuento</label>\n      <input  [ngClass]=\"{'is-invalid':!porcentajeDescuento.valid}\" [(ngModel)]=\"nuevoUsuario.porcentajeDescuento\" name=\"porcentajeDescuentoN\" type=\"number\" class=\"form-control\" #porcentajeDescuento=\"ngModel\" required>\n    \n    </div>\n\n\n\n    <div class=\"col-md-4 mb-4 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Fecha expiracion</label>\n      <div class=\"input-group\">\n          <input  [ngClass]=\"{'is-invalid':!soloFecha.valid }\" [(ngModel)]=\"nuevoUsuario.soloFecha\" name=\"soloFecha\"  #soloFecha=\"ngModel\" class=\"form-control\" placeholder=\"yyyy-mm-dd\"\n             ngbDatepicker #d=\"ngbDatepicker\" required [minDate]='minDatse'>\n          <div class=\"input-group-append\">\n            <button class=\"btn btn-outline-secondary\" (click)=\"d.toggle()\" type=\"button\">\n              <img src=\"https://ng-bootstrap.github.io/img/calendar-icon.svg\" style=\"width: 1.2rem; height: 1rem; cursor: pointer;\"/>\n            </button>\n          </div>\n        </div>\n  </div>\n\n\n\n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select   [ngClass]=\"{'is-invalid':!estadoN.valid}\"  [(ngModel)]=\"nuevoUsuario.estado\" name=\"estadoN\" #estadoN=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\" >\n        <option value=\"1\">Visible</option>\n        <option value=\"2\">No - Visible</option>\n      </select>\n    </div>\n\n\n\n\n<!--      <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select   [ngClass]=\"{'is-invalid':!estadoN.valid}\"  [(ngModel)]=\"nuevoUsuario.estado\" name=\"estadoN\" #estadoN=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\" >\n        <option value=\"1\">Visible</option>\n        <option value=\"2\">No - Visible</option>\n      </select>\n    </div>\n -->\n\n  </div>\n\n\n  <button  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' type='submit' class=\"btn btn-primary\" [disabled]=\"!form.valid\"  (click)='nuevoCupon()'>Crear Cupon</button>\n\n\n</form>\n\n\n\n\n\n\n          </div>\n\n</div>\n\n<div *ngIf='usuarioSeleccionado[\"idCupon\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <div  style=\"    padding-bottom: 20px;\n    padding-left: 15px;\n    font-size: 31px;\">Informacion de Cupon</div>\n\n  </div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n    <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    {{isCollapsed ? 'Mostrar mas' : 'Mostrar menos'}}\n  </button>\n\n    </div>\n\n  </div>\n</div>\n\n\n<div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n\n<form class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"usuarioSeleccionado.nombre\" name=\"nombre\" type=\"text\" class=\"form-control\">\n    </div>\n\n        <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Codigo</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"usuarioSeleccionado.codigo\" name=\"codigo\" type=\"text\" class=\"form-control\">\n    </div>\n\n\n\n\n     <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">% Descuento</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"usuarioSeleccionado.porcentajeDescuento\" name=\"porcentajeDescuento\" type=\"number\" class=\"form-control\">\n    </div>\n\n\n      <div class=\"col-md-4 mb-4 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Fecha expiracion</label>\n      <div class=\"input-group\">\n          <input  [disabled]=\"!editar\" [(ngModel)]=\"usuarioSeleccionado.soloFecha\" name=\"soloFecha\"   class=\"form-control\" placeholder=\"yyyy-mm-dd\"\n             ngbDatepicker #d=\"ngbDatepicker\"  [minDate]='minDatse'>\n          <div class=\"input-group-append\">\n            <button class=\"btn btn-outline-secondary\" (click)=\"d.toggle()\" type=\"button\">\n              <img src=\"https://ng-bootstrap.github.io/img/calendar-icon.svg\" style=\"width: 1.2rem; height: 1rem; cursor: pointer;\"/>\n            </button>\n          </div>\n        </div>\n  </div>\n\n\n \n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select   [disabled]=\"!editar\"  [(ngModel)]=\"usuarioSeleccionado.estado\" name=\"estado\"   class=\"form-control custom-select mr-sm-2\" >\n        <option value=\"1\">Visible</option>\n        <option value=\"2\">No - Visible</option>\n      </select>\n    </div>\n\n\n  </div>\n\n\n</form>\n\n<div *ngIf='usuarioSeleccionado.idCupon' >\n\n  <button  [disabled]=\"editar\" (click)='editar = !editar' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Editar</button>\n  <button [disabled]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n   <button (click)='editar = !editar' [disabled]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n</div>\n</div>\n          </div>\n        </div> \n\n\n\n\n\n         <div  *ngIf='usuarioSeleccionado[\"idCupon\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n   <ngx-loading [show]=\"loading2\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;'>Negocios donde aplica</h3>\n\n  </div>\n\n</div>\n\n\n\n          <table  style='    ' class='table material'>\n            <thead>\n               <th>Nombre</th>\n                 <th>Cupon</th>\n           \n                \n                <th></th>\n            </thead>\n            <tbody>\n                <tr *ngFor=\"let e  of centroCupones || []\">\n                    <td>{{e.nombre}}</td>\n                    <td>{{e.nombreCupon}}</td>\n\n               \n                    <td><button (click)='eliminarNegocioUsuario(e.idCentro)' class=\"btn btn-danger\">Eliminar</button></td>\n                </tr>\n            </tbody>\n        </table>\n\n        <div style=\"margin:20px\" >\n          <h5>Asignar a Negocio</h5>\n          <div class=\"col-md-3 mb-3 ff\" style=\"    display: inline-block;\n    margin-right: 15px !important;\n    padding-left: 0px;\n    margin-top: 20px;\">\n\n\n          <label for=\"validationCustom01\"></label>\n          <select   [(ngModel)]=\"seleccionCentro.idCentroC\" name=\"idCentroC\" #idCentroC=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\">\n\n              <option  *ngFor=\"let c of negociosParent\" \n              [value]=\"c.idCentro\" [hidden]='c.estado!==1'\n              >\n              {{c.nombre}} \n              </option>\n          </select>\n          </div>\n\n          <button [hidden]='!seleccionCentro.idCentroC' (click)='agregarNegocioUsuario(seleccionCentro.idCentroC)' class=\"btn btn-success\">Agregar</button>\n        </div>\n\n      </div>\n\n\n\n</div>\n\n\n\n\n    </div> \n\n"
+module.exports = "   <ng-template #content let-c=\"close\" let-d=\"dismiss\">\n  <div class=\"modal-header\">\n   <h5 style=\"margin-bottom: 20px\">Agregar Servicio</h5>\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n  <div class=\"modal-body\">\n\n     <label >Categoria</label>\n              <select   (change)=\"onChangeS($event.target.value)\"  name=\"nombreCat\"  required  class=\"form-control custom-select mr-sm-2\">\n                <option [value]=\"false\"  selected></option>\n              <option *ngFor=\"let c of categoriasCentro; let i = index\" \n              [value]=\"i\" \n              >\n              {{c}}\n              </option>\n          </select>\n\n\n           <label  style=\"margin-top: 14px\" [hidden]='!serviciosCat?.length>0 || verifs'   for=\"idServicio\">Servicios</label>\n              <select   (change)=\"onChangeBtn($event.target.value)\"  [hidden]='!serviciosCat?.length>0' [(ngModel)]=\"agregarEjercicio.idServicio\" name=\"idServicio\" #idServicio=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\">\n\n              <option *ngFor=\"let c of serviciosCat\"  \n              [value]=\"c.idServicio\" \n              >\n              {{c.nombre}} / ${{c.precio.toFixed(2)}}\n              </option>\n          </select>\n          \n\n  </div>\n  <div class=\"modal-footer\">\n\n     <button [disabled]='disable1' [hidden]='!agregarEjercicio.idServicio' (click)='agregarServicioCuponCentro(agregarEjercicio.idServicio)' class=\"btn btn-success\">Agregar</button>\n\n    <button type=\"button\" class=\"btn btn-light\" (click)=\"c('Close click')\">Close</button>\n  </div>\n</ng-template>\n\n   <ng-template #content2 let-c=\"close\" let-d=\"dismiss\">\n  <div class=\"modal-header\">\n   <h5 style=\"margin-bottom: 20px\">Agregar Sucursal</h5>\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n  <div class=\"modal-body\">\n\n     <label >Centro</label>\n              <select   (change)=\"onChangeS1($event.target.value)\"  name=\"nombreCen\"  required  class=\"form-control custom-select mr-sm-2\">\n                <option [value]=\"false\"  selected></option>\n              <option *ngFor=\"let c of centrosT; let i = index\" \n              [value]=\"i\" \n              >\n              {{c}}\n              </option>\n          </select>\n\n\n           <label  style=\"margin-top: 14px\" [hidden]='!serviciosCat2?.length>0 || verifs'   for=\"idSucursal\">Sucursal</label>\n              <select   [hidden]='!serviciosCat2?.length>0' [(ngModel)]=\"agregarEjercicio.idCentro\" name=\"idSucursal\"  (change)=\"onChangeBtn2($event.target.value)\" #idSucursal=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\">\n\n              <option *ngFor=\"let c of serviciosCat2\" \n              [value]=\"c.idCentro\" \n              >\n              {{c.nombreCentro}}\n              </option>\n          </select>\n          \n\n  </div>\n  <div class=\"modal-footer\">\n\n     <button   [disabled]='disable2' [hidden]='!agregarEjercicio.idCentro' (click)='agregarCentroCupon(agregarEjercicio.idCentro)' class=\"btn btn-success\">Agregar</button>\n\n    <button type=\"button\" class=\"btn btn-light\" (click)=\"c('Close click')\">Close</button>\n  </div>\n</ng-template>\n\n\n\n\n\n\n\n\n\n  <div class=\"card mb-4\" style=\"    background: transparent;\n    border: none !important;\">\n    \n\n    <div class=\"btn-toolbar justify-content-between\" style='display: inline-block !important;' role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n\n  <div class=\"input-group\" style=\"float:right;margin-bottom: 0px !important\">\n    <div class=\"input-group-prepend\">\n   \n   <button  style=' margin-right: 15px;margin-top: 15px' class=\" btn btn-primary \" (click)='usuarioSeleccionado={};selected = [];serviciosCentroCupon=[];'>Crear nuevo Cupon</button>\n\n    </div>\n\n  </div>\n</div>\n\n\n\n\n\n      <div style='float:left;width:100%'>\n      <ngx-loading [show]=\"loadingI\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n        <div class=\"info\">\n          <p></p>\n        </div>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect($event)'>\n\n\n\n                  <ngx-datatable-column prop=\"nombre\" name='Titulo' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n          <ngx-datatable-column prop=\"codigo\" name='Cupon' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n  \n\n        <ngx-datatable-column prop=\"soloFecha\" name='Expira' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n         <ngx-datatable-column prop=\"porcentajeDescuento\" name='Valor' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           <span *ngIf='row.tipoDescuento==2'>${{value.toFixed(2)}}</span> <span *ngIf='row.tipoDescuento==1'>{{value}}%</span>\n          </ng-template>\n        </ngx-datatable-column>\n\n           <ngx-datatable-column prop=\"estado\" name='Estado' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value == 1 ? 'Visible' : 'No visible'}}\n\n\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n<!-- \n\n                 <ngx-datatable-column prop=\"estado\" name='Estado' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value == 1 ? \"Visible\" : \"No visible\"}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n -->\n\n\n\n        </ngx-datatable>\n\n      </div>\n\n\n\n\n\n <div [hidden]='!usuarioSeleccionado[\"idCupon\"]' class=\"card mb-4\" style=\"margin-top: 20px\">\n\n\n\n\n\n <ngx-loading [show]=\"loading2\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n\n<ngb-tabset>\n  <ngb-tab title=\"Informacion\">\n    <ng-template ngbTabContent>\n        <div *ngIf='usuarioSeleccionado[\"idCupon\"]' class=\"\" style=\"    margin-top: 10px;\">\n  <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n\n\n  </div>\n\n</div>\n\n\n<div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n\n<form class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"usuarioSeleccionado.nombre\" name=\"nombre\" type=\"text\" class=\"form-control\">\n    </div>\n\n        <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Codigo</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"usuarioSeleccionado.codigo\" name=\"codigo\" type=\"text\" class=\"form-control\">\n    </div>\n\n\n\n\n     <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Valor Descuento</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"usuarioSeleccionado.porcentajeDescuento\" name=\"porcentajeDescuento\" type=\"number\" class=\"form-control\">\n    </div>\n\n\n      <div class=\"col-md-4 mb-4 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Fecha expiracion</label>\n      <div class=\"input-group\">\n          <input  [disabled]=\"!editar\" [(ngModel)]=\"usuarioSeleccionado.fechaExpiracion\" name=\"soloFecha\"   class=\"form-control\" placeholder=\"yyyy-mm-dd\"\n             ngbDatepicker #d=\"ngbDatepicker\"  [minDate]='minDatse'>\n          <div class=\"input-group-append\">\n            <button class=\"btn btn-outline-secondary\" (click)=\"d.toggle()\" type=\"button\">\n              <img src=\"https://ng-bootstrap.github.io/img/calendar-icon.svg\" style=\"width: 1.2rem; height: 1rem; cursor: pointer;\"/>\n            </button>\n          </div>\n        </div>\n  </div>\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Valido para</label>\n           <select   [disabled]=\"!editar\"  [(ngModel)]=\"usuarioSeleccionado.tipo\" name=\"tipo\"   class=\"form-control custom-select mr-sm-2\" >\n\n        <option value=\"1\">Servicios Especificos</option>\n        <option value=\"2\">Todos los servicios</option>\n \n      </select>\n    </div>\n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Tipo de Descuento</label>\n           <select   [disabled]=\"!editar\"  [(ngModel)]=\"usuarioSeleccionado.tipoDescuento\" name=\"tipoDescuento\"   class=\"form-control custom-select mr-sm-2\" >\n\n        <option value=\"1\">Descuento</option>\n        <option value=\"2\">Fijo</option>\n         <option value=\"3\">Premio</option>\n      </select>\n    </div>\n \n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select   [disabled]=\"!editar\"  [(ngModel)]=\"usuarioSeleccionado.estado\" name=\"estado\"   class=\"form-control custom-select mr-sm-2\" >\n        <option value=\"1\">Visible</option>\n        <option value=\"2\">No - Visible</option>\n      </select>\n    </div>\n\n\n  </div>\n\n\n</form>\n\n<div *ngIf='usuarioSeleccionado.idCupon' >\n\n  <button  [hidden]=\"editar\" (click)='editar = !editar' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Editar</button>\n  <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n   <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n</div>\n</div>\n          </div>\n        </div> \n\n\n    </ng-template>\n  </ngb-tab>\n \n\n\n   <ngb-tab title=\"Centros\">\n    <ng-template ngbTabContent>\n      \n\n                <div style=\"    padding: 20px;\n    font-size: 16px;        display: flow-root;\">\n          \n\n               <button  style=' margin-right: 15px;float: right;' class=\" btn btn-primary \" (click)=\"serviciosCat2 = [];openVerticallyCentered(content2)\">Agregar</button>\n          </div>\n\n\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"centroCupones\"\n          [columnMode]=\"'force'\"\n       \n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected2\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect2($event)'>\n\n\n                            <ngx-datatable-column prop=\"nombre\" name='Sucursal' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n         <div class=\"photo-table img\">\n<img class=\"img-circle\" src=\"http://50.116.17.150:3000/{{row.idFoto}}\" \n  onError=\"this.src='assets/tiendaLogo.png';\"> {{value}}\n</div>   \n          </ng-template>\n        </ngx-datatable-column>\n\n\n                                          <ngx-datatable-column prop=\"cantServicios\" name='Servicios' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n          <span *ngIf='usuarioSeleccionado.tipo==1'>Aplica en {{value}} servicios</span>  <span *ngIf='usuarioSeleccionado.tipo==2'>*Aplica a todos</span> \n          </ng-template>\n        </ngx-datatable-column>\n    \n\n\n        </ngx-datatable>\n\n\n\n\n        <div class=\"card mb-4\" *ngIf=\"idCuponCentroSelec['idCuponCentro'] \">\n\n          <div style=\"    text-align: center;\n    color: lightgrey;\n    font-size: 16px;\n    padding: 40px;\" *ngIf=\"usuarioSeleccionado['tipo']==2\" >\n            Este cupon aplica en todos loss servicios\n          </div>\n\n          <div [hidden]=\"usuarioSeleccionado['tipo']==2\" style=\"padding: 25px 8px;\n    font-size: 16px;\n    color: #777;\n    text-align: center;\">\n           <span [hidden]=\"serviciosCentroCupon.length==0\">Servicios donde aplica el cupón</span> \n\n               <button  style=' margin-right: 15px;float: right;' class=\" btn btn-primary \" (click)=\"serviciosCat = [];openVerticallyCentered(content)\">Agregar</button>\n          </div>  \n\n\n          <div style=\"    text-align: center;\n    color: lightgrey;\n    font-size: 16px;\n    padding: 40px;\" [hidden]=\"usuarioSeleccionado['tipo']==2\" *ngIf=\"serviciosCentroCupon.length==0\">\n            No se han agregado servicios\n          </div>\n\n\n        <ngx-datatable [hidden]=\"usuarioSeleccionado['tipo']==2\" *ngIf=\"serviciosCentroCupon.length>0\"\n          class=\"material\"\n          [rows]=\"serviciosCentroCupon\"\n          [columnMode]=\"'force'\"\n       \n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected3\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect3($event)'>\n\n\n                            <ngx-datatable-column prop=\"nombre\" name='Servicio' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n                                    <ngx-datatable-column prop=\"precio\" name='Precio' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           ${{value.toFixed(2)}}\n          </ng-template>\n        </ngx-datatable-column>\n\n                                    <ngx-datatable-column prop=\"precio\" name='Precio con cupón' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{getPrecioCupon(value)}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                  \n\n\n        </ngx-datatable>\n\n\n        </div>\n\n    </ng-template>\n  </ngb-tab>\n \n\n\n</ngb-tabset>\n\n</div>\n<div *ngIf='!usuarioSeleccionado[\"idCupon\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  \n <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Crear nuevo Cupon</h3>\n\n<form  #form='ngForm' name=\"form\" class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreN.valid}\" [(ngModel)]=\"nuevoUsuario.nombre\" name=\"nombreN\" type=\"text\" class=\"form-control\" #nombreN=\"ngModel\" required>\n    \n    </div>\n\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Codigo</label>\n      <input  [ngClass]=\"{'is-invalid':!codigoN.valid}\" [(ngModel)]=\"nuevoUsuario.codigo\" name=\"codigoN\" type=\"text\" class=\"form-control\" #codigoN=\"ngModel\" required>\n    \n    </div>\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Valor Descuento</label>\n      <input  [ngClass]=\"{'is-invalid':!porcentajeDescuento.valid}\" [(ngModel)]=\"nuevoUsuario.porcentajeDescuento\" name=\"porcentajeDescuentoN\" type=\"number\" class=\"form-control\" #porcentajeDescuento=\"ngModel\" required>\n    \n    </div>\n\n\n\n    <div class=\"col-md-4 mb-4 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Fecha expiracion</label>\n      <div class=\"input-group\">\n          <input  [ngClass]=\"{'is-invalid':!soloFecha.valid }\" [(ngModel)]=\"nuevoUsuario.fechaExpiracion\" name=\"soloFecha\"  #soloFecha=\"ngModel\" class=\"form-control\" placeholder=\"yyyy-mm-dd\"\n             ngbDatepicker #d=\"ngbDatepicker\" required [minDate]='minDatse'>\n          <div class=\"input-group-append\">\n            <button class=\"btn btn-outline-secondary\" (click)=\"d.toggle()\" type=\"button\">\n              <img src=\"https://ng-bootstrap.github.io/img/calendar-icon.svg\" style=\"width: 1.2rem; height: 1rem; cursor: pointer;\"/>\n            </button>\n          </div>\n        </div>\n  </div>\n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Valido para</label>\n           <select   [ngClass]=\"{'is-invalid':!tipoN.valid}\"  [(ngModel)]=\"nuevoUsuario.tipo\" name=\"estadoN\" #tipoN=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\" >\n <option value=\"1\">Servicios Especificos</option>\n        <option value=\"2\">Todos los servicios</option>\n      </select>\n    </div>\n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Tipo de Descuento</label>\n           <select   [ngClass]=\"{'is-invalid':!tipoDescuentoN.valid}\"  [(ngModel)]=\"nuevoUsuario.tipoDescuento\" name=\"estadoN\" #tipoDescuentoN=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\" >\n        <option value=\"1\">% Descuento</option>\n        <option value=\"2\">$ Fijo</option>\n         <option value=\"3\">Premio</option>\n      </select>\n    </div>\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select   [ngClass]=\"{'is-invalid':!estadoN.valid}\"  [(ngModel)]=\"nuevoUsuario.estado\" name=\"estadoN\" #estadoN=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\" >\n        <option value=\"1\">Visible</option>\n        <option value=\"2\">No - Visible</option>\n      </select>\n    </div>\n\n\n\n\n  </div>\n\n\n  <button  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' type='submit' class=\"btn btn-primary\" [disabled]=\"!form.valid\"  (click)='nuevoCupon()'>Crear Cupon</button>\n\n\n</form>\n\n\n\n\n\n\n          </div>\n\n</div>\n<!-- \n<div *ngIf='usuarioSeleccionado[\"idCupon\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <div  style=\"    padding-bottom: 20px;\n    padding-left: 15px;\n    font-size: 31px;\">Informacion de Cupon</div>\n\n  </div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n    <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    {{isCollapsed ? 'Mostrar mas' : 'Mostrar menos'}}\n  </button>\n\n    </div>\n\n  </div>\n</div>\n\n\n<div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n\n<form class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"usuarioSeleccionado.nombre\" name=\"nombre\" type=\"text\" class=\"form-control\">\n    </div>\n\n        <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Codigo</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"usuarioSeleccionado.codigo\" name=\"codigo\" type=\"text\" class=\"form-control\">\n    </div>\n\n\n\n\n     <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">% Descuento</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"usuarioSeleccionado.porcentajeDescuento\" name=\"porcentajeDescuento\" type=\"number\" class=\"form-control\">\n    </div>\n\n\n      <div class=\"col-md-4 mb-4 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Fecha expiracion</label>\n      <div class=\"input-group\">\n          <input  [disabled]=\"!editar\" [(ngModel)]=\"usuarioSeleccionado.soloFecha\" name=\"soloFecha\"   class=\"form-control\" placeholder=\"yyyy-mm-dd\"\n             ngbDatepicker #d=\"ngbDatepicker\"  [minDate]='minDatse'>\n          <div class=\"input-group-append\">\n            <button class=\"btn btn-outline-secondary\" (click)=\"d.toggle()\" type=\"button\">\n              <img src=\"https://ng-bootstrap.github.io/img/calendar-icon.svg\" style=\"width: 1.2rem; height: 1rem; cursor: pointer;\"/>\n            </button>\n          </div>\n        </div>\n  </div>\n\n\n \n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select   [disabled]=\"!editar\"  [(ngModel)]=\"usuarioSeleccionado.estado\" name=\"estado\"   class=\"form-control custom-select mr-sm-2\" >\n        <option value=\"1\">Visible</option>\n        <option value=\"2\">No - Visible</option>\n      </select>\n    </div>\n\n\n  </div>\n\n\n</form>\n\n<div *ngIf='usuarioSeleccionado.idCupon' >\n\n  <button  [disabled]=\"editar\" (click)='editar = !editar' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Editar</button>\n  <button [disabled]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n   <button (click)='editar = !editar' [disabled]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n</div>\n</div>\n          </div>\n        </div> \n\n\n\n\n\n         <div  *ngIf='usuarioSeleccionado[\"idCupon\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n   <ngx-loading [show]=\"loading2\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;'>Negocios donde aplica</h3>\n\n  </div>\n\n</div>\n\n\n\n          <table  style='    ' class='table material'>\n            <thead>\n               <th>Nombre</th>\n                 <th>Cupon</th>\n           \n                \n                <th></th>\n            </thead>\n            <tbody>\n                <tr *ngFor=\"let e  of centroCupones || []\">\n                    <td>{{e.nombre}}</td>\n                    <td>{{e.nombreCupon}}</td>\n\n               \n                    <td><button (click)='eliminarNegocioUsuario(e.idCentro)' class=\"btn btn-danger\">Eliminar</button></td>\n                </tr>\n            </tbody>\n        </table>\n\n        <div style=\"margin:20px\" >\n          <h5>Asignar a Negocio</h5>\n          <div class=\"col-md-3 mb-3 ff\" style=\"    display: inline-block;\n    margin-right: 15px !important;\n    padding-left: 0px;\n    margin-top: 20px;\">\n\n\n          <label for=\"validationCustom01\"></label>\n          <select   [(ngModel)]=\"seleccionCentro.idCentroC\" name=\"idCentroC\" #idCentroC=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\">\n\n              <option  *ngFor=\"let c of negociosParent\" \n              [value]=\"c.idCentro\" [hidden]='c.estado!==1'\n              >\n              {{c.nombre}} \n              </option>\n          </select>\n          </div>\n\n          <button [hidden]='!seleccionCentro.idCentroC' (click)='agregarNegocioUsuario(seleccionCentro.idCentroC)' class=\"btn btn-success\">Agregar</button>\n        </div>\n\n      </div>\n\n\n\n</div>\n -->\n\n\n\n    </div> \n\n"
 
 /***/ }),
 
@@ -4342,6 +4979,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__endpoints_service__ = __webpack_require__("../../../../../src/app/endpoints.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ng_bootstrap_ng_bootstrap__ = __webpack_require__("../../../../@ng-bootstrap/ng-bootstrap/index.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4354,16 +4992,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var RutinaComponent = (function () {
-    function RutinaComponent(endpointsService, router) {
+    function RutinaComponent(endpointsService, router, modalService) {
         this.endpointsService = endpointsService;
         this.router = router;
+        this.modalService = modalService;
         this.cu = JSON.parse(localStorage.getItem('currentUser'));
         this.seleccionCentro = {};
+        this.idCuponCentroSelec = {};
         this.rows = [];
         this.centroCupones = [];
+        this.serviciosCentroCupon = [];
         this.negociosParent = [];
         this.selected = [];
+        this.selected2 = [];
+        this.serviciosCat = [];
+        this.selected3 = [];
         this.editar = false;
         this.loadingI = false;
         this.selectedHorario = [];
@@ -4372,6 +5017,13 @@ var RutinaComponent = (function () {
         this.keyFixed = [];
         this.keysRutina = [];
         this.ejerciciosSelect = [];
+        this.serviciosCat2 = [];
+        this.serviciosCategoria = [];
+        this.centrosT = [];
+        this.sucursalesT = [];
+        this.categoriasCentro = [];
+        this.disable1 = false;
+        this.disable2 = false;
         this.agregarEjercicio = {};
         this.usuarioSeleccionado = {};
         this.nuevoUsuario = {};
@@ -4379,6 +5031,7 @@ var RutinaComponent = (function () {
         this.loading = false;
         this.loading2 = false;
         this.isCollapsed = false;
+        this.serviciosCat = [];
         if (this.cu[0]['tipo'] !== 3) {
             console.log('usuario no deseado');
             this.router.navigate(['/dashboard']);
@@ -4386,14 +5039,123 @@ var RutinaComponent = (function () {
     }
     RutinaComponent.prototype.ngOnInit = function () {
         var _this = this;
+        //getCentrosSucursales
         this.getCuponesCentro();
         //  this.cargaEjercicios();
-        this.endpointsService.getCentrosAll()
+        this.endpointsService.getCentrosSucursales()
             .then(function (data) {
-            //console.log(data);
-            _this.negociosParent = data;
+            console.log(data);
+            _this.centrosT = Object.keys(data);
+            _this.sucursalesT = Object.values(data);
             // this.originalData = data;
         });
+    };
+    RutinaComponent.prototype.agregarServicioCuponCentro = function (idServicio) {
+        //  console.log(idServicio);
+        //console.log(this.idCuponCentroSelec['idCuponCentro']);
+        this.addServicioCupon({ idServicio: idServicio, idCuponCentro: this.idCuponCentroSelec['idCuponCentro'] });
+    };
+    RutinaComponent.prototype.agregarCentroCupon = function (idCentro) {
+        this.addCentroCupon({ idCentro: idCentro, idCupon: this.usuarioSeleccionado["idCupon"] });
+    };
+    RutinaComponent.prototype.verificarIt = function (idServicio) {
+        var env = true;
+        if (this.serviciosCat.filter(function (e) { return e.idServicio == idServicio; }).length > 0) {
+            env = false;
+        }
+        console.log(env);
+        return env;
+    };
+    RutinaComponent.prototype.addServicioCupon = function (fe) {
+        var _this = this;
+        this.loading2 = true;
+        console.log(fe);
+        this.endpointsService.addServicioCupon(fe)
+            .then(function (data) {
+            console.log(data);
+            var daf = { idCuponCetro: fe['idCuponCentro'] };
+            _this.getServiciosCupon(daf);
+            _this.modalReference.close();
+            alert('Agregado correctamente');
+            _this.loading2 = false;
+        });
+    };
+    RutinaComponent.prototype.addCentroCupon = function (fe) {
+        var _this = this;
+        this.loading2 = true;
+        console.log(fe);
+        this.endpointsService.addCentroCupon(fe)
+            .then(function (data) {
+            console.log(data);
+            _this.getClienteCupones(_this.usuarioSeleccionado['idCupon']);
+            _this.modalReference.close();
+            alert('Agregado correctamente');
+            _this.loading2 = false;
+        });
+    };
+    // var daf = {idCuponCetro:this.selected2[0]['idCuponCentro']}
+    // this.getServiciosCupon(daf);
+    RutinaComponent.prototype.onChangeBtn = function (va) {
+        var env = this.serviciosCentroCupon.find(function (vendor) { return vendor.idServicio == va; });
+        //console.log(env);
+        //console.log(va);
+        if (env) {
+            this.disable1 = true;
+        }
+        else {
+            this.disable1 = false;
+        }
+        //console.log(this.disable1);
+    };
+    RutinaComponent.prototype.onChangeBtn2 = function (va) {
+        var env = this.centroCupones.find(function (vendor) { return vendor.idCentro == va; });
+        //console.log(env);
+        //console.log(va);
+        if (env) {
+            this.disable2 = true;
+        }
+        else {
+            this.disable2 = false;
+        }
+        //console.log(this.disable1);
+    };
+    RutinaComponent.prototype.onChangeS1 = function (deviceValue) {
+        console.log(deviceValue);
+        this.agregarEjercicio['idCentro'] = undefined;
+        if (deviceValue) {
+            this.serviciosCat2 = this.sucursalesT[deviceValue];
+        }
+        else {
+            this.serviciosCat2 = [];
+        }
+        //this.agregarEjercicio['idServicio'] = undefined;
+    };
+    RutinaComponent.prototype.getServiciosCupon = function (fe) {
+        var _this = this;
+        this.loading2 = true;
+        this.endpointsService.getServiciosCupon(fe)
+            .then(function (data) {
+            console.log(data);
+            //this.serviciosCentroCupon=data[0];
+            _this.serviciosCentroCupon = data['centros'];
+            _this.categoriasCentro = Object.keys(data['servicios']);
+            _this.serviciosCategoria = Object.values(data['servicios']);
+            // this.getClienteCupones(this.usuarioSeleccionado["idCupon"]);
+            _this.loading2 = false;
+        });
+    };
+    RutinaComponent.prototype.onChangeS = function (deviceValue) {
+        console.log(deviceValue);
+        if (deviceValue) {
+            this.serviciosCat = this.serviciosCategoria[deviceValue];
+        }
+        else {
+            this.serviciosCat = [];
+        }
+        this.agregarEjercicio['idServicio'] = undefined;
+    };
+    RutinaComponent.prototype.openVerticallyCentered = function (content) {
+        this.modalReference = this.modalService.open(content);
     };
     RutinaComponent.prototype.agregarNegocioUsuario = function (fe) {
         var _this = this;
@@ -4441,7 +5203,7 @@ var RutinaComponent = (function () {
     RutinaComponent.prototype.getClienteCupones = function (id) {
         var _this = this;
         this.loadingI = true;
-        this.endpointsService.getCC({ idCupon: id })
+        this.endpointsService.getCentrosCuponSA({ idCupon: id })
             .then(function (data) {
             console.log(data);
             _this.centroCupones = data;
@@ -4464,19 +5226,54 @@ var RutinaComponent = (function () {
         // this.loadingI=true;
         this.keyFixed = [];
         this.diasRutinaFixed = [];
+        console.log(this.usuarioSeleccionado);
         this.usuarioSeleccionado = JSON.parse(JSON.stringify(this.selected[0]));
-        var dateObj = new Date(this.usuarioSeleccionado['fechaExpira']);
-        this.usuarioSeleccionado['soloFecha'] = { year: (dateObj.getUTCFullYear()), month: (dateObj.getUTCMonth() + 1), day: (dateObj.getUTCDate()) };
-        console.log(this.usuarioSeleccionado['idCupon']);
+        var y = this.usuarioSeleccionado['fechaExpira'].split('T')[0].split('-')[0];
+        var d = this.usuarioSeleccionado['fechaExpira'].split('T')[0].split('-')[2];
+        var m = this.usuarioSeleccionado['fechaExpira'].split('T')[0].split('-')[1];
+        var ti = {
+            "year": parseInt(y),
+            "month": parseInt(m),
+            "day": parseInt(d)
+        };
+        this.usuarioSeleccionado['fechaExpiracion'] = ti;
+        this.idCuponCentroSelec = {};
         this.getClienteCupones(this.usuarioSeleccionado['idCupon']);
+    };
+    RutinaComponent.prototype.getPrecioCupon = function (precio) {
+        var precioDescuento = 0;
+        var descuento = this.usuarioSeleccionado['porcentajeDescuento'];
+        var tipoCupon = this.usuarioSeleccionado['tipoDescuento'];
+        console.log(descuento, tipoCupon);
+        if (tipoCupon == 1) {
+            precioDescuento = precio - (precio * (descuento / 100));
+        }
+        else if (tipoCupon == 2) {
+            precioDescuento = (precio - descuento);
+        }
+        else {
+            precioDescuento = precio;
+        }
+        return '$' + precioDescuento.toFixed(2);
+    };
+    RutinaComponent.prototype.onSelect2 = function (_a) {
+        var selected2 = _a.selected2;
+        console.log(this.selected2[0]);
+        this.idCuponCentroSelec = this.selected2[0];
+        var daf = { idCuponCetro: this.selected2[0]['idCuponCentro'] };
+        this.getServiciosCupon(daf);
+    };
+    RutinaComponent.prototype.onSelect3 = function (_a) {
+        var selected3 = _a.selected3;
+        console.log(this.selected3[0]);
     };
     RutinaComponent.prototype.guardarEdicion = function () {
         var _this = this;
         this.loading = true;
         console.log(this.usuarioSeleccionado);
-        this.usuarioSeleccionado['fechaExpira'] = this.usuarioSeleccionado['soloFecha']['year'] + '-' +
-            this.pad2(this.usuarioSeleccionado['soloFecha']['month']) + '-' +
-            this.pad2(this.usuarioSeleccionado['soloFecha']['day']) + ' ' + '00:00' + ':00';
+        this.usuarioSeleccionado['fechaExpira'] = this.usuarioSeleccionado['fechaExpiracion']['year'] + '-' +
+            this.pad2(this.usuarioSeleccionado['fechaExpiracion']['month']) + '-' +
+            this.pad2(this.usuarioSeleccionado['fechaExpiracion']['day']) + ' ' + '00:00' + ':00';
         console.log(this.usuarioSeleccionado);
         this.endpointsService.editarCupon(this.usuarioSeleccionado)
             .then(function (data) {
@@ -4498,10 +5295,10 @@ var RutinaComponent = (function () {
         var _this = this;
         this.loading = true;
         this.nuevoUsuario['idCentro'] = 1;
-        this.nuevoUsuario['fechaExpira'] = this.nuevoUsuario['soloFecha']['year'] + '-' +
-            this.pad2(this.nuevoUsuario['soloFecha']['month']) + '-' +
-            this.pad2(this.nuevoUsuario['soloFecha']['day']);
-        '00:00:00';
+        this.nuevoUsuario['fechaExpira'] = this.nuevoUsuario['fechaExpiracion']['year'] + '-' +
+            this.pad2(this.nuevoUsuario['fechaExpiracion']['month']) + '-' +
+            this.pad2(this.nuevoUsuario['fechaExpiracion']['day']) + ' ' +
+            '00:00:00';
         console.log(this.nuevoUsuario);
         this.endpointsService.nuevoCupon(this.nuevoUsuario)
             .then(function (data) {
@@ -4609,7 +5406,7 @@ var RutinaComponent = (function () {
             template: __webpack_require__("../../../../../src/app/rutina/rutina.component.html"),
             styles: [__webpack_require__("../../../../../src/app/rutina/rutina.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */], __WEBPACK_IMPORTED_MODULE_3__ng_bootstrap_ng_bootstrap__["a" /* NgbModal */]])
     ], RutinaComponent);
     return RutinaComponent;
 }());
@@ -5013,6 +5810,9 @@ var ROUTES2 = [
     { path: '/admincentros', title: 'Gestion Negocios', iconClass: 'fa fa-area-chart' },
     { path: '/adminusers', title: 'Gestion Administradores', iconClass: 'fa fa-users' },
     { path: '/cupones', title: 'Cupones', iconClass: ' fa fa-ticket' },
+    { path: '/uapp', title: 'Usuarios APP', iconClass: 'fa fa-users' },
+    { path: '/addcategorias', title: 'Categorias', iconClass: 'fa fa-asterisk' },
+    { path: '/parametros', title: 'Configuracion', iconClass: 'fa fa-cogs' },
 ];
 var ROUTES = [
     //{path: '/dashboard', title: 'Informacion', iconClass: 'fa fa-info-circle'},
@@ -5682,6 +6482,197 @@ var StafComponent = (function () {
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]])
     ], StafComponent);
     return StafComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/usuarioadmin/usuarioadmin.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "  <div class=\"card mb-4\" style=\"    background: transparent;\n    border: none !important;\">\n    \n\n    <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n\n\n  </div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n  <!--  \n   <button  style='margin-right: 15px;margin-top: 20px;margin-bottom: 20px;' class=\" btn btn-primary float-right\" (click)='usuarioSeleccionado={};selected = [];'>Crear nuevo Usuario</button> -->\n\n    </div>\n\n  </div>\n</div>\n\n\n\n\n\n      <div style='float:left;width:100%'>\n        <div class=\"info\">\n          <p></p>\n        </div>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect($event)'>\n\n\n          <ngx-datatable-column prop=\"estado\" name='' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n            <i *ngIf='value==1'  class=\"fa fa-check-square-o\" aria-hidden=\"true\"></i> \n     \t\t<i *ngIf='value!==1'  class=\"fa fa-close\" aria-hidden=\"true\"></i> \n\n\n\n          </ng-template>\n        </ngx-datatable-column>\n\n                  <ngx-datatable-column prop=\"nombre\" minWidth='220' maxWidth='280' name='Nombre' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n                                 <div class=\"photo-table img\">\n<img class=\"img-circle\" src=\"http://50.116.17.150:3000/{{row.idFoto}}\" \n  onError=\"this.src='assets/user.png';\"> {{value}}\n</div> \n       \n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                 <ngx-datatable-column prop=\"email\" name='Email' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                 <ngx-datatable-column prop=\"telefono\" name='Móvil' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                 <ngx-datatable-column prop=\"activas\" name='Activas' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                 <ngx-datatable-column prop=\"completadas\" name='Completadas' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n\n\n<!--     <ngx-datatable-column    [cellClass]=\"getCellClass\"  prop=\"estado\" name='Estado' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n\n\n            {{value == 1 ? \"Activo\" : value == 0 ? \"ESPERANDO APROBACION\" : value == 2 ? \"Baneado\": \"DESCONOCIDO\"}}\n          </ng-template>\n        </ngx-datatable-column> -->\n\n\n\n\n\n\n        </ngx-datatable>\n\n      </div>\n<!-- \n\n<div *ngIf='!usuarioSeleccionado[\"idUsuario\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  \n <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Crear nuevo Usuario</h3>\n\n<form  #form='ngForm' name=\"form\" class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreN.valid}\" [(ngModel)]=\"nuevoUsuario.nombre\" name=\"nombreN\" type=\"text\" class=\"form-control\" #nombreN=\"ngModel\" required>\n    \n    </div>\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">URL Imagen</label>\n      <input  [ngClass]=\"{'is-invalid':!imagenUrlN.valid}\" [(ngModel)]=\"nuevoUsuario.imagenUrl\" name=\"imagenUrlN\" type=\"text\" class=\"form-control\" #imagenUrlN=\"ngModel\" required>\n    \n    </div>\n\n\n    <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Numero Socio</label>\n      <input    [ngClass]=\"{'is-invalid':!numeroSocio.valid}\" [(ngModel)]=\"nuevoUsuario.numeroSocio\" name=\"numeroSocio\"  #numeroSocio=\"ngModel\" type=\"number\" class=\"form-control\" required>\n    </div>\n\n\n\n    <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Codigo</label>\n      <input   [ngClass]=\"{'is-invalid':!codigo.valid}\"  [(ngModel)]=\"nuevoUsuario.codigo\" name=\"codigo\" #codigo=\"ngModel\" type=\"number\" class=\"form-control\" required>\n    </div>\n\n\n\n\n    <div class=\"col-md-4 mb-4 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Fecha</label>\n\t\t\t<div class=\"input-group\">\n\t\t      <input  [ngClass]=\"{'is-invalid':!fecha.valid }\" [(ngModel)]=\"nuevoUsuario.fecha\" name=\"fecha\"  #fecha=\"ngModel\" class=\"form-control\" placeholder=\"yyyy-mm-dd\"\n\t\t         ngbDatepicker #d=\"ngbDatepicker\" required [maxDate]='{year:2005, month:01, day:01}' [minDate]='{year:1950, month:01, day:01}'>\n\t\t      <div class=\"input-group-append\">\n\t\t        <button class=\"btn btn-outline-secondary\" (click)=\"d.toggle()\" type=\"button\">\n\t\t          <img src=\"https://ng-bootstrap.github.io/img/calendar-icon.svg\" style=\"width: 1.2rem; height: 1rem; cursor: pointer;\"/>\n\t\t        </button>\n\t\t      </div>\n\t\t    </div>\n\t</div>\n\n\n\n   <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Email</label>\n      <input  [ngClass]=\"{'is-invalid':!email.valid}\" [(ngModel)]=\"nuevoUsuario.email\" name=\"email\" type=\"text\" class=\"form-control\" #email=\"ngModel\" required>\n    \n    </div>\n\n\n  </div>\n\n\n  <button  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' type='submit' class=\"btn btn-primary\" [disabled]=\"!form.valid\"  (click)='guardarUsuario()'>Crear Usuario</button>\n\n\n</form>\n\n\n\n\n\n\n          </div>\n\n</div> -->\n\n\n\n\n<div *ngIf='usuarioSeleccionado[\"idCliente\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <div  style=\"    padding-bottom: 20px;\n    padding-left: 15px;\n    font-size: 31px;\">\n                   <div class=\"photo-table img\">\n<img class=\"img-circle\" src=\"http://50.116.17.150:3000/{{usuarioSeleccionado.idFoto}}\" \n  onError=\"this.src='assets/user.png';\"> {{usuarioSeleccionado.nombre}}\n</div> \n  \n\n</div>\n\n  </div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n    <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    {{isCollapsed ? 'Mostrar mas' : 'Mostrar menos'}}\n  </button>\n\n    </div>\n\n  </div>\n</div>\n\n\n<div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n\n<form class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"usuarioSeleccionado.nombre\" name=\"nombre\" type=\"text\" class=\"form-control\">\n    </div>\n\n \n        <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Email</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"usuarioSeleccionado.email\" name=\"email\" type=\"email\" class=\"form-control\">\n    </div>\n\n \n        <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Móvil</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"usuarioSeleccionado.telefono\" name=\"telefono\" type=\"tel\" class=\"form-control\">\n    </div>\n\n\n\n\n\n<!-- \n        <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Fecha Nacimiento</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"usuarioSeleccionado.soloFecha\" name=\"soloFecha\" type=\"text\" class=\"form-control\">\n    </div>\n\n -->\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Genero</label>\n           <select [disabled]=\"!editar\" [(ngModel)]=\"usuarioSeleccionado.idGenero\" class=\"form-control custom-select mr-sm-2\" name='genero'>\n\n        <option value=\"2\">Femenino</option>\n        <option value=\"1\">Masculino</option>\n        <option value=\"0\">No especificado</option>\n      </select>\n    </div>\n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select [disabled]=\"!editar\" [(ngModel)]=\"usuarioSeleccionado.estado\" class=\"form-control custom-select mr-sm-2\" name='estado'>\n\n        <option value=\"1\">Activo</option>\n        <option value=\"2\">Sin validar</option>\n        <option value=\"3\">Baneado</option>\n      </select>\n    </div>\n\n\n\n\n\n\n\n\n  </div>\n\n\n</form>\n\n<div *ngIf='usuarioSeleccionado.idCliente' >\n\n  <button  [hidden]=\"editar\" (click)='editar = !editar' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Editar</button>\n  <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n   <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n</div>\n\n\n</div>\n          </div>\n        </div> \n\n\n\n\n\n\n\n\n<div *ngIf='usuarioSeleccionado[\"idCliente\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  <ngx-loading [show]=\"loading3\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n          \t\t<ngb-tabset>\n\n  <ngb-tab title=\"Confirmadas ({{citasConfirmadas.length}})\" [disabled]=\"citasConfirmadas.length==0\">\n    <ng-template ngbTabContent>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"citasConfirmadas\"\n          [columnMode]=\"'force'\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          (select)='getServicios($event)'>\n          <ngx-datatable-column prop=\"idCita\" name='ID de Reserva' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>   \n            {{value}}\n         </ng-template>\n        </ngx-datatable-column>\n           <ngx-datatable-column prop=\"nombreCentro\" minWidth='220' maxWidth='280'  name='Negocio' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n                    <div class=\"photo-table img\">\n<img class=\"img-circle\" src=\"http://50.116.17.150:3000/{{row.idFoto}}\" \n  onError=\"this.src='assets/tiendaLogo.png';\"> {{value}}\n</div> \n\n          </ng-template>\n        </ngx-datatable-column>\n\t\t<ngx-datatable-column prop=\"FechaCita\" name='Fecha' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n          <ngx-datatable-column prop=\"totalServicios\" name='Servicios' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n          <ngx-datatable-column prop=\"precioEsperado\" name='Total' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           ${{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n\t\t</ngx-datatable>\n    </ng-template>\n  </ngb-tab>\n\n\n\n  <ngb-tab title=\"Por Confirmar ({{conjuntoCC.length}})\" [disabled]=\"conjuntoCC.length==0\">\n    <ng-template ngbTabContent>\n             <ngx-datatable \n          class=\"material\"\n          [rows]=\"conjuntoCC\"\n          [columnMode]=\"'force'\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          (select)='getServicios($event)'>\n          <ngx-datatable-column prop=\"idCita\" name='ID de Reserva' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>   \n            {{value}}\n         </ng-template>\n        </ngx-datatable-column>\n           <ngx-datatable-column prop=\"nombreCentro\" minWidth='220' maxWidth='280' name='Negocio' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n                           <div class=\"photo-table img\">\n<img class=\"img-circle\" src=\"http://50.116.17.150:3000/{{row.idFoto}}\" \n  onError=\"this.src='assets/tiendaLogo.png';\"> {{value}}\n</div> \n          </ng-template>\n        </ngx-datatable-column>\n\t\t<ngx-datatable-column prop=\"FechaCita\" name='Fecha' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n                  <ngx-datatable-column prop=\"estado\" name='Parte' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value == 1 ? 'Negocio' :  'Cliente'}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n          <ngx-datatable-column prop=\"totalServicios\" name='Servicios' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n          <ngx-datatable-column prop=\"precioEsperado\" name='Total' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           ${{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n\t\t</ngx-datatable>\n    </ng-template>\n  </ngb-tab>\n\n\n  <ngb-tab title=\"Completadas ({{citasCompletadas.length}})\" [disabled]=\"citasCompletadas.length==0\">\n    <ng-template ngbTabContent>\n           <ngx-datatable \n          class=\"material\"\n          [rows]=\"citasCompletadas\"\n          [columnMode]=\"'force'\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          (select)='getServicios($event)'>\n          <ngx-datatable-column prop=\"idCita\" name='ID de Reserva' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>   \n           {{value}}\n         </ng-template>\n        </ngx-datatable-column>\n           <ngx-datatable-column prop=\"nombreCentro\" minWidth='220' maxWidth='280' name='Negocio' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n                             <div class=\"photo-table img\">\n<img class=\"img-circle\" src=\"http://50.116.17.150:3000/{{row.idFoto}}\" \n  onError=\"this.src='assets/tiendaLogo.png';\"> {{value}}\n</div> \n          </ng-template>\n        </ngx-datatable-column>\n\t\t<ngx-datatable-column prop=\"FechaCita\" name='Fecha' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n          <ngx-datatable-column prop=\"totalServicios\" name='Servicios' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n          <ngx-datatable-column prop=\"precioEsperado\" name='Total' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           ${{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n                  <ngx-datatable-column prop=\"valoracion\" name='Puntuacion' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n\t\t</ngx-datatable>\n    </ng-template>\n  </ngb-tab>\n\n\n  <ngb-tab title=\"Canceladas ({{citasCanceladas.length}})\" [disabled]=\"citasCanceladas.length==0\">\n    <ng-template ngbTabContent>\n       <ngx-datatable \n          class=\"material\"\n          [rows]=\"citasCanceladas\"\n          [columnMode]=\"'force'\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          (select)='getServicios($event)'>\n          <ngx-datatable-column prop=\"idCita\" name='ID de Reserva' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>   \n            {{value}} \n         </ng-template>\n        </ngx-datatable-column>\n           <ngx-datatable-column prop=\"nombreCentro\" minWidth='220' maxWidth='280' name='Negocio' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n                          <div class=\"photo-table img\">\n<img class=\"img-circle\" src=\"http://50.116.17.150:3000/{{row.idFoto}}\" \n  onError=\"this.src='assets/tiendaLogo.png';\"> {{value}}\n</div> \n          </ng-template>\n        </ngx-datatable-column>\n\t\t<ngx-datatable-column prop=\"FechaCita\" name='Fecha' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n          <ngx-datatable-column prop=\"totalServicios\" name='Servicios' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n          <ngx-datatable-column prop=\"precioEsperado\" name='Total' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           ${{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n\t\t</ngx-datatable>\n    </ng-template>\n  </ngb-tab>\n\n\n\n\n<!--   <ngb-tab title=\"Disabled\" [disabled]=\"true\">\n    <ng-template ngbTabContent>\n      <p>Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget sodales nibh elit id diam. Nulla facilisi. Donec egestas ligula vitae odio interdum aliquet. Duis lectus turpis, luctus eget tincidunt eu, congue et odio. Duis pharetra et nisl at faucibus. Quisque luctus pulvinar arcu, et molestie lectus ultrices et. Sed diam urna, egestas ut ipsum vel, volutpat volutpat neque. Praesent fringilla tortor arcu. Vivamus faucibus nisl enim, nec tristique ipsum euismod facilisis. Morbi ut bibendum est, eu tincidunt odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris aliquet odio ac lorem aliquet ultricies in eget neque. Phasellus nec tortor vel tellus pulvinar feugiat.</p>\n    </ng-template>\n  </ngb-tab>\n -->\n\n\n</ngb-tabset>\n\n\n\n<div class=\"\">\n\n<div class=\"card\">\n<div class=\"card-block\">\n\n</div>\n\n\n<div class=\"card-block client-card table-1-card p-t-0\">\n<div class=\"table-responsive\">\n<table class=\"table\">\n<thead>\n<tr class=\"text-capitalize\">\n<th>Servicio</th>\n<th>Duracion</th>\n<th>Precio</th>\n\n\n</tr>\n</thead>\n<tbody>\n\n<tr  *ngFor=\"let e of serviciosSeleccionado || []\" >\n<td class=\"\">\n{{e.nombre}}\n</td>\n<td>{{e.duracion}}min</td>\n<td class=\"text-success\">\n\n  <span [hidden]=\"!(usuarioSeleccionado['descuento']>0)\"  style=\"color: #777;text-decoration: line-through;\">${{e.precio.toFixed(2)}}</span>\n<br>\n    <span >${{getPrecioDescuento(e.precio)}}</span>\n\n\n\n</td>\n\n</tr>\n\n\n\n\n</tbody>\n</table>\n</div>\n<!--   <button [disabled]='!idServicio.valid' (click)='agregarServicioCita(agregarEjercicio.idServicio)' class=\"btn btn-success\">Agregar Servicio</button> -->\n\n \n</div>\n</div>\n</div>\n\n\n\n        </div>\n</div>\n\n\n\n\n\n    </div> \n\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/usuarioadmin/usuarioadmin.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/usuarioadmin/usuarioadmin.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsuarioadminComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__endpoints_service__ = __webpack_require__("../../../../../src/app/endpoints.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var UsuarioadminComponent = (function () {
+    function UsuarioadminComponent(endpointsService) {
+        this.endpointsService = endpointsService;
+        this.serviciosSeleccionado = [];
+        this.citasPendienteConfirmar = [];
+        this.citasConfirmadas = [];
+        this.citasCompletadas = [];
+        this.citasCanceladas = [];
+        this.conjuntoCC = [];
+        this.citasReprogramads = [];
+        this.rows = [];
+        this.selected = [];
+        this.selecteds = [];
+        this.editar = false;
+        this.usuarioSeleccionado = {};
+        this.citaSelected = {};
+        this.nuevoUsuario = {};
+        this.loading = false;
+        this.isCollapsed = false;
+    }
+    UsuarioadminComponent.prototype.ngOnInit = function () {
+        this.cargaUsuarios();
+    };
+    UsuarioadminComponent.prototype.cargaUsuarios = function () {
+        var _this = this;
+        this.endpointsService.getUsuariosConsolaSA()
+            .then(function (data) {
+            console.log(data);
+            _this.rows = data;
+        });
+    };
+    UsuarioadminComponent.prototype.cargaCitasUsuario = function (idCli) {
+        var _this = this;
+        this.endpointsService.citasUserSA({ idCliente: idCli })
+            .then(function (data) {
+            console.log(data);
+            _this.citasPendienteConfirmar = data["1"] || [];
+            _this.citasConfirmadas = data["2"] || [];
+            _this.citasCompletadas = data["3"] || [];
+            _this.citasCanceladas = data["4"] || [];
+            _this.citasReprogramads = data["5"] || [];
+            _this.conjuntoCC = _this.citasPendienteConfirmar.concat(_this.citasReprogramads);
+        });
+    };
+    UsuarioadminComponent.prototype.onSelect = function (_a) {
+        var selected = _a.selected;
+        console.log(this.selected[0]);
+        this.serviciosSeleccionado = [];
+        //this.selectedHorario = []; 
+        // this.rows = this.originalData;
+        // this.test = JSON.parse(JSON.stringify(this.selected[0]));
+        this.usuarioSeleccionado = JSON.parse(JSON.stringify(this.selected[0]));
+        //  let  dateObj = new Date(this.usuarioSeleccionado['fechaNacimiento']);
+        // this.usuarioSeleccionado['fechaV'] =  {year: (dateObj.getUTCFullYear()), month: (dateObj.getUTCMonth() + 1), day: (dateObj.getUTCDate())};
+        //{year: 2017, month: 8, day: 8};
+        this.cargaCitasUsuario(this.usuarioSeleccionado['idCliente']);
+    };
+    UsuarioadminComponent.prototype.getPrecioDescuento = function (precio) {
+        var retorno = 0;
+        if (this.citaSelected['descuento']) {
+            var descuento = this.citaSelected['descuento'];
+            var precioN = precio;
+            retorno = precioN - (precioN * (descuento / 100));
+        }
+        else {
+            retorno = precio;
+        }
+        return retorno.toFixed(2);
+    };
+    UsuarioadminComponent.prototype.getServicios = function (rowSelected) {
+        var _this = this;
+        console.log(rowSelected['selected'][0]);
+        this.citaSelected = rowSelected['selected'][0];
+        var dataER = { idCita: rowSelected['selected'][0]['idCita'], idCentro: rowSelected['selected'][0]['idCentro'] };
+        this.endpointsService.getServiciosCita(dataER)
+            .then(function (data) {
+            console.log(data);
+            // this.usuarioSeleccionado['precioEsperado'] = data['servicios'][0]['precioEsperado'];
+            _this.serviciosSeleccionado = data['servicios'];
+            //this.categoriasCentro = Object.keys(data['categorias']);
+            //this.serviciosCategoria = Object.values(data['categorias']);
+            //this.actualizarHora(this.usuarioSeleccionado['horaF']);
+        }, function (msg) {
+            console.log(msg);
+        });
+    };
+    UsuarioadminComponent.prototype.guardarEdicion = function () {
+        var _this = this;
+        this.loading = true;
+        console.log(this.usuarioSeleccionado);
+        this.endpointsService.editarUsuarioSA(this.usuarioSeleccionado)
+            .then(function (data) {
+            console.log(data);
+            _this.loading = false;
+            _this.cargaUsuarios();
+            alert('Editado correctamente');
+            _this.editar = false;
+        }, function (msg) {
+            console.log(msg);
+            // this.loading = false;
+        });
+    };
+    UsuarioadminComponent.prototype.pad2 = function (number) {
+        return (number < 10 ? '0' : '') + number;
+    };
+    UsuarioadminComponent.prototype.guardarUsuario = function () {
+        var _this = this;
+        this.loading = true;
+        this.nuevoUsuario['fechaNacimiento'] = this.nuevoUsuario['fecha']['year'] + '-' +
+            this.pad2(this.nuevoUsuario['fecha']['month']) + '-' +
+            this.pad2(this.nuevoUsuario['fecha']['day']);
+        '00:00:00';
+        console.log(this.nuevoUsuario);
+        this.endpointsService.nuevoUsuario(this.nuevoUsuario)
+            .then(function (data) {
+            console.log(data);
+            _this.loading = false;
+            _this.cargaUsuarios();
+            alert('Guardado correctamente');
+            _this.editar = false;
+            _this.nuevoUsuario = {};
+        }, function (msg) {
+            console.log(msg);
+            _this.loading = false;
+        });
+    };
+    UsuarioadminComponent.prototype.getCellClass = function (_a) {
+        var row = _a.row, column = _a.column, value = _a.value;
+        return {
+            'class1': (value) === 0,
+            'parpadea': (value) === 0
+        };
+    };
+    UsuarioadminComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'tox-usuarioadmin',
+            template: __webpack_require__("../../../../../src/app/usuarioadmin/usuarioadmin.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/usuarioadmin/usuarioadmin.component.scss")]
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */]])
+    ], UsuarioadminComponent);
+    return UsuarioadminComponent;
 }());
 
 
