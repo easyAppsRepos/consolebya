@@ -295,7 +295,7 @@ var AddcategoriasComponent = (function () {
 /***/ "../../../../../src/app/admincentros/admincentros.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n <div class=\"card mb-4\" style=\"margin-top: 20px\">\n    \n\n\n          <div  style='float:left;width:100%'>\n        <div class=\"info\">\n          <p></p>\n        </div>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows2\"\n          [columnMode]=\"'force'\"\n       \n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect($event)'>\n\n\n                            <ngx-datatable-column prop=\"nombre\" name='Nombre' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                            <ngx-datatable-column prop=\"email\" name='Email' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"sucursales\" name='Sucursales' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n                {{value}}\n\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"activos\" name='Activos' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                            <ngx-datatable-column prop=\"sincerrar\" name='Sin Cerrar' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                            <ngx-datatable-column prop=\"completos\" name='Completos' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n\n\n\n\n\n        </ngx-datatable>\n      </div>\n\n</div>\n <div [hidden]='!test[\"idUsuarioConsola\"]' class=\"card mb-4\" style=\"margin-top: 20px\">\n\n\n\n\n\n <ngx-loading [show]=\"loading2\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n\n<ngb-tabset >\n\n  <ngb-tab title=\"Sucursales\"  >\n\n    <ng-template ngbTabContent>\n\n    \n\n  <div  class=\"input-group\">\n    <div class=\"input-group-prepend\">\n\n   <button  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\" btn btn-primary \" (click)='claseSeleccionada={};selected2 = [];'>Crear Sucursal</button>\n\n    </div>\n\n  </div>\n\n\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n       \n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected2\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect2($event)'>\n\n\n                            <ngx-datatable-column minWidth='220' maxWidth='280' prop=\"nombre\" name='Sucursal' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n                   <div class=\"photo-table img\">\n<img class=\"img-circle\" src=\"http://50.116.17.150:3000/{{row.idFoto}}\" \n  onError=\"this.src='assets/tiendaLogo.png';\"> {{value}}\n</div> \n\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                            <ngx-datatable-column prop=\"email\" name='Email' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"activos\" name='Activos' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"sincerrar\" name='Sin Cerrar' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n                            <ngx-datatable-column prop=\"completos\" name='Completos' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                         <ngx-datatable-column prop=\"estado\" name='Estado' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value == 1 ? 'Activo' : 'Cancelado'}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n\n        </ngx-datatable>\n\n\n\n \n\n\n      <div *ngIf='claseSeleccionada[\"idCentro\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  <ngb-tabset>\n  <ngb-tab title=\"Informacion\">\n    <ng-template ngbTabContent>\n                    <div style='padding: 20px' class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n\n                 <div class=\"photo-table img\">\n<img class=\"img-circle\" src=\"http://50.116.17.150:3000/{{claseSeleccionada['idFoto']}}\" \n  onError=\"this.src='assets/tiendaLogo.png';\"> \n\n  <span style=\"    font-size: 21px;\n    color: #0073aa;\">{{claseSeleccionada[\"nombre\"]}}</span> \n\n\n</div> \n\n\n    \n\n\n \n\n  </div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n    <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    {{isCollapsed ? 'Mostrar mas' : 'Mostrar menos'}}\n  </button>\n\n    </div>\n\n  </div>\n</div>\n\n<div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n\n<form class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Sucursal</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.nombre\" name=\"nombre\" type=\"text\" class=\"form-control\">\n    </div>\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Email</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.email\" name=\"email\" type=\"text\" class=\"form-control\">\n    </div>\n\n\n    <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Telefono</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.telefono\" name=\"tel\" type=\"text\" class=\"form-control\">\n    </div>\n\n\n\n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select [disabled]=\"!editar\" [(ngModel)]=\"claseSeleccionada.estado\" class=\"form-control custom-select mr-sm-2\" name='estado'>\n      \n        <option value=\"1\">Activo</option>\n        <option value=\"2\">Cancelado</option>\n\n      </select>\n    </div>\n\n\n\n     \n\n\n\n\n  </div>\n\n\n</form>\n\n<div *ngIf='claseSeleccionada.idCentro' >\n\n  <button  [hidden]=\"editar\" (click)='editar = !editar' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Editar</button>\n\n\n\n\n  <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n   <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n</div>\n</div>\n    </ng-template>\n  </ngb-tab>\n\n\n  <ngb-tab title=\"Opiniones\" >\n\n    <ng-template ngbTabContent>\n\n              <ngx-datatable \n          class=\"material\"\n          [rows]=\"opiniones\"\n          [columnMode]=\"'force'\"\n       \n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected3\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect3($event)'>\n\n\n                            <ngx-datatable-column prop=\"nombreCliente\" name='Cliente' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                            <ngx-datatable-column prop=\"idCita\" name='ID de Reserva' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"comentario\" name='Comentario' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"puntuacion\" name='Calificacion' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column maxWidth='150' prop=\"estado\" name='' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           <button *ngIf='value == 2'  (click)='ocultarPubli(3,row.idEvaluacionCentro)' type=\"button\" class=\"btn btn-danger btn-sm\">Ocultar</button>\n              <button *ngIf='value == 3' (click)='ocultarPubli(2,row.idEvaluacionCentro)'  type=\"button\" class=\"btn btn-success btn-sm\">Mostrar</button>\n\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n\n        </ngx-datatable>\n\n\n    </ng-template>\n  </ngb-tab>\n  <ngb-tab title=\"Servicios\" >\n\n    <ng-template ngbTabContent>\n\n\n                    <ngx-datatable \n          class=\"material\"\n          [rows]=\"servicios\"\n          [columnMode]=\"'force'\"\n       \n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected4\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect4($event)'>\n\n\n          <ngx-datatable-column  maxWidth='20' prop=\"estado\" name='' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n            <i *ngIf='value==1'  class=\"fa fa-check-square-o\" aria-hidden=\"true\"></i> \n        <i *ngIf='value!==1'  class=\"fa fa-close\" aria-hidden=\"true\"></i> \n\n\n\n          </ng-template>\n        </ngx-datatable-column>\n\n                            <ngx-datatable-column prop=\"nombre\" name='Servicio' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                            <ngx-datatable-column prop=\"nombreCategoria\" name='Asignacion' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"duracion\" name='Tiempo' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}min\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"precio\" name='Costo' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           ${{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n \n\n\n\n\n        </ngx-datatable>\n\n\n    </ng-template>\n  </ngb-tab>\n</ngb-tabset>\n\n\n\n\n\n          \n        </div>\n\n\n<!-- 270- 334-->\n <div *ngIf='!claseSeleccionada[\"idCentro\"] && test[\"idUsuarioConsola\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  \n\n          <div class=\"card-body\">\n            <h5 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Agregar Sucursal a {{test[\"nombre\"]}}</h5>\n\n<form  #form='ngForm' name=\"form\" class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreN.valid}\" [(ngModel)]=\"nuevaClase.nombre\" name=\"nombreN\" type=\"text\" class=\"form-control\" #nombreN=\"ngModel\" required>\n    \n    </div>\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Email</label>\n      <input  [ngClass]=\"{'is-invalid':!emailN.valid}\" [(ngModel)]=\"nuevaClase.email\" name=\"emailN\" type=\"text\" class=\"form-control\" #emailN=\"ngModel\" required>\n    \n    </div>\n\n        <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Telefono</label>\n      <input  [ngClass]=\"{'is-invalid':!telefonoN.valid}\" [(ngModel)]=\"nuevaClase.telefono\" name=\"telefonoN\" type=\"text\" class=\"form-control\" #telefonoN=\"ngModel\" required>\n    \n    </div>\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre Registro</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreTitularN.valid}\" [(ngModel)]=\"nuevaClase.nombreTitular\" name=\"nombreTitularN\" type=\"text\" class=\"form-control\" #nombreTitularN=\"ngModel\" required>\n    \n    </div>\n\n\n\n\n</div>\n\n\n  <button  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' type='submit' class=\"btn btn-primary\" [disabled]=\"!form.valid\"  (click)='guardarNuevaClase()'>Crear sucursal</button>\n\n\n</form>\n\n\n\n\n\n\n          </div>\n\n</div> \n\n    </ng-template>\n  </ngb-tab>\n\n    <ngb-tab title=\"Informacion\" >\n    <ng-template ngbTabContent>\n                      <div class=\"card-body\">\n\n                  <div class=\"mb-4\">\n\n<div [hidden]='currentID !== \"completadas\" ' class=\"row\" style=\"float: right;\n    margin-right: 16px;\">\n<div class=\"col-md-12 col-xl-4\" style=\"    display: contents;\">\n<div >\n<div class=\"card-status\">\n<h5>TOTAL = ${{(dataR[0]['total'])?.toFixed(2)}}</h5>\n\n</div>\n</div>\n</div>\n<div class=\"col-md-12 col-xl-4\" style=\"    display: contents;\">\n<div >\n<div class=\"card-status\">\n<h5>COMISION = ${{(dataR[0]['comision'])?.toFixed(2)}}</h5>\n\n\n</div>\n</div>\n</div>\n</div>\n</div>\n              <ngb-tabset (tabChange)=\"activeTab($event)\">\n\n  <ngb-tab  id=\"confirmadasTab\" title=\"Confirmadas ({{citasConfirmadas.length}})\" [disabled]=\"citasConfirmadas.length==0\">\n    <ng-template ngbTabContent>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"citasConfirmadas\"\n          [columnMode]=\"'force'\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          (select)='getServicios($event)'>\n          <ngx-datatable-column prop=\"idCita\" name='ID de Reserva' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>   \n            {{value}}\n         </ng-template>\n        </ngx-datatable-column>\n\n\n\n\n           <ngx-datatable-column prop=\"nombreCentro\"  minWidth='220' maxWidth='280' name='Sucursal' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n               <div class=\"photo-table img\">\n<img class=\"img-circle\" src=\"http://50.116.17.150:3000/{{row.idFoto}}\" \n  onError=\"this.src='assets/tiendaLogo.png';\"> {{value}}\n</div> \n          </ng-template>\n        </ngx-datatable-column>\n\n                           <ngx-datatable-column prop=\"nombreCliente\" name='Cliente' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n    <ngx-datatable-column prop=\"FechaCita\" name='Fecha' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n          <ngx-datatable-column prop=\"totalServicios\" name='Servicios' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n          <ngx-datatable-column prop=\"precioEsperado\" name='Total' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           ${{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n    </ngx-datatable>\n    </ng-template>\n  </ngb-tab>\n\n\n\n  <ngb-tab id=\"porConfirmarTab\" title=\"Por Confirmar ({{conjuntoCC.length}})\" [disabled]=\"conjuntoCC.length==0\">\n    <ng-template ngbTabContent>\n             <ngx-datatable \n          class=\"material\"\n          [rows]=\"conjuntoCC\"\n          [columnMode]=\"'force'\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          (select)='getServicios($event)'>\n          <ngx-datatable-column prop=\"idCita\" name='ID de Reserva' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>   \n            {{value}}\n         </ng-template>\n        </ngx-datatable-column>\n           <ngx-datatable-column prop=\"nombreCentro\"  minWidth='220' maxWidth='280' name='Sucursal' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n                <div class=\"photo-table img\">\n<img class=\"img-circle\" src=\"http://50.116.17.150:3000/{{row.idFoto}}\" \n  onError=\"this.src='assets/tiendaLogo.png';\"> {{value}}\n</div> \n          </ng-template>\n        </ngx-datatable-column>\n\n                           <ngx-datatable-column prop=\"nombreCliente\" name='Cliente' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n    <ngx-datatable-column prop=\"FechaCita\" name='Fecha' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n                  <ngx-datatable-column prop=\"estado\" name='Parte' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value == 1 ? 'Negocio' :  'Cliente'}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n          <ngx-datatable-column prop=\"totalServicios\" name='Servicios' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n          <ngx-datatable-column prop=\"precioEsperado\" name='Total' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           ${{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n    </ngx-datatable>\n    </ng-template>\n  </ngb-tab>\n\n\n  <ngb-tab id=\"completadas\"  title=\"Completadas ({{citasCompletadas.length}})\" [disabled]=\"citasCompletadas.length==0\">\n    <ng-template ngbTabContent>\n           <ngx-datatable \n          class=\"material\"\n          [rows]=\"citasCompletadas\"\n          [columnMode]=\"'force'\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          (select)='getServicios($event)'>\n          <ngx-datatable-column prop=\"idCita\" name='ID de Reserva' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>   \n           {{value}}\n         </ng-template>\n        </ngx-datatable-column>\n           <ngx-datatable-column prop=\"nombreCentro\"  minWidth='220' maxWidth='280' name='Sucursal' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n                <div class=\"photo-table img\">\n<img class=\"img-circle\" src=\"http://50.116.17.150:3000/{{row.idFoto}}\" \n  onError=\"this.src='assets/tiendaLogo.png';\"> {{value}}\n</div> \n          </ng-template>\n        </ngx-datatable-column>\n\n                           <ngx-datatable-column prop=\"nombreCliente\" name='Cliente' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n    <ngx-datatable-column prop=\"FechaCita\" name='Fecha' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n<!--           <ngx-datatable-column prop=\"totalServicios\" name='Servicios' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column> -->\n\n\n                  <ngx-datatable-column prop=\"valoracion\" name='Puntuacion' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n                  <ngx-datatable-column prop=\"precioEsperado\" name='Total' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           ${{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                  <ngx-datatable-column prop=\"comision\" name='Comision' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           ${{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n    </ngx-datatable>\n    </ng-template>\n  </ngb-tab>\n\n\n  <ngb-tab id=\"canceladas\" title=\"Canceladas ({{citasCanceladas.length}})\" [disabled]=\"citasCanceladas.length==0\">\n    <ng-template ngbTabContent>\n       <ngx-datatable \n          class=\"material\"\n          [rows]=\"citasCanceladas\"\n          [columnMode]=\"'force'\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          (select)='getServicios($event)'>\n          <ngx-datatable-column prop=\"idCita\" name='ID de Reserva' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>   \n            {{value}} \n         </ng-template>\n        </ngx-datatable-column>\n           <ngx-datatable-column prop=\"nombreCentro\"  minWidth='220' maxWidth='280' name='Sucursal' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n                <div class=\"photo-table img\">\n<img class=\"img-circle\" src=\"http://50.116.17.150:3000/{{row.idFoto}}\" \n  onError=\"this.src='assets/tiendaLogo.png';\"> {{value}}\n</div> \n          </ng-template>\n        </ngx-datatable-column>\n    <ngx-datatable-column prop=\"FechaCita\" name='Fecha' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n          <ngx-datatable-column prop=\"totalServicios\" name='Servicios' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n          <ngx-datatable-column prop=\"precioEsperado\" name='Total' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           ${{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n    </ngx-datatable>\n    </ng-template>\n  </ngb-tab>\n\n\n\n\n<!--   <ngb-tab title=\"Disabled\" [disabled]=\"true\">\n    <ng-template ngbTabContent>\n      <p>Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget sodales nibh elit id diam. Nulla facilisi. Donec egestas ligula vitae odio interdum aliquet. Duis lectus turpis, luctus eget tincidunt eu, congue et odio. Duis pharetra et nisl at faucibus. Quisque luctus pulvinar arcu, et molestie lectus ultrices et. Sed diam urna, egestas ut ipsum vel, volutpat volutpat neque. Praesent fringilla tortor arcu. Vivamus faucibus nisl enim, nec tristique ipsum euismod facilisis. Morbi ut bibendum est, eu tincidunt odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris aliquet odio ac lorem aliquet ultricies in eget neque. Phasellus nec tortor vel tellus pulvinar feugiat.</p>\n    </ng-template>\n  </ngb-tab>\n -->\n\n\n</ngb-tabset>\n\n\n\n<div class=\"\" [hidden]='serviciosSeleccionado?.length == 0'>\n\n<div class=\"card\">\n<div class=\"card-block\">\n\n</div>\n\n\n<div class=\"card-block client-card table-1-card p-t-0\">\n<div class=\"table-responsive\">\n<table class=\"table\">\n<thead>\n<tr class=\"text-capitalize\">\n<th>Servicio</th>\n<th>Duracion</th>\n<th>Precio</th>\n\n\n</tr>\n</thead>\n<tbody>\n\n<tr  *ngFor=\"let e of serviciosSeleccionado || []\" >\n<td class=\"\">\n{{e.nombre}}\n</td>\n<td>{{e.duracion}}min</td>\n<td class=\"text-success\">\n<!-- \n  <span [hidden]=\"!(usuarioSeleccionado['descuento']>0)\"  style=\"color: #777;text-decoration: line-through;\">${{e.precio.toFixed(2)}}</span> -->\n<br>\n    <span >${{getPrecioDescuento(e.precio)}}</span>\n\n\n\n</td>\n\n</tr>\n\n\n\n\n</tbody>\n</table>\n</div>\n<!--   <button [disabled]='!idServicio.valid' (click)='agregarServicioCita(agregarEjercicio.idServicio)' class=\"btn btn-success\">Agregar Servicio</button> -->\n\n \n</div>\n</div>\n</div>\n\n\n\n        </div>\n    </ng-template>\n  </ngb-tab>\n\n\n\n\n</ngb-tabset>\n\n\n<!-- \n<div *ngIf='!claseSeleccionada[\"idCentro\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  \n\n          <div class=\"card-body\">\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Crear nuevo Negocio</h3>\n\n<form  #form='ngForm' name=\"form\" class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreN.valid}\" [(ngModel)]=\"nuevaClase.nombre\" name=\"nombreN\" type=\"text\" class=\"form-control\" #nombreN=\"ngModel\" required>\n    \n    </div>\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Email</label>\n      <input  [ngClass]=\"{'is-invalid':!emailN.valid}\" [(ngModel)]=\"nuevaClase.email\" name=\"emailN\" type=\"text\" class=\"form-control\" #emailN=\"ngModel\" required>\n    \n    </div>\n\n        <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Telefono</label>\n      <input  [ngClass]=\"{'is-invalid':!telefonoN.valid}\" [(ngModel)]=\"nuevaClase.telefono\" name=\"telefonoN\" type=\"text\" class=\"form-control\" #telefonoN=\"ngModel\" required>\n    \n    </div>\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre Registro</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreTitularN.valid}\" [(ngModel)]=\"nuevaClase.nombreTitular\" name=\"nombreTitularN\" type=\"text\" class=\"form-control\" #nombreTitularN=\"ngModel\" required>\n    \n    </div>\n\n\n\n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select   [ngClass]=\"{'is-invalid':!estadoN.valid}\"  [(ngModel)]=\"nuevaClase.estado\" name=\"estadoN\" #estadoN=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\" >\n                <option value=\"1\">Publicado</option>\n        <option value=\"2\">Pendiente de Revision</option>\n         <option value=\"3\">No Publicado</option>\n      </select>\n    </div>\n</div>\n\n\n  <button  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' type='submit' class=\"btn btn-primary\" [disabled]=\"!form.valid\"  (click)='guardarNuevaClase()'>Crear negocio</button>\n\n\n</form>\n\n\n\n\n\n\n          </div>\n\n</div>\n -->\n\n\n    </div> \n\n\n\n"
+module.exports = "\n <div class=\"card mb-4\" style=\"margin-top: 20px\">\n    \n\n\n          <div  style='float:left;width:100%'>\n        <div class=\"info\">\n          <p></p>\n        </div>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows2\"\n          [columnMode]=\"'force'\"\n       \n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect($event)'>\n\n\n                            <ngx-datatable-column prop=\"nombre\" name='Nombre' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                            <ngx-datatable-column prop=\"email\" name='Email' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"sucursales\" name='Sucursales' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n                {{value}}\n\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"activos\" name='Activos' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                            <ngx-datatable-column prop=\"sincerrar\" name='Sin Cerrar' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                            <ngx-datatable-column prop=\"completos\" name='Completos' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n\n\n\n\n\n        </ngx-datatable>\n      </div>\n\n</div>\n <div [hidden]='!test[\"idUsuarioConsola\"]' class=\"card mb-4\" style=\"margin-top: 20px\">\n\n\n\n\n\n <ngx-loading [show]=\"loading2\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n\n<ngb-tabset >\n\n  <ngb-tab title=\"Sucursales\"  >\n\n    <ng-template ngbTabContent>\n\n    \n\n  <div  class=\"input-group\">\n    <div class=\"input-group-prepend\">\n\n   <button  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\" btn btn-primary \" (click)='claseSeleccionada={};selected2 = [];'>Crear Sucursal</button>\n\n    </div>\n\n  </div>\n\n\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n       \n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected2\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect2($event)'>\n\n\n                            <ngx-datatable-column minWidth='220' maxWidth='280' prop=\"nombre\" name='Sucursal' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n                   <div class=\"photo-table img\">\n<img class=\"img-circle\" src=\"http://50.116.17.150:3000/{{row.idFoto}}\" \n  onError=\"this.src='assets/tiendaLogo.png';\"> {{value}}\n</div> \n\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                            <ngx-datatable-column prop=\"email\" name='Email' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"activos\" name='Activos' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"sincerrar\" name='Sin Cerrar' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n                            <ngx-datatable-column prop=\"completos\" name='Completos' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                         <ngx-datatable-column prop=\"estado\" name='Estado' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value == 1 ? 'Activo' : 'Cancelado'}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n\n        </ngx-datatable>\n\n\n\n \n\n\n      <div *ngIf='claseSeleccionada[\"idCentro\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  <ngb-tabset>\n  <ngb-tab title=\"Informacion\">\n    <ng-template ngbTabContent>\n                    <div style='padding: 20px' class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n\n                 <div class=\"photo-table img\">\n<img class=\"img-circle\" src=\"http://50.116.17.150:3000/{{claseSeleccionada['idFoto']}}\" \n  onError=\"this.src='assets/tiendaLogo.png';\"> \n\n  <span style=\"    font-size: 21px;\n    color: #0073aa;\">{{claseSeleccionada[\"nombre\"]}}</span> \n\n\n</div> \n\n\n    \n\n\n \n\n  </div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n    <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    {{isCollapsed ? 'Mostrar mas' : 'Mostrar menos'}}\n  </button>\n\n    </div>\n\n  </div>\n</div>\n\n<div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n\n<form class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Sucursal</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.nombre\" name=\"nombre\" type=\"text\" class=\"form-control\">\n    </div>\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Email</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.email\" name=\"email\" type=\"text\" class=\"form-control\">\n    </div>\n\n\n    <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Telefono</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.telefono\" name=\"tel\" type=\"text\" class=\"form-control\">\n    </div>\n\n\n\n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado <br> <span style=\"    font-size: 12px;\n    color: darkgray;\">*Cambiar el estado afectará el periodo de facturacion y generará un registro de actividad</span></label>\n           <select [disabled]=\"!editar\" [(ngModel)]=\"claseSeleccionada.estado\" class=\"form-control custom-select mr-sm-2\" name='estado'>\n      \n        <option value=\"1\">Activo</option>\n        <option value=\"2\">Cancelado</option>\n\n      </select>\n    </div>\n\n\n\n     \n\n\n\n\n  </div>\n\n\n</form>\n\n<div *ngIf='claseSeleccionada.idCentro' >\n\n  <button  [hidden]=\"editar\" (click)='editar = !editar' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Editar</button>\n\n\n\n\n  <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n   <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n</div>\n</div>\n    </ng-template>\n  </ngb-tab>\n\n\n  <ngb-tab title=\"Opiniones\" >\n\n    <ng-template ngbTabContent>\n\n              <ngx-datatable \n          class=\"material\"\n          [rows]=\"opiniones\"\n          [columnMode]=\"'force'\"\n       \n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected3\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect3($event)'>\n\n\n                            <ngx-datatable-column prop=\"nombreCliente\" name='Cliente' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                            <ngx-datatable-column prop=\"idCita\" name='ID de Reserva' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"comentario\" name='Comentario' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"puntuacion\" name='Calificacion' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column maxWidth='150' prop=\"estado\" name='' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           <button *ngIf='value == 2'  (click)='ocultarPubli(3,row.idEvaluacionCentro)' type=\"button\" class=\"btn btn-danger btn-sm\">Ocultar</button>\n              <button *ngIf='value == 3' (click)='ocultarPubli(2,row.idEvaluacionCentro)'  type=\"button\" class=\"btn btn-success btn-sm\">Mostrar</button>\n\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n\n        </ngx-datatable>\n\n\n    </ng-template>\n  </ngb-tab>\n  <ngb-tab title=\"Servicios\" >\n\n    <ng-template ngbTabContent>\n\n\n                    <ngx-datatable \n          class=\"material\"\n          [rows]=\"servicios\"\n          [columnMode]=\"'force'\"\n       \n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected4\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect4($event)'>\n\n\n          <ngx-datatable-column  maxWidth='20' prop=\"estado\" name='' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n            <i *ngIf='value==1'  class=\"fa fa-check-square-o\" aria-hidden=\"true\"></i> \n        <i *ngIf='value!==1'  class=\"fa fa-close\" aria-hidden=\"true\"></i> \n\n\n\n          </ng-template>\n        </ngx-datatable-column>\n\n                            <ngx-datatable-column prop=\"nombre\" name='Servicio' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                            <ngx-datatable-column prop=\"nombreCategoria\" name='Asignacion' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"duracion\" name='Tiempo' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}min\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"precio\" name='Costo' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           ${{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n \n\n\n\n\n        </ngx-datatable>\n\n\n    </ng-template>\n  </ngb-tab>\n\n\n\n\n    <ngb-tab title=\"Actividad\" >\n\n    <ng-template ngbTabContent>\n\n              <ngx-datatable \n          class=\"material\"\n          [rows]=\"actividad\"\n          [columnMode]=\"'force'\"\n       \n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected8\"\n          [selectionType]=\"'single'\"\n          >\n\n\n                            <ngx-datatable-column prop=\"soloFecha\" name='Fecha' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n                            <ngx-datatable-column prop=\"estadoAsignado\" name='Estado' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n      {{value == 1 ? 'Activo' : 'Cancelado'}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                            <ngx-datatable-column prop=\"estadoAsignado\" name='Descripcion' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n         {{value == 1 ? 'Se ha activado la sucursal' : 'Se ha cancelado la sucursal'}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n\n\n\n\n\n\n\n        </ngx-datatable>\n\n\n    </ng-template>\n  </ngb-tab>\n\n\n\n</ngb-tabset>\n\n\n\n\n\n          \n        </div>\n\n\n<!-- 270- 334-->\n <div *ngIf='!claseSeleccionada[\"idCentro\"] && test[\"idUsuarioConsola\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  \n\n          <div class=\"card-body\">\n            <h5 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Agregar Sucursal a {{test[\"nombre\"]}}</h5>\n\n<form  #form='ngForm' name=\"form\" class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreN.valid}\" [(ngModel)]=\"nuevaClase.nombre\" name=\"nombreN\" type=\"text\" class=\"form-control\" #nombreN=\"ngModel\" required>\n    \n    </div>\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Email</label>\n      <input  [ngClass]=\"{'is-invalid':!emailN.valid}\" [(ngModel)]=\"nuevaClase.email\" name=\"emailN\" type=\"text\" class=\"form-control\" #emailN=\"ngModel\" required>\n    \n    </div>\n\n        <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Telefono</label>\n      <input  [ngClass]=\"{'is-invalid':!telefonoN.valid}\" [(ngModel)]=\"nuevaClase.telefono\" name=\"telefonoN\" type=\"text\" class=\"form-control\" #telefonoN=\"ngModel\" required>\n    \n    </div>\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre Registro</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreTitularN.valid}\" [(ngModel)]=\"nuevaClase.nombreTitular\" name=\"nombreTitularN\" type=\"text\" class=\"form-control\" #nombreTitularN=\"ngModel\" required>\n    \n    </div>\n\n\n\n\n</div>\n\n\n  <button  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' type='submit' class=\"btn btn-primary\" [disabled]=\"!form.valid\"  (click)='guardarNuevaClase()'>Crear sucursal</button>\n\n\n</form>\n\n\n\n\n\n\n          </div>\n\n</div> \n\n    </ng-template>\n  </ngb-tab>\n\n    <ngb-tab title=\"Informacion\" >\n    <ng-template ngbTabContent>\n                      <div class=\"card-body\">\n\n                  <div class=\"mb-4\">\n\n<div [hidden]='currentID !== \"completadas\" ' class=\"row\" style=\"float: right;\n    margin-right: 16px;\">\n<div class=\"col-md-12 col-xl-4\" style=\"    display: contents;\">\n<div >\n<div class=\"card-status\">\n<h5>TOTAL = ${{(dataR[0]['total'])?.toFixed(2)}}</h5>\n\n</div>\n</div>\n</div>\n<div class=\"col-md-12 col-xl-4\" style=\"    display: contents;\">\n<div >\n<div class=\"card-status\">\n<h5>COMISION = ${{(dataR[0]['comision'])?.toFixed(2)}}</h5>\n\n\n</div>\n</div>\n</div>\n</div>\n</div>\n              <ngb-tabset (tabChange)=\"activeTab($event)\">\n\n  <ngb-tab  id=\"confirmadasTab\" title=\"Confirmadas ({{citasConfirmadas.length}})\" [disabled]=\"citasConfirmadas.length==0\">\n    <ng-template ngbTabContent>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"citasConfirmadas\"\n          [columnMode]=\"'force'\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          (select)='getServicios($event)'>\n          <ngx-datatable-column prop=\"idCita\" name='ID de Reserva' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>   \n            {{value}}\n         </ng-template>\n        </ngx-datatable-column>\n\n\n\n\n           <ngx-datatable-column prop=\"nombreCentro\"  minWidth='220' maxWidth='280' name='Sucursal' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n               <div class=\"photo-table img\">\n<img class=\"img-circle\" src=\"http://50.116.17.150:3000/{{row.idFoto}}\" \n  onError=\"this.src='assets/tiendaLogo.png';\"> {{value}}\n</div> \n          </ng-template>\n        </ngx-datatable-column>\n\n                           <ngx-datatable-column prop=\"nombreCliente\" name='Cliente' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n    <ngx-datatable-column prop=\"FechaCita\" name='Fecha' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n          <ngx-datatable-column prop=\"totalServicios\" name='Servicios' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n          <ngx-datatable-column prop=\"precioEsperado\" name='Total' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           ${{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n    </ngx-datatable>\n    </ng-template>\n  </ngb-tab>\n\n\n\n  <ngb-tab id=\"porConfirmarTab\" title=\"Por Confirmar ({{conjuntoCC.length}})\" [disabled]=\"conjuntoCC.length==0\">\n    <ng-template ngbTabContent>\n             <ngx-datatable \n          class=\"material\"\n          [rows]=\"conjuntoCC\"\n          [columnMode]=\"'force'\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          (select)='getServicios($event)'>\n          <ngx-datatable-column prop=\"idCita\" name='ID de Reserva' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>   \n            {{value}}\n         </ng-template>\n        </ngx-datatable-column>\n           <ngx-datatable-column prop=\"nombreCentro\"  minWidth='220' maxWidth='280' name='Sucursal' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n                <div class=\"photo-table img\">\n<img class=\"img-circle\" src=\"http://50.116.17.150:3000/{{row.idFoto}}\" \n  onError=\"this.src='assets/tiendaLogo.png';\"> {{value}}\n</div> \n          </ng-template>\n        </ngx-datatable-column>\n\n                           <ngx-datatable-column prop=\"nombreCliente\" name='Cliente' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n    <ngx-datatable-column prop=\"FechaCita\" name='Fecha' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n                  <ngx-datatable-column prop=\"estado\" name='Parte' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value == 1 ? 'Negocio' :  'Cliente'}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n          <ngx-datatable-column prop=\"totalServicios\" name='Servicios' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n          <ngx-datatable-column prop=\"precioEsperado\" name='Total' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           ${{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n    </ngx-datatable>\n    </ng-template>\n  </ngb-tab>\n\n\n  <ngb-tab id=\"completadas\"  title=\"Completadas ({{citasCompletadas.length}})\" [disabled]=\"citasCompletadas.length==0\">\n    <ng-template ngbTabContent>\n           <ngx-datatable \n          class=\"material\"\n          [rows]=\"citasCompletadas\"\n          [columnMode]=\"'force'\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          (select)='getServicios($event)'>\n          <ngx-datatable-column prop=\"idCita\" name='ID de Reserva' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>   \n           {{value}}\n         </ng-template>\n        </ngx-datatable-column>\n           <ngx-datatable-column prop=\"nombreCentro\"  minWidth='220' maxWidth='280' name='Sucursal' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n                <div class=\"photo-table img\">\n<img class=\"img-circle\" src=\"http://50.116.17.150:3000/{{row.idFoto}}\" \n  onError=\"this.src='assets/tiendaLogo.png';\"> {{value}}\n</div> \n          </ng-template>\n        </ngx-datatable-column>\n\n                           <ngx-datatable-column prop=\"nombreCliente\" name='Cliente' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n    <ngx-datatable-column prop=\"FechaCita\" name='Fecha' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n<!--           <ngx-datatable-column prop=\"totalServicios\" name='Servicios' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column> -->\n\n\n                  <ngx-datatable-column prop=\"valoracion\" name='Puntuacion' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n                  <ngx-datatable-column prop=\"precioEsperado\" name='Total' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           ${{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                  <ngx-datatable-column prop=\"comision\" name='Comision' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           ${{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n    </ngx-datatable>\n    </ng-template>\n  </ngb-tab>\n\n\n  <ngb-tab id=\"canceladas\" title=\"Canceladas ({{citasCanceladas.length}})\" [disabled]=\"citasCanceladas.length==0\">\n    <ng-template ngbTabContent>\n       <ngx-datatable \n          class=\"material\"\n          [rows]=\"citasCanceladas\"\n          [columnMode]=\"'force'\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          (select)='getServicios($event)'>\n          <ngx-datatable-column prop=\"idCita\" name='ID de Reserva' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>   \n            {{value}} \n         </ng-template>\n        </ngx-datatable-column>\n           <ngx-datatable-column prop=\"nombreCentro\"  minWidth='220' maxWidth='280' name='Sucursal' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n                <div class=\"photo-table img\">\n<img class=\"img-circle\" src=\"http://50.116.17.150:3000/{{row.idFoto}}\" \n  onError=\"this.src='assets/tiendaLogo.png';\"> {{value}}\n</div> \n          </ng-template>\n        </ngx-datatable-column>\n    <ngx-datatable-column prop=\"FechaCita\" name='Fecha' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n          <ngx-datatable-column prop=\"totalServicios\" name='Servicios' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n          <ngx-datatable-column prop=\"precioEsperado\" name='Total' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           ${{value || '-'  }}\n          </ng-template>\n        </ngx-datatable-column>\n\n    </ngx-datatable>\n    </ng-template>\n  </ngb-tab>\n\n\n\n\n<!--   <ngb-tab title=\"Disabled\" [disabled]=\"true\">\n    <ng-template ngbTabContent>\n      <p>Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget sodales nibh elit id diam. Nulla facilisi. Donec egestas ligula vitae odio interdum aliquet. Duis lectus turpis, luctus eget tincidunt eu, congue et odio. Duis pharetra et nisl at faucibus. Quisque luctus pulvinar arcu, et molestie lectus ultrices et. Sed diam urna, egestas ut ipsum vel, volutpat volutpat neque. Praesent fringilla tortor arcu. Vivamus faucibus nisl enim, nec tristique ipsum euismod facilisis. Morbi ut bibendum est, eu tincidunt odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris aliquet odio ac lorem aliquet ultricies in eget neque. Phasellus nec tortor vel tellus pulvinar feugiat.</p>\n    </ng-template>\n  </ngb-tab>\n -->\n\n\n</ngb-tabset>\n\n\n\n<div class=\"\" [hidden]='serviciosSeleccionado?.length == 0'>\n\n<div class=\"card\">\n<div class=\"card-block\">\n\n</div>\n\n\n<div class=\"card-block client-card table-1-card p-t-0\">\n<div class=\"table-responsive\">\n<table class=\"table\">\n<thead>\n<tr class=\"text-capitalize\">\n<th>Servicio</th>\n<th>Duracion</th>\n<th>Precio</th>\n\n\n</tr>\n</thead>\n<tbody>\n\n<tr  *ngFor=\"let e of serviciosSeleccionado || []\" >\n<td class=\"\">\n{{e.nombre}}\n</td>\n<td>{{e.duracion}}min</td>\n<td class=\"text-success\">\n<!-- \n  <span [hidden]=\"!(usuarioSeleccionado['descuento']>0)\"  style=\"color: #777;text-decoration: line-through;\">${{e.precio.toFixed(2)}}</span> -->\n<br>\n    <span >${{getPrecioDescuento(e.precio)}}</span>\n\n\n\n</td>\n\n</tr>\n\n\n\n\n</tbody>\n</table>\n</div>\n<!--   <button [disabled]='!idServicio.valid' (click)='agregarServicioCita(agregarEjercicio.idServicio)' class=\"btn btn-success\">Agregar Servicio</button> -->\n\n \n</div>\n</div>\n</div>\n\n\n\n        </div>\n    </ng-template>\n  </ngb-tab>\n\n\n\n\n</ngb-tabset>\n\n\n<!-- \n<div *ngIf='!claseSeleccionada[\"idCentro\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  \n\n          <div class=\"card-body\">\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Crear nuevo Negocio</h3>\n\n<form  #form='ngForm' name=\"form\" class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreN.valid}\" [(ngModel)]=\"nuevaClase.nombre\" name=\"nombreN\" type=\"text\" class=\"form-control\" #nombreN=\"ngModel\" required>\n    \n    </div>\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Email</label>\n      <input  [ngClass]=\"{'is-invalid':!emailN.valid}\" [(ngModel)]=\"nuevaClase.email\" name=\"emailN\" type=\"text\" class=\"form-control\" #emailN=\"ngModel\" required>\n    \n    </div>\n\n        <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Telefono</label>\n      <input  [ngClass]=\"{'is-invalid':!telefonoN.valid}\" [(ngModel)]=\"nuevaClase.telefono\" name=\"telefonoN\" type=\"text\" class=\"form-control\" #telefonoN=\"ngModel\" required>\n    \n    </div>\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre Registro</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreTitularN.valid}\" [(ngModel)]=\"nuevaClase.nombreTitular\" name=\"nombreTitularN\" type=\"text\" class=\"form-control\" #nombreTitularN=\"ngModel\" required>\n    \n    </div>\n\n\n\n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select   [ngClass]=\"{'is-invalid':!estadoN.valid}\"  [(ngModel)]=\"nuevaClase.estado\" name=\"estadoN\" #estadoN=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\" >\n                <option value=\"1\">Publicado</option>\n        <option value=\"2\">Pendiente de Revision</option>\n         <option value=\"3\">No Publicado</option>\n      </select>\n    </div>\n</div>\n\n\n  <button  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' type='submit' class=\"btn btn-primary\" [disabled]=\"!form.valid\"  (click)='guardarNuevaClase()'>Crear negocio</button>\n\n\n</form>\n\n\n\n\n\n\n          </div>\n\n</div>\n -->\n\n\n    </div> \n\n\n\n"
 
 /***/ }),
 
@@ -344,6 +344,7 @@ var AdmincentrosComponent = (function () {
         this.rows = [];
         this.rows2 = [];
         this.opiniones = [];
+        this.actividad = [];
         this.rowsUsuarios = [];
         this.negociosParent = [];
         this.servicios = [];
@@ -354,6 +355,7 @@ var AdmincentrosComponent = (function () {
         this.citasCanceladas = [];
         this.conjuntoCC = [];
         this.citasReprogramads = [];
+        this.estadoCambio = 0;
         this.currentID = '';
         this.negociosAsignados = [];
         this.seleccionCentro = {};
@@ -362,6 +364,7 @@ var AdmincentrosComponent = (function () {
         this.selected2 = [];
         this.selected3 = [];
         this.selected4 = [];
+        this.selected8 = [];
         this.editar = false;
         this.claseSeleccionada = {};
         this.opinionSelect = {};
@@ -418,6 +421,7 @@ var AdmincentrosComponent = (function () {
             //this.negociosParent = data;
             _this.opiniones = data['opiniones'];
             _this.servicios = data['servicios'];
+            _this.actividad = data['actividad'];
             // this.originalData = data;
         });
     };
@@ -545,6 +549,7 @@ var AdmincentrosComponent = (function () {
     AdmincentrosComponent.prototype.onSelect2 = function (_a) {
         var selected2 = _a.selected2;
         console.log(this.selected2[0]);
+        this.estadoCambio = this.selected2[0]['estado'];
         this.claseSeleccionada = JSON.parse(JSON.stringify(this.selected2[0]));
         this.getOpiniones(this.claseSeleccionada['idCentro']);
     };
@@ -645,14 +650,22 @@ var AdmincentrosComponent = (function () {
     };
     AdmincentrosComponent.prototype.guardarEdicion = function () {
         var _this = this;
+        var id = this.claseSeleccionada['idCentro'];
+        this.claseSeleccionada['estadoAnterior'] = this.estadoCambio;
         this.loading = true;
         console.log(this.claseSeleccionada);
         this.endpointsService.editNegocio(this.claseSeleccionada)
             .then(function (data) {
             console.log(data);
+            if (data['affectedRows'] > 0) {
+                _this.estadoCambio = _this.claseSeleccionada['estado'];
+            }
             _this.loading = false;
-            _this.cargaUCSA();
+            //   this.cargaUCSA();
+            //this.test ={};
+            _this.cargarNegocios(_this.test['idUsuarioConsola']);
             alert('Editado correctamente');
+            _this.getOpiniones(id);
             _this.editar = false;
         }, function (msg) {
             console.log(msg);
@@ -2432,6 +2445,16 @@ var EndpointsService = (function () {
             });
         });
     };
+    EndpointsService.prototype.getVentas = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/getVentas', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
     EndpointsService.prototype.getCuponesCentro = function (dataE) {
         var _this = this;
         return new Promise(function (resolve) {
@@ -2596,6 +2619,26 @@ var EndpointsService = (function () {
         var _this = this;
         return new Promise(function (resolve) {
             _this.http.post(_this.api2 + '/actulizarHorario', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.getParametros = function () {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/getParametros', { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.editarParametro = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/editarParametro', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
                 resolve(data);
             }, function (err) {
                 console.log(err);
@@ -4431,7 +4474,7 @@ var OpinionesComponent = (function () {
 /***/ "../../../../../src/app/parametros/parametros.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  parametros works!\n</p>\n"
+module.exports = "\n <div class=\"card mb-4\" style=\"    background: transparent;\n    border: none !important;\">\n    \n  <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n    <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n\n\n    </div>\n\n  </div>\n</div>\n\n\n\n\n\n\n        <div  class=\"card mb-4\">\n\n          <div class=\"card-body\">\n            <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n      <h3 style=\"margin-bottom: 20px\">\t</h3>\n\n  </div>\n\n\n        <div class=\"info\">\n          <p></p>\n        </div>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n          [columns]=\"columns\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect($event)'>\n        </ngx-datatable>\n<div *ngIf='claseSeleccionada.idParametro' >\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3 style=\"margin-bottom: 20px;margin-top: 40px;\">Parametro</h3>\n\n  </div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n\n    </div>\n\n  </div>\n</div>\n\n\n<!--\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Informacion de la clase</h3>\n\n<p>\n  <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    Toggle\n  </button>\n</p>\n <div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n  <div class=\"card\">\n    <div class=\"card-body\">\n      You can collapse this card by clicking Toggle\n    </div>\n  </div>\n</div>\n -->\n\n<div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n\n<form class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Parametro</label>\n      <input  [disabled]=\"true\"  [(ngModel)]=\"claseSeleccionada.nombre\" name=\"nombre\" type=\"text\" class=\"form-control\">\n    </div>\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Valor</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.valor\" name=\"valor\" type=\"text\" class=\"form-control\">\n    </div>\n\n\n<!--      <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select [disabled]=\"!editar\" [(ngModel)]=\"claseSeleccionada.estado\" class=\"form-control custom-select mr-sm-2\" name='estado'>\n      \n        <option value=\"1\">Visible</option>\n        <option value=\"2\">No - Visible</option>\n      </select>\n    </div>\n -->\n\n\n     \n\n\n\n\n  </div>\n\n\n</form> \n\n\n\n<div *ngIf='claseSeleccionada.idParametro' >\n\n  <button  [hidden]=\"editar\" (click)='editar=!editar' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Editar</button>\n  <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n   <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n</div>\n</div>\n</div>\n      </div>\n    </div>\n      \n\n\n\n\n    </div> \n\n\n\n"
 
 /***/ }),
 
@@ -4459,6 +4502,9 @@ module.exports = module.exports.toString();
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ParametrosComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__endpoints_service__ = __webpack_require__("../../../../../src/app/endpoints.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("../../../forms/esm5/forms.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4469,18 +4515,199 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
+
 var ParametrosComponent = (function () {
-    function ParametrosComponent() {
+    function ParametrosComponent(endpointsService, fb, router) {
+        this.endpointsService = endpointsService;
+        this.fb = fb;
+        this.router = router;
+        this.globalImage = 'http://50.116.17.150:3000/';
+        this.rows = [];
+        this.rowsUsuarios = [];
+        this.dataImagen = '';
+        this.dataFile = '';
+        this.url = '';
+        this.categorias = [];
+        this.selected = [];
+        this.editar = false;
+        this.claseSeleccionada = {};
+        this.nuevaClase = {};
+        this.cu = JSON.parse(localStorage.getItem('currentUser'));
+        this.loading = false;
+        this.isCollapsed = false;
+        this.rowsHorarios = [];
+        this.selectedHorario = [];
+        this.columnsHorarios = [
+            { prop: 'idReservaClase', name: '#ID Reserva' },
+            { prop: 'soloFecha', name: 'Fecha Clase' },
+            { prop: 'soloHora', name: 'Hora Clase' },
+            { prop: 'estado', name: 'Estado' },
+            { prop: 'usuariosAnotados', name: 'Usuarios Anotados' },
+        ];
+        this.originalData = [];
+        this.columns = [
+            { prop: 'nombre', name: 'Nombre' },
+            { prop: 'valor', name: 'Valor' }
+        ];
+        this.createForm();
+        if (this.cu[0]['tipo'] !== 3) {
+            console.log('usuario no deseado');
+            this.router.navigate(['/dashboard']);
+        }
     }
-    ParametrosComponent.prototype.ngOnInit = function () {
+    ParametrosComponent.prototype.createForm = function () {
+        this.form = this.fb.group({
+            imageU: null
+        });
     };
+    ParametrosComponent.prototype.ngOnInit = function () {
+        console.log('d');
+        this.getStaff();
+    };
+    ParametrosComponent.prototype.getStaff = function () {
+        var _this = this;
+        this.endpointsService.getParametros()
+            .then(function (data) {
+            console.log(data);
+            _this.rows = data;
+            _this.originalData = data;
+        });
+    };
+    ParametrosComponent.prototype.cargaUsuarios = function (id) {
+        var _this = this;
+        this.endpointsService.getUsuariosAnotadosClase({ idReserva: id })
+            .then(function (data) {
+            //console.log(data);
+            _this.rowsUsuarios = data;
+            // this.originalData = data;
+        });
+    };
+    ParametrosComponent.prototype.onFileChange = function (event) {
+        var _this = this;
+        if (event.target.files.length > 0) {
+            var file = event.target.files[0];
+            //this.form.get('imageU').setValue(file);
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                _this.dataImagen = event.target.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+            this.dataFile = file;
+        }
+    };
+    ParametrosComponent.prototype.readUrl = function (event) {
+        var _this = this;
+        if (event.target.files && event.target.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                _this.url = event.target.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    };
+    ParametrosComponent.prototype.prepareSave = function (empleado) {
+        var input = new FormData();
+        input.append('imageU', this.dataFile);
+        input.append('nombre', empleado.nombre);
+        input.append('estado', empleado.estado);
+        input.append('idCategoria', empleado.idCategoria);
+        return input;
+    };
+    ParametrosComponent.prototype.onSubmit = function () {
+        var formModel = this.prepareSave(this.claseSeleccionada);
+        console.log(formModel);
+        this.endpointsService.subirImagen(formModel)
+            .then(function (data) {
+            console.log(data);
+        });
+    };
+    ParametrosComponent.prototype.guardarNuevaClase = function () {
+        var _this = this;
+        this.loading = true;
+        console.log(this.nuevaClase);
+        this.endpointsService.nuevaCategoria(this.nuevaClase)
+            .then(function (data) {
+            console.log(data);
+            _this.loading = false;
+            _this.getStaff();
+            alert('Guardado correctamente');
+            _this.editar = false;
+            _this.nuevaClase = {};
+        }, function (msg) {
+            console.log(msg);
+            _this.loading = false;
+        });
+    };
+    ParametrosComponent.prototype.cargaCategorias = function () {
+        var _this = this;
+        this.endpointsService.categoriasHome()
+            .then(function (data) {
+            console.log(data);
+            _this.categorias = data;
+        });
+    };
+    ParametrosComponent.prototype.onSelectHorario = function (_a) {
+        var selectedHorario = _a.selectedHorario;
+        console.log(this.selectedHorario[0]);
+        // this.rows = this.originalData;
+        // this.test = JSON.parse(JSON.stringify(this.selected[0]));
+        // this.claseSeleccionada = JSON.parse(JSON.stringify(this.selected[0]));
+        this.cargaUsuarios(this.selectedHorario[0].idReservaClase);
+    };
+    ParametrosComponent.prototype.onSelect = function (_a) {
+        var selected = _a.selected;
+        console.log(this.selected[0]);
+        this.selectedHorario = [];
+        // this.rows = this.originalData;
+        // this.test = JSON.parse(JSON.stringify(this.selected[0]));
+        this.claseSeleccionada = JSON.parse(JSON.stringify(this.selected[0]));
+        this.dataImagen = this.globalImage + this.claseSeleccionada['idFoto'];
+        // this.cargaHorarios();
+    };
+    ParametrosComponent.prototype.onActivate = function (event) {
+        console.log('Activate Event', event);
+    };
+    ParametrosComponent.prototype.guardarEdicion = function () {
+        var _this = this;
+        this.loading = true;
+        console.log(this.claseSeleccionada);
+        this.endpointsService.editarParametro(this.claseSeleccionada)
+            .then(function (data) {
+            console.log(data);
+            _this.loading = false;
+            _this.getStaff();
+            alert('Editado correctamente');
+            _this.editar = false;
+        }, function (msg) {
+            console.log(msg);
+            // this.loading = false;
+        });
+    };
+    ParametrosComponent.prototype.onChangeColor2 = function (er) {
+        console.log(er);
+        this.claseSeleccionada['color'] = er;
+    };
+    ParametrosComponent.prototype.onChangeColor = function (er) {
+        console.log(er);
+        this.nuevaClase['color'] = er;
+    };
+    ParametrosComponent.prototype.cancelarEdicion = function () {
+        //  this.rows = this.originalData;
+        // console.log(this.test);
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('fileInput'),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"])
+    ], ParametrosComponent.prototype, "fileInput", void 0);
     ParametrosComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'tox-parametros',
             template: __webpack_require__("../../../../../src/app/parametros/parametros.component.html"),
             styles: [__webpack_require__("../../../../../src/app/parametros/parametros.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__angular_router__["c" /* Router */]])
     ], ParametrosComponent);
     return ParametrosComponent;
 }());
@@ -5811,6 +6038,7 @@ var ROUTES2 = [
     { path: '/adminusers', title: 'Gestion Administradores', iconClass: 'fa fa-users' },
     { path: '/cupones', title: 'Cupones', iconClass: ' fa fa-ticket' },
     { path: '/uapp', title: 'Usuarios APP', iconClass: 'fa fa-users' },
+    { path: '/ventas', title: 'Ventas', iconClass: 'fa fa-percent' },
     { path: '/addcategorias', title: 'Categorias', iconClass: 'fa fa-asterisk' },
     { path: '/parametros', title: 'Configuracion', iconClass: 'fa fa-cogs' },
 ];
@@ -6825,7 +7053,7 @@ var UsuariosComponent = (function () {
 /***/ "../../../../../src/app/ventas/ventas.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  ventas works!\n</p>\n"
+module.exports = "\n <div class=\"card mb-4\" style=\"    background: transparent;\n    border: none !important;\">\n    \n\n    <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n\n\n    </div>\n\n  </div>\n</div>\n\n\n\n\n\n\n        <div  class=\"card mb-4\">\n\n          <div class=\"card-body\">\n\n\n\n\n          \t      <label >Periodo</label>\n\n\n\n  <div style='   margin-left: 17px; width: 300px;'  class=\"input-group\">\n          <input  [(ngModel)]=\"fechaFiltro\"  name=\"fechaFi\"  #fechaFi=\"ngModel\" class=\"form-control\" placeholder=\"yyyy-mm-dd\" (ngModelChange)='getCalen(fechaFiltro)'\n             ngbDatepicker #d=\"ngbDatepicker\" required  >\n          <div class=\"input-group-append\">\n            <button class=\"btn btn-outline-secondary\" (click)=\"d.toggle()\" type=\"button\">\n              <img src=\"https://ng-bootstrap.github.io/img/calendar-icon.svg\" style=\"width: 1.2rem; height: 1rem; cursor: pointer;\"/>\n            </button>\n          </div>\n        </div>\n\n\n\n\n            <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n      <h3 style=\"margin-bottom: 20px\">\t</h3>\n\n  </div>\n\n\n        <div class=\"info\">\n          <p></p>\n        </div>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\">\n\n\n                    <ngx-datatable-column prop=\"nombre\" name='Sucursal' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n\n\n          <ngx-datatable-column prop=\"comision\" name='Comisiones' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           ${{value.toFixed(2)}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n\n\n\n        </ngx-datatable>\n\n      </div>\n    </div>\n      \n\n\n\n\n    </div> \n\n\n\n"
 
 /***/ }),
 
@@ -6853,6 +7081,11 @@ module.exports = module.exports.toString();
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return VentasComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__endpoints_service__ = __webpack_require__("../../../../../src/app/endpoints.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("../../../forms/esm5/forms.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_jquery__ = __webpack_require__("../../../../jquery/dist/jquery.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_jquery__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -6863,18 +7096,216 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
+
+
+window["$"] = __WEBPACK_IMPORTED_MODULE_4_jquery__;
+window["jQuery"] = __WEBPACK_IMPORTED_MODULE_4_jquery__;
 var VentasComponent = (function () {
-    function VentasComponent() {
+    function VentasComponent(endpointsService, fb, router) {
+        this.endpointsService = endpointsService;
+        this.fb = fb;
+        this.router = router;
+        this.globalImage = 'http://50.116.17.150:3000/';
+        this.rows = [];
+        this.periodo = [];
+        this.rowsUsuarios = [];
+        this.dataImagen = '';
+        this.dataFile = '';
+        this.url = '';
+        this.categorias = [];
+        this.selected = [];
+        this.editar = false;
+        this.claseSeleccionada = {};
+        this.nuevaClase = {};
+        this.cu = JSON.parse(localStorage.getItem('currentUser'));
+        this.loading = false;
+        this.isCollapsed = false;
+        this.fechaFiltro = {};
+        this.rowsHorarios = [];
+        this.selectedHorario = [];
+        this.columnsHorarios = [
+            { prop: 'idReservaClase', name: '#ID Reserva' },
+            { prop: 'soloFecha', name: 'Fecha Clase' },
+            { prop: 'soloHora', name: 'Hora Clase' },
+            { prop: 'estado', name: 'Estado' },
+            { prop: 'usuariosAnotados', name: 'Usuarios Anotados' },
+        ];
+        this.originalData = [];
+        this.columns = [
+            { prop: 'nombre', name: 'Nombre' },
+            { prop: 'valor', name: 'Valor' }
+        ];
+        this.createForm();
+        if (this.cu[0]['tipo'] !== 3) {
+            console.log('usuario no deseado');
+            this.router.navigate(['/dashboard']);
+        }
+        var TodayDate = new Date();
+        var dd = TodayDate.getDay();
+        var mm = TodayDate.getMonth();
+        var yy = TodayDate.getFullYear();
+        this.fechaFiltro = { year: yy, month: mm, day: dd };
     }
-    VentasComponent.prototype.ngOnInit = function () {
+    VentasComponent.prototype.createForm = function () {
+        this.form = this.fb.group({
+            imageU: null
+        });
     };
+    VentasComponent.prototype.ngOnInit = function () {
+        console.log('d');
+        this.getStaff(this.fechaFiltro['month'], this.fechaFiltro['year']);
+    };
+    VentasComponent.prototype.pad2 = function (number) {
+        return (number < 10 ? '0' : '') + number;
+    };
+    VentasComponent.prototype.getStaff = function (mes, ano) {
+        var _this = this;
+        var emv = { fechaFixed: ano + '-' + this.pad2(mes) + '-01' };
+        this.endpointsService.getVentas(emv)
+            .then(function (data) {
+            console.log(data);
+            _this.rows = data['info'];
+            _this.periodo = data['periodo'];
+            _this.originalData = data;
+        });
+    };
+    VentasComponent.prototype.cargaUsuarios = function (id) {
+        var _this = this;
+        this.endpointsService.getUsuariosAnotadosClase({ idReserva: id })
+            .then(function (data) {
+            //console.log(data);
+            _this.rowsUsuarios = data;
+            // this.originalData = data;
+        });
+    };
+    VentasComponent.prototype.onFileChange = function (event) {
+        var _this = this;
+        if (event.target.files.length > 0) {
+            var file = event.target.files[0];
+            //this.form.get('imageU').setValue(file);
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                _this.dataImagen = event.target.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+            this.dataFile = file;
+        }
+    };
+    VentasComponent.prototype.readUrl = function (event) {
+        var _this = this;
+        if (event.target.files && event.target.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                _this.url = event.target.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    };
+    VentasComponent.prototype.prepareSave = function (empleado) {
+        var input = new FormData();
+        input.append('imageU', this.dataFile);
+        input.append('nombre', empleado.nombre);
+        input.append('estado', empleado.estado);
+        input.append('idCategoria', empleado.idCategoria);
+        return input;
+    };
+    VentasComponent.prototype.onSubmit = function () {
+        var formModel = this.prepareSave(this.claseSeleccionada);
+        console.log(formModel);
+        this.endpointsService.subirImagen(formModel)
+            .then(function (data) {
+            console.log(data);
+        });
+    };
+    VentasComponent.prototype.getCalen = function (ev) {
+        this.getStaff(ev.month, ev.year);
+        console.log(ev);
+    };
+    VentasComponent.prototype.guardarNuevaClase = function () {
+        var _this = this;
+        this.loading = true;
+        console.log(this.nuevaClase);
+        this.endpointsService.nuevaCategoria(this.nuevaClase)
+            .then(function (data) {
+            console.log(data);
+            _this.loading = false;
+            alert('Guardado correctamente');
+            _this.editar = false;
+            _this.nuevaClase = {};
+        }, function (msg) {
+            console.log(msg);
+            _this.loading = false;
+        });
+    };
+    VentasComponent.prototype.cargaCategorias = function () {
+        var _this = this;
+        this.endpointsService.categoriasHome()
+            .then(function (data) {
+            console.log(data);
+            _this.categorias = data;
+        });
+    };
+    VentasComponent.prototype.onSelectHorario = function (_a) {
+        var selectedHorario = _a.selectedHorario;
+        console.log(this.selectedHorario[0]);
+        // this.rows = this.originalData;
+        // this.test = JSON.parse(JSON.stringify(this.selected[0]));
+        // this.claseSeleccionada = JSON.parse(JSON.stringify(this.selected[0]));
+        this.cargaUsuarios(this.selectedHorario[0].idReservaClase);
+    };
+    VentasComponent.prototype.onSelect = function (_a) {
+        var selected = _a.selected;
+        console.log(this.selected[0]);
+        this.selectedHorario = [];
+        // this.rows = this.originalData;
+        // this.test = JSON.parse(JSON.stringify(this.selected[0]));
+        this.claseSeleccionada = JSON.parse(JSON.stringify(this.selected[0]));
+        this.dataImagen = this.globalImage + this.claseSeleccionada['idFoto'];
+        // this.cargaHorarios();
+    };
+    VentasComponent.prototype.onActivate = function (event) {
+        console.log('Activate Event', event);
+    };
+    VentasComponent.prototype.guardarEdicion = function () {
+        var _this = this;
+        this.loading = true;
+        console.log(this.claseSeleccionada);
+        this.endpointsService.editarParametro(this.claseSeleccionada)
+            .then(function (data) {
+            console.log(data);
+            _this.loading = false;
+            alert('Editado correctamente');
+            _this.editar = false;
+        }, function (msg) {
+            console.log(msg);
+            // this.loading = false;
+        });
+    };
+    VentasComponent.prototype.onChangeColor2 = function (er) {
+        console.log(er);
+        this.claseSeleccionada['color'] = er;
+    };
+    VentasComponent.prototype.onChangeColor = function (er) {
+        console.log(er);
+        this.nuevaClase['color'] = er;
+    };
+    VentasComponent.prototype.cancelarEdicion = function () {
+        //  this.rows = this.originalData;
+        // console.log(this.test);
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('fileInput'),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"])
+    ], VentasComponent.prototype, "fileInput", void 0);
     VentasComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'tox-ventas',
             template: __webpack_require__("../../../../../src/app/ventas/ventas.component.html"),
             styles: [__webpack_require__("../../../../../src/app/ventas/ventas.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__angular_router__["c" /* Router */]])
     ], VentasComponent);
     return VentasComponent;
 }());
