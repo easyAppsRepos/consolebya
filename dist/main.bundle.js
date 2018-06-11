@@ -7053,7 +7053,7 @@ var UsuariosComponent = (function () {
 /***/ "../../../../../src/app/ventas/ventas.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n <div class=\"card mb-4\" style=\"    background: transparent;\n    border: none !important;\">\n    \n\n    <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n\n\n    </div>\n\n  </div>\n</div>\n\n\n\n\n\n\n        <div  class=\"card mb-4\">\n\n          <div class=\"card-body\">\n\n\n\n\n          \t      <label >Periodo</label>\n\n\n\n  <div style='   margin-left: 17px; width: 300px;'  class=\"input-group\">\n          <input  [(ngModel)]=\"fechaFiltro\"  name=\"fechaFi\"  #fechaFi=\"ngModel\" class=\"form-control\" placeholder=\"yyyy-mm-dd\" (ngModelChange)='getCalen(fechaFiltro)'\n             ngbDatepicker #d=\"ngbDatepicker\" required  >\n          <div class=\"input-group-append\">\n            <button class=\"btn btn-outline-secondary\" (click)=\"d.toggle()\" type=\"button\">\n              <img src=\"https://ng-bootstrap.github.io/img/calendar-icon.svg\" style=\"width: 1.2rem; height: 1rem; cursor: pointer;\"/>\n            </button>\n          </div>\n        </div>\n\n\n\n\n            <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n      <h3 style=\"margin-bottom: 20px\">\t</h3>\n\n  </div>\n\n\n        <div class=\"info\">\n          <p></p>\n        </div>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\">\n\n\n                    <ngx-datatable-column prop=\"nombre\" name='Sucursal' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n\n\n          <ngx-datatable-column prop=\"comision\" name='Comisiones' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           ${{value.toFixed(2)}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n\n\n\n        </ngx-datatable>\n\n      </div>\n    </div>\n      \n\n\n\n\n    </div> \n\n\n\n"
+module.exports = "\n <div class=\"card mb-4\" style=\"    background: transparent;\n    border: none !important;\">\n    \n\n    <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n\n\n    </div>\n\n  </div>\n</div>\n\n\n\n\n\n\n        <div  class=\"card mb-4\">\n\n          <div class=\"card-body\">\n\n\n\n\n          \t      <label >Periodo</label>\n\n\n\n  <div style='   margin-left: 17px; width: 300px;'  class=\"input-group\">\n          <input  [(ngModel)]=\"fechaFiltro\"  name=\"fechaFi\"  #fechaFi=\"ngModel\" class=\"form-control\" placeholder=\"yyyy-mm-dd\" (ngModelChange)='getCalen(fechaFiltro)' [maxDate]='fechaFiltro2'\n             ngbDatepicker #d=\"ngbDatepicker\" required  >\n          <div class=\"input-group-append\">\n            <button class=\"btn btn-outline-secondary\" (click)=\"d.toggle()\" type=\"button\">\n              <img src=\"https://ng-bootstrap.github.io/img/calendar-icon.svg\" style=\"width: 1.2rem; height: 1rem; cursor: pointer;\"/>\n            </button>\n          </div>\n        </div>\n\n\n\n\n            <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n      <h3 style=\"margin-bottom: 20px\">\t</h3>\n\n  </div>\n\n\n        <div class=\"info\">\n          <p></p>\n        </div>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\">\n\n\n                    <ngx-datatable-column prop=\"nombre\" name='Sucursal' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n\n\n          <ngx-datatable-column prop=\"comision\" name='Comisiones' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{getDataFix(value)}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n          <ngx-datatable-column prop=\"idCentro\" name='Periodo' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n       \n         <span  *ngFor='let d of this.periodo[value]; let i = index' [hidden]='this.periodo[value]?.length==1' >\n\n\n\n         \t\t<span *ngIf='d.estadoAsignado==2 && i==0 '>-</span>\t\n\n         \t   {{getDia(d.fechaCreacion)}}\n\n\n         \t\t<span *ngIf='d.estadoAsignado==1 '>-</span>\n\n\n         \t</span>\n\n       <span *ngIf='getD2(row.idCentro)'>01 - {{getDia(this.periodo[value][0]['fechaCreacion'])}}</span>\n\t\t\n       <span *ngIf='getD1(row.idCentro)' > \n       {{getDia(this.periodo[value][0]['fechaCreacion'])}} -</span>\n\n\n        <span *ngIf='!this.periodo[value] && (row.estadoMomento==1 || !row.estadoMomento)' >Completo</span>\n        <span *ngIf='!this.periodo[value] && row.estadoMomento==2' >Cancelado</span>\n\n\n\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n\n        </ngx-datatable>\n\n      </div>\n    </div>\n      \n\n\n\n\n    </div> \n\n\n\n"
 
 /***/ }),
 
@@ -7110,6 +7110,7 @@ var VentasComponent = (function () {
         this.globalImage = 'http://50.116.17.150:3000/';
         this.rows = [];
         this.periodo = [];
+        this.dataPeriodos = {};
         this.rowsUsuarios = [];
         this.dataImagen = '';
         this.dataFile = '';
@@ -7123,6 +7124,7 @@ var VentasComponent = (function () {
         this.loading = false;
         this.isCollapsed = false;
         this.fechaFiltro = {};
+        this.fechaFiltro2 = {};
         this.rowsHorarios = [];
         this.selectedHorario = [];
         this.columnsHorarios = [
@@ -7144,9 +7146,10 @@ var VentasComponent = (function () {
         }
         var TodayDate = new Date();
         var dd = TodayDate.getDay();
-        var mm = TodayDate.getMonth();
+        var mm = TodayDate.getMonth() + 1;
         var yy = TodayDate.getFullYear();
         this.fechaFiltro = { year: yy, month: mm, day: dd };
+        this.fechaFiltro2 = { year: yy, month: mm, day: dd };
     }
     VentasComponent.prototype.createForm = function () {
         this.form = this.fb.group({
@@ -7154,11 +7157,42 @@ var VentasComponent = (function () {
         });
     };
     VentasComponent.prototype.ngOnInit = function () {
-        console.log('d');
         this.getStaff(this.fechaFiltro['month'], this.fechaFiltro['year']);
+    };
+    VentasComponent.prototype.getD1 = function (id) {
+        if (this.periodo[id]) {
+            return (Object.is(!this.periodo[id].length, 1) && Object.is(this.periodo[id][0]["estadoAsignado"], 1));
+        }
+        else {
+            return false;
+        }
+    };
+    VentasComponent.prototype.getD2 = function (id) {
+        if (this.periodo[id]) {
+            return (Object.is(this.periodo[id].length, 1) && Object.is(this.periodo[id][0]["estadoAsignado"], 2));
+        }
+        else {
+            return false;
+        }
+    };
+    VentasComponent.prototype.getDia = function (dd) {
+        if (dd) {
+            return dd.split('-')[2].split('T')[0];
+        }
+        else {
+            return '-';
+        }
     };
     VentasComponent.prototype.pad2 = function (number) {
         return (number < 10 ? '0' : '') + number;
+    };
+    VentasComponent.prototype.getDataFix = function (data) {
+        if (data) {
+            return '$' + data.toFixed(2);
+        }
+        else {
+            return '$0';
+        }
     };
     VentasComponent.prototype.getStaff = function (mes, ano) {
         var _this = this;
@@ -7168,6 +7202,10 @@ var VentasComponent = (function () {
             console.log(data);
             _this.rows = data['info'];
             _this.periodo = data['periodo'];
+            _this.dataPeriodos = Object.values(data['periodo']);
+            //this.keysRutina = Object.keys(data);
+            console.log(_this.dataPeriodos);
+            console.log(_this.periodo);
             _this.originalData = data;
         });
     };
