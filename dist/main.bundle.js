@@ -34,7 +34,7 @@ module.exports = webpackAsyncContext;
 /***/ "../../../../../src/app/addcategorias/addcategorias.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n <div class=\"card mb-4\" style=\"    background: transparent;\n    border: none !important;\">\n    \n\n    <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n   <button  style='margin-right: 15px;margin-top: 20px;margin-bottom: 20px;' class=\" btn btn-primary float-right\" (click)='claseSeleccionada={};selected = [];'>Crear nueva Categoria</button>\n\n    </div>\n\n  </div>\n</div>\n\n\n\n\n\n\n        <div  class=\"card mb-4\">\n\n          <div class=\"card-body\">\n            <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n      <h3 style=\"margin-bottom: 20px\">\t</h3>\n\n  </div>\n\n\n        <div class=\"info\">\n          <p></p>\n        </div>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n          [columns]=\"columns\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect($event)'>\n        </ngx-datatable>\n      </div>\n    </div>\n      \n\n\n<div *ngIf='!claseSeleccionada[\"idCategoria\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  \n <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n           \n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n\n<span style=\"        font-size: 21px;\n    color: #0073aa;\n    margin: 20px;\n    display: block;\">Crear nueva Categoria</span>\n  </div>\n\n\n<form  #form='ngForm' name=\"form\" class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreN.valid}\" [(ngModel)]=\"nuevaClase.nombre\" name=\"nombreN\" type=\"text\" class=\"form-control\" #nombreN=\"ngModel\" required>\n    \n    </div>\n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select   [ngClass]=\"{'is-invalid':!estadoN.valid}\"  [(ngModel)]=\"nuevaClase.estado\" name=\"estadoN\" #estadoN=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\" >\n        <option value=\"1\">Visible</option>\n        <option value=\"2\">No - Visible</option>\n      </select>\n    </div>\n</div>\n\n\n  <button  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' type='submit' class=\"btn btn-primary\" [disabled]=\"!form.valid\"  (click)='guardarNuevaClase()'>Crear categoria</button>\n\n\n</form>\n\n\n\n\n\n\n          </div>\n\n</div>\n\n<div *ngIf='claseSeleccionada[\"idCategoria\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3 style=\"margin-bottom: 20px\">Categoria</h3>\n\n  </div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n    <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    {{isCollapsed ? 'Mostrar mas' : 'Mostrar menos'}}\n  </button>\n\n    </div>\n\n  </div>\n</div>\n\n\n<!--\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Informacion de la clase</h3>\n\n<p>\n  <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    Toggle\n  </button>\n</p>\n <div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n  <div class=\"card\">\n    <div class=\"card-body\">\n      You can collapse this card by clicking Toggle\n    </div>\n  </div>\n</div>\n -->\n\n<div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n\n<form class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n     <div class=\"col col-lg-2\" style=\"text-align: center;\">\n<!--      <img style=\"    height: 90px;\n    width: 90px;border-radius: 100px;\" \n     (error)=\"setDefaultPic()\" src=\"{{globalImage}}/{{claseSeleccionada.idFoto}}\"\n      onError=\"this.src='assets/user.png';\"> -->\n       <img style=\"    height: 90px;\n    width: 90px;\" \n      src=\"{{this.dataImagen}}\"\n      onError=\"this.src='assets/categoria.png';\">\n\n      <form [formGroup]=\"form\">\n      <input  [disabled]=\"!editar\"  style='margin-left: 20px;display: none'  type=\"file\" name=\"imageU\" id=\"imageU\" (change)=\"onFileChange($event)\" #fileInput >\n      <label for=\"imageU\">Seleccionar imagen</label>\n      </form>\n </div>\n\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.nombre\" name=\"nombre\" type=\"text\" class=\"form-control\">\n    </div>\n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select [disabled]=\"!editar\" [(ngModel)]=\"claseSeleccionada.estado\" class=\"form-control custom-select mr-sm-2\" name='estado'>\n      \n        <option value=\"1\">Visible</option>\n        <option value=\"2\">No - Visible</option>\n      </select>\n    </div>\n\n\n\n     \n\n\n\n\n  </div>\n\n\n</form> \n\n\n\n<div *ngIf='claseSeleccionada.idCategoria' >\n\n  <button  [hidden]=\"editar\" (click)='editar=!editar' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Editar</button>\n  <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n   <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n</div>\n</div>\n          </div>\n        </div>\n\n    </div> \n\n\n\n"
+module.exports = " <ng-template #content let-c=\"close\" let-d=\"dismiss\">\n  <div class=\"modal-header\" style=\"background-color: #f3f3f3;\">\n   <h5 >{{claseSeleccionada[\"nombre\"]}}</h5>\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n  <div class=\"modal-body\" style=\"background-color: #f3f3f3;\">\n   \n      <div id=\"collapseExample\">\n\n  <form class=\"needs-validation\" novalidate >\n    <div class=\"form-row\">\n\n       <div class=\"col\" style=\"text-align: center;\">\n\n         <img style=\"height: 50px;width: 50px;\" \n        src=\"{{this.dataImagen}}\"\n        onError=\"this.src='assets/categoria.png';\">\n\n        <form [formGroup]=\"form\">\n        <input  [disabled]=\"!editar\"  style='margin-left: 20px;display: none'  type=\"file\" name=\"imageU\" id=\"imageU\" (change)=\"onFileChange($event)\" #fileInput >\n        <label for=\"imageU\" style=\"margin-top: 12px;\">Seleccionar imagen</label>\n        </form>\n   </div>\n\n</div>\n<div class=\"form-row\">\n\n      <div class=\"col\" >\n        <label for=\"validationCustom01\">Nombre</label>\n        <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.nombre\" name=\"nombre\" type=\"text\" class=\"form-control\" style=\"    width: 200px;\">\n\n                <label for=\"validationCustom01\" style=\"margin-top: 12px;\">Estado</label>\n             <select [disabled]=\"!editar\" [(ngModel)]=\"claseSeleccionada.estado\" class=\"form-control custom-select mr-sm-2\" name='estado'>\n        \n          <option value=\"1\">Visible</option>\n          <option value=\"2\">Oculto</option>\n        </select>\n      </div>\n\n\n\n\n   </div>\n\n  </form> \n\n<!--     <div *ngIf='claseSeleccionada.idCategoria' >\n\n\n      <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n       <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n    </div> -->\n    </div>\n          \n\n  </div>\n  <div class=\"modal-footer\" style=\"background-color: #f3f3f3;\">\n\n      <button  class=\"btn btn-success\"  (click)='guardarEdicion()' >\n      Guardar \n    </button> \n\n\n\n    <button type=\"button\" class=\"btn btn-light\" (click)=\"c('Close click')\">Cerrar</button>\n  </div>\n</ng-template>\n\n \n <ng-template #content2 let-c=\"close\" let-d=\"dismiss\">\n  <div class=\"modal-header\" style=\"background-color: #f3f3f3;\">\n   <h5 >{{claseSeleccionada2[\"nombre\"]}}</h5>\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n  <div class=\"modal-body\" style=\"background-color: #f3f3f3;\">\n   \n      <div id=\"collapseExample\">\n\n  <form class=\"needs-validation\" novalidate >\n\n<div class=\"form-row\">\n\n      <div class=\"col\" >\n        <label for=\"validationCustom01\">Nombre</label>\n        <input  [disabled]=\"!editar2\"  [(ngModel)]=\"claseSeleccionada2.nombre\" name=\"nombre2\" type=\"text\" class=\"form-control\" style=\"    width: 200px;\">\n\n                <label for=\"validationCustom01\" style=\"margin-top: 12px;\">Estado</label>\n             <select [disabled]=\"!editar2\" [(ngModel)]=\"claseSeleccionada2.estado\" class=\"form-control custom-select mr-sm-2\" name='estado2'>\n        \n          <option value=\"1\">Visible</option>\n          <option value=\"2\">Oculto</option>\n        </select>\n      </div>\n\n\n\n\n   </div>\n\n  </form> \n\n<!--     <div *ngIf='claseSeleccionada.idCategoria' >\n\n\n      <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n       <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n    </div> -->\n    </div>\n          \n\n  </div>\n  <div class=\"modal-footer\" style=\"background-color: #f3f3f3;\">\n\n      <button  class=\"btn btn-success\"  (click)='guardarEdicion2()' >\n      Guardar \n    </button> \n\n\n\n    <button type=\"button\" class=\"btn btn-light\" (click)=\"c('Close click')\">Cerrar</button>\n  </div>\n</ng-template>\n\n\n\n\n\n\n\n\n\n <ng-template #content3 let-c=\"close\" let-d=\"dismiss\">\n  <div class=\"modal-header\" style=\"background-color: #f3f3f3;\">\n   <h5 >Crear Categoria</h5>\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n  <div class=\"modal-body\" style=\"background-color: #f3f3f3;\">\n   \n      <div id=\"collapseExample\">\n\n  <form class=\"needs-validation\" novalidate >\n    <div class=\"form-row\">\n\n       <div class=\"col\" style=\"text-align: center;\">\n\n         <img style=\"height: 50px;width: 50px;\" \n        src=\"{{this.dataImagen2}}\"\n        onError=\"this.src='assets/categoria.png';\">\n\n        <form [formGroup]=\"form2\">\n        <input   style='margin-left: 20px;display: none'  type=\"file\" name=\"imageU2\" id=\"imageU2\" (change)=\"onFileChange2($event)\" #fileInput2 >\n        <label for=\"imageU2\" style=\"margin-top: 12px;\">Seleccionar imagen</label>\n        </form>\n   </div>\n\n</div>\n<div class=\"form-row\">\n\n      <div class=\"col\" >\n        <label for=\"validationCustom01\">Nombre</label>\n        <input    [(ngModel)]=\"claseSeleccionada3.nombre\" name=\"nombre3\" type=\"text\" class=\"form-control\" style=\"    width: 200px;\">\n\n                <label for=\"validationCustom01\" style=\"margin-top: 12px;\">Estado</label>\n             <select  [(ngModel)]=\"claseSeleccionada3.estado\" class=\"form-control custom-select mr-sm-2\" name='estado3'>\n        \n          <option value=\"1\">Visible</option>\n          <option value=\"2\">Oculto</option>\n        </select>\n      </div>\n\n\n\n\n   </div>\n\n  </form> \n\n<!--     <div *ngIf='claseSeleccionada.idCategoria' >\n\n\n      <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n       <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n    </div> -->\n    </div>\n          \n\n  </div>\n  <div class=\"modal-footer\" style=\"background-color: #f3f3f3;\">\n\n      <button  class=\"btn btn-success\"  (click)='nuevaCategoria()' >\n      Guardar \n    </button> \n\n\n\n    <button type=\"button\" class=\"btn btn-light\" (click)=\"c('Close click')\">Cerrar</button>\n  </div>\n</ng-template>\n\n\n\n\n\n\n\n\n <ng-template #content4 let-c=\"close\" let-d=\"dismiss\">\n  <div class=\"modal-header\" style=\"background-color: #f3f3f3;\">\n   <h5 >Agregar SubCategoria</h5>\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n  <div class=\"modal-body\" style=\"background-color: #f3f3f3;\">\n   \n      <div id=\"collapseExample\">\n\n  <form class=\"needs-validation\" novalidate >\n\n<div class=\"form-row\">\n\n      <div class=\"col\" >\n        <label for=\"validationCustom01\">Nombre</label>\n        <input    [(ngModel)]=\"claseSeleccionada4.nombre\" name=\"nombre3\" type=\"text\" class=\"form-control\" style=\"    width: 200px;\">\n\n                <label for=\"validationCustom01\" style=\"margin-top: 12px;\">Estado</label>\n             <select  [(ngModel)]=\"claseSeleccionada4.estado\" class=\"form-control custom-select mr-sm-2\" name='estado3'>\n        \n          <option value=\"1\">Visible</option>\n          <option value=\"2\">Oculto</option>\n        </select>\n      </div>\n\n\n\n\n   </div>\n\n  </form> \n\n<!--     <div *ngIf='claseSeleccionada.idCategoria' >\n\n\n      <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n       <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n    </div> -->\n    </div>\n          \n\n  </div>\n  <div class=\"modal-footer\" style=\"background-color: #f3f3f3;\">\n\n      <button  class=\"btn btn-success\"  (click)='nuevaSCategoria()' >\n      Guardar \n    </button> \n\n\n\n    <button type=\"button\" class=\"btn btn-light\" (click)=\"c('Close click')\">Cerrar</button>\n  </div>\n</ng-template>\n\n\n\n\n\n\n\n\n\n\n\n <div class=\"card\" style=\"    background: transparent;\n    border: none !important;\">\n    \n\n    <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n\n    </div>\n\n  </div>\n</div>\n\n\n\n\n\n\n\n      \n\n  <div class='row'>\n  <div class=\"col-md-12 col-xl-6\">\n        <div class=\"card\">\n            <div class=\"card-body\">\n                <h5>Categorias</h5>\n\n                 <button  style='' class=\" btn btn-primary float-right\" (click)='crearCategoria(content3)' >Crear Categoria</button>\n\n\n            </div>\n            <div class=\"card-body\">\n                       <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect($event,content)'>\n\n          <ngx-datatable-column prop=\"estado\" name='' >\n          <ng-template minWidth='20' maxWidth='20' let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n            <i *ngIf='value==1'  class=\"fa fa-eye\" aria-hidden=\"true\"></i> \n        <i *ngIf='value!==1'  class=\"fa fa-eye-slash\" aria-hidden=\"true\"></i> \n\n\n\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                          <ngx-datatable-column prop=\"nombre\" name='Categoria' >\n          <ng-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template  minWidth='250'  >\n    \n  \n\n{{value}}\n\n          </ng-template>\n        </ngx-datatable-column>\n\n           <ngx-datatable-column  prop=\"cantServicios\" name='Servicios' >\n          <ng-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template  minWidth='50' maxWidth='150' >\n    \n  \n\n{{value}}\n\n          </ng-template>\n        </ngx-datatable-column>\n\n\n      <ngx-datatable-column prop=\"estado\" name='' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n       <button class=\"btn btn-success btn-sm btn-round btn-outline-success\" type=\"button\" (click)='editarCategoria(content)'>\n       <span>Editar</span>\n       </button>\n        \n          </ng-template>\n        </ngx-datatable-column>\n\n\n        </ngx-datatable>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"col-md-12 col-xl-6\">\n        <div class=\"user-card-body card\">\n            <div class=\"card-body\">\n                <div *ngIf=\"claseSeleccionada['idCategoria']\">\n                <div class=\"top-card text-center\">\n                    <img style=\"height: 45px;width: 45px;\" alt=\"\" class=\"img-responsive\"  \n                    src=\"{{this.dataImagen}}\"\n                    onError=\"this.src='assets/categoria.png';\">\n                </div>\n                <div class=\"card-contain text-center p-t-40\">\n                    <h5 class=\"text-capitalize p-b-10\">{{claseSeleccionada[\"nombre\"]}}</h5>\n                    <p class=\"text-muted\">{{claseSeleccionada.estado==1 ? 'Visible' : 'Oculto'}}</p>\n                </div>\n                <div class=\"card-data\">\n<!--                     <div class=\"row\" style=\"    text-align: center;\n    display: block;\">\n  <button class=\"btn btn-primary btn-round\" (click)='openSub(content)'>Sub-Categorias</button>\n                    </div> -->\n                </div>\n              </div>\n              <div style=\"    text-align: center;\n    color: darkgray;\" *ngIf=\"!claseSeleccionada['idCategoria']\">\n                <span>Selecciona una Categoria</span>\n              </div>\n\n            </div>\n        </div>\n\n\n        <div class=\"user-card-body card\">\n\n          <div class=\"card-body\">\n                <h5>Sub Categorias</h5>\n\n                   <button [disabled]=\"!claseSeleccionada['idCategoria']\" style='' class=\" btn btn-primary float-right\" (click)='crearSCategoria(content4)'>Agregar SubCategoria</button>\n\n\n            </div>\n\n            <div class=\"card-body\">\n                \n     <ngx-datatable \n     #rows2table\n          class=\"material\"\n          [rows]=\"rows2\"\n          [columnMode]=\"'force'\"\n[selected]=\"selected2\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          (select)='onSelect2($event)'\n          [selectionType]=\"'single'\"\n          \n        >\n\n\n          <ngx-datatable-column prop=\"estado\" name='' >\n          <ng-template minWidth='20' maxWidth='20' let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n            <i *ngIf='value==1'  class=\"fa fa-eye\" aria-hidden=\"true\"></i> \n        <i *ngIf='value!==1'  class=\"fa fa-eye-slash\" aria-hidden=\"true\"></i> \n\n\n\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                          <ngx-datatable-column prop=\"nombre\" name='SubCategoria' >\n          <ng-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n  \n\n{{value}}\n\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n\n\n                          <ngx-datatable-column prop=\"estado\" name='' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n       <button class=\"btn btn-success btn-sm btn-round btn-outline-success\" type=\"button\"\n       (click)='editarSubCategoria(content2)' >\n       <span>Editar</span>\n       </button>\n        \n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n\n\n        </ngx-datatable>    \n            </div>\n        </div>\n\n\n\n\n    </div>\n    </div>\n\n\n\n    </div> \n\n\n\n"
 
 /***/ }),
 
@@ -65,6 +65,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__endpoints_service__ = __webpack_require__("../../../../../src/app/endpoints.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("../../../forms/esm5/forms.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ng_bootstrap_ng_bootstrap__ = __webpack_require__("../../../../@ng-bootstrap/ng-bootstrap/index.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -78,21 +79,32 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var AddcategoriasComponent = (function () {
-    function AddcategoriasComponent(endpointsService, fb, router) {
+    function AddcategoriasComponent(endpointsService, fb, router, modalService) {
         this.endpointsService = endpointsService;
         this.fb = fb;
         this.router = router;
+        this.modalService = modalService;
         this.globalImage = 'http://50.116.17.150:3000/';
         this.rows = [];
+        this.rows2 = [];
         this.rowsUsuarios = [];
         this.dataImagen = '';
+        this.dataImagen2 = '';
         this.dataFile = '';
+        this.dataFile2 = '';
         this.url = '';
+        this.editing = {};
         this.categorias = [];
         this.selected = [];
+        this.selected2 = [];
         this.editar = false;
+        this.editar2 = false;
         this.claseSeleccionada = {};
+        this.claseSeleccionada2 = {};
+        this.claseSeleccionada3 = {};
+        this.claseSeleccionada4 = {};
         this.nuevaClase = {};
         this.cu = JSON.parse(localStorage.getItem('currentUser'));
         this.loading = false;
@@ -121,6 +133,9 @@ var AddcategoriasComponent = (function () {
         this.form = this.fb.group({
             imageU: null
         });
+        this.form2 = this.fb.group({
+            imageU2: null
+        });
     };
     AddcategoriasComponent.prototype.ngOnInit = function () {
         console.log('d');
@@ -133,6 +148,16 @@ var AddcategoriasComponent = (function () {
             console.log(data);
             _this.rows = data;
             _this.originalData = data;
+        });
+    };
+    AddcategoriasComponent.prototype.getSubcategorias = function () {
+        var _this = this;
+        var dateEv = { idCategoria: this.claseSeleccionada["idCategoria"] };
+        this.endpointsService.getSubcategorias(dateEv)
+            .then(function (data) {
+            console.log(data);
+            _this.rows2 = data;
+            //this.originalData = data;
         });
     };
     AddcategoriasComponent.prototype.cargaUsuarios = function (id) {
@@ -157,6 +182,26 @@ var AddcategoriasComponent = (function () {
             this.dataFile = file;
         }
     };
+    AddcategoriasComponent.prototype.onFileChange2 = function (event) {
+        var _this = this;
+        if (event.target.files.length > 0) {
+            var file = event.target.files[0];
+            //this.form.get('imageU').setValue(file);
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                _this.dataImagen2 = event.target.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+            this.dataFile2 = file;
+        }
+    };
+    AddcategoriasComponent.prototype.updateValue = function (event, cell, rowIndex) {
+        console.log('inline editing rowIndex', rowIndex);
+        this.editing[rowIndex + '-' + cell] = false;
+        this.rows2[rowIndex][cell] = event.target.value;
+        this.rows2 = this.rows2.slice();
+        console.log('UPDATED!', this.rows2[rowIndex][cell]);
+    };
     AddcategoriasComponent.prototype.readUrl = function (event) {
         var _this = this;
         if (event.target.files && event.target.files[0]) {
@@ -173,6 +218,13 @@ var AddcategoriasComponent = (function () {
         input.append('nombre', empleado.nombre);
         input.append('estado', empleado.estado);
         input.append('idCategoria', empleado.idCategoria);
+        return input;
+    };
+    AddcategoriasComponent.prototype.prepareSave2 = function (empleado) {
+        var input = new FormData();
+        input.append('imageU2', this.dataFile2);
+        input.append('nombre', empleado.nombre);
+        input.append('estado', empleado.estado);
         return input;
     };
     AddcategoriasComponent.prototype.onSubmit = function () {
@@ -216,7 +268,15 @@ var AddcategoriasComponent = (function () {
         // this.claseSeleccionada = JSON.parse(JSON.stringify(this.selected[0]));
         this.cargaUsuarios(this.selectedHorario[0].idReservaClase);
     };
-    AddcategoriasComponent.prototype.onSelect = function (_a) {
+    AddcategoriasComponent.prototype.editarCategoria = function (content) {
+        this.editar = true;
+        this.modalReference = this.modalService.open(content);
+    };
+    AddcategoriasComponent.prototype.editarSubCategoria = function (content2) {
+        this.editar2 = true;
+        this.modalReference2 = this.modalService.open(content2);
+    };
+    AddcategoriasComponent.prototype.onSelect = function (_a, content) {
         var selected = _a.selected;
         console.log(this.selected[0]);
         this.selectedHorario = [];
@@ -225,9 +285,43 @@ var AddcategoriasComponent = (function () {
         this.claseSeleccionada = JSON.parse(JSON.stringify(this.selected[0]));
         this.dataImagen = this.globalImage + this.claseSeleccionada['idFoto'];
         // this.cargaHorarios();
+        //this.modalReference = this.modalService.open(content);
+        this.getSubcategorias();
+    };
+    AddcategoriasComponent.prototype.onSelect2 = function (_a) {
+        var selected2 = _a.selected2;
+        this.claseSeleccionada2 = JSON.parse(JSON.stringify(this.selected2[0]));
     };
     AddcategoriasComponent.prototype.onActivate = function (event) {
         console.log('Activate Event', event);
+    };
+    AddcategoriasComponent.prototype.openSub = function (content) {
+        this.modalReference = this.modalService.open(content);
+    };
+    AddcategoriasComponent.prototype.crearCategoria = function (content3) {
+        this.claseSeleccionada3 = {};
+        this.dataImagen2 = '';
+        this.modalReference2 = this.modalService.open(content3);
+    };
+    AddcategoriasComponent.prototype.crearSCategoria = function (content4) {
+        this.claseSeleccionada4 = {};
+        this.modalReference2 = this.modalService.open(content4);
+    };
+    AddcategoriasComponent.prototype.guardarEdicion2 = function () {
+        var _this = this;
+        this.endpointsService.editarSCategoriaN(this.claseSeleccionada2)
+            .then(function (data) {
+            console.log(data);
+            _this.loading = false;
+            //this.getStaff();
+            alert('Editado correctamente');
+            _this.getSubcategorias();
+            _this.editar2 = false;
+            _this.modalReference2.close();
+        }, function (msg) {
+            console.log(msg);
+            // this.loading = false;
+        });
     };
     AddcategoriasComponent.prototype.guardarEdicion = function () {
         var _this = this;
@@ -242,6 +336,7 @@ var AddcategoriasComponent = (function () {
                 _this.getStaff();
                 alert('Editado correctamente');
                 _this.editar = false;
+                _this.modalReference.close();
             }, function (msg) {
                 console.log(msg);
                 // this.loading = false;
@@ -255,6 +350,58 @@ var AddcategoriasComponent = (function () {
                 _this.getStaff();
                 alert('Editado correctamente');
                 _this.editar = false;
+                _this.modalReference.close();
+            }, function (msg) {
+                console.log(msg);
+                // this.loading = false;
+            });
+        }
+    };
+    AddcategoriasComponent.prototype.nuevaSCategoria = function () {
+        var _this = this;
+        this.claseSeleccionada4['idCategoria'] = this.claseSeleccionada['idCategoria'];
+        console.log(this.claseSeleccionada4);
+        this.endpointsService.nuevaSCategoria(this.claseSeleccionada4)
+            .then(function (data) {
+            console.log(data);
+            _this.loading = false;
+            alert('Agregado correctamente');
+            _this.editar = false;
+            _this.getSubcategorias();
+            _this.modalReference2.close();
+        }, function (msg) {
+            console.log(msg);
+            // this.loading = false;
+        });
+    };
+    AddcategoriasComponent.prototype.nuevaCategoria = function () {
+        var _this = this;
+        this.loading = true;
+        console.log(this.claseSeleccionada3);
+        if (this.dataFile2) {
+            var formModel = this.prepareSave2(this.claseSeleccionada3);
+            this.endpointsService.nuevaCategoriaImagen(formModel)
+                .then(function (data) {
+                console.log(data);
+                _this.loading = false;
+                _this.getStaff();
+                alert('Agregado correctamente');
+                _this.editar = false;
+                _this.modalReference2.close();
+            }, function (msg) {
+                console.log(msg);
+                // this.loading = false;
+            });
+        }
+        else {
+            this.endpointsService.nuevaCategoria(this.claseSeleccionada3)
+                .then(function (data) {
+                console.log(data);
+                _this.loading = false;
+                _this.getStaff();
+                alert('Agregado correctamente');
+                _this.editar = false;
+                _this.modalReference2.close();
             }, function (msg) {
                 console.log(msg);
                 // this.loading = false;
@@ -283,7 +430,7 @@ var AddcategoriasComponent = (function () {
             template: __webpack_require__("../../../../../src/app/addcategorias/addcategorias.component.html"),
             styles: [__webpack_require__("../../../../../src/app/addcategorias/addcategorias.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__angular_router__["c" /* Router */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__angular_router__["c" /* Router */], __WEBPACK_IMPORTED_MODULE_4__ng_bootstrap_ng_bootstrap__["a" /* NgbModal */]])
     ], AddcategoriasComponent);
     return AddcategoriasComponent;
 }());
@@ -2437,6 +2584,16 @@ var EndpointsService = (function () {
             });
         });
     };
+    EndpointsService.prototype.nuevaCategoriaImagen = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/nuevaCategoriaImagen', dataE).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
     EndpointsService.prototype.editarCategoriaImagen = function (dataE) {
         var _this = this;
         return new Promise(function (resolve) {
@@ -2451,6 +2608,36 @@ var EndpointsService = (function () {
         var _this = this;
         return new Promise(function (resolve) {
             _this.http.post(_this.api2 + '/getStaff', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.nuevaSCategoria = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/nuevaSCategoria', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.editarSCategoriaN = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/editarSCategoriaN', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.getSubcategorias = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/getSubcategorias', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
                 resolve(data);
             }, function (err) {
                 console.log(err);
