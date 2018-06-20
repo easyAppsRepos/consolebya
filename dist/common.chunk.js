@@ -35,7 +35,7 @@ var SharedLazyModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_2__angular_common__["CommonModule"],
                 __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormsModule */],
                 __WEBPACK_IMPORTED_MODULE_4__angular_router__["d" /* RouterModule */],
-                __WEBPACK_IMPORTED_MODULE_5__ng_bootstrap_ng_bootstrap__["b" /* NgbModule */],
+                __WEBPACK_IMPORTED_MODULE_5__ng_bootstrap_ng_bootstrap__["c" /* NgbModule */],
                 __WEBPACK_IMPORTED_MODULE_6__ngx_translate_core__["b" /* TranslateModule */].forChild(),
             ],
             declarations: [],
@@ -44,7 +44,7 @@ var SharedLazyModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormsModule */],
                 __WEBPACK_IMPORTED_MODULE_4__angular_router__["d" /* RouterModule */],
                 __WEBPACK_IMPORTED_MODULE_6__ngx_translate_core__["b" /* TranslateModule */],
-                __WEBPACK_IMPORTED_MODULE_5__ng_bootstrap_ng_bootstrap__["b" /* NgbModule */],
+                __WEBPACK_IMPORTED_MODULE_5__ng_bootstrap_ng_bootstrap__["c" /* NgbModule */],
             ]
         })
     ], SharedLazyModule);
