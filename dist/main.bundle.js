@@ -6923,7 +6923,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 // duplicates to routing configs ... i know
 var ROUTES2 = [
     { path: '/admincentros', title: 'Gestion Negocios', iconClass: 'fa fa-area-chart' },
-    { path: '/adminusers', title: 'Gestion Administradores', iconClass: 'fa fa-users' },
     { path: '/cupones', title: 'Cupones', iconClass: ' fa fa-ticket' },
     { path: '/uapp', title: 'Usuarios APP', iconClass: 'fa fa-users' },
     { path: '/ventas', title: 'Ventas', iconClass: 'fa fa-percent' },
