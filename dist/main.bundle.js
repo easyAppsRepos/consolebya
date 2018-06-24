@@ -2015,6 +2015,7 @@ var CentroComponent = (function () {
         this.router = router;
         this.globalImage = 'http://50.116.17.150:3000/';
         this.cu = JSON.parse(localStorage.getItem('currentUser'));
+        this.seccionActivas = localStorage.getItem('seccUBY');
         this.dataFile = '';
         this.dataFileB = '';
         this.zoom = 16;
@@ -2026,10 +2027,18 @@ var CentroComponent = (function () {
         this.dataCentro = {};
         this.ventasCentro = {};
         this.editarOn = false;
-        if (this.cu[0]['tipo'] !== 1) {
-            console.log('usuario no deseado');
-            this.router.navigate(['/dashboard']);
+        if (this.cu[0]['tipo'] == 2) {
+            if (!this.seccionActivas.split(',').includes("5")) {
+                console.log('usuario no deseado');
+                this.router.navigate(['/dashboard']);
+            }
         }
+        /*
+        if(this.cu[0]['tipo'] !== 1){
+          console.log('usuario no deseado');
+          this.router.navigate(['/dashboard']);
+        }
+        */
         this.createForm();
     }
     CentroComponent.prototype.clickedMarker = function (label, index) {
@@ -2203,8 +2212,9 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__endpoints_service__ = __webpack_require__("../../../../../src/app/endpoints.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ng_bootstrap_ng_bootstrap__ = __webpack_require__("../../../../@ng-bootstrap/ng-bootstrap/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_jquery__ = __webpack_require__("../../../../jquery/dist/jquery.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_jquery__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_jquery__ = __webpack_require__("../../../../jquery/dist/jquery.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_jquery__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2219,8 +2229,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-window["$"] = __WEBPACK_IMPORTED_MODULE_3_jquery__;
-window["jQuery"] = __WEBPACK_IMPORTED_MODULE_3_jquery__;
+
+window["$"] = __WEBPACK_IMPORTED_MODULE_4_jquery__;
+window["jQuery"] = __WEBPACK_IMPORTED_MODULE_4_jquery__;
 var equals = function (one, two) {
     return one && two && two.year === one.year && two.month === one.month && two.day === one.day;
 };
@@ -2233,10 +2244,13 @@ var after = function (one, two) {
         ? false : one.day > two.day : one.month > two.month : one.year > two.year;
 };
 var EjerciciosComponent = (function () {
-    function EjerciciosComponent(endpointsService, modalService, calendar) {
+    function EjerciciosComponent(endpointsService, modalService, calendar, router) {
         var _this = this;
         this.endpointsService = endpointsService;
         this.modalService = modalService;
+        this.router = router;
+        this.cu = JSON.parse(localStorage.getItem('currentUser'));
+        this.seccionActivas = localStorage.getItem('seccUBY');
         this.serviciosCategoria = [];
         this.rows = [];
         this.selected = [];
@@ -2284,6 +2298,12 @@ var EjerciciosComponent = (function () {
         this.isInside = function (date) { return after(date, _this.fromDate) && before(date, _this.toDate); };
         this.isFrom = function (date) { return equals(date, _this.fromDate); };
         this.isTo = function (date) { return equals(date, _this.toDate); };
+        if (this.cu[0]['tipo'] == 2) {
+            if (!this.seccionActivas.split(',').includes("3")) {
+                console.log('usuario no deseado');
+                this.router.navigate(['/dashboard']);
+            }
+        }
         //this.temp = [...data];
         this.serviciosCat = [];
         this.estadoCheck = false;
@@ -2758,7 +2778,7 @@ var EjerciciosComponent = (function () {
             template: __webpack_require__("../../../../../src/app/ejercicios/ejercicios.component.html"),
             styles: [__webpack_require__("../../../../../src/app/ejercicios/ejercicios.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_2__ng_bootstrap_ng_bootstrap__["b" /* NgbModal */], __WEBPACK_IMPORTED_MODULE_2__ng_bootstrap_ng_bootstrap__["a" /* NgbCalendar */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_2__ng_bootstrap_ng_bootstrap__["b" /* NgbModal */], __WEBPACK_IMPORTED_MODULE_2__ng_bootstrap_ng_bootstrap__["a" /* NgbCalendar */], __WEBPACK_IMPORTED_MODULE_3__angular_router__["c" /* Router */]])
     ], EjerciciosComponent);
     return EjerciciosComponent;
 }());
@@ -2820,6 +2840,16 @@ var EndpointsService = (function () {
         var _this = this;
         return new Promise(function (resolve) {
             _this.http.post(_this.api2 + '/updateCategoriaEmpleado', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.updateSeccionSA = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/updateSeccionSA', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
                 resolve(data);
             }, function (err) {
                 console.log(err);
@@ -3276,6 +3306,16 @@ var EndpointsService = (function () {
             });
         });
     };
+    EndpointsService.prototype.cargarNegocios2 = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/cargarNegocios2', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
     EndpointsService.prototype.addNegocio = function (dataE) {
         var _this = this;
         return new Promise(function (resolve) {
@@ -3530,6 +3570,16 @@ var EndpointsService = (function () {
         var _this = this;
         return new Promise(function (resolve) {
             _this.http.post(_this.api2 + '/getCentrosUsuario', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                console.log(err);
+            });
+        });
+    };
+    EndpointsService.prototype.getSeccionesUsuario = function (dataE) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(_this.api2 + '/getSeccionesUsuario', JSON.stringify(dataE), { headers: { 'Content-Type': 'application/json' } }).subscribe(function (data) {
                 resolve(data);
             }, function (err) {
                 console.log(err);
@@ -4003,6 +4053,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__endpoints_service__ = __webpack_require__("../../../../../src/app/endpoints.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ng_bootstrap_ng_bootstrap__ = __webpack_require__("../../../../@ng-bootstrap/ng-bootstrap/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4015,12 +4066,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var GestionclasesComponent = (function () {
-    function GestionclasesComponent(endpointsService, modalService) {
+    function GestionclasesComponent(endpointsService, modalService, router) {
         this.endpointsService = endpointsService;
         this.modalService = modalService;
+        this.router = router;
         this.rows = [];
         this.rowsUsuarios = [];
+        this.cu = JSON.parse(localStorage.getItem('currentUser'));
+        this.seccionActivas = localStorage.getItem('seccUBY');
         this.categorias = [];
         this.subcategorias = [];
         this.subcategorias2 = [];
@@ -4048,6 +4103,12 @@ var GestionclasesComponent = (function () {
             { prop: 'precio', name: 'Precio' },
             { prop: 'duracion', name: 'Duracion (min)' },
         ];
+        if (this.cu[0]['tipo'] == 2) {
+            if (!this.seccionActivas.split(',').includes("1")) {
+                console.log('usuario no deseado');
+                this.router.navigate(['/dashboard']);
+            }
+        }
         this.cargaCategorias();
     }
     GestionclasesComponent.prototype.ngOnInit = function () {
@@ -4248,7 +4309,7 @@ var GestionclasesComponent = (function () {
             template: __webpack_require__("../../../../../src/app/gestionclases/gestionclases.component.html"),
             styles: [__webpack_require__("../../../../../src/app/gestionclases/gestionclases.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_2__ng_bootstrap_ng_bootstrap__["b" /* NgbModal */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_2__ng_bootstrap_ng_bootstrap__["b" /* NgbModal */], __WEBPACK_IMPORTED_MODULE_3__angular_router__["c" /* Router */]])
     ], GestionclasesComponent);
     return GestionclasesComponent;
 }());
@@ -4290,8 +4351,9 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__endpoints_service__ = __webpack_require__("../../../../../src/app/endpoints.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("../../../forms/esm5/forms.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_jquery__ = __webpack_require__("../../../../jquery/dist/jquery.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_jquery__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_jquery__ = __webpack_require__("../../../../jquery/dist/jquery.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_jquery__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4305,12 +4367,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-window["$"] = __WEBPACK_IMPORTED_MODULE_3_jquery__;
-window["jQuery"] = __WEBPACK_IMPORTED_MODULE_3_jquery__;
+
+window["$"] = __WEBPACK_IMPORTED_MODULE_4_jquery__;
+window["jQuery"] = __WEBPACK_IMPORTED_MODULE_4_jquery__;
 var HorarioComponent = (function () {
-    function HorarioComponent(endpointsService, fb) {
+    function HorarioComponent(endpointsService, fb, router) {
         this.endpointsService = endpointsService;
         this.fb = fb;
+        this.router = router;
+        this.cu = JSON.parse(localStorage.getItem('currentUser'));
+        this.seccionActivas = localStorage.getItem('seccUBY');
         this.horario = [];
         this.lunes = {};
         this.martes = {};
@@ -4319,6 +4385,12 @@ var HorarioComponent = (function () {
         this.viernes = {};
         this.sabado = {};
         this.domingo = {};
+        if (this.cu[0]['tipo'] == 2) {
+            if (!this.seccionActivas.split(',').includes("7")) {
+                console.log('usuario no deseado');
+                this.router.navigate(['/dashboard']);
+            }
+        }
         this.lunes = { diaSemana: 1 };
         this.martes = { diaSemana: 2 };
         this.miercoles = { diaSemana: 3 };
@@ -4419,7 +4491,7 @@ var HorarioComponent = (function () {
             template: __webpack_require__("../../../../../src/app/horario/horario.component.html"),
             styles: [__webpack_require__("../../../../../src/app/horario/horario.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__angular_router__["c" /* Router */]])
     ], HorarioComponent);
     return HorarioComponent;
 }());
@@ -4553,7 +4625,7 @@ var LoginComponent = (function () {
 /***/ "../../../../../src/app/manejousuarios/manejousuarios.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n <div class=\"card mb-4\" style=\"margin-top: 20px\">\n    \n <div >\n    <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\">\n\n\n\n    \t<div class=\"card-block-big card-status\">\n<h3>Usuarios</h3>\n\n</div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n   <button  style='margin-right: 15px;margin-top: 20px;margin-bottom: 20px;' class=\" btn btn-primary float-right\" (click)='claseSeleccionada={};selected = [];'>Crear nuevo usuario</button>\n\n    </div>\n\n  </div>\n</div>\n\n\n\n\n\n      <div  style='float:left;width:100%'>\n        <div class=\"info\">\n          <p></p>\n        </div>\n        <ngx-datatable \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n          [columns]=\"columns\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect($event)'>\n        </ngx-datatable>\n      </div>\n</div>\n\n<div *ngIf='!claseSeleccionada[\"idUsuarioConsola\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  \n <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Crear nuevo Usuario</h3>\n\n<form  #form='ngForm' name=\"form\" class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre</label>\n      <input  [ngClass]=\"{'is-invalid':!nombreN.valid}\" [(ngModel)]=\"nuevaClase.nombre\" name=\"nombreN\" type=\"text\" class=\"form-control\" #nombreN=\"ngModel\" required>\n    \n    </div>\n\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Email</label>\n      <input  [ngClass]=\"{'is-invalid':!emailN.valid}\" [(ngModel)]=\"nuevaClase.email\" name=\"emailN\" type=\"text\" class=\"form-control\" #emailN=\"ngModel\" required>\n    \n    </div>\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Codigo Acceso</label>\n      <input  [ngClass]=\"{'is-invalid':!passwordN.valid}\" [(ngModel)]=\"nuevaClase.password\" name=\"passwordN\" type=\"text\" class=\"form-control\" #passwordN=\"ngModel\" required>\n    \n    </div>\n\n\n\n\n\n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select   [ngClass]=\"{'is-invalid':!estadoN.valid}\"  [(ngModel)]=\"nuevaClase.estado\" name=\"estadoN\" #estadoN=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\" >\n        <option value=\"1\">Activo</option>\n        <option value=\"2\">Desactivado</option>\n      </select>\n    </div>\n</div>\n\n\n  <button  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' type='submit' class=\"btn btn-primary\" [disabled]=\"!form.valid\"  (click)='guardarNuevaClase()'>Crear usuario consola</button>\n\n\n</form>\n\n\n\n\n\n\n          </div>\n\n</div>\n\n<div *ngIf='claseSeleccionada[\"idUsuarioConsola\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n  <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n\n          <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3>Informacion del usuario</h3>\n\n  </div>\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n    <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    {{isCollapsed ? 'Mostrar mas' : 'Mostrar menos'}}\n  </button>\n\n    </div>\n\n  </div>\n</div>\n\n\n<!--\n            <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;' class=\"card-title\">Informacion de la clase</h3>\n\n<p>\n  <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"isCollapsed = !isCollapsed\"\n          [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"collapseExample\">\n    Toggle\n  </button>\n</p>\n <div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n  <div class=\"card\">\n    <div class=\"card-body\">\n      You can collapse this card by clicking Toggle\n    </div>\n  </div>\n</div>\n -->\n\n<div id=\"collapseExample\" [ngbCollapse]=\"isCollapsed\">\n\n<form class=\"needs-validation\" novalidate >\n  <div class=\"form-row\">\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Nombre servicio</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.nombre\" name=\"nombre\" type=\"text\" class=\"form-control\">\n    </div>\n\n    <div class=\"col-md-3 mb-3\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Email</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.email\" name=\"email\" type=\"text\" class=\"form-control\">\n    </div>\n\n\n    <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Codigo Acceso</label>\n      <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.password\" name=\"password\" type=\"text\" class=\"form-control\">\n    </div>\n\n<!--    <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Dificultad</label>\n\n\n                         <select [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.dificultad\" name=\"dificultad\" type=\"number\" class=\"form-control\">\n        <option value=\"10\">10%</option>\n        <option value=\"25\">25%</option>\n        <option value=\"40\">40%</option>\n        <option value=\"50\">50%</option>\n        <option value=\"70\">70%</option>\n        <option value=\"85\">85%</option>\n        <option value=\"90\">90%</option>\n        <option value=\"100\">100%</option>\n\n      </select> \n\n\n\n    </div>\n\n -->\n      \n\n     <div class=\"col-md-3 mb-3 ff\" style=\"margin-left: 15px !important;margin-right: 15px !important;\">\n      <label for=\"validationCustom01\">Estado</label>\n           <select [disabled]=\"!editar\" [(ngModel)]=\"claseSeleccionada.estado\" class=\"form-control custom-select mr-sm-2\" name='estado'>\n      \n        <option value=\"1\">Activo</option>\n        <option value=\"2\">Desactivado</option>\n      </select>\n    </div>\n\n\n\n     \n\n\n\n\n  </div>\n\n\n</form>\n\n<div *ngIf='claseSeleccionada.idUsuarioConsola' >\n\n  <button  [hidden]=\"editar\" (click)='editar = !editar' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Editar</button>\n\n    <button  [hidden]=\"editar\" (click)='eliminarUsuario(claseSeleccionada.idUsuarioConsola)' style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-danger\" >Eliminar</button>\n\n\n  <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n   <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n</div>\n</div>\n          </div>\n        </div>\n\n\n\n\n\n\n\n\n\n\n\n\n         <div  *ngIf='claseSeleccionada[\"idUsuarioConsola\"]' class=\"card mb-4\" style=\"    margin-top: 42px;\">\n   \n <div class=\"card-body\">\n\n\n              <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n  <div class=\"btn-group\" role=\"group\" aria-label=\"First group\">\n    <h3 style='    margin-left: 15px;\n    margin-bottom: 40px;'>Negocios que administra</h3>\n\n  </div>\n\n</div>\n\n\n\n          <table  style='    ' class='table material'>\n            <thead>\n                <th>Nombre del negocio</th>\n                \n                <th></th>\n            </thead>\n            <tbody>\n                <tr *ngFor=\"let e  of negociosAsignados || []\">\n                    <td>{{e.nombre}}</td>\n               \n                    <td><button (click)='eliminarNegocioUsuario(e.idUsuarioConsolaCentro)' class=\"btn btn-danger\">Eliminar</button></td>\n                </tr>\n            </tbody>\n        </table>\n\n        <div style=\"margin:20px\" >\n          <h5>Asignar Negocio</h5>\n          <div class=\"col-md-3 mb-3 ff\" style=\"    display: inline-block;\n    margin-right: 15px !important;\n    padding-left: 0px;\n    margin-top: 20px;\">\n\n\n          <label for=\"validationCustom01\"></label>\n          <select   [(ngModel)]=\"seleccionCentro.idCentro\" name=\"idCentro\" #idCentro=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\">\n\n              <option *ngFor=\"let c of negociosParent\" \n              [value]=\"c.idCentro\" \n              >\n              {{c.nombre}}\n              </option>\n          </select>\n          </div>\n\n          <button [disabled]='!seleccionCentro.idCentro' (click)='agregarNegocioUsuario(seleccionCentro)' class=\"btn btn-success\">Agregar</button>\n        </div>\n\n      </div>\n\n\n\n</div>\n\n\n\n\n    </div> \n\n\n\n"
+module.exports = " <ng-template #content let-c=\"close\" let-d=\"dismiss\">\n  <div class=\"modal-header\" style=\"background-color: #f3f3f3;\">\n   <h5 >{{claseSeleccionada[\"nombre\"]}}</h5>\n\n  </div>\n  <div class=\"modal-body\" style=\"\">\n   \n      <div id=\"collapseExample\">\n\n  <form class=\"needs-validation\" novalidate >\n\n<div class=\"form-row\">\n\n      <div class=\"col\" >\n        <label for=\"nombreN\">Nombre</label>\n        <input    [(ngModel)]=\"claseSeleccionada.nombre\" name=\"nombreN\" type=\"text\" class=\"form-control\" style=\"  margin-bottom: 10px;  width: 200px;\">\n\n\n                <label for=\"emailN\">Email</label>\n        <input   [(ngModel)]=\"claseSeleccionada.email\" name=\"emailN\" type=\"text\" class=\"form-control\" style=\"\">\n\n            <label for=\"passN\">Contraseña</label>\n        <input   [(ngModel)]=\"claseSeleccionada.password\" name=\"passN\" type=\"text\" class=\"form-control\" style=\"\">\n\n\n                <label for=\"estadoN\" style=\"margin-top: 12px;\">Estado</label>\n             <select  [(ngModel)]=\"claseSeleccionada.estado\" class=\"form-control custom-select mr-sm-2\" name='estadoN'>\n        \n          <option value=\"1\">Activo</option>\n          <option value=\"2\">Desactivado</option>\n        </select>\n      </div>\n\n\n\n\n   </div>\n\n  </form> \n\n<!--     <div *ngIf='claseSeleccionada.idCategoria' >\n\n\n      <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n       <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n    </div> -->\n    </div>\n          \n\n  </div>\n  <div class=\"modal-footer\" style=\"background-color: #f3f3f3;\">\n\n      <button  class=\"btn btn-success\"  (click)='guardarEdicion()' >\n      Guardar \n    </button> \n\n\n\n    <button type=\"button\" class=\"btn btn-light\" (click)=\"c('Close click')\">Cerrar</button>\n  </div>\n</ng-template>\n\n \n\n\n   <ng-template #content8 let-c=\"close\" let-d=\"dismiss\">\n      <ngx-loading [show]=\"hide3\" [config]=\"{ backdropBorderRadius: '0px' }\"></ngx-loading>\n\n<!--   <div class=\"modal-header\">\n   <h5 style=\"margin-bottom: 20px\">Agregar Sucursal</h5>\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div> -->\n\n  <div class=\"modal-body\">\n\n        <div class=\"card mb-4\" style=\"box-shadow: none;\" >\n\n <div style=\"padding: 25px 8px;\n    font-size: 16px;\n    color: #777;\">\n         \n  <span >Sucursales</span> \n               <button  style=' margin-right: 15px;float: right;' class=\" btn btn-primary btn-sm\" (click)=\"serviciosCat = [];openVerticallyCentered8(content4)\">Agregar</button>\n          </div>  \n\n\n\n\n          <div style=\"    text-align: center;\n    color: lightgrey;\n    font-size: 16px;\n    padding: 40px;\"  *ngIf=\"negociosAsignados.length==0\">\n            No se han agregado sucursales\n          </div>\n\n\n        <ngx-datatable  *ngIf=\"negociosAsignados.length>0\"\n          class=\"material\"\n          [rows]=\"negociosAsignados\"\n          [columnMode]=\"'force'\"\n       \n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected3\"\n          [selectionType]=\"'single'\"\n          \n          >\n\n\n                            <ngx-datatable-column prop=\"nombre\" name='Sucursal' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n           {{value}}\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                                    <ngx-datatable-column prop=\"idUsuarioConsolaCentro\" name='' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n\n          <button (click)='eliminarNegocioUsuario(value)' class=\"btn btn-danger\">Eliminar</button>\n\n\n          </ng-template>\n        </ngx-datatable-column>\n\n\n                  \n\n\n        </ngx-datatable>\n\n\n        </div>\n\n  </div>\n  <div class=\"modal-footer\">\n\n<!--      <button   [disabled]='disable2' [hidden]='!agregarEjercicio.idCentro' (click)='agregarCentroCupon(agregarEjercicio.idCentro)' class=\"btn btn-success\">Agregar</button>\n -->\n    <button type=\"button\" class=\"btn btn-light\" (click)=\"c('Close click')\">Cerrar</button>\n  </div>\n</ng-template>\n\n\n   <ng-template #content9 let-c=\"close\" let-d=\"dismiss\">\n  <div class=\"modal-header\">\n   <h5 style=\"margin-bottom: 20px\">Asignar Sucursal</h5>\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n  <div class=\"modal-body\">\n\n     <label >Centro</label>\n              <select   (change)=\"onChangeS1($event.target.value)\" [(ngModel)]=\"ttss\"  name=\"nombreCen\"  required  class=\"form-control custom-select mr-sm-2\">\n                <option [value]=\"false\"  selected></option>\n              <option *ngFor=\"let c of centrosT; let i = index\" \n              [value]=\"i\" \n              >\n              {{c}}\n              </option>\n          </select>\n\n\n           <label  style=\"margin-top: 14px\" [hidden]='!serviciosCat2?.length>0 || !ttss'   for=\"idSucursal\">Sucursal</label>\n              <select   [hidden]='!serviciosCat2?.length>0' [(ngModel)]=\"agregarEjercicio.idCentro\" name=\"idSucursal\"  (change)=\"onChangeBtn2($event.target.value)\" #idSucursal=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\">\n\n              <option *ngFor=\"let c of serviciosCat2\" \n              [value]=\"c.idCentro\" \n              >\n              {{c.nombreCentro}}\n              </option>\n          </select>\n          \n\n  </div>\n  <div class=\"modal-footer\">\n\n     <button   [disabled]='disable2' [hidden]='!agregarEjercicio.idCentro' (click)='agregarCentroCupon(agregarEjercicio.idCentro)' class=\"btn btn-success\">Agregar</button>\n\n    <button type=\"button\" class=\"btn btn-light\" (click)=\"c('Close click')\">Cerrar</button>\n  </div>\n</ng-template>\n\n\n\n\n <ng-template #content2 let-c=\"close\" let-d=\"dismiss\">\n  <div class=\"modal-header\" style=\"background-color: #f3f3f3;\">\n   <h5 >{{claseSeleccionada2[\"nombre\"]}}</h5>\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n  <div class=\"modal-body\" style=\"background-color: #f3f3f3;\">\n   \n      <div id=\"collapseExample\">\n\n  <form class=\"needs-validation\" novalidate >\n\n<div class=\"form-row\">\n\n      <div class=\"col\" >\n        <label for=\"validationCustom01\">Nombre</label>\n        <input  [disabled]=\"!editar2\"  [(ngModel)]=\"claseSeleccionada2.nombre\" name=\"nombre2\" type=\"text\" class=\"form-control\" style=\"    width: 200px;\">\n\n                <label for=\"validationCustom01\" style=\"margin-top: 12px;\">Estado</label>\n             <select [disabled]=\"!editar2\" [(ngModel)]=\"claseSeleccionada2.estado\" class=\"form-control custom-select mr-sm-2\" name='estado2'>\n        \n          <option value=\"1\">Visible</option>\n          <option value=\"2\">Oculto</option>\n        </select>\n      </div>\n\n\n\n\n   </div>\n\n  </form> \n\n<!--     <div *ngIf='claseSeleccionada.idCategoria' >\n\n\n      <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n       <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n    </div> -->\n    </div>\n          \n\n  </div>\n  <div class=\"modal-footer\" style=\"background-color: #f3f3f3;\">\n\n      <button  class=\"btn btn-success\"  (click)='guardarEdicion2()' >\n      Guardar \n    </button> \n\n\n\n    <button type=\"button\" class=\"btn btn-light\" (click)=\"c('Close click')\">Cerrar</button>\n  </div>\n</ng-template>\n\n\n\n\n\n\n\n\n\n <ng-template #content3 let-c=\"close\" let-d=\"dismiss\">\n  <div class=\"modal-header\" style=\"background-color: #f3f3f3;\">\n   <h5 >Crear Usuario</h5>\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n  <div class=\"modal-body\" style=\"\">\n   \n      <div id=\"collapseExample\">\n\n  <form class=\"needs-validation\" novalidate >\n\n<div class=\"form-row\">\n\n      <div class=\"col\" >\n        <label for=\"nombreK\">Nombre</label>\n        <input   [ngClass]=\"{'is-invalid':!nombreK.valid }\" [(ngModel)]=\"claseSeleccionada3.nombre\" name=\"nombreK\" #nombreK=\"ngModel\" type=\"text\" class=\"form-control\" style=\" margin-bottom: 10px;   width: 200px;\" required>\n\n        <label for=\"emailK\">Email</label>\n        <input   [ngClass]=\"{'is-invalid':!emailK.valid }\" [(ngModel)]=\"claseSeleccionada3.email\" name=\"emailK\" #emailK=\"ngModel\" type=\"email\" class=\"form-control\" style=\" margin-bottom: 10px;   width: 200px;\" required>\n\n\n               \n        <label for=\"passK\">Contraseña</label>\n        <input   [ngClass]=\"{'is-invalid':!passK.valid }\" [(ngModel)]=\"claseSeleccionada3.password\" name=\"passK\" #passK=\"ngModel\" type=\"text\" class=\"form-control\" style=\" margin-bottom: 10px;   width: 200px;\" required>\n\n\n                <label for=\"estadoK\" style=\"margin-top: 12px;\">Estado</label>\n             <select [ngClass]=\"{'is-invalid':!estadoK.valid }\" [(ngModel)]=\"claseSeleccionada3.estado\" class=\"form-control  custom-select mr-sm-2\" #estadoK=\"ngModel\" name='estadoK' required>\n        \n          <option value=\"1\">Activo</option>\n          <option value=\"2\">Desactivado</option>\n        </select>\n      </div>\n\n\n\n\n   </div>\n\n  </form> \n\n<!--     <div *ngIf='claseSeleccionada.idCategoria' >\n\n\n      <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n       <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n    </div> -->\n    </div>\n          \n\n  </div>\n  <div class=\"modal-footer\" style=\"background-color: #f3f3f3;\">\n\n      <button  [disabled]='!estadoK.valid || !nombreK.valid || !emailK.valid || !passK.valid'  class=\"btn btn-success\"  (click)='guardarNuevaClase()' >\n      Guardar \n    </button> \n\n\n\n    <button type=\"button\" class=\"btn btn-light\" (click)=\"c('Close click')\">Cerrar</button>\n  </div>\n</ng-template>\n\n\n\n\n\n\n\n\n <ng-template #content4 let-c=\"close\" let-d=\"dismiss\">\n  <div class=\"modal-header\" style=\"background-color: #f3f3f3;\">\n   <h5 >Agregar Sucursal</h5>\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n  <div class=\"modal-body\" style=\"background-color: #f3f3f3;\">\n   \n      <div id=\"collapseExample\">\n\n  <form class=\"needs-validation\" novalidate >\n\n<div class=\"form-row\">\n\n      <div class=\"col\" >\n\n\n\n\n\n          <label for=\"validationCustom01\">Sucursal</label>\n          <select   [(ngModel)]=\"seleccionCentro.idCentro\" name=\"idCentro\" #idCentro=\"ngModel\" required  class=\"form-control custom-select mr-sm-2\">\n\n              <option *ngFor=\"let c of negociosParent\" \n              [value]=\"c.idCentro\" \n              >\n              {{c.nombre}}\n              </option>\n          </select>\n         \n\n\n      </div>\n\n\n\n\n   </div>\n\n  </form> \n\n<!--     <div *ngIf='claseSeleccionada.idCategoria' >\n\n\n      <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n       <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n    </div> -->\n    </div>\n          \n\n  </div>\n  <div class=\"modal-footer\" style=\"background-color: #f3f3f3;\">\n\n      <button  class=\"btn btn-success\"  [disabled]='!seleccionCentro.idCentro' (click)='agregarNegocioUsuario(seleccionCentro)' >\n      Agregar \n    </button> \n\n\n\n    <button type=\"button\" class=\"btn btn-light\" (click)=\"c('Close click')\">Cerrar</button>\n  </div>\n</ng-template>\n\n\n\n\n\n\n\n\n\n\n\n <div class=\"card\" style=\"    background: transparent;\n    border: none !important;\">\n    \n\n    <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n\n    </div>\n\n  </div>\n</div>\n\n\n\n\n\n\n\n      \n\n  <div class='row'>\n  <div class=\"col-md-12 col-xl-8\">\n        <div class=\"card\">\n            <div class=\"card-body\">\n                <h5>Usuarios Consola</h5>\n\n                 <button  style='' class=\" btn btn-sm btn-primary float-right\" (click)='crearEmpleado(content3)' >Crear Usuario</button>\n\n\n            </div>\n            <div class=\"card-body\">\n\n              <input\n        type='text'\n        style='padding:8px;margin:15px auto;width:30%;'\n        placeholder='Buscar usuario ...'\n        (keyup)='updateFilter($event)'\n      />\n\n                       <ngx-datatable \n                    \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"10\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect($event,content)'>\n\n          <ngx-datatable-column prop=\"estado\" name='' minWidth='30' maxWidth='40'>\n          <ng-template  let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n            <i *ngIf='value==1'  class=\"fa fa-eye\" aria-hidden=\"true\"></i> \n        <i *ngIf='value!==1'  class=\"fa fa-eye-slash\" aria-hidden=\"true\"></i> \n\n\n\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                          <ngx-datatable-column prop=\"nombre\" name='Nombre' >\n          <ng-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template   >\n    \n  \n\n{{value}}\n\n          </ng-template>\n        </ngx-datatable-column>\n\n           <ngx-datatable-column  prop=\"email\" name='Email' >\n          <ng-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template   >\n    \n  \n\n{{value}}\n\n          </ng-template>\n        </ngx-datatable-column>\n\n\n      <ngx-datatable-column prop=\"estado\" name='' minWidth='50' maxWidth='220'>\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n       <button class=\"btn btn-success btn-sm btn-round btn-outline-success\" type=\"button\" (click)='editarEmpleado(content)'>\n       <span>Editar</span>\n       </button>\n        \n\n               <button style='margin-left: 10px' class=\"btn btn-primary btn-sm btn-round btn-outline-primary\" type=\"button\" (click)='negociosAsignados=[];editarEmpleado(content8)'>\n       <span>Sucursales</span>\n       </button>\n\n\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n\n        </ngx-datatable>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"col-md-12 col-xl-4\">\n\n\n\n        <div class=\"user-card-body card\">\n <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n          <div class=\"card-body\">\n                <h5></h5>\n\n              \n\n\n            </div>\n\n            <div class=\"card-body\">\n                \n <div _ngcontent-c6=\"\" class=\"row\" *ngIf=\"claseSeleccionada['idUsuarioConsola']\">\n          <div _ngcontent-c6=\"\" class=\"col-sm-12 \">\n            <h4 _ngcontent-c6=\"\" class=\"sub-title\">Secciones del usuario</h4>\n\n\n\n\n    <div *ngFor=\"let p of categorias; let i = index;\" class=\"checkbox-color checkbox-primary\">\n              <input  checked=\"\" id=\"cat{{p.idSeccion}}\" type=\"checkbox\"\n               (change)=\"changeCheckbox(i)\"\n                [checked]=\"p.checked\">\n              <label  for=\"cat{{p.idSeccion}}\">\n                {{p.nombre}}\n              </label>\n            </div>\n         \n         \n\n\n\n          </div>\n        </div>\n         <div style=\"    text-align: center;\n    color: darkgray;\" *ngIf=\"!claseSeleccionada['idUsuarioConsola']\">\n                <span>Selecciona un Usuario</span>\n              </div>\n\n\n\n            </div>\n        </div>\n\n\n\n\n    </div>\n    </div>\n\n\n\n    </div> \n\n\n\n"
 
 /***/ }),
 
@@ -4583,6 +4655,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__endpoints_service__ = __webpack_require__("../../../../../src/app/endpoints.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ng_bootstrap_ng_bootstrap__ = __webpack_require__("../../../../@ng-bootstrap/ng-bootstrap/index.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4595,17 +4668,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var ManejousuariosComponent = (function () {
-    function ManejousuariosComponent(endpointsService, router) {
+    function ManejousuariosComponent(endpointsService, router, modalService) {
         this.endpointsService = endpointsService;
         this.router = router;
+        this.modalService = modalService;
         this.rows = [];
+        this.claseSeleccionada3 = {};
+        this.temp = [];
+        this.hide3 = false;
         this.rowsUsuarios = [];
         this.negociosParent = [];
         this.negociosAsignados = [];
         this.seleccionCentro = {};
         this.categorias = [];
         this.selected = [];
+        this.selected3 = [];
         this.editar = false;
         this.claseSeleccionada = {};
         this.nuevaClase = {};
@@ -4661,6 +4740,16 @@ var ManejousuariosComponent = (function () {
             .then(function (data) {
             console.log(data);
             _this.cargarNegocios(_this.claseSeleccionada['idUsuarioConsola']);
+            _this.modalReference3.close();
+        });
+    };
+    ManejousuariosComponent.prototype.openVerticallyCentered8 = function (content8) {
+        var _this = this;
+        this.hide3 = true;
+        this.modalReference3 = this.modalService.open(content8);
+        this.modalReference3.result.catch(function () { })
+            .then(function () {
+            _this.hide3 = false;
         });
     };
     ManejousuariosComponent.prototype.eliminarNegocioUsuario = function (fe) {
@@ -4704,27 +4793,34 @@ var ManejousuariosComponent = (function () {
         this.endpointsService.cargaUsuariosConsola({ idUsuario: this.cu[0]['idUsuarioConsola'] })
             .then(function (data) {
             //console.log(data);
+            _this.temp = data.slice();
             _this.rows = data;
             // this.originalData = data;
         });
     };
     ManejousuariosComponent.prototype.guardarNuevaClase = function () {
         var _this = this;
-        this.loading = true;
-        console.log(this.nuevaClase);
-        this.nuevaClase['parentUser'] = this.cu[0]['idUsuarioConsola'];
-        this.endpointsService.nuevoUsuarioC(this.nuevaClase)
+        console.log(this.claseSeleccionada3);
+        this.claseSeleccionada3['parentUser'] = this.cu[0]['idUsuarioConsola'];
+        this.endpointsService.nuevoUsuarioC(this.claseSeleccionada3)
             .then(function (data) {
             console.log(data);
-            _this.loading = false;
+            if (data.affectedRows > 0) {
+                alert('Guardado correctamente');
+            }
+            else {
+                alert('Ha ocurrido un error');
+            }
             _this.cargaUsuarios();
-            alert('Guardado correctamente');
-            _this.editar = false;
-            _this.nuevaClase = {};
+            _this.modalReference2.close();
+            _this.claseSeleccionada3 = {};
         }, function (msg) {
             console.log(msg);
             _this.loading = false;
         });
+    };
+    ManejousuariosComponent.prototype.editarEmpleado = function (content) {
+        this.modalReference = this.modalService.open(content);
     };
     ManejousuariosComponent.prototype.cargaCategorias = function () {
         var _this = this;
@@ -4746,9 +4842,8 @@ var ManejousuariosComponent = (function () {
         var selected = _a.selected;
         console.log(this.selected[0]);
         this.selectedHorario = [];
-        // this.rows = this.originalData;
-        // this.test = JSON.parse(JSON.stringify(this.selected[0]));
         this.claseSeleccionada = JSON.parse(JSON.stringify(this.selected[0]));
+        // this.categoriaEmpleados(this.claseSeleccionada['idEmpleado']);
         this.cargarNegocios(this.claseSeleccionada['idUsuarioConsola']);
     };
     ManejousuariosComponent.prototype.onActivate = function (event) {
@@ -4757,24 +4852,67 @@ var ManejousuariosComponent = (function () {
     ManejousuariosComponent.prototype.cargarNegocios = function (idUsuarioConsola) {
         var _this = this;
         console.log(idUsuarioConsola);
-        this.endpointsService.cargarNegocios({ idUsuarioConsola: idUsuarioConsola })
+        this.endpointsService.cargarNegocios2({ idUsuarioConsola: idUsuarioConsola })
             .then(function (data) {
             console.log(data);
-            _this.negociosAsignados = data;
+            _this.negociosAsignados = data[0];
+            _this.categorias = data[1];
             // this.originalData = data;
         });
     };
+    ManejousuariosComponent.prototype.cambiarEstado = function (estado, idCat) {
+        var _this = this;
+        var datae = { estado: estado, idSeccion: idCat, idUsuarioConsola: this.claseSeleccionada['idUsuarioConsola'] };
+        this.loading = true;
+        this.endpointsService.updateSeccionSA(datae)
+            .then(function (data) {
+            console.log(data);
+            //this.rowsUsuarios = data;
+            // this.originalData = data;
+            _this.loading = false;
+        });
+    };
+    ManejousuariosComponent.prototype.crearEmpleado = function (content3) {
+        this.claseSeleccionada3 = {};
+        this.modalReference2 = this.modalService.open(content3);
+    };
+    ManejousuariosComponent.prototype.changeCheckbox = function (i) {
+        if (this.categorias) {
+            this.categorias[i]['checked'] = !this.categorias[i]['checked'];
+            console.log(this.categorias[i]);
+            if (this.categorias[i]['checked']) {
+                this.cambiarEstado(1, this.categorias[i]['idSeccion']);
+            }
+            else {
+                this.cambiarEstado(0, this.categorias[i]['idSeccion']);
+            }
+        }
+    };
+    ManejousuariosComponent.prototype.updateFilter = function (event) {
+        var val = event.target.value.toLowerCase();
+        // filter our data
+        var temp = this.temp.filter(function (d) {
+            return d.nombre.toLowerCase().indexOf(val) !== -1 || !val;
+        });
+        // update the rows
+        this.rows = temp;
+        // Whenever the filter changes, always go back to the first page
+        // this.table.offset = 0;
+    };
     ManejousuariosComponent.prototype.guardarEdicion = function () {
         var _this = this;
-        this.loading = true;
         console.log(this.claseSeleccionada);
         this.endpointsService.editarUC(this.claseSeleccionada)
             .then(function (data) {
             console.log(data);
-            _this.loading = false;
+            if (data.affectedRows > 0) {
+                alert('Editado correctamente');
+            }
+            else {
+                alert('Ha ocurrido un error');
+            }
             _this.cargaUsuarios();
-            alert('Editado correctamente');
-            _this.editar = false;
+            _this.modalReference.close();
         }, function (msg) {
             console.log(msg);
             // this.loading = false;
@@ -4798,7 +4936,7 @@ var ManejousuariosComponent = (function () {
             template: __webpack_require__("../../../../../src/app/manejousuarios/manejousuarios.component.html"),
             styles: [__webpack_require__("../../../../../src/app/manejousuarios/manejousuarios.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */], __WEBPACK_IMPORTED_MODULE_3__ng_bootstrap_ng_bootstrap__["b" /* NgbModal */]])
     ], ManejousuariosComponent);
     return ManejousuariosComponent;
 }());
@@ -5081,7 +5219,8 @@ module.exports = module.exports.toString();
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return OfertasComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__endpoints_service__ = __webpack_require__("../../../../../src/app/endpoints.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ng_bootstrap_ng_bootstrap__ = __webpack_require__("../../../../@ng-bootstrap/ng-bootstrap/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ng_bootstrap_ng_bootstrap__ = __webpack_require__("../../../../@ng-bootstrap/ng-bootstrap/index.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5094,10 +5233,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var OfertasComponent = (function () {
-    function OfertasComponent(endpointsService, modalService) {
+    function OfertasComponent(endpointsService, modalService, router) {
         this.endpointsService = endpointsService;
         this.modalService = modalService;
+        this.router = router;
+        this.cu = JSON.parse(localStorage.getItem('currentUser'));
+        this.seccionActivas = localStorage.getItem('seccUBY');
         this.rows = [];
         this.rows2 = [];
         this.rowsUsuarios = [];
@@ -5125,6 +5268,12 @@ var OfertasComponent = (function () {
             { prop: 'duracion', name: 'Duracion' },
             { prop: 'fechaCaducidad', name: 'Fecha de caducidad' },
         ];
+        if (this.cu[0]['tipo'] == 2) {
+            if (!this.seccionActivas.split(',').includes("8")) {
+                console.log('usuario no deseado');
+                this.router.navigate(['/dashboard']);
+            }
+        }
     }
     OfertasComponent.prototype.ngOnInit = function () {
         console.log('d');
@@ -5302,7 +5451,7 @@ var OfertasComponent = (function () {
             template: __webpack_require__("../../../../../src/app/ofertas/ofertas.component.html"),
             styles: [__webpack_require__("../../../../../src/app/ofertas/ofertas.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_2__ng_bootstrap_ng_bootstrap__["b" /* NgbModal */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_3__ng_bootstrap_ng_bootstrap__["b" /* NgbModal */], __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */]])
     ], OfertasComponent);
     return OfertasComponent;
 }());
@@ -5650,8 +5799,9 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__endpoints_service__ = __webpack_require__("../../../../../src/app/endpoints.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jqwidgets_scripts_jqwidgets_ts_angular_jqxscheduler__ = __webpack_require__("../../../../jqwidgets-scripts/jqwidgets-ts/angular_jqxscheduler.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_jquery__ = __webpack_require__("../../../../jquery/dist/jquery.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_jquery__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_jquery__ = __webpack_require__("../../../../jquery/dist/jquery.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_jquery__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5665,11 +5815,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-window["$"] = __WEBPACK_IMPORTED_MODULE_3_jquery__;
-window["jQuery"] = __WEBPACK_IMPORTED_MODULE_3_jquery__;
+
+window["$"] = __WEBPACK_IMPORTED_MODULE_4_jquery__;
+window["jQuery"] = __WEBPACK_IMPORTED_MODULE_4_jquery__;
 var ProfesoresComponent = (function () {
-    function ProfesoresComponent(endpointsService) {
+    function ProfesoresComponent(endpointsService, router) {
         this.endpointsService = endpointsService;
+        this.router = router;
+        this.cu = JSON.parse(localStorage.getItem('currentUser'));
+        this.seccionActivas = localStorage.getItem('seccUBY');
         this.diasCitas = [];
         this.keyCitas = [];
         this.idCentroSeleccionado = localStorage.getItem('idCentroBY');
@@ -5691,7 +5845,7 @@ var ProfesoresComponent = (function () {
         };
         //url: "http://50.116.17.150:3000/getCalendario",
         //  dataAdapter: any = new jqx.dataAdapter(this.source);
-        this.dataAdapter = new __WEBPACK_IMPORTED_MODULE_3_jquery__["jqx"].dataAdapter(this.source, {
+        this.dataAdapter = new __WEBPACK_IMPORTED_MODULE_4_jquery__["jqx"].dataAdapter(this.source, {
             beforeLoadComplete: function (records) {
                 console.log(records);
                 // this.citas = records;
@@ -5773,6 +5927,12 @@ var ProfesoresComponent = (function () {
         this.setOR = function () {
             // this.scheduler.setAppointmentProperty('5', 'readOnly', true);
         };
+        if (this.cu[0]['tipo'] == 2) {
+            if (!this.seccionActivas.split(',').includes("4")) {
+                console.log('usuario no deseado');
+                this.router.navigate(['/dashboard']);
+            }
+        }
     }
     ;
     ProfesoresComponent.prototype.ngOnInit = function () {
@@ -5873,7 +6033,7 @@ var ProfesoresComponent = (function () {
             template: __webpack_require__("../../../../../src/app/profesores/profesores.component.html"),
             styles: [__webpack_require__("../../../../../src/app/profesores/profesores.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_3__angular_router__["c" /* Router */]])
     ], ProfesoresComponent);
     return ProfesoresComponent;
 }());
@@ -6813,6 +6973,7 @@ module.exports = "<div class=\"hb\" style=\"    background-color: #212529 !impor
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HeaderbarComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__endpoints_service__ = __webpack_require__("../../../../../src/app/endpoints.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -6824,18 +6985,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var HeaderbarComponent = (function () {
-    function HeaderbarComponent(renderer, router) {
+    function HeaderbarComponent(renderer, router, endpointsService) {
         this.renderer = renderer;
         this.router = router;
+        this.endpointsService = endpointsService;
         this.currentUser = [];
+        this.seccionesUser = [];
     }
     HeaderbarComponent.prototype.onResize = function (event) {
         this.setSidebar(event);
     };
     HeaderbarComponent.prototype.ngOnInit = function () {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'))[0];
-        console.log(this.currentUser);
+        this.getSeccionesUsuario();
+        //this.seccionesUser = localStorage.getItem('seccUBY').split(',');
+        //data[0]['secciones'].split(',')
+        //console.log(this.seccionesUser);
         this.setSidebarByWidth(window.innerWidth);
     };
     HeaderbarComponent.prototype.toggleSidebar = function () {
@@ -6846,6 +7013,21 @@ var HeaderbarComponent = (function () {
             this.showSidebar();
         }
     };
+    HeaderbarComponent.prototype.getSeccionesUsuario = function () {
+        var _this = this;
+        this.endpointsService.getSeccionesUsuario({ idUsuarioConsola: this.currentUser['idUsuarioConsola'] })
+            .then(function (data) {
+            if (data[0]) {
+                localStorage.setItem('seccUBY', data[0]['secciones']);
+                _this.seccionesUser = data[0]['secciones'].split(',');
+            }
+            else {
+                localStorage.setItem('seccUBY', '');
+                _this.seccionesUser = [];
+            }
+            // console.log(this.seccionesUser) ;
+        });
+    };
     HeaderbarComponent.prototype.setSidebar = function (event) {
         var width = (event.target.innerWidth > 0) ? event.target.innerWidth : event.screen.width;
         this.setSidebarByWidth(width);
@@ -6854,6 +7036,7 @@ var HeaderbarComponent = (function () {
         console.log('cerrar');
         localStorage.removeItem('currentUser');
         localStorage.removeItem('idCentroBY');
+        localStorage.removeItem('seccUBY');
         this.router.navigate(['/login']);
     };
     HeaderbarComponent.prototype.setSidebarByWidth = function (width) {
@@ -6883,7 +7066,7 @@ var HeaderbarComponent = (function () {
             selector: 'tox-headerbar',
             template: __webpack_require__("../../../../../src/app/shared/components/headerbar/headerbar.component.html"),
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer2"], __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer2"], __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */], __WEBPACK_IMPORTED_MODULE_2__endpoints_service__["a" /* EndpointsService */]])
     ], HeaderbarComponent);
     return HeaderbarComponent;
 }());
@@ -7016,7 +7199,7 @@ var SharedComponentsModule = (function () {
 /***/ "../../../../../src/app/shared/components/sidebar/sidebar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<style type=\"text/css\">\n  .noLi{\n    pointer-events:none !important; opacity:0.3  !important;\n  }\n</style>\n\n<div class=\"sb\">\n  <!--<div class=\"sb-header\">sb-header</div>-->\n  <div class=\"sb-body\" >\n\n\n    <ul class=\"nav flex-column\">\n\n      <li  [hidden]=\"currentUser['tipo']==3\"   style=\"margin-bottom: 20px;margin-top: 10px\">\n          <div class=\"col\" style=\"text-align: center\">\n    <div ngbDropdown class=\"d-inline-block\">\n      <button style='font-size: 14px;' class=\"btn \" id=\"dropdownBasic1\" ngbDropdownToggle>{{centroSeleccionado || \"Selecciona un negocio\"}}</button>\n      <div ngbDropdownMenu aria-labelledby=\"dropdownBasic1\">\n\n        <button *ngFor=\"let e of centrosUsuario\" \n        (click)='cambiarCentro(e.idCentro, e.nombre)' class=\"dropdown-item\">{{e.nombre}}</button>\n\n    \n      </div>\n    </div>\n  </div>\n\n      </li>\n\n\n      <li [hidden]=\"currentUser['tipo'] == 3 || (currentUser['tipo'] == 2 &&  ((menuItem.path == '/uconsola') || (menuItem.path == '/centro'))) \" [ngClass]=\"{'noLi':!seleccionCentro}\" style=' ' *ngFor=\"let menuItem of menuItems\" class=\"nav-item\">\n        <a  class=\"nav-link p-3\" [routerLink]=\"[menuItem.path]\" routerLinkActive=\"active\">\n          <i class=\"mr-1 {{menuItem.iconClass}}\"></i>\n          <span >{{menuItem.title}}\n\n\n\n\n\n          </span>\n        </a>\n      </li>\n\n\n\n\n          <li [hidden]=\"currentUser['tipo'] !== 3\"  style=' ' *ngFor=\"let menuItem of menuItems2\" class=\"nav-item\">\n        <a  class=\"nav-link p-3\" [routerLink]=\"[menuItem.path]\" routerLinkActive=\"active\">\n          <i class=\"mr-1 {{menuItem.iconClass}}\"></i>\n          <span >{{menuItem.title}}\n\n\n\n\n\n          </span>\n        </a>\n      </li>\n\n\n\n    </ul>\n\n  </div>\n  <!--<div class=\"sb-footer\">sb-footer</div>-->\n</div>\n"
+module.exports = "\n<style type=\"text/css\">\n  .noLi{\n    pointer-events:none !important; opacity:0.3  !important;\n  }\n</style>\n\n<div class=\"sb\">\n  <!--<div class=\"sb-header\">sb-header</div>-->\n  <div class=\"sb-body\" >\n\n\n    <ul class=\"nav flex-column\">\n\n      <li  [hidden]=\"currentUser['tipo']==3\"   style=\"margin-bottom: 20px;margin-top: 10px\">\n          <div class=\"col\" style=\"text-align: center\">\n    <div ngbDropdown class=\"d-inline-block\">\n      <button style='font-size: 14px;' class=\"btn \" id=\"dropdownBasic1\" ngbDropdownToggle>{{centroSeleccionado || \"Selecciona un negocio\"}}</button>\n      <div ngbDropdownMenu aria-labelledby=\"dropdownBasic1\">\n\n        <button *ngFor=\"let e of centrosUsuario\" \n        (click)='cambiarCentro(e.idCentro, e.nombre)' class=\"dropdown-item\">{{e.nombre}}</button>\n\n    \n      </div>\n    </div>\n  </div>\n\n      </li>\n\n\n      <li [hidden]=\"currentUser['tipo'] == 3 || (currentUser['tipo'] == 2 &&  ((menuItem.path == '/uconsola'))) \" [ngClass]=\"{'noLi':!seleccionCentro}\" style=' ' *ngFor=\"let menuItem of menuItems\" class=\"nav-item\" >\n        <a  class=\"nav-link p-3\" [routerLink]=\"[menuItem.path]\" routerLinkActive=\"active\">\n          <i class=\"mr-1 {{menuItem.iconClass}}\"></i>\n          <span >{{menuItem.title}}\n\n\n\n\n\n          </span>\n        </a>\n      </li>\n\n\n\n\n          <li [hidden]=\"currentUser['tipo'] !== 3\"  style=' ' *ngFor=\"let menuItem of menuItems2\" class=\"nav-item\">\n        <a  class=\"nav-link p-3\" [routerLink]=\"[menuItem.path]\" routerLinkActive=\"active\">\n          <i class=\"mr-1 {{menuItem.iconClass}}\"></i>\n          <span >{{menuItem.title}}\n\n\n\n\n\n          </span>\n        </a>\n      </li>\n\n\n\n    </ul>\n\n  </div>\n  <!--<div class=\"sb-footer\">sb-footer</div>-->\n</div>\n"
 
 /***/ }),
 
@@ -7052,15 +7235,15 @@ var ROUTES2 = [
 var ROUTES = [
     //{path: '/dashboard', title: 'Informacion', iconClass: 'fa fa-info-circle'},
     // {path: '/plong', title: 'Plong', iconClass: 'fa fa-tachometer'},
-    { path: '/servicios', title: 'Servicios', iconClass: ' fa fa-cart-plus' },
+    { path: '/servicios', title: 'Servicios', iconClass: ' fa fa-cart-plus', idS: 1 },
     //     {path: '/cupones', title: 'Cupones', iconClass: ' fa fa-ticket'},
-    { path: '/staf', title: 'Empleados', iconClass: 'fa fa-vcard' },
-    { path: '/citas', title: 'Citas', iconClass: 'fa fa-book' },
-    { path: '/calendario', title: 'Calendario', iconClass: 'fa fa-calendar-plus-o' },
-    { path: '/centro', title: 'Perfil de Negocio', iconClass: 'fa fa-area-chart' },
-    { path: '/uconsola', title: 'Usuarios Consola', iconClass: 'fa fa-users' },
-    { path: '/horario', title: 'Horario', iconClass: 'fa fa-calendar' },
-    { path: '/ofertas', title: 'Ofertas y Paquetes', iconClass: 'fa fa-tag' },
+    { path: '/staf', title: 'Empleados', iconClass: 'fa fa-vcard', idS: 2 },
+    { path: '/citas', title: 'Citas', iconClass: 'fa fa-book', idS: 3 },
+    { path: '/calendario', title: 'Calendario', iconClass: 'fa fa-calendar-plus-o', idS: 4 },
+    { path: '/centro', title: 'Perfil de Negocio', iconClass: 'fa fa-area-chart', idS: 5 },
+    { path: '/uconsola', title: 'Usuarios Consola', iconClass: 'fa fa-users', idS: 10 },
+    { path: '/horario', title: 'Horario', iconClass: 'fa fa-calendar', idS: 7 },
+    { path: '/ofertas', title: 'Ofertas y Paquetes', iconClass: 'fa fa-tag', idS: 8 },
 ];
 // routing for -----
 var SidebarComponent = (function () {
@@ -7069,20 +7252,59 @@ var SidebarComponent = (function () {
         this.centroSeleccionado = '';
         this.centrosUsuario = [];
         this.currentUser = [];
+        this.seccionesUser = [];
         this.seleccionCentro = false;
     }
     SidebarComponent.prototype.ngOnInit = function () {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'))[0];
-        this.menuItems = ROUTES.filter(function (menuItem) { return menuItem; });
+        /*
+         this.menuItems = ROUTES.filter(menuItem => {
+          //(menuItem.idS == 10) || this.seccionesUser.includes(String(menuItem.idS)));
+          console.log(menuItem.seccionesUser );
+           console.log(menuItem.idS == 10);
+          console.log(this.seccionesUser.includes(String(menuItem.idS)));
+          return true;
+         }
+        
+        */
         this.menuItems2 = ROUTES2.filter(function (menuItem2) { return menuItem2; });
         // this.getSolicitudesEspera();
         this.getCentrosUsuario();
+        this.getSeccionesUsuario();
     };
     SidebarComponent.prototype.cambiarCentro = function (idCentro, nombre) {
         this.centroSeleccionado = nombre;
         localStorage.setItem('idCentroBY', idCentro);
         window.location.reload();
         console.log(localStorage.getItem('idCentroBY'));
+    };
+    SidebarComponent.prototype.getSeccionesUsuario = function () {
+        var _this = this;
+        this.endpointsService.getSeccionesUsuario({ idUsuarioConsola: this.currentUser['idUsuarioConsola'] })
+            .then(function (data) {
+            if (data[0]) {
+                localStorage.setItem('seccUBY', data[0]['secciones']);
+                _this.seccionesUser = data[0]['secciones'].split(',');
+            }
+            else {
+                localStorage.setItem('seccUBY', '');
+                _this.seccionesUser = [];
+            }
+            _this.menuItems = ROUTES.filter(function (menuItem) { return (_this.currentUser['tipo'] == 1) || (menuItem.idS == 10) || _this.seccionesUser.includes(String(menuItem.idS)); });
+            console.log(localStorage.getItem('seccUBY'));
+        });
+    };
+    SidebarComponent.prototype.verificarSeccion = function (seccion) {
+        console.log(this.seccionesUser);
+        if (seccion == 10) {
+            return false;
+        }
+        if (this.seccionesUser.includes(String(seccion))) {
+            return false;
+        }
+        else {
+            return true;
+        }
     };
     SidebarComponent.prototype.getCentrosUsuario = function () {
         var _this = this;
@@ -7472,7 +7694,7 @@ var SortPipe = (function () {
 /***/ "../../../../../src/app/staf/staf.component.html":
 /***/ (function(module, exports) {
 
-module.exports = " <ng-template #content let-c=\"close\" let-d=\"dismiss\">\n  <div class=\"modal-header\" style=\"background-color: #f3f3f3;\">\n   <h5 >{{claseSeleccionada[\"nombre\"]}}</h5>\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n  <div class=\"modal-body\" style=\"\">\n   \n      <div id=\"collapseExample\">\n\n  <form class=\"needs-validation\" novalidate >\n    <div class=\"form-row\">\n\n       <div class=\"col\" style=\"text-align: center;\">\n\n         <img style=\"height: 70px;width: 70px;border-radius: 70px\" \n        src=\"{{this.dataImagen}}\"\n        onError=\"this.src='assets/user.png';\">\n\n        <form [formGroup]=\"form\">\n        <input  [disabled]=\"!editar\"  style='margin-left: 20px;display: none'  type=\"file\" name=\"imageU\" id=\"imageU\" (change)=\"onFileChange($event)\" #fileInput >\n        <label for=\"imageU\" style=\"margin-top: 12px;\">Seleccionar imagen</label>\n        </form>\n   </div>\n\n</div>\n<div class=\"form-row\">\n\n      <div class=\"col\" >\n        <label for=\"validationCustom01\">Nombre</label>\n        <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.nombre\" name=\"nombre\" type=\"text\" class=\"form-control\" style=\"  margin-bottom: 10px;  width: 200px;\">\n\n\n                <label for=\"validationCustom01\">Descripcion</label>\n        <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.descripcion\" name=\"descripcion\" type=\"text\" class=\"form-control\" style=\"\">\n\n\n\n                <label for=\"validationCustom01\" style=\"margin-top: 12px;\">Estado</label>\n             <select [disabled]=\"!editar\" [(ngModel)]=\"claseSeleccionada.estado\" class=\"form-control custom-select mr-sm-2\" name='estado'>\n        \n          <option value=\"1\">Visible</option>\n          <option value=\"2\">Oculto</option>\n        </select>\n      </div>\n\n\n\n\n   </div>\n\n  </form> \n\n<!--     <div *ngIf='claseSeleccionada.idCategoria' >\n\n\n      <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n       <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n    </div> -->\n    </div>\n          \n\n  </div>\n  <div class=\"modal-footer\" style=\"background-color: #f3f3f3;\">\n\n      <button  class=\"btn btn-success\"  (click)='guardarEdicion()' >\n      Guardar \n    </button> \n\n\n\n    <button type=\"button\" class=\"btn btn-light\" (click)=\"c('Close click')\">Cerrar</button>\n  </div>\n</ng-template>\n\n \n <ng-template #content2 let-c=\"close\" let-d=\"dismiss\">\n  <div class=\"modal-header\" style=\"background-color: #f3f3f3;\">\n   <h5 >{{claseSeleccionada2[\"nombre\"]}}</h5>\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n  <div class=\"modal-body\" style=\"background-color: #f3f3f3;\">\n   \n      <div id=\"collapseExample\">\n\n  <form class=\"needs-validation\" novalidate >\n\n<div class=\"form-row\">\n\n      <div class=\"col\" >\n        <label for=\"validationCustom01\">Nombre</label>\n        <input  [disabled]=\"!editar2\"  [(ngModel)]=\"claseSeleccionada2.nombre\" name=\"nombre2\" type=\"text\" class=\"form-control\" style=\"    width: 200px;\">\n\n                <label for=\"validationCustom01\" style=\"margin-top: 12px;\">Estado</label>\n             <select [disabled]=\"!editar2\" [(ngModel)]=\"claseSeleccionada2.estado\" class=\"form-control custom-select mr-sm-2\" name='estado2'>\n        \n          <option value=\"1\">Visible</option>\n          <option value=\"2\">Oculto</option>\n        </select>\n      </div>\n\n\n\n\n   </div>\n\n  </form> \n\n<!--     <div *ngIf='claseSeleccionada.idCategoria' >\n\n\n      <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n       <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n    </div> -->\n    </div>\n          \n\n  </div>\n  <div class=\"modal-footer\" style=\"background-color: #f3f3f3;\">\n\n      <button  class=\"btn btn-success\"  (click)='guardarEdicion2()' >\n      Guardar \n    </button> \n\n\n\n    <button type=\"button\" class=\"btn btn-light\" (click)=\"c('Close click')\">Cerrar</button>\n  </div>\n</ng-template>\n\n\n\n\n\n\n\n\n\n <ng-template #content3 let-c=\"close\" let-d=\"dismiss\">\n  <div class=\"modal-header\" style=\"background-color: #f3f3f3;\">\n   <h5 >Crear Empleado</h5>\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n  <div class=\"modal-body\" style=\"\">\n   \n      <div id=\"collapseExample\">\n\n  <form class=\"needs-validation\" novalidate >\n    <div class=\"form-row\">\n\n       <div class=\"col\" style=\"text-align: center;\">\n\n         <img style=\"height: 50px;width: 50px; border-radius: 40px\" \n        src=\"{{this.dataImagen2}}\"\n        onError=\"this.src='assets/user.png';\">\n\n        <form [formGroup]=\"form2\">\n        <input   style='margin-left: 20px;display: none'  type=\"file\" name=\"imageU2\" id=\"imageU2\" (change)=\"onFileChange2($event)\" #fileInput2 >\n        <label for=\"imageU2\" style=\"margin-top: 12px;\">Seleccionar imagen</label>\n        </form>\n   </div>\n\n</div>\n<div class=\"form-row\">\n\n      <div class=\"col\" >\n        <label for=\"validationCustom01\">Nombre</label>\n        <input    [(ngModel)]=\"claseSeleccionada3.nombre\" name=\"nombre3\" type=\"text\" class=\"form-control\" style=\" margin-bottom: 10px;   width: 200px;\">\n\n                <label for=\"validationCustom01\">Descripcion</label>\n        <input    [(ngModel)]=\"claseSeleccionada3.descripcion\" name=\"descripcion3\" type=\"text\" class=\"form-control\" style=\" \">\n\n\n\n                <label for=\"validationCustom01\" style=\"margin-top: 12px;\">Estado</label>\n             <select  [(ngModel)]=\"claseSeleccionada3.estado\" class=\"form-control custom-select mr-sm-2\" name='estado3'>\n        \n          <option value=\"1\">Visible</option>\n          <option value=\"2\">Oculto</option>\n        </select>\n      </div>\n\n\n\n\n   </div>\n\n  </form> \n\n<!--     <div *ngIf='claseSeleccionada.idCategoria' >\n\n\n      <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n       <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n    </div> -->\n    </div>\n          \n\n  </div>\n  <div class=\"modal-footer\" style=\"background-color: #f3f3f3;\">\n\n      <button  class=\"btn btn-success\"  (click)='nuevaCategoria()' >\n      Guardar \n    </button> \n\n\n\n    <button type=\"button\" class=\"btn btn-light\" (click)=\"c('Close click')\">Cerrar</button>\n  </div>\n</ng-template>\n\n\n\n\n\n\n\n\n <ng-template #content4 let-c=\"close\" let-d=\"dismiss\">\n  <div class=\"modal-header\" style=\"background-color: #f3f3f3;\">\n   <h5 >Agregar SubCategoria</h5>\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n  <div class=\"modal-body\" style=\"background-color: #f3f3f3;\">\n   \n      <div id=\"collapseExample\">\n\n  <form class=\"needs-validation\" novalidate >\n\n<div class=\"form-row\">\n\n      <div class=\"col\" >\n        <label for=\"validationCustom01\">Nombre</label>\n        <input    [(ngModel)]=\"claseSeleccionada4.nombre\" name=\"nombre3\" type=\"text\" class=\"form-control\" style=\"    width: 200px;\">\n\n                <label for=\"validationCustom01\" style=\"margin-top: 12px;\">Estado</label>\n             <select  [(ngModel)]=\"claseSeleccionada4.estado\" class=\"form-control custom-select mr-sm-2\" name='estado3'>\n        \n          <option value=\"1\">Visible</option>\n          <option value=\"2\">Oculto</option>\n        </select>\n      </div>\n\n\n\n\n   </div>\n\n  </form> \n\n<!--     <div *ngIf='claseSeleccionada.idCategoria' >\n\n\n      <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n       <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n    </div> -->\n    </div>\n          \n\n  </div>\n  <div class=\"modal-footer\" style=\"background-color: #f3f3f3;\">\n\n      <button  class=\"btn btn-success\"  (click)='nuevaSCategoria()' >\n      Guardar \n    </button> \n\n\n\n    <button type=\"button\" class=\"btn btn-light\" (click)=\"c('Close click')\">Cerrar</button>\n  </div>\n</ng-template>\n\n\n\n\n\n\n\n\n\n\n\n <div class=\"card\" style=\"    background: transparent;\n    border: none !important;\">\n    \n\n    <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n\n    </div>\n\n  </div>\n</div>\n\n\n\n\n\n\n\n      \n\n  <div class='row'>\n  <div class=\"col-md-12 col-xl-6\">\n        <div class=\"card\">\n            <div class=\"card-body\">\n                <h5>Empleados</h5>\n\n                 <button  style='' class=\" btn btn-sm btn-primary float-right\" (click)='crearEmpleado(content3)' >Crear Empleado</button>\n\n\n            </div>\n            <div class=\"card-body\">\n\n              <input\n        type='text'\n        style='padding:8px;margin:15px auto;width:30%;'\n        placeholder='Buscar empleado ...'\n        (keyup)='updateFilter($event)'\n      />\n\n                       <ngx-datatable \n                    \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"10\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect($event,content)'>\n\n          <ngx-datatable-column prop=\"estado\" name='' >\n          <ng-template minWidth='20' maxWidth='20' let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n            <i *ngIf='value==1'  class=\"fa fa-eye\" aria-hidden=\"true\"></i> \n        <i *ngIf='value!==1'  class=\"fa fa-eye-slash\" aria-hidden=\"true\"></i> \n\n\n\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                          <ngx-datatable-column prop=\"nombre\" name='Nombre' >\n          <ng-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template  minWidth='250'  >\n    \n  \n\n{{value}}\n\n          </ng-template>\n        </ngx-datatable-column>\n\n           <ngx-datatable-column  prop=\"descripcion\" name='Descripcion' >\n          <ng-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template  minWidth='50' maxWidth='150' >\n    \n  \n\n{{value}}\n\n          </ng-template>\n        </ngx-datatable-column>\n\n\n      <ngx-datatable-column prop=\"estado\" name='' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n       <button class=\"btn btn-success btn-sm btn-round btn-outline-success\" type=\"button\" (click)='editarEmpleado(content)'>\n       <span>Editar</span>\n       </button>\n        \n          </ng-template>\n        </ngx-datatable-column>\n\n\n        </ngx-datatable>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"col-md-12 col-xl-6\">\n        <div class=\"user-card-body card\">\n            <div class=\"card-body\">\n                <div *ngIf=\"claseSeleccionada['idEmpleado']\">\n                <div class=\"top-card text-center\">\n                    <img style=\"height: 60px;width: 60px; border-radius: 60px\" alt=\"\" class=\"img-responsive\"  \n                    src=\"{{this.dataImagen}}\"\n                    onError=\"this.src='assets/user.png';\">\n                </div>\n                <div class=\"card-contain text-center p-t-10\">\n                    <h5 class=\"text-capitalize p-b-10\">{{claseSeleccionada[\"nombre\"]}}</h5>\n                    <p class=\"text-muted\">{{claseSeleccionada.estado==1 ? 'Visible' : 'Oculto'}}</p>\n                </div>\n                <div class=\"card-data\">\n<!--                     <div class=\"row\" style=\"    text-align: center;\n    display: block;\">\n  <button class=\"btn btn-primary btn-round\" (click)='openSub(content)'>Sub-Categorias</button>\n                    </div> -->\n                </div>\n              </div>\n              <div style=\"    text-align: center;\n    color: darkgray;\" *ngIf=\"!claseSeleccionada['idEmpleado']\">\n                <span>Selecciona un Empleado</span>\n              </div>\n\n            </div>\n        </div>\n\n\n        <div class=\"user-card-body card\">\n <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n          <div class=\"card-body\">\n                <h5>Categorias</h5>\n\n              \n\n\n            </div>\n\n            <div class=\"card-body\">\n                \n <div _ngcontent-c6=\"\" class=\"row\">\n          <div _ngcontent-c6=\"\" class=\"col-sm-12 \">\n            <h4 _ngcontent-c6=\"\" class=\"sub-title\">Categorias que el empleado trabaja</h4>\n\n\n\n\n            <div *ngFor=\"let p of categorias; let i = index;\" class=\"checkbox-color checkbox-primary\">\n              <input  checked=\"\" id=\"cat{{p.idCategoria}}\" type=\"checkbox\"\n               (change)=\"changeCheckbox(i)\"\n                [checked]=\"p.checked\">\n              <label  for=\"cat{{p.idCategoria}}\">\n                {{p.nombre}}\n              </label>\n            </div>\n         \n\n\n<!-- \n    \n  <div class=\"form-check\" *ngFor=\"let tag of tags; let i = index;\">\n    <label class=\"form-check-label\" for=\"tag{{tag.value}}\">\n      <input\n        class=\"form-check-input\"\n        type=\"checkbox\"\n        id=\"tag{{tag.value}}\"\n        name=\"tagOptions\"\n        (change)=\"changeCheckbox(i)\"\n        [checked]=\"tag.checked\">\n      {{tag.name}}\n    </label>\n  </div>\n\n\n            <div _ngcontent-c6=\"\" class=\"checkbox-color checkbox-default\">\n              <input _ngcontent-c6=\"\" disabled=\"\" id=\"checkbox17\" type=\"checkbox\">\n              <label _ngcontent-c6=\"\" for=\"checkbox17\">\n                Disabled\n              </label>\n            </div> -->\n\n\n\n          </div>\n        </div>\n\n\n\n\n            </div>\n        </div>\n\n\n\n\n    </div>\n    </div>\n\n\n\n    </div> \n\n\n\n"
+module.exports = " <ng-template #content let-c=\"close\" let-d=\"dismiss\">\n  <div class=\"modal-header\" style=\"background-color: #f3f3f3;\">\n   <h5 >{{claseSeleccionada[\"nombre\"]}}</h5>\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n  <div class=\"modal-body\" style=\"\">\n   \n      <div id=\"collapseExample\">\n\n  <form class=\"needs-validation\" novalidate >\n    <div class=\"form-row\">\n\n       <div class=\"col\" style=\"text-align: center;\">\n\n         <img style=\"height: 70px;width: 70px;border-radius: 70px\" \n        src=\"{{this.dataImagen}}\"\n        onError=\"this.src='assets/user.png';\">\n\n        <form [formGroup]=\"form\">\n        <input  [disabled]=\"!editar\"  style='margin-left: 20px;display: none'  type=\"file\" name=\"imageU\" id=\"imageU\" (change)=\"onFileChange($event)\" #fileInput >\n        <label for=\"imageU\" style=\"margin-top: 12px;\">Seleccionar imagen</label>\n        </form>\n   </div>\n\n</div>\n<div class=\"form-row\">\n\n      <div class=\"col\" >\n        <label for=\"validationCustom01\">Nombre</label>\n        <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.nombre\" name=\"nombre\" type=\"text\" class=\"form-control\" style=\"  margin-bottom: 10px;  width: 200px;\">\n\n\n                <label for=\"validationCustom01\">Descripcion</label>\n        <input  [disabled]=\"!editar\"  [(ngModel)]=\"claseSeleccionada.descripcion\" name=\"descripcion\" type=\"text\" class=\"form-control\" style=\"\">\n\n\n\n                <label for=\"validationCustom01\" style=\"margin-top: 12px;\">Estado</label>\n             <select [disabled]=\"!editar\" [(ngModel)]=\"claseSeleccionada.estado\" class=\"form-control custom-select mr-sm-2\" name='estado'>\n        \n          <option value=\"1\">Visible</option>\n          <option value=\"2\">Oculto</option>\n        </select>\n      </div>\n\n\n\n\n   </div>\n\n  </form> \n\n<!--     <div *ngIf='claseSeleccionada.idCategoria' >\n\n\n      <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n       <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n    </div> -->\n    </div>\n          \n\n  </div>\n  <div class=\"modal-footer\" style=\"background-color: #f3f3f3;\">\n\n      <button  class=\"btn btn-success\"  (click)='guardarEdicion()' >\n      Guardar \n    </button> \n\n\n\n    <button type=\"button\" class=\"btn btn-light\" (click)=\"c('Close click')\">Cerrar</button>\n  </div>\n</ng-template>\n\n \n <ng-template #content2 let-c=\"close\" let-d=\"dismiss\">\n  <div class=\"modal-header\" style=\"background-color: #f3f3f3;\">\n   <h5 >{{claseSeleccionada2[\"nombre\"]}}</h5>\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n  <div class=\"modal-body\" style=\"background-color: #f3f3f3;\">\n   \n      <div id=\"collapseExample\">\n\n  <form class=\"needs-validation\" novalidate >\n\n<div class=\"form-row\">\n\n      <div class=\"col\" >\n        <label for=\"validationCustom01\">Nombre</label>\n        <input  [disabled]=\"!editar2\"  [(ngModel)]=\"claseSeleccionada2.nombre\" name=\"nombre2\" type=\"text\" class=\"form-control\" style=\"    width: 200px;\">\n\n                <label for=\"validationCustom01\" style=\"margin-top: 12px;\">Estado</label>\n             <select [disabled]=\"!editar2\" [(ngModel)]=\"claseSeleccionada2.estado\" class=\"form-control custom-select mr-sm-2\" name='estado2'>\n        \n          <option value=\"1\">Visible</option>\n          <option value=\"2\">Oculto</option>\n        </select>\n      </div>\n\n\n\n\n   </div>\n\n  </form> \n\n<!--     <div *ngIf='claseSeleccionada.idCategoria' >\n\n\n      <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n       <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n    </div> -->\n    </div>\n          \n\n  </div>\n  <div class=\"modal-footer\" style=\"background-color: #f3f3f3;\">\n\n      <button  class=\"btn btn-success\"  (click)='guardarEdicion2()' >\n      Guardar \n    </button> \n\n\n\n    <button type=\"button\" class=\"btn btn-light\" (click)=\"c('Close click')\">Cerrar</button>\n  </div>\n</ng-template>\n\n\n\n\n\n\n\n\n\n <ng-template #content3 let-c=\"close\" let-d=\"dismiss\">\n  <div class=\"modal-header\" style=\"background-color: #f3f3f3;\">\n   <h5 >Crear Empleado</h5>\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n  <div class=\"modal-body\" style=\"\">\n   \n      <div id=\"collapseExample\">\n\n  <form class=\"needs-validation\" novalidate >\n    <div class=\"form-row\">\n\n       <div class=\"col\" style=\"text-align: center;\">\n\n         <img style=\"height: 50px;width: 50px; border-radius: 40px\" \n        src=\"{{this.dataImagen2}}\"\n        onError=\"this.src='assets/user.png';\">\n\n        <form [formGroup]=\"form2\">\n        <input   style='margin-left: 20px;display: none'  type=\"file\" name=\"imageU2\" id=\"imageU2\" (change)=\"onFileChange2($event)\" #fileInput2 >\n        <label for=\"imageU2\" style=\"margin-top: 12px;\">Seleccionar imagen</label>\n        </form>\n   </div>\n\n</div>\n<div class=\"form-row\">\n\n      <div class=\"col\" >\n        <label for=\"validationCustom01\">Nombre</label>\n        <input    [(ngModel)]=\"claseSeleccionada3.nombre\" name=\"nombre3\" type=\"text\" class=\"form-control\" style=\" margin-bottom: 10px;   width: 200px;\">\n\n                <label for=\"validationCustom01\">Descripcion</label>\n        <input    [(ngModel)]=\"claseSeleccionada3.descripcion\" name=\"descripcion3\" type=\"text\" class=\"form-control\" style=\" \">\n\n\n\n                <label for=\"validationCustom01\" style=\"margin-top: 12px;\">Estado</label>\n             <select  [(ngModel)]=\"claseSeleccionada3.estado\" class=\"form-control custom-select mr-sm-2\" name='estado3'>\n        \n          <option value=\"1\">Visible</option>\n          <option value=\"2\">Oculto</option>\n        </select>\n      </div>\n\n\n\n\n   </div>\n\n  </form> \n\n<!--     <div *ngIf='claseSeleccionada.idCategoria' >\n\n\n      <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n       <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n    </div> -->\n    </div>\n          \n\n  </div>\n  <div class=\"modal-footer\" style=\"background-color: #f3f3f3;\">\n\n      <button  class=\"btn btn-success\"  (click)='nuevaCategoria()' >\n      Guardar \n    </button> \n\n\n\n    <button type=\"button\" class=\"btn btn-light\" (click)=\"c('Close click')\">Cerrar</button>\n  </div>\n</ng-template>\n\n\n\n\n\n\n\n\n <ng-template #content4 let-c=\"close\" let-d=\"dismiss\">\n  <div class=\"modal-header\" style=\"background-color: #f3f3f3;\">\n   <h5 >Agregar SubCategoria</h5>\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n  <div class=\"modal-body\" style=\"background-color: #f3f3f3;\">\n   \n      <div id=\"collapseExample\">\n\n  <form class=\"needs-validation\" novalidate >\n\n<div class=\"form-row\">\n\n      <div class=\"col\" >\n        <label for=\"validationCustom01\">Nombre</label>\n        <input    [(ngModel)]=\"claseSeleccionada4.nombre\" name=\"nombre3\" type=\"text\" class=\"form-control\" style=\"    width: 200px;\">\n\n                <label for=\"validationCustom01\" style=\"margin-top: 12px;\">Estado</label>\n             <select  [(ngModel)]=\"claseSeleccionada4.estado\" class=\"form-control custom-select mr-sm-2\" name='estado3'>\n        \n          <option value=\"1\">Visible</option>\n          <option value=\"2\">Oculto</option>\n        </select>\n      </div>\n\n\n\n\n   </div>\n\n  </form> \n\n<!--     <div *ngIf='claseSeleccionada.idCategoria' >\n\n\n      <button [hidden]=\"!editar\" style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" (click)='guardarEdicion()'>Guardar</button>\n       <button (click)='editar = !editar' [hidden]=\"!editar\"  style='margin-left: 15px;margin-top: 20px;margin-bottom: 20px;' class=\"btn btn-primary\" >Cancelar</button>\n    </div> -->\n    </div>\n          \n\n  </div>\n  <div class=\"modal-footer\" style=\"background-color: #f3f3f3;\">\n\n      <button  class=\"btn btn-success\"  (click)='nuevaSCategoria()' >\n      Guardar \n    </button> \n\n\n\n    <button type=\"button\" class=\"btn btn-light\" (click)=\"c('Close click')\">Cerrar</button>\n  </div>\n</ng-template>\n\n\n\n\n\n\n\n\n\n\n\n <div class=\"card\" style=\"    background: transparent;\n    border: none !important;\">\n    \n\n    <div class=\"btn-toolbar justify-content-between\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n\n  <div class=\"input-group\">\n    <div class=\"input-group-prepend\">\n   \n\n    </div>\n\n  </div>\n</div>\n\n\n\n\n\n\n\n      \n\n  <div class='row'>\n  <div class=\"col-md-12 col-xl-8\">\n        <div class=\"card\">\n            <div class=\"card-body\">\n                <h5>Empleados</h5>\n\n                 <button  style='' class=\" btn btn-sm btn-primary float-right\" (click)='crearEmpleado(content3)' >Crear Empleado</button>\n\n\n            </div>\n            <div class=\"card-body\">\n\n              <input\n        type='text'\n        style='padding:8px;margin:15px auto;width:30%;'\n        placeholder='Buscar empleado ...'\n        (keyup)='updateFilter($event)'\n      />\n\n                       <ngx-datatable \n                    \n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"10\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          \n          (select)='onSelect($event,content)'>\n\n          <ngx-datatable-column prop=\"estado\" name='' >\n          <ng-template minWidth='20' maxWidth='20' let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n            <i *ngIf='value==1'  class=\"fa fa-eye\" aria-hidden=\"true\"></i> \n        <i *ngIf='value!==1'  class=\"fa fa-eye-slash\" aria-hidden=\"true\"></i> \n\n\n\n          </ng-template>\n        </ngx-datatable-column>\n\n\n\n                          <ngx-datatable-column prop=\"nombre\" name='Nombre' >\n          <ng-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template  minWidth='250'  >\n    \n  \n\n{{value}}\n\n          </ng-template>\n        </ngx-datatable-column>\n\n           <ngx-datatable-column  prop=\"descripcion\" name='Descripcion' >\n          <ng-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template  minWidth='50' maxWidth='150' >\n    \n  \n\n{{value}}\n\n          </ng-template>\n        </ngx-datatable-column>\n\n\n      <ngx-datatable-column prop=\"estado\" name='' >\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n    \n       <button class=\"btn btn-success btn-sm btn-round btn-outline-success\" type=\"button\" (click)='editarEmpleado(content)'>\n       <span>Editar</span>\n       </button>\n        \n          </ng-template>\n        </ngx-datatable-column>\n\n\n        </ngx-datatable>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"col-md-12 col-xl-4\">\n        <div class=\"user-card-body card\">\n            <div class=\"card-body\">\n                <div *ngIf=\"claseSeleccionada['idEmpleado']\">\n                <div class=\"top-card text-center\">\n                    <img style=\"height: 60px;width: 60px; border-radius: 60px\" alt=\"\" class=\"img-responsive\"  \n                    src=\"{{this.dataImagen}}\"\n                    onError=\"this.src='assets/user.png';\">\n                </div>\n                <div class=\"card-contain text-center p-t-10\">\n                    <h5 class=\"text-capitalize p-b-10\">{{claseSeleccionada[\"nombre\"]}}</h5>\n                    <p class=\"text-muted\">{{claseSeleccionada.estado==1 ? 'Visible' : 'Oculto'}}</p>\n                </div>\n                <div class=\"card-data\">\n<!--                     <div class=\"row\" style=\"    text-align: center;\n    display: block;\">\n  <button class=\"btn btn-primary btn-round\" (click)='openSub(content)'>Sub-Categorias</button>\n                    </div> -->\n                </div>\n              </div>\n              <div style=\"    text-align: center;\n    color: darkgray;\" *ngIf=\"!claseSeleccionada['idEmpleado']\">\n                <span>Selecciona un Empleado</span>\n              </div>\n\n            </div>\n        </div>\n\n\n        <div class=\"user-card-body card\">\n <ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n          <div class=\"card-body\">\n                <h5>Categorias</h5>\n\n              \n\n\n            </div>\n\n            <div class=\"card-body\">\n                \n <div _ngcontent-c6=\"\" class=\"row\">\n          <div _ngcontent-c6=\"\" class=\"col-sm-12 \">\n            <h4 _ngcontent-c6=\"\" class=\"sub-title\">Categorias que el empleado trabaja</h4>\n\n\n\n\n            <div *ngFor=\"let p of categorias; let i = index;\" class=\"checkbox-color checkbox-primary\">\n              <input  checked=\"\" id=\"cat{{p.idCategoria}}\" type=\"checkbox\"\n               (change)=\"changeCheckbox(i)\"\n                [checked]=\"p.checked\">\n              <label  for=\"cat{{p.idCategoria}}\">\n                {{p.nombre}}\n              </label>\n            </div>\n         \n\n\n<!-- \n    \n  <div class=\"form-check\" *ngFor=\"let tag of tags; let i = index;\">\n    <label class=\"form-check-label\" for=\"tag{{tag.value}}\">\n      <input\n        class=\"form-check-input\"\n        type=\"checkbox\"\n        id=\"tag{{tag.value}}\"\n        name=\"tagOptions\"\n        (change)=\"changeCheckbox(i)\"\n        [checked]=\"tag.checked\">\n      {{tag.name}}\n    </label>\n  </div>\n\n\n            <div _ngcontent-c6=\"\" class=\"checkbox-color checkbox-default\">\n              <input _ngcontent-c6=\"\" disabled=\"\" id=\"checkbox17\" type=\"checkbox\">\n              <label _ngcontent-c6=\"\" for=\"checkbox17\">\n                Disabled\n              </label>\n            </div> -->\n\n\n\n          </div>\n        </div>\n\n\n\n\n            </div>\n        </div>\n\n\n\n\n    </div>\n    </div>\n\n\n\n    </div> \n\n\n\n"
 
 /***/ }),
 
@@ -7503,6 +7725,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__endpoints_service__ = __webpack_require__("../../../../../src/app/endpoints.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("../../../forms/esm5/forms.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ng_bootstrap_ng_bootstrap__ = __webpack_require__("../../../../@ng-bootstrap/ng-bootstrap/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7516,11 +7739,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var StafComponent = (function () {
-    function StafComponent(endpointsService, fb, modalService) {
+    function StafComponent(endpointsService, fb, modalService, router) {
         this.endpointsService = endpointsService;
         this.fb = fb;
         this.modalService = modalService;
+        this.router = router;
         this.globalImage = 'http://50.116.17.150:3000/';
         this.rows = [];
         this.temp = [];
@@ -7539,6 +7764,8 @@ var StafComponent = (function () {
         this.loading = false;
         this.loading2 = false;
         this.isCollapsed = false;
+        this.cu = JSON.parse(localStorage.getItem('currentUser'));
+        this.seccionActivas = localStorage.getItem('seccUBY');
         this.rowsHorarios = [];
         this.selectedHorario = [];
         this.columnsHorarios = [
@@ -7553,6 +7780,12 @@ var StafComponent = (function () {
             { prop: 'nombre', name: 'Nombre' },
             { prop: 'descripcion', name: 'Descripcion' }
         ];
+        if (this.cu[0]['tipo'] == 2) {
+            if (!this.seccionActivas.split(',').includes("2")) {
+                console.log('usuario no deseado');
+                this.router.navigate(['/dashboard']);
+            }
+        }
         this.createForm();
     }
     StafComponent.prototype.createForm = function () {
@@ -7831,7 +8064,7 @@ var StafComponent = (function () {
             template: __webpack_require__("../../../../../src/app/staf/staf.component.html"),
             styles: [__webpack_require__("../../../../../src/app/staf/staf.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__ng_bootstrap_ng_bootstrap__["b" /* NgbModal */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__endpoints_service__["a" /* EndpointsService */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__ng_bootstrap_ng_bootstrap__["b" /* NgbModal */], __WEBPACK_IMPORTED_MODULE_4__angular_router__["c" /* Router */]])
     ], StafComponent);
     return StafComponent;
 }());
