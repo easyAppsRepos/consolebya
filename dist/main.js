@@ -1410,7 +1410,7 @@ var LayoutConfig = /** @class */ (function () {
                 left: {
                     display: true,
                     fixed: true,
-                    skin: 'light',
+                    skin: 'dark',
                     push_footer: true,
                     //  Left aside minimize toggle
                     minimize: {
