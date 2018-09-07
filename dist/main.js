@@ -1400,7 +1400,7 @@ var LayoutConfig = /** @class */ (function () {
                     type: 'search-dropdown',
                     // Header search results dropdown
                     dropdown: {
-                        skin: 'light' // Select results dropdown skin from available options:  light|dark
+                        skin: 'dark' // Select results dropdown skin from available options:  light|dark
                     }
                 }
             },
