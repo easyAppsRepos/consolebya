@@ -1468,7 +1468,7 @@ var LayoutConfig = /** @class */ (function () {
             },
             // == Content
             content: {
-                skin: 'light2' // Select main content skin from available options: light|light2,
+                skin: 'light' // Select main content skin from available options: light|light2,
             },
             // == Footer
             footer: {
