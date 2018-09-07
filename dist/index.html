@@ -1,47 +1,36 @@
 <!doctype html>
-<html>
+<html lang="en">
+
 <head>
-  <meta charset="utf-8">
-  <title>BeYou Negocios</title>
-  <base href="/">
+	<meta charset="utf-8">
+	<title>Metronic | Default Demo</title>
+	<base href="/">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/x-icon" href="./assets/demo/default/media/img/logo/favicon.ico">
+	<link href="//fonts.googleapis.com/css?family=Poppins:300,400,500,600,700%7CRoboto:300,400,500,600,700" rel="stylesheet">
 
-  <!-- ICON FONTS -->
-  <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+	<style type="text/css">
+		body,
+		html {
+			height: 100%;
+		}
+
+		.m-splash-screen {
+			background-color: #f2f3f8;
+			position: absolute;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: 100%;
+			width: 100%;
+			z-index: 99999;
+		}
+	</style>
 
 </head>
-<body class="hui-buh">
-  <tox-root>
-    <style type="text/css">
-      @keyframes spinner {
-        to {transform: rotate(360deg);}
-      }
 
-      .spinner:before {
-        content: '';
-        box-sizing: border-box;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 40px;
-        height: 40px;
-        margin-top: -20px;
-        margin-left: -20px;
-        border-radius: 50%;
+<body m-root><script type="text/javascript" src="runtime.js"></script><script type="text/javascript" src="polyfills.js"></script><script type="text/javascript" src="styles.js"></script><script type="text/javascript" src="scripts.js"></script><script type="text/javascript" src="vendor.js"></script><script type="text/javascript" src="main.js"></script></body>
 
-        border: 4px solid transparent;
-        border-top-color: #c03;
-        border-bottom-color: #333;
-        animation: spinner .8s ease infinite;
-      }
-
-      body {
-        background-color: #f6f6f6;
-      }
-    </style>
-    <div class="spinner"></div>
-  </tox-root>
-<script type="text/javascript" src="inline.bundle.js"></script><script type="text/javascript" src="polyfills.bundle.js"></script><script type="text/javascript" src="styles.bundle.js"></script><script type="text/javascript" src="vendor.bundle.js"></script><script type="text/javascript" src="main.bundle.js"></script></body>
 </html>
