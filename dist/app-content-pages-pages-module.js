@@ -1065,6 +1065,116 @@ var AngularEditorModule = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/content/pages/components/addstaff/addstaff.component.html":
+/*!***************************************************************************!*\
+  !*** ./src/app/content/pages/components/addstaff/addstaff.component.html ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 15px;\">Agregar Staff</div>\r\n\r\n\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" [disabled]='!empleado.nombre || !empleado.email || !empleado.descripcion || !empleado.tipo' \r\n     (click)='guardarStaff()'>Guardar</button>\r\n\r\n\t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button>\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n<ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"text-align: center\">\r\n\t\t\t<img   style='    height: 70px;\r\n    width: 70px;\r\n    border-radius: 100px;\r\n    margin: 5px 11px;' src=\"assets/app/media/img/userB.png\">\r\n</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t\r\n\r\n\r\n\t\t\t\t<label class='labelBy'>Nombre*</label>\r\n\t\t\t\t<input [(ngModel)]='empleado.nombre' class='inputBy w100' placeholder=\"nombre del staff\"  autocomplete=\"off\"  type=\"text\" name=\"nombre\">\r\n\t\t\t</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Telefono</label>\r\n\t\t\t\t<input [(ngModel)]='empleado.telefono' class='inputBy w100' placeholder=\"telefono del staff\"  autocomplete=\"off\"  type=\"tel\" name=\"telefono\">\r\n\t\t\t</div>\r\n\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Email*</label>\r\n\t\t\t\t<input [(ngModel)]='empleado.email' class='inputBy w100' placeholder=\"email del staff\"  autocomplete=\"off\"  type=\"email\" name=\"enail\">\r\n\t\t\t</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Descripcion*</label>\r\n\t\t\t\t<input [(ngModel)]='empleado.descripcion' class='inputBy w100' placeholder=\"descripcion del staff\"  autocomplete=\"off\"  type=\"text\" name=\"desc\">\r\n\t\t\t</div>\r\n\r\n\r\n\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"color:darkgray;font-size: 16px;font-weight: 500 !important;margin-bottom: 20px;\">Permisos</div>\r\n\t\t\t\t\t<div style=\"border: solid 1px lightgray;padding: 20px;\">\r\n\t\t\t\t\t\t\r\n<label class='labelBy'>Permisos de usuario</label>\r\n\t\t\t<mat-select [(ngModel)]='empleado.tipo' class='inputBy w100'>\r\n\t\t\t<mat-option value=\"1\">Miembro Administrador</mat-option>\r\n\t\t\t\t<mat-option value=\"2\">Miembro de Staff</mat-option>\r\n\t\t\t\t<mat-option value=\"3\">Recepcion</mat-option>\r\n\t\t\t\t</mat-select>\r\n\r\n\r\n\r\n\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t\t\t\t\t\r\n\t\t</div>\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
+
+/***/ }),
+
+/***/ "./src/app/content/pages/components/addstaff/addstaff.component.scss":
+/*!***************************************************************************!*\
+  !*** ./src/app/content/pages/components/addstaff/addstaff.component.scss ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".inputBy {\n  color: #383734;\n  background: #fff;\n  border: 1px solid #e1e1e1;\n  border-radius: 4px;\n  min-height: 40px;\n  padding: 7px 10px;\n  resize: vertical;\n  -webkit-appearance: none;\n  -moz-appearance: none; }\n\n.w100 {\n  display: block;\n  width: 100%; }\n\n.imgCheckBox {\n  height: 34px;\n  width: 34px;\n  border-radius: 20px;\n  margin: 5px 11px; }\n\n.txtF {\n  color: #383734;\n  font-size: 16px; }\n\n.w50 {\n  display: flex;\n  width: 50%; }\n\n.conteinInput {\n  margin-bottom: 30px; }\n\n.labelBy {\n  display: inline-block;\n  margin-bottom: 10px;\n  font-size: 16px;\n  font-weight: 500 !important;\n  line-height: 1.5;\n  color: #383734; }\n\ninput:focus {\n  outline: none !important;\n  border: 1px solid #34bfa3; }\n"
+
+/***/ }),
+
+/***/ "./src/app/content/pages/components/addstaff/addstaff.component.ts":
+/*!*************************************************************************!*\
+  !*** ./src/app/content/pages/components/addstaff/addstaff.component.ts ***!
+  \*************************************************************************/
+/*! exports provided: AddstaffComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AddstaffComponent", function() { return AddstaffComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _core_services_layout_subheader_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../core/services/layout/subheader.service */ "./src/app/core/services/layout/subheader.service.ts");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../core/auth/authentication.service */ "./src/app/core/auth/authentication.service.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+var AddstaffComponent = /** @class */ (function () {
+    function AddstaffComponent(router, _location, activatedRoute, subheaderService, authService, cdr, _formBuilder) {
+        this.router = router;
+        this._location = _location;
+        this.activatedRoute = activatedRoute;
+        this.subheaderService = subheaderService;
+        this.authService = authService;
+        this.cdr = cdr;
+        this._formBuilder = _formBuilder;
+        this.empleado = {};
+        this.loadingScreen = false;
+        var retrievedObject = JSON.parse(localStorage.getItem('userADby2as'));
+        this.idCentro = retrievedObject.idCentro;
+    }
+    AddstaffComponent.prototype.ngOnInit = function () {
+    };
+    AddstaffComponent.prototype.guardarStaff = function () {
+        var _this = this;
+        this.loadingScreen = true;
+        var dataEnv = this.empleado;
+        dataEnv.idCentro = this.idCentro;
+        this.authService.addStaffNC2(dataEnv)
+            .subscribe(function (data) {
+            console.log(data);
+            if (data.affectedRows > 0) {
+                _this.loadingScreen = false;
+                _this.goBack();
+            }
+        }, function (err) {
+            _this.loadingScreen = false;
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+    };
+    AddstaffComponent.prototype.goBack = function () {
+        this._location.back();
+        //	let _backUrl = 'servicios';
+        //this.router.navigateByUrl(_backUrl);
+    };
+    AddstaffComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'm-addstaff',
+            template: __webpack_require__(/*! ./addstaff.component.html */ "./src/app/content/pages/components/addstaff/addstaff.component.html"),
+            styles: [__webpack_require__(/*! ./addstaff.component.scss */ "./src/app/content/pages/components/addstaff/addstaff.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["Location"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _core_services_layout_subheader_service__WEBPACK_IMPORTED_MODULE_2__["SubheaderService"],
+            _core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_4__["AuthenticationService"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"],
+            _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormBuilder"]])
+    ], AddstaffComponent);
+    return AddstaffComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/content/pages/components/agregaroferta/agregaroferta.component.html":
 /*!*************************************************************************************!*\
   !*** ./src/app/content/pages/components/agregaroferta/agregaroferta.component.html ***!
@@ -1072,7 +1182,7 @@ var AngularEditorModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 15px;\">Agregar Oferta</div>\r\n\r\n\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" >Guardar</button>\r\n\r\n\t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button>\r\n\r\n\r\n</div>\r\n\r\n\r\n<div class=\"row\">\r\n\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Contrato de Oferta</label>\r\n\r\n\t\t\t\t<p class=' w100'>\r\n\t\t\t\t\tLas ofertas tienen una vigencia de 7 dias y un costo de $1 por cada servicio en oferta. Se pueden obtener hasta 10 a la vez. \r\n\t\t\t\t</p>\r\n\t\t\t</div>\r\n\t\t\t<label class='labelBy'>Las ofertas tienen una posicion especial en el app</label>\r\n\t\t\t<img src=\"assets/app/media/img/demo1.png\">\r\n\t\t\t<hr>\r\n\r\n\r\n\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy'>Fecha de expiracion</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\r\n\t\t\t\t<span class='inputBy w50' > 01/01/2018</span>\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t<div style=\"color:darkgray;font-size: 16px;font-weight: 500 !important;margin-bottom: 20px;\">\r\n\t\t\tElige un servico para marcar en oferta</div>\r\n\t\t\t\t\t<div style=\"border: solid 1px lightgray;padding: 20px;\">\r\n\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t<div class='tituloCateg'>Peluqueria</div>\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: rgb(250,249,247);padding: 10px 10px;\" *ngFor=\"let item of [{nombre:'Corte y Estilo',precio:30},{nombre:'Lavado y tinte',precio:40}];  let i = index\">\r\n\t\t\t\t\t\t<mat-checkbox [checked]=\"selected === i\" (change)=\"selected = i\">\r\n\t\t\t\t\t\t\t<span class=\"txtF\">{{item.nombre}} / ${{item.precio}}.00</span></mat-checkbox>\r\n\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t<div class='tituloCateg'>Rostro y Cuerpo</div>\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: rgb(250,249,247);padding: 10px 10px;\" *ngFor=\"let item of [{nombre:'Masaje espalda',precio:20}];  let i = index\">\r\n\t\t\t\t\t\t<mat-checkbox  [checked]=\"selected2 === i\" (change)=\"OnChange($event,i)\">\r\n\t\t\t\t\t\t\t<span class=\"txtF\">{{item.nombre}} / ${{item.precio}}.00</span></mat-checkbox>\r\n\r\n\t\t\t\t\t\t\t<div *ngIf='selected2 === i' style=\"margin-top: 20px;font-size: 14px;\">\r\n\t\t\t\t\t\t\t\t<span style=\"font-weight: 400\">Precio en Oferta: </span> \r\n\t\t\t\t\t\t\t\t<input   class='inputBy w50' placeholder=\"precio de Oferta\"  autocomplete=\"off\"  style='    margin-top: 15px;margin-bottom: 20px;' type=\"number\" name=\"precio\">\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t</div>\r\n\r\n\t\t</div>\r\n\t</div>\r\n\r\n</div>\r\n\r\n"
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 15px;\">Agregar Oferta</div>\r\n\r\n\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" [disabled]='!valorOferta || !selected2' (click)='macarcarOferta()' >Guardar</button>\r\n\r\n\t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button>\r\n\r\n\r\n</div>\r\n\r\n\r\n<div class=\"row\">\r\n\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Contrato de Oferta</label>\r\n\r\n\t\t\t\t<p class=' w100'>\r\n\t\t\t\t\tLas ofertas tienen una vigencia de 7 dias y un costo de $1 por cada servicio en oferta. Se pueden obtener hasta 10 a la vez. \r\n\t\t\t\t</p>\r\n\t\t\t</div>\r\n\t\t\t<label class='labelBy'>Las ofertas tienen una posicion especial en el app</label>\r\n\t\t\t<img src=\"assets/app/media/img/demo1.png\">\r\n\t\t\t<hr>\r\n\r\n\r\n<!-- \t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy'>Fecha de expiracion</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\r\n\t\t\t\t<span class='inputBy w50' > 01/01/2018</span>\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div> -->\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t<div style=\"color:darkgray;font-size: 16px;font-weight: 500 !important;margin-bottom: 20px;\">\r\n\t\t\tElige un servico para marcar en oferta</div>\r\n\t\t\t\t\t<div style=\"border: solid 1px lightgray;padding: 20px;\">\r\n\r\n\t\t\t\t\t\r\n\r\n\t\t\t\t\t\t\t<div *ngFor=\"let k of keys;  let m = index\">\r\n\t\t\t\t\t\t\t<div class='tituloCateg'>{{k}}</div>\r\n\r\n\t\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: rgb(250,249,247);padding: 10px 10px;\" *ngFor=\"let item of serviciosValues[m];  let i = index\">\r\n\t\t\t\t\t\t\t<mat-checkbox name=\"{{i}}-name\" [disabled]='item.oferta' [checked]=\"(selected2 == item.idServicio || item.oferta)\" (change)=\"OnChange($event,item.idServicio)\">\r\n\t\t\t\t\t\t\t\t<span class=\"txtF\">\r\n\t\t\t\t\t\t\t\t\t{{item.nombre}} / \r\n\t\t\t\t\t\t\t\t\t<span  [ngClass]=\"{'underl': item.oferta}\">${{item.precio}}</span>\r\n\t\t\t\t\t\t\t\t\t<span style=\"margin-left: 10px;font-weight: 500;\" *ngIf='item.oferta' >${{item.oferta}}</span>\r\n\r\n\r\n\t\t\t\t\t\t\t\t</span></mat-checkbox>\r\n\r\n\t\t\t\t\t\t\t\t<div *ngIf='selected2 === item.idServicio' style=\"margin-top: 20px;font-size: 14px;\">\r\n\t\t\t\t\t\t\t\t\t<span style=\"font-weight: 400\">Precio en Oferta: </span> \r\n\t\t\t\t\t\t\t\t\t<input   class='inputBy w50' placeholder=\"precio de Oferta\"  autocomplete=\"off\"  style='    margin-top: 15px;margin-bottom: 20px;' type=\"number\" name=\"precio\" [(ngModel)]=\"valorOferta\">\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t</div>\t\r\n\r\n\r\n\r\n\t\t\t\t\t</div>\r\n\r\n\t\t</div>\r\n\t</div>\r\n\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -1083,7 +1193,7 @@ module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,24
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".txtF {\n  color: #383734;\n  font-size: 16px; }\n\n.tituloCateg {\n  font-size: 16px;\n  margin-bottom: 10px;\n  margin-top: 15px;\n  font-weight: 400; }\n\n.w50 {\n  display: flex;\n  width: 50%; }\n\ninput:focus {\n  outline: none !important;\n  border: 1px solid #34bfa3; }\n\n.inputBy {\n  color: #383734;\n  background: #fff;\n  border: 1px solid #e1e1e1;\n  border-radius: 4px;\n  min-height: 40px;\n  padding: 7px 10px;\n  resize: vertical;\n  -webkit-appearance: none;\n  -moz-appearance: none; }\n\n.w100 {\n  display: block;\n  width: 100%; }\n\n.imgCheckBox {\n  height: 34px;\n  width: 34px;\n  border-radius: 20px;\n  margin: 5px 11px; }\n\n.conteinInput {\n  margin-bottom: 30px; }\n\n.labelBy {\n  display: inline-block;\n  margin-bottom: 10px;\n  font-size: 16px;\n  font-weight: 500 !important;\n  line-height: 1.5;\n  color: #383734; }\n"
+module.exports = ".txtF {\n  color: #383734;\n  font-size: 16px; }\n\n.tituloCateg {\n  font-size: 16px;\n  margin-bottom: 10px;\n  margin-top: 15px;\n  font-weight: 400; }\n\n.w50 {\n  display: flex;\n  width: 50%; }\n\n.underl {\n  text-decoration: line-through; }\n\ninput:focus {\n  outline: none !important;\n  border: 1px solid #34bfa3; }\n\n.inputBy {\n  color: #383734;\n  background: #fff;\n  border: 1px solid #e1e1e1;\n  border-radius: 4px;\n  min-height: 40px;\n  padding: 7px 10px;\n  resize: vertical;\n  -webkit-appearance: none;\n  -moz-appearance: none; }\n\n.w100 {\n  display: block;\n  width: 100%; }\n\n.imgCheckBox {\n  height: 34px;\n  width: 34px;\n  border-radius: 20px;\n  margin: 5px 11px; }\n\n.conteinInput {\n  margin-bottom: 30px; }\n\n.labelBy {\n  display: inline-block;\n  margin-bottom: 10px;\n  font-size: 16px;\n  font-weight: 500 !important;\n  line-height: 1.5;\n  color: #383734; }\n"
 
 /***/ }),
 
@@ -1097,8 +1207,9 @@ module.exports = ".txtF {\n  color: #383734;\n  font-size: 16px; }\n\n.tituloCat
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AgregarofertaComponent", function() { return AgregarofertaComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../core/auth/authentication.service */ "./src/app/core/auth/authentication.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1110,12 +1221,53 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
+
 var AgregarofertaComponent = /** @class */ (function () {
-    function AgregarofertaComponent(_location) {
+    function AgregarofertaComponent(_location, authService, cdr) {
         this._location = _location;
+        this.authService = authService;
+        this.cdr = cdr;
+        this.loadingScreen = false;
         this.selected2 = false;
+        this.keys = [];
+        this.serviciosValues = [];
+        var retrievedObject = JSON.parse(localStorage.getItem('userADby2as'));
+        this.idCentro = retrievedObject.idCentro;
     }
     AgregarofertaComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.authService.serviciosGroupNC({ idCentro: this.idCentro })
+            .subscribe(function (data) {
+            _this.keys = Object.keys(data);
+            _this.serviciosValues = Object.values(data);
+            //this.serviciosC = data;
+            // this.cdr.detectChanges();
+            console.log(_this.keys);
+            console.log(_this.serviciosValues);
+        }, function (err) {
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+    };
+    //marcarEnOfertaNC
+    AgregarofertaComponent.prototype.macarcarOferta = function () {
+        var _this = this;
+        console.log(this.selected2);
+        console.log(this.valorOferta);
+        this.loadingScreen = true;
+        var dataEnv = { idServicio: this.selected2, precioOferta: this.valorOferta };
+        this.authService.marcarEnOfertaNC(dataEnv)
+            .subscribe(function (data) {
+            _this.loadingScreen = false;
+            console.log(data);
+            _this.goBack();
+        }, function (err) {
+            _this.loadingScreen = false;
+            _this.cdr.detectChanges();
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
     };
     AgregarofertaComponent.prototype.goBack = function () {
         this._location.back();
@@ -1124,17 +1276,173 @@ var AgregarofertaComponent = /** @class */ (function () {
     };
     AgregarofertaComponent.prototype.OnChange = function ($event, i) {
         $event.checked ? (this.selected2 = i) : (this.selected2 = undefined);
+        this.valorOferta = undefined;
         //MatCheckboxChange {checked,MatCheckbox}
     };
     AgregarofertaComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'm-agregaroferta',
             template: __webpack_require__(/*! ./agregaroferta.component.html */ "./src/app/content/pages/components/agregaroferta/agregaroferta.component.html"),
             styles: [__webpack_require__(/*! ./agregaroferta.component.scss */ "./src/app/content/pages/components/agregaroferta/agregaroferta.component.scss")]
         }),
-        __metadata("design:paramtypes", [_angular_common__WEBPACK_IMPORTED_MODULE_1__["Location"]])
+        __metadata("design:paramtypes", [_angular_common__WEBPACK_IMPORTED_MODULE_0__["Location"], _core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"],
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"]])
     ], AgregarofertaComponent);
     return AgregarofertaComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/content/pages/components/agregarservicio/agregarservicio.component.html":
+/*!*****************************************************************************************!*\
+  !*** ./src/app/content/pages/components/agregarservicio/agregarservicio.component.html ***!
+  \*****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 15px;\">Agregar Servicio</div>\r\n\r\n\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='guardarServicio()'   [disabled]='!firstFormGroup.valid'>Guardar</button>\r\n\r\n\t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button>\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<form [formGroup]=\"firstFormGroup\"  #f2=\"ngForm\">\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Nombre del Servicio</label>\r\n\t\t\t\t<input formControlName=\"nombreServicio\" required class='inputBy w100' placeholder=\"Cual es el nombre del servicio\"  autocomplete=\"off\"  type=\"text\" name=\"nombre\">\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy'>Categoria y Subcategoria</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\t\t\t\t\r\n\t\t\t\t<mat-select formControlName=\"idCategoria\" required (selectionChange)=\"getSubs($event)\" class='inputBy w50'>\r\n\t\t\t\t <mat-option  *ngFor=\"let c of categorias\" [value]=\"c.idCategoria\" >\r\n              {{c.nombre}}\r\n              </mat-option>\r\n\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t<mat-select formControlName=\"idSubcategoria\"  required  class='inputBy w50'>\r\n\t\t<mat-option  *ngFor=\"let sc of subcategorias\" \r\n\t\t\t\t [value]=\"sc.idSubcategoria\" >\r\n              {{sc.nombre}}\r\n              </mat-option>\r\n\t\t\t\t</mat-select>\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t<hr>\r\n\r\n\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy'>Duracion</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\t\t\t\t\r\n\t\t\t\t<mat-select formControlName=\"duracionH\"  required class='inputBy w50'>\r\n\t\t\t\t <mat-option [value]=\"0\">0 horas</mat-option>\r\n              <mat-option [value]=\"60\">1 hora</mat-option>\r\n              <mat-option [value]=\"120\">2 horas</mat-option>\r\n              <mat-option [value]=\"180\">3 horas</mat-option>\r\n              <mat-option [value]=\"240\">4 horas</mat-option>\r\n              <mat-option [value]=\"300\">5 horas</mat-option>\r\n\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t<mat-select formControlName=\"duracionM\"  required class='inputBy w50'>\r\n\t\t\t\t <mat-option [value]=\"0\">0 minutos</mat-option>\r\n              <mat-option [value]=\"5\">5 minutos</mat-option>\r\n              <mat-option [value]=\"10\">10 minutos</mat-option>\r\n              <mat-option [value]=\"15\">15 minutos</mat-option>\r\n              <mat-option [value]=\"20\">20 minutos</mat-option>\r\n              <mat-option [value]=\"25\">25 minutos</mat-option>\r\n              <mat-option [value]=\"30\">30 minutos</mat-option>\r\n              <mat-option [value]=\"35\">35 minutos</mat-option>\r\n              <mat-option [value]=\"40\">40 minutos</mat-option>\r\n              <mat-option [value]=\"45\">45 minutos</mat-option>\r\n              <mat-option [value]=\"50\">50 minutos</mat-option>\r\n              <mat-option [value]=\"55\">55 minutos</mat-option>\r\n\t\t\t\t</mat-select>\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div>\r\n\r\n\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy'>Precio</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\t\t\t\t\r\n\t\t\t\t<input formControlName=\"precio\" required  class='inputBy w50' placeholder=\"precio del servicio\"  autocomplete=\"off\"  type=\"number\" name=\"precio\">\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div>\r\n\t\t</form>\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"color:darkgray;font-size: 16px;font-weight: 500 !important;margin-bottom: 20px;\">\r\n\t\t\tEmpleados que dan este servicio</div>\r\n\t\t\t\t\t<div style=\"border: solid 1px lightgray;padding: 20px;\">\r\n\r\n\t\t\t\t\t\t<p *ngFor=\"let e of empleados; let i = index\" >\r\n\r\n\t\t\t\t\t\t<mat-checkbox  [(ngModel)]=\"e.checke\"   name=\"{{i}}-name\">\r\n\t\t\t\t\t\t<img  class='imgCheckBox' src=\"http://50.116.17.150:3000/{{e.idFoto}}\" \r\n\t\t\t\t\t\t onError=\"this.src='assets/app/media/img/userB.png'\" >\r\n\t\t\t\t\t\t<span class=\"txtF\">{{e.nombre}}</span>\r\n\t\t\t\t\t\t</mat-checkbox></p>\r\n\r\n\r\n\t\t\t\t\t</div>\r\n\r\n\t\t</div>\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
+
+/***/ }),
+
+/***/ "./src/app/content/pages/components/agregarservicio/agregarservicio.component.scss":
+/*!*****************************************************************************************!*\
+  !*** ./src/app/content/pages/components/agregarservicio/agregarservicio.component.scss ***!
+  \*****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".inputBy {\n  color: #383734;\n  background: #fff;\n  border: 1px solid #e1e1e1;\n  border-radius: 4px;\n  min-height: 40px;\n  padding: 7px 10px;\n  resize: vertical;\n  -webkit-appearance: none;\n  -moz-appearance: none; }\n\n.w100 {\n  display: block;\n  width: 100%; }\n\n.imgCheckBox {\n  height: 34px;\n  width: 34px;\n  border-radius: 20px;\n  margin: 5px 11px; }\n\n.txtF {\n  color: #383734;\n  font-size: 16px; }\n\n.w50 {\n  display: flex;\n  width: 50%; }\n\n.conteinInput {\n  margin-bottom: 30px; }\n\n.labelBy {\n  display: inline-block;\n  margin-bottom: 10px;\n  font-size: 16px;\n  font-weight: 500 !important;\n  line-height: 1.5;\n  color: #383734; }\n\ninput:focus {\n  outline: none !important;\n  border: 1px solid #34bfa3; }\n"
+
+/***/ }),
+
+/***/ "./src/app/content/pages/components/agregarservicio/agregarservicio.component.ts":
+/*!***************************************************************************************!*\
+  !*** ./src/app/content/pages/components/agregarservicio/agregarservicio.component.ts ***!
+  \***************************************************************************************/
+/*! exports provided: AgregarservicioComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AgregarservicioComponent", function() { return AgregarservicioComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _core_services_layout_subheader_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../core/services/layout/subheader.service */ "./src/app/core/services/layout/subheader.service.ts");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../core/auth/authentication.service */ "./src/app/core/auth/authentication.service.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+var AgregarservicioComponent = /** @class */ (function () {
+    function AgregarservicioComponent(router, _location, activatedRoute, subheaderService, authService, cdr, _formBuilder) {
+        var _this = this;
+        this.router = router;
+        this._location = _location;
+        this.activatedRoute = activatedRoute;
+        this.subheaderService = subheaderService;
+        this.authService = authService;
+        this.cdr = cdr;
+        this._formBuilder = _formBuilder;
+        this.loadingScreen = false;
+        this.subcategorias = [];
+        this.categorias = [];
+        this.servicio = {};
+        this.empleados = [];
+        var retrievedObject = JSON.parse(localStorage.getItem('userADby2as'));
+        this.idCentro = retrievedObject.idCentro;
+        this.firstFormGroup = this._formBuilder.group({
+            nombreServicio: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+            precio: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+            duracionH: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+            duracionM: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+            idCategoria: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+            idSubcategoria: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required]
+        });
+        this.authService.getCategorias()
+            .subscribe(function (data) {
+            _this.categorias = data;
+            console.log(data);
+        }, function (err) {
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+        this.authService.getStaff({ idCentro: this.idCentro })
+            .subscribe(function (data) {
+            _this.empleados = data;
+            console.log(data);
+        }, function (err) {
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+    }
+    AgregarservicioComponent.prototype.ngOnInit = function () {
+    };
+    AgregarservicioComponent.prototype.getSubs = function (eve) {
+        var _this = this;
+        console.log(eve);
+        this.authService.getSubcategorias({ idCategoria: eve.value })
+            .subscribe(function (data) {
+            _this.subcategorias = data;
+            //this.servicio.idSubcategoria = undefined;
+            _this.firstFormGroup.patchValue({
+                idSubcategoria: undefined
+            });
+            console.log(data);
+        }, function (err) {
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+    };
+    AgregarservicioComponent.prototype.guardarServicio = function () {
+        var _this = this;
+        this.loadingScreen = true;
+        var dataEnv = this.firstFormGroup.value;
+        dataEnv.idCentro = this.idCentro;
+        dataEnv.empleados = this.empleados.filter(function (word) { return word.checke == true; });
+        console.log(dataEnv);
+        //updateServicioNC
+        this.authService.addServicioNC(dataEnv)
+            .subscribe(function (data) {
+            _this.loadingScreen = false;
+            console.log(data);
+            _this.goBack();
+        }, function (err) {
+            _this.loadingScreen = false;
+            _this.cdr.detectChanges();
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+    };
+    AgregarservicioComponent.prototype.goBack = function () {
+        this._location.back();
+    };
+    AgregarservicioComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'm-agregarservicio',
+            template: __webpack_require__(/*! ./agregarservicio.component.html */ "./src/app/content/pages/components/agregarservicio/agregarservicio.component.html"),
+            styles: [__webpack_require__(/*! ./agregarservicio.component.scss */ "./src/app/content/pages/components/agregarservicio/agregarservicio.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["Location"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _core_services_layout_subheader_service__WEBPACK_IMPORTED_MODULE_2__["SubheaderService"],
+            _core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_4__["AuthenticationService"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"],
+            _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormBuilder"]])
+    ], AgregarservicioComponent);
+    return AgregarservicioComponent;
 }());
 
 
@@ -1148,7 +1456,7 @@ var AgregarofertaComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 15px;\">Agregar Servicio</div>\r\n\r\n\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" >Guardar</button>\r\n\r\n\t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button>\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Nombre del Servicio</label>\r\n\t\t\t\t<input class='inputBy w100' placeholder=\"Cual es el nombre del servicio\"  autocomplete=\"off\"  type=\"text\" name=\"nombre\">\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy'>Categoria y Subcategoria</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\t\t\t\t\r\n\t\t\t\t<mat-select class='inputBy w50'>\r\n\t\t\t\t<mat-option>None</mat-option>\r\n\t\t\t\t<mat-option value=\"option1\">Option 1</mat-option>\r\n\t\t\t\t<mat-option value=\"option2\">Option 2</mat-option>\r\n\t\t\t\t<mat-option value=\"option3\">Option 3</mat-option>\r\n\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t<mat-select class='inputBy w50'>\r\n\t\t\t\t<mat-option>None</mat-option>\r\n\t\t\t\t<mat-option value=\"option1\">Option 1</mat-option>\r\n\t\t\t\t<mat-option value=\"option2\">Option 2</mat-option>\r\n\t\t\t\t<mat-option value=\"option3\">Option 3</mat-option>\r\n\t\t\t\t</mat-select>\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t<hr>\r\n\r\n\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy'>Duracion</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\t\t\t\t\r\n\t\t\t\t<mat-select class='inputBy w50'>\r\n\t\t\t\t<mat-option>None</mat-option>\r\n\t\t\t\t<mat-option value=\"option1\">Option 1</mat-option>\r\n\t\t\t\t<mat-option value=\"option2\">Option 2</mat-option>\r\n\t\t\t\t<mat-option value=\"option3\">Option 3</mat-option>\r\n\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t<mat-select class='inputBy w50'>\r\n\t\t\t\t<mat-option>None</mat-option>\r\n\t\t\t\t<mat-option value=\"option1\">Option 1</mat-option>\r\n\t\t\t\t<mat-option value=\"option2\">Option 2</mat-option>\r\n\t\t\t\t<mat-option value=\"option3\">Option 3</mat-option>\r\n\t\t\t\t</mat-select>\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div>\r\n\r\n\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy'>Precio</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\t\t\t\t\r\n\t\t\t\t<mat-select class='inputBy w50'>\r\n\t\t\t\t<mat-option value=\"option1\" selected>Fijo</mat-option>\r\n\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t<input class='inputBy w50' placeholder=\"precio del servicio\"  autocomplete=\"off\"  type=\"number\" name=\"precio\">\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"color:darkgray;font-size: 16px;font-weight: 500 !important;margin-bottom: 20px;\">\r\n\t\t\tEmpleados que dan este servicio</div>\r\n\t\t\t\t\t<div style=\"border: solid 1px lightgray;padding: 20px;\">\r\n\t\t\t\t\t\t<p><mat-checkbox>\r\n\t\t\t\t\t\t<span class=\"txtF\">Seleccionar todos</span>\r\n\t\t\t\t\t\t</mat-checkbox></p>\r\n\t\t\t\t\t\t<hr>\r\n\t\t\t\t\t\t<p><mat-checkbox>\r\n\t\t\t\t\t\t<img  class='imgCheckBox' src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\">\r\n\t\t\t\t\t\t<span class=\"txtF\">Juan de Arco</span>\r\n\t\t\t\t\t\t</mat-checkbox></p>\r\n\t\t\t\t\t\t<p><mat-checkbox>\r\n\t\t\t\t\t\t<img class='imgCheckBox' src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\">\r\n\t\t\t\t\t\t<span class=\"txtF\">Juan de Arco</span>\r\n\t\t\t\t\t\t</mat-checkbox></p>\r\n\t\t\t\t\t\t<p><mat-checkbox>\r\n\t\t\t\t\t\t<img class='imgCheckBox' src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\">\r\n\t\t\t\t\t\t<span class=\"txtF\">Juan de Arco</span>\r\n\t\t\t\t\t\t</mat-checkbox></p>\r\n\t\t\t\t\t</div>\r\n\r\n\t\t</div>\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 15px;\">Editar Servicio</div>\r\n\r\n\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='editarServicio()'   [disabled]='!firstFormGroup.valid || !servicio.idCategoria || !servicio.idSubcategoria '  >Guardar</button>\r\n\r\n\t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button>\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n <ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\r\n\t\t\t<form [formGroup]=\"firstFormGroup\"  #f2=\"ngForm\" >\r\n\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Nombre del Servicio</label>\r\n\t\t\t\t<input formControlName=\"nombreServicio\" required [(ngModel)]=\"servicio.nombre\" class='inputBy w100' placeholder=\"Cual es el nombre del servicio\"  autocomplete=\"off\"  type=\"text\" name=\"nombre\">\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy'>Categoria y Subcategoria</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\t\t\t\t\r\n\t\t\t\t<mat-select formControlName=\"idCategoria\" required (selectionChange)=\"getSubs($event)\"  [(ngModel)]=\"servicio.idCategoria\" class='inputBy w50'>\r\n\r\n\t\t\t\t <mat-option  *ngFor=\"let c of categorias\" [value]=\"c.idCategoria\" >\r\n              {{c.nombre}}\r\n              </mat-option>\r\n\r\n\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t<mat-select formControlName=\"idSubcategoria\"  required [(ngModel)]=\"servicio.idSubcategoria\" class='inputBy w50'>\r\n\r\n\t\t\t\t<mat-option  *ngFor=\"let sc of subcategorias\" \r\n\t\t\t\t [value]=\"sc.idSubcategoria\" >\r\n              {{sc.nombre}}\r\n              </mat-option>\r\n\r\n\r\n\t\t\t\t</mat-select>\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t<hr>\r\n\r\n\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy'>Duracion</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\t\t\t\t\r\n\t\t\t\t<mat-select formControlName=\"duracionH\"  required [(ngModel)]=\"servicio.duracionH\" class='inputBy w50'>\r\n              <mat-option [value]=\"0\">0 horas</mat-option>\r\n              <mat-option [value]=\"60\">1 hora</mat-option>\r\n              <mat-option [value]=\"120\">2 horas</mat-option>\r\n              <mat-option [value]=\"180\">3 horas</mat-option>\r\n              <mat-option [value]=\"240\">4 horas</mat-option>\r\n              <mat-option [value]=\"300\">5 horas</mat-option>\r\n\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t<mat-select formControlName=\"duracionM\"  required [(ngModel)]=\"servicio.duracionM\" class='inputBy w50'>\r\n              <mat-option [value]=\"0\">0 minutos</mat-option>\r\n              <mat-option [value]=\"5\">5 minutos</mat-option>\r\n              <mat-option [value]=\"10\">10 minutos</mat-option>\r\n              <mat-option [value]=\"15\">15 minutos</mat-option>\r\n              <mat-option [value]=\"20\">20 minutos</mat-option>\r\n              <mat-option [value]=\"25\">25 minutos</mat-option>\r\n              <mat-option [value]=\"30\">30 minutos</mat-option>\r\n              <mat-option [value]=\"35\">35 minutos</mat-option>\r\n              <mat-option [value]=\"40\">40 minutos</mat-option>\r\n              <mat-option [value]=\"45\">45 minutos</mat-option>\r\n              <mat-option [value]=\"50\">50 minutos</mat-option>\r\n              <mat-option [value]=\"55\">55 minutos</mat-option>\r\n\t\t\t\t</mat-select>\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div>\r\n\r\n\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy'>Precio</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\t\t\t\t\r\n\t<!-- \t\t\t<mat-select class='inputBy w50'>\r\n\t\t\t\t<mat-option value=\"option1\" selected>Fijo</mat-option>\r\n\t\t\t\t</mat-select>\r\n -->\r\n\t\t\t\t$<input formControlName=\"precio\" required [(ngModel)]=\"servicio.precio\" class='inputBy w50' placeholder=\"precio del servicio\"  autocomplete=\"off\"  type=\"number\" name=\"precio\">\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div>\r\n\r\n\t\t</form>\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"color:darkgray;font-size: 16px;font-weight: 500 !important;margin-bottom: 20px;\">\r\n\t\t\tEmpleados que dan este servicio</div>\r\n\t\t\t\t\t<div style=\"border: solid 1px lightgray;padding: 20px;\">\r\n\t\t<!-- \t\t\t\t<p><mat-checkbox>\r\n\t\t\t\t\t\t<span class=\"txtF\">Seleccionar todos</span>\r\n\t\t\t\t\t\t</mat-checkbox></p> \r\n\t\t\t\t\t\t<hr>-->\r\n\t\t\t\t\t\t<p *ngFor=\"let e of empleados; let i = index\" >\r\n\r\n\t\t\t\t\t\t<mat-checkbox  [(ngModel)]=\"e.checke\" [checked]=\"e.idServicioEmpleado\"  name=\"{{i}}-name\">\r\n\t\t\t\t\t\t<img  class='imgCheckBox' src=\"http://50.116.17.150:3000/{{e.idFoto}}\" \r\n\t\t\t\t\t\t onError=\"this.src='assets/app/media/img/userB.png'\" >\r\n\t\t\t\t\t\t<span class=\"txtF\">{{e.nombre}}</span>\r\n\t\t\t\t\t\t</mat-checkbox></p>\r\n\t\t\t\t\t\t<!-- <p><mat-checkbox>\r\n\t\t\t\t\t\t<img class='imgCheckBox' src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\">\r\n\t\t\t\t\t\t<span class=\"txtF\">Juan de Arco</span>\r\n\t\t\t\t\t\t</mat-checkbox></p>\r\n\t\t\t\t\t\t<p><mat-checkbox>\r\n\t\t\t\t\t\t<img class='imgCheckBox' src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\">\r\n\t\t\t\t\t\t<span class=\"txtF\">Juan de Arco</span>\r\n\t\t\t\t\t\t</mat-checkbox></p> -->\r\n\t\t\t\t\t</div>\r\n\r\n\t\t</div>\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -1177,6 +1485,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _core_services_layout_subheader_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../core/services/layout/subheader.service */ "./src/app/core/services/layout/subheader.service.ts");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../core/auth/authentication.service */ "./src/app/core/auth/authentication.service.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1190,40 +1500,125 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
+
+
 var EditservicioComponent = /** @class */ (function () {
-    function EditservicioComponent(router, _location, activatedRoute, subheaderService) {
+    function EditservicioComponent(router, _location, activatedRoute, subheaderService, authService, cdr, _formBuilder) {
+        var _this = this;
         this.router = router;
         this._location = _location;
         this.activatedRoute = activatedRoute;
         this.subheaderService = subheaderService;
+        this.authService = authService;
+        this.cdr = cdr;
+        this._formBuilder = _formBuilder;
+        this.loadingScreen = false;
+        this.subcategorias = [];
+        this.categorias = [];
+        this.servicio = {};
+        this.empleados = [];
+        var retrievedObject = JSON.parse(localStorage.getItem('userADby2as'));
+        this.idCentro = retrievedObject.idCentro;
+        this.firstFormGroup = this._formBuilder.group({
+            nombreServicio: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+            precio: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+            duracionH: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+            duracionM: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+            idCategoria: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+            idSubcategoria: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required]
+        });
+        this.authService.getCategorias()
+            .subscribe(function (data) {
+            _this.categorias = data;
+            console.log(data);
+        }, function (err) {
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
     }
     EditservicioComponent.prototype.ngOnInit = function () {
-        this.subheaderService.setTitle('Nuevo Servicio');
+        var _this = this;
         //this.loadingSubject.next(true);
         this.activatedRoute.queryParams.subscribe(function (params) {
-            console.log(params);
-            /*
-            const id = +params.id;
+            var id = params.id;
+            console.log(id);
             if (id && id > 0) {
-                this.productsService.getProductById(id).subscribe(res => {
-                    this.product = res;
-                    this.oldProduct = Object.assign({}, res);
-                    this.initProduct();
+                _this.authService.getServicioNC({ idServicio: id, idCentro: _this.idCentro })
+                    .subscribe(function (data) {
+                    console.log(data);
+                    _this.servicio = data.servicio[0];
+                    _this.empleados = data.empleados;
+                    _this.servicio.duracionH = (Math.floor(_this.servicio.duracion / 60)) * 60;
+                    _this.servicio.duracionM = _this.servicio.duracion % 60;
+                    _this.getSubs2(_this.servicio.idCategoria);
+                    _this.cdr.detectChanges();
+                    //console.log(data);
+                }, function (err) {
+                    console.log('someError');
+                    alert('Ups! Algo ha salido mal');
                 });
-            } else {
-                const newProduct = new ProductModel();
-                newProduct.clear();
-                this.product = newProduct;
-                this.oldProduct = Object.assign({}, newProduct);
-                this.initProduct();
             }
-            */
+            else {
+                console.log('error no data');
+                /*
+                    const newProduct = new ProductModel();
+                    newProduct.clear();
+                    this.product = newProduct;
+                    this.oldProduct = Object.assign({}, newProduct);
+                    this.initProduct();
+                    */
+            }
         });
         /*
         for (let i = 2018; i > 1945; i--) {
             this.availableYears.push(i);
         }
         */
+    };
+    EditservicioComponent.prototype.getSubs = function (eve) {
+        var _this = this;
+        console.log(eve);
+        //this.categoriaName = (eve.source.selected._element.nativeElement.innerText.trim());
+        this.authService.getSubcategorias({ idCategoria: eve.value })
+            .subscribe(function (data) {
+            _this.subcategorias = data;
+            _this.servicio.idSubcategoria = undefined;
+            console.log(data);
+        }, function (err) {
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+    };
+    EditservicioComponent.prototype.editarServicio = function () {
+        var _this = this;
+        this.loadingScreen = true;
+        this.servicio.empleados = this.empleados;
+        console.log(this.servicio);
+        //updateServicioNC
+        this.authService.updateServicioNC(this.servicio)
+            .subscribe(function (data) {
+            _this.loadingScreen = false;
+            console.log(data);
+            _this.goBack();
+        }, function (err) {
+            _this.loadingScreen = false;
+            _this.cdr.detectChanges();
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+    };
+    EditservicioComponent.prototype.getSubs2 = function (id) {
+        var _this = this;
+        this.authService.getSubcategorias({ idCategoria: id })
+            .subscribe(function (data) {
+            _this.subcategorias = data;
+            _this.cdr.detectChanges();
+            console.log(data);
+        }, function (err) {
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
     };
     EditservicioComponent.prototype.goBack = function () {
         this._location.back();
@@ -1236,7 +1631,9 @@ var EditservicioComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./editservicio.component.html */ "./src/app/content/pages/components/editservicio/editservicio.component.html"),
             styles: [__webpack_require__(/*! ./editservicio.component.scss */ "./src/app/content/pages/components/editservicio/editservicio.component.scss")]
         }),
-        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["Location"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _core_services_layout_subheader_service__WEBPACK_IMPORTED_MODULE_2__["SubheaderService"]])
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["Location"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _core_services_layout_subheader_service__WEBPACK_IMPORTED_MODULE_2__["SubheaderService"],
+            _core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_4__["AuthenticationService"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"],
+            _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormBuilder"]])
     ], EditservicioComponent);
     return EditservicioComponent;
 }());
@@ -1252,7 +1649,7 @@ var EditservicioComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 15px;\">Editar Staff</div>\r\n\r\n\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" >Guardar</button>\r\n\r\n\t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button>\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"text-align: center\">\r\n\t\t\t<img   style='    height: 70px;\r\n    width: 70px;\r\n    border-radius: 100px;\r\n    margin: 5px 11px;' src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\">\r\n</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t\r\n\r\n\t\t\t\t<label class='labelBy'>Nombre</label>\r\n\t\t\t\t<input class='inputBy w100' placeholder=\"nombre del staff\"  autocomplete=\"off\"  type=\"text\" name=\"nombre\">\r\n\t\t\t</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Telefono</label>\r\n\t\t\t\t<input class='inputBy w100' placeholder=\"telefono del staff\"  autocomplete=\"off\"  type=\"tel\" name=\"telefono\">\r\n\t\t\t</div>\r\n\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Email</label>\r\n\t\t\t\t<input class='inputBy w100' placeholder=\"email del staff\"  autocomplete=\"off\"  type=\"email\" name=\"enail\">\r\n\t\t\t</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Descripcion</label>\r\n\t\t\t\t<input class='inputBy w100' placeholder=\"descripcion del staff\"  autocomplete=\"off\"  type=\"text\" name=\"desc\">\r\n\t\t\t</div>\r\n\r\n\r\n\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"color:darkgray;font-size: 16px;font-weight: 500 !important;margin-bottom: 20px;\">Permisos</div>\r\n\t\t\t\t\t<div style=\"border: solid 1px lightgray;padding: 20px;\">\r\n\t\t\t\t\t\t\r\n<label class='labelBy'>Permisos de usuario</label>\r\n\t\t\t\t\t\t\t\t\t\t<mat-select class='inputBy w100'>\r\n\t\t\t\t<mat-option>None</mat-option>\r\n\t\t\t\t<mat-option value=\"option1\">Option 1</mat-option>\r\n\t\t\t\t<mat-option value=\"option2\">Option 2</mat-option>\r\n\t\t\t\t<mat-option value=\"option3\">Option 3</mat-option>\r\n\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t<button  \t \r\n\t\t class=\"btn btn-outline-danger\" style=\"margin-top: 50px;\"  mat-raised-button color=\"primary\" >Eliminar miembro del Staff</button>\r\n\r\n\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t\t\t\t\t\r\n\t\t</div>\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 15px;\">Editar Staff</div>\r\n\r\n\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" \r\n    [disabled]='!empleado.nombre || !empleado.email || !empleado.descripcion || !empleado.tipo' \r\n     (click)='guardarStaff()'>Guardar</button>\r\n\r\n\t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button>\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n<ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"text-align: center\">\r\n\t\t\t<img   style='    height: 70px;\r\n    width: 70px;\r\n    border-radius: 100px;\r\n    margin: 5px 11px;' src=\"http://50.116.17.150:3000/{{empleado.idFoto}}\" \r\n    onError=\"this.src='assets/app/media/img/userB.png'\">\r\n</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t\r\n\r\n\t\t\t\t<label class='labelBy'>Nombre*</label>\r\n\t\t\t\t<input [(ngModel)]='empleado.nombre' class='inputBy w100' placeholder=\"nombre del staff\"  autocomplete=\"off\"  type=\"text\" name=\"nombre\">\r\n\t\t\t</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Telefono</label>\r\n\t\t\t\t<input [(ngModel)]='empleado.telefono' class='inputBy w100' placeholder=\"telefono del staff\"  autocomplete=\"off\"  type=\"tel\" name=\"telefono\">\r\n\t\t\t</div>\r\n\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Email*</label>\r\n\t\t\t\t<input [(ngModel)]='empleado.email' class='inputBy w100' placeholder=\"email del staff\"  autocomplete=\"off\"  type=\"email\" name=\"enail\">\r\n\t\t\t</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Descripcion*</label>\r\n\t\t\t\t<input [(ngModel)]='empleado.descripcion' class='inputBy w100' placeholder=\"descripcion del staff\"  autocomplete=\"off\"  type=\"text\" name=\"desc\">\r\n\t\t\t</div>\r\n\r\n\r\n\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"color:darkgray;font-size: 16px;font-weight: 500 !important;margin-bottom: 20px;\">Permisos</div>\r\n\t\t\t\t\t<div style=\"border: solid 1px lightgray;padding: 20px;\">\r\n\t\t\t\t\t\t\r\n<label class='labelBy'>Permisos de usuario</label>\r\n\t\t\t\t<mat-select [(ngModel)]='empleado.tipo' class='inputBy w100'>\r\n\t\t\t\r\n\t\t\t\t<mat-option value=\"1\">Miembro Administrador</mat-option>\r\n\t\t\t\t<mat-option value=\"2\">Miembro de Staff</mat-option>\r\n\t\t\t\t<mat-option value=\"3\">Recepcion</mat-option>\r\n\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t<button  (click)='borrarStaff()' \t \r\n\t\t class=\"btn btn-outline-danger\" style=\"margin-top: 50px;\"  mat-raised-button color=\"primary\" >Eliminar miembro del Staff</button>\r\n\r\n\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t\t\t\t\t\r\n\t\t</div>\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -1281,6 +1678,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _core_services_layout_subheader_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../core/services/layout/subheader.service */ "./src/app/core/services/layout/subheader.service.ts");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../core/auth/authentication.service */ "./src/app/core/auth/authentication.service.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1294,40 +1693,71 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
+
+
 var EditstaffComponent = /** @class */ (function () {
-    function EditstaffComponent(router, _location, activatedRoute, subheaderService) {
+    function EditstaffComponent(router, _location, activatedRoute, subheaderService, authService, cdr, _formBuilder) {
         this.router = router;
         this._location = _location;
         this.activatedRoute = activatedRoute;
         this.subheaderService = subheaderService;
+        this.authService = authService;
+        this.cdr = cdr;
+        this._formBuilder = _formBuilder;
+        this.empleado = {};
+        this.loadingScreen = false;
+        this.empleado2 = {};
     }
     EditstaffComponent.prototype.ngOnInit = function () {
-        this.subheaderService.setTitle('Nuevo Empleado');
-        //this.loadingSubject.next(true);
+        //getStaffIndi
+        var _this = this;
         this.activatedRoute.queryParams.subscribe(function (params) {
             console.log(params);
-            /*
-            const id = +params.id;
-            if (id && id > 0) {
-                this.productsService.getProductById(id).subscribe(res => {
-                    this.product = res;
-                    this.oldProduct = Object.assign({}, res);
-                    this.initProduct();
-                });
-            } else {
-                const newProduct = new ProductModel();
-                newProduct.clear();
-                this.product = newProduct;
-                this.oldProduct = Object.assign({}, newProduct);
-                this.initProduct();
-            }
-            */
+            _this.empleado2 = params;
+            _this.empleado.nombre = _this.empleado2.nombre;
+            _this.empleado.telefono = _this.empleado2.telefono;
+            _this.empleado.email = _this.empleado2.email;
+            _this.empleado.descripcion = _this.empleado2.descripcion;
+            _this.empleado.tipo = _this.empleado2.tipo;
+            _this.empleado.idFoto = _this.empleado2.idFoto;
+            _this.empleado.idEmpleado = _this.empleado2.idEmpleado;
         });
-        /*
-        for (let i = 2018; i > 1945; i--) {
-            this.availableYears.push(i);
-        }
-        */
+    };
+    EditstaffComponent.prototype.guardarStaff = function () {
+        var _this = this;
+        this.loadingScreen = true;
+        console.log(this.empleado);
+        this.authService.editarStafNC(this.empleado)
+            .subscribe(function (data) {
+            console.log(data);
+            if (data.affectedRows > 0) {
+                _this.loadingScreen = false;
+                _this.goBack();
+            }
+        }, function (err) {
+            _this.loadingScreen = false;
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+    };
+    EditstaffComponent.prototype.borrarStaff = function () {
+        var _this = this;
+        console.log(this.empleado.idEmpleado);
+        var idE = this.empleado.idEmpleado;
+        this.loadingScreen = true;
+        this.authService.eliminarStaff({ idEmpleado: idE })
+            .subscribe(function (data) {
+            console.log(data);
+            if (data.affectedRows > 0) {
+                _this.loadingScreen = false;
+                _this.goBack();
+            }
+        }, function (err) {
+            _this.loadingScreen = false;
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
     };
     EditstaffComponent.prototype.goBack = function () {
         this._location.back();
@@ -1340,7 +1770,9 @@ var EditstaffComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./editstaff.component.html */ "./src/app/content/pages/components/editstaff/editstaff.component.html"),
             styles: [__webpack_require__(/*! ./editstaff.component.scss */ "./src/app/content/pages/components/editstaff/editstaff.component.scss")]
         }),
-        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["Location"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _core_services_layout_subheader_service__WEBPACK_IMPORTED_MODULE_2__["SubheaderService"]])
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["Location"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _core_services_layout_subheader_service__WEBPACK_IMPORTED_MODULE_2__["SubheaderService"],
+            _core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_4__["AuthenticationService"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"],
+            _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormBuilder"]])
     ], EditstaffComponent);
     return EditstaffComponent;
 }());
@@ -1356,7 +1788,7 @@ var EditstaffComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 30px;\">Estadistica</div>\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n<div class=\"row\" style=\"    padding: 40px;\">\r\n<div class=\"col-sm-12\">\r\n<div class=\"user-card-block card\" style=\" border: none !important;padding: 40px 60px; border-radius: 0px !important;\">\r\n<div class=\"card-block\">\r\n<div class=\"top-card text-center\">\r\n<img src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\"\r\n     class=\"img-responsive\" alt=\"\">\r\n</div>\r\n<div class=\"card-contain text-center p-t-40\"  style=\"    padding-top: 40px;\">\r\n<h5 class=\"text-capitalize p-b-10\" style=\"    padding-bottom: 10px;\">asdsad</h5>\r\n<p class=\"text-muted\">adsasd</p>\r\n</div>\r\n<div class=\"card-data m-t-40\" style=\"    margin-top: 40px;\">\r\n<div class=\"row\">\r\n<div class=\"col-3 b-r-default text-center\">\r\n<p class=\"text-muted\">Total</p>\r\n<span>3123</span>\r\n</div>\r\n\r\n<div class=\"col-3 b-r-default text-center\">\r\n<p class=\"text-muted\">Completadas</p>\r\n<span>123</span>\r\n</div>\r\n\r\n<div class=\" col-3 b-r-default text-center\">\r\n<p class=\"text-muted\">Canceladas</p>\r\n<span>123</span>\r\n</div>\r\n\r\n<div class=\"col-3 text-center \">\r\n<p class=\"text-muted\">Puntuacion</p>\r\n<span>123</span>\r\n</div>\r\n\r\n</div>\r\n</div>\r\n\r\n</div>\r\n</div>\r\n</div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n<div class=\"col-md-12 col-xl-4\">\r\n\r\n<div class=\"row\">\r\n<div class=\"col-xl-12 col-md-6\" style=\"    margin-bottom: 20px;\">\r\n<div class=\"card\">\r\n<div class=\"card-block-big card-status\">\r\n<h5>Ingresos Totales</h5>\r\n<div class=\"card-block text-center\">\r\n<h2 class=\"text-primary\">$100</h2>\r\n</div>\r\n\r\n</div>\r\n</div>\r\n</div>\r\n<div class=\"col-xl-12 col-md-6\"  style=\"    margin-bottom: 20px;\">\r\n<div class=\"card\">\r\n<div class=\"card-block-big card-status\">\r\n<h5>Reserva promedio</h5>\r\n<div class=\"card-block text-center\">\r\n<h2 class=\"text-warning\">$100</h2>\r\n</div>\r\n\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n\r\n\r\n<div class=\"col-md-12 col-xl-8\">\r\n<div class=\"card\">\r\n<div class=\"card-block\">\r\n<h5>Servicios mas consumidos</h5>\r\n</div>\r\n\r\n\r\n<div class=\"card-block client-card table-1-card p-t-0\">\r\n<div class=\"table-responsive\">\r\n<table class=\"table\">\r\n<thead>\r\n<tr class=\"text-capitalize\">\r\n<th>Servicio</th>\r\n<th>Categoria</th>\r\n<th>Cantidad</th>\r\n\r\n\r\n</tr>\r\n</thead>\r\n<tbody>\r\n\r\n<tr  >\r\n<td class=\"photo-table img\">\r\n<!-- <a href=\"#!\">\r\n\r\n\t<img style=\"border-radius: 0px;\r\nwidth: 27px;\" class=\"img-circle\" src=\"{{globalImage}}{{e.idFoto}}\" onError=\"this.src='assets/categoria.png';\"  alt=\"chat-user\">\r\n\r\n</a> -->\r\n<p>Corte de Cabello</p>\r\n</td>\r\n<td>Peluqueria</td>\r\n<td>1</td>\r\n\r\n<!-- <td class=\"text-success\">${{e.total?.toFixed(2)}}</td> -->\r\n</tr>\r\n\r\n\r\n<tr  >\r\n<td class=\"photo-table img\">\r\n<!-- <a href=\"#!\">\r\n\r\n\t<img style=\"border-radius: 0px;\r\nwidth: 27px;\" class=\"img-circle\" src=\"{{globalImage}}{{e.idFoto}}\" onError=\"this.src='assets/categoria.png';\"  alt=\"chat-user\">\r\n\r\n</a> -->\r\n<p>Corte de Cabello2</p>\r\n</td>\r\n<td>Peluqueria</td>\r\n<td>12</td>\r\n\r\n<!-- <td class=\"text-success\">${{e.total?.toFixed(2)}}</td> -->\r\n</tr>\r\n\r\n\r\n\r\n</tbody>\r\n</table>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n\r\n"
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 30px;\">Estadistica</div>\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n<div class=\"row\" style=\"    padding: 40px;\">\r\n\r\n <ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\r\n\t\r\n<div class=\"col-sm-12\">\r\n<div class=\"user-card-block card\" style=\" border: none !important;padding: 40px 60px; border-radius: 0px !important;\">\r\n<div class=\"card-block\">\r\n<div class=\"top-card text-center\">\r\n<img  src=\"http://50.116.17.150:3000/{{info.idFoto}}\" \r\n    onError=\"this.src='assets/app/media/img/fotoComercio.png'\" \r\n     class=\"img-responsive\" alt=\"\">\r\n</div>\r\n<div class=\"card-contain text-center p-t-40\"  style=\"    padding-top: 40px;\">\r\n<h5 class=\"text-capitalize p-b-10\" style=\"    padding-bottom: 10px;\">{{info.nombre}}</h5>\r\n<p class=\"text-muted\">{{info.direccion}}</p>\r\n</div>\r\n<div class=\"card-data m-t-40\" style=\"    margin-top: 40px;\">\r\n<div class=\"row\">\r\n<div class=\"col-3 b-r-default text-center\">\r\n<p class=\"text-muted\">Total</p>\r\n<span>{{info.total}}</span>\r\n</div>\r\n\r\n<div class=\"col-3 b-r-default text-center\">\r\n<p class=\"text-muted\">Completadas</p>\r\n<span>{{info.completadas}}</span>\r\n</div>\r\n\r\n<div class=\" col-3 b-r-default text-center\">\r\n<p class=\"text-muted\">Canceladas</p>\r\n<span>{{info.canceladas}}</span>\r\n</div>\r\n\r\n<div class=\"col-3 text-center \">\r\n<p class=\"text-muted\">Puntuacion</p>\r\n<span>{{info.rate || 0}}</span>\r\n</div>\r\n\r\n</div>\r\n</div>\r\n\r\n</div>\r\n</div>\r\n</div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n<div class=\"col-md-12 col-xl-4\">\r\n\r\n<div class=\"row\">\r\n<div class=\"col-xl-12 col-md-6\" style=\"    margin-bottom: 20px;\">\r\n<div class=\"card\">\r\n<div class=\"card-block-big card-status\">\r\n<h5>Ingresos Totales</h5>\r\n<div class=\"card-block text-center\">\r\n<h2 class=\"text-primary\">${{ingresos.total || 0}}</h2>\r\n</div>\r\n\r\n</div>\r\n</div>\r\n</div>\r\n<div class=\"col-xl-12 col-md-6\"  style=\"    margin-bottom: 20px;\">\r\n<div class=\"card\">\r\n<div class=\"card-block-big card-status\">\r\n<h5>Reserva promedio</h5>\r\n<div class=\"card-block text-center\">\r\n<h2 class=\"text-warning\">${{ingresos.promedio || 0}}</h2>\r\n</div>\r\n\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n\r\n\r\n<div class=\"col-md-12 col-xl-8\">\r\n<div class=\"card\">\r\n<div class=\"card-block\">\r\n<h5>Servicios mas consumidos</h5>\r\n</div>\r\n\r\n\r\n<div class=\"card-block client-card table-1-card p-t-0\">\r\n<div class=\"table-responsive\">\r\n<table class=\"table\">\r\n<thead>\r\n<tr class=\"text-capitalize\">\r\n<th>Servicio</th>\r\n<th>Categoria</th>\r\n<th>Cantidad</th>\r\n\r\n\r\n</tr>\r\n</thead>\r\n<tbody>\r\n\r\n<tr *ngFor=\"let h of bests; let i = index\"  >\r\n<td class=\"photo-table img\">\r\n<!-- <a href=\"#!\">\r\n\r\n\t<img style=\"border-radius: 0px;\r\nwidth: 27px;\" class=\"img-circle\" src=\"{{globalImage}}{{e.idFoto}}\" onError=\"this.src='assets/categoria.png';\"  alt=\"chat-user\">\r\n\r\n</a> -->\r\n<p>{{h.nombre}}</p>\r\n</td>\r\n<td>{{h.nombreCategoria}}</td>\r\n<td>{{h.cantidad}}</td>\r\n\r\n<!-- <td class=\"text-success\">${{e.total?.toFixed(2)}}</td> -->\r\n</tr>\r\n\r\n\r\n\r\n\r\n</tbody>\r\n</table>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -1382,6 +1814,7 @@ module.exports = ".b-r-default {\n  border-right: 1px solid #bdc3c7; }\n\nh5 {\n
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EstadisticaComponent", function() { return EstadisticaComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../core/auth/authentication.service */ "./src/app/core/auth/authentication.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1392,10 +1825,35 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 var EstadisticaComponent = /** @class */ (function () {
-    function EstadisticaComponent() {
+    function EstadisticaComponent(authService, cdr) {
+        this.authService = authService;
+        this.cdr = cdr;
+        this.loadingScreen = false;
+        this.info = [];
+        this.ingresos = [];
+        this.bests = [];
+        var retrievedObject = JSON.parse(localStorage.getItem('userADby2as'));
+        this.idCentro = retrievedObject.idCentro;
     }
     EstadisticaComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.loadingScreen = true;
+        this.authService.getInfoCentro({ idCentro: this.idCentro })
+            .subscribe(function (data) {
+            _this.loadingScreen = false;
+            console.log(data);
+            _this.info = data.info[0];
+            _this.ingresos = data.dataV[0];
+            _this.bests = data.clientes;
+            _this.cdr.detectChanges();
+        }, function (err) {
+            _this.loadingScreen = false;
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
     };
     EstadisticaComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -1403,7 +1861,8 @@ var EstadisticaComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./estadistica.component.html */ "./src/app/content/pages/components/estadistica/estadistica.component.html"),
             styles: [__webpack_require__(/*! ./estadistica.component.scss */ "./src/app/content/pages/components/estadistica/estadistica.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_1__["AuthenticationService"],
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"]])
     ], EstadisticaComponent);
     return EstadisticaComponent;
 }());
@@ -1419,7 +1878,7 @@ var EstadisticaComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n<!-- \r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n -->\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 15px;\">Horario de Atención</div>\r\n\r\n\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" >Guardar</button>\r\n\r\n<!-- \t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button> -->\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t\t\t<div style='padding: 30px 45px;'>\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" *ngFor=\"let item of [{nombre:'Domingo'},{nombre:'Lunes'},{nombre:'Martes'}\r\n\t\t\t\t\t\t,{nombre:'Miercoles'},{nombre:'Jueves'},{nombre:'Viernes'},{nombre:'Sabado'}];  let i = index\">\r\n\t\t\t\t\t\t<mat-checkbox >\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>{{item.nombre}}</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select class='inputBy w50'>\r\n\t\t\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:55 AM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:55 AM</mat-option>\r\n\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:55 AM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:55 AM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:55 AM</mat-option>\r\n\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:55 AM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:55 AM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:55 AM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:55 AM</mat-option>\r\n\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:55 AM</mat-option>\r\n\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:55 AM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:55 AM</mat-option>\r\n\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:55 PM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:55 PM</mat-option>\r\n\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:55 PM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:55 PM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:55 PM</mat-option>\r\n\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:55 PM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:55 PM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:55 PM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:55 PM</mat-option>\r\n\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:55 PM</mat-option>\r\n\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:55 PM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:55 PM</mat-option>\r\n\r\n\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t\t\t\t<mat-select class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:55 AM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:55 AM</mat-option>\r\n\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:55 AM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:55 AM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:55 AM</mat-option>\r\n\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:55 AM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:55 AM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:55 AM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:55 AM</mat-option>\r\n\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:55 AM</mat-option>\r\n\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:55 AM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:55 AM</mat-option>\r\n\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:55 PM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:55 PM</mat-option>\r\n\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:55 PM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:55 PM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:55 PM</mat-option>\r\n\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:55 PM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:55 PM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:55 PM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:55 PM</mat-option>\r\n\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:55 PM</mat-option>\r\n\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:55 PM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:55 PM</mat-option>\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\r\n\t\t\t<label class='labelBy'>Horario Especial</label>\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n<!-- \r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n -->\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 15px;\">Horario de Atención</div>\r\n\r\n<!-- \r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='guardarHorario()' >Guardar</button>\r\n\r\n\t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button> -->\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n<ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style='padding: 30px 45px;'>\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t<mat-checkbox  [(ngModel)]='diasSemana.domingo.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Domingo</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.domingo.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tCERRADO\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.domingo.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.domingo.horaAbrir' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.domingo.horaCerrar' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t<mat-checkbox [(ngModel)]='diasSemana.lunes.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Lunes</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.lunes.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tCERRADO\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.lunes.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.lunes.horaAbrir' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.lunes.horaCerrar' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t<mat-checkbox [(ngModel)]='diasSemana.martes.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Martes</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.martes.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tCERRADO\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.martes.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.martes.horaAbrir' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.martes.horaCerrar' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t<mat-checkbox [(ngModel)]='diasSemana.miercoles.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Miercoles</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.miercoles.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tCERRADO\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.miercoles.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.miercoles.horaAbrir' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.miercoles.horaCerrar' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t<mat-checkbox [(ngModel)]='diasSemana.jueves.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Jueves</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.jueves.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tCERRADO\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.jueves.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.jueves.horaAbrir' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.jueves.horaCerrar' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t<mat-checkbox [(ngModel)]='diasSemana.viernes.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Viernes</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.viernes.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tCERRADO\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.viernes.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.viernes.horaAbrir' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.viernes.horaCerrar' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t<mat-checkbox [(ngModel)]='diasSemana.sabado.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Sabado</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.sabado.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tCERRADO\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.sabado.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.sabado.horaAbrir' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t\t\t\t<mat-select [(ngModel)]='diasSemana.sabado.horaCerrar' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n\t\t\t\t\t    float: right;\r\n\t\t\t\t\t    margin-right: 10px;\" (click)='guardarHorario()'>Guardar</button>\r\n\r\n\t\t\t\t\t</div>\t\t\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\r\n\t\t\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 20px 20px;\" >\r\n\t<label class='labelBy'>Horario Especial</label>\r\n\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px;margin-bottom: 15px !important;\">\r\n\r\n\t\t\t\t\r\n\t\t\t\t\t\t\t<div  >\r\n\r\n\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t  <mat-form-field style='    margin: auto;' class='inputBy'>\r\n\t\t\t\t\t\t\t\t    <input [(ngModel)]='tiempoLibre.inicio' matInput [matDatepicker]=\"dp3\" placeholder=\"Fecha \" disabled>\r\n\t\t\t\t\t\t\t\t\t<mat-datepicker-toggle matSuffix [for]=\"dp3\">\r\n\t\t\t\t\t\t\t\t  </mat-datepicker-toggle>\r\n\t\t\t\t\t\t\t\t  <mat-datepicker #dp3 disabled=\"false\"></mat-datepicker>\r\n\t\t\t\t\t\t\t\t    </mat-form-field>\r\n\r\n\t\t\t\t\t\t\t<div style=\"display: flex;    margin-top: 13px;\">\r\n\r\n\t\t\t\t\t\t\t<mat-select [(ngModel)]='tiempoLibre.horaAbrir'  class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t<span style=\"margin: 0px 10px;line-height: 40px;\">-</span>\r\n\t\t\t\t\t\t\t<mat-select [(ngModel)]='tiempoLibre.horaCerrar' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t<button  [disabled]='!tiempoLibre.inicio || !tiempoLibre.horaAbrir || !tiempoLibre.horaCerrar' class=\"btn btn-success\" style=\"margin-top: 20px;\" (click)='guardarHS()'>Guardar</button>\r\n\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t    <hr>\r\n\r\n\r\n\t\t\t\t\t    <!-- \tAQUI LOS ITEMNS -->\r\n\r\n\r\n\t\t\t\t\t    <div  *ngFor=\"let h of horarioEspecial; let i = index\"  style=\"border-bottom: solid 1px lightgray;font-size: 16px;padding: 20px\">\r\n\r\n\t\t\t\t\t    <div style=\"display: block;width: 100%\">\r\n\t\t\t\t\t    <span style=\"font-weight: 400; margin-right: 20px\">Fecha:</span>\r\n\t\t\t\t\t\t{{h.fecha.split('T')[0]}}</div>\r\n\r\n\t\t\t\t\t    <div style=\"display: inline-block;\"><span style=\"font-weight: 400; margin-right: 20px\">Abre:</span>{{h.horaAbrir}}</div> \r\n\t\t\t\t\t    <span style=\"margin-left: 20px;margin-right: 20px\">- </span>\r\n\t\t\t\t\t    <div style=\"display: inline-block;\"><span style=\"font-weight: 400;margin-right: 20px\">Cierra:</span>{{h.horaCerrar}}</div>\r\n\r\n\t\t\t\t\t    \t<mat-icon class='iconGG' (click)='borrarBloque(h.idHorarioEspecial)' style='margin-left: 23px;    float: right;background: darkgray; margin: auto;height: 20px;line-height: 20px;color: white;text-align: center;'>\r\n\t\t\t\t\t    \tclose\r\n\t\t\t\t\t    \t</mat-icon>\r\n\r\n\t\t\t\t\t    </div>\r\n\r\n\r\n\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -1430,7 +1889,7 @@ module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,24
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".txtF {\n  color: #383734;\n  font-size: 16px; }\n\n.tituloCateg {\n  font-size: 16px;\n  margin-bottom: 10px;\n  margin-top: 15px;\n  font-weight: 400; }\n\n.w50 {\n  display: flex;\n  width: 50%; }\n\ninput:focus {\n  outline: none !important;\n  border: 1px solid #34bfa3; }\n\n.inputBy {\n  color: #383734;\n  background: #fff;\n  border: 1px solid #e1e1e1;\n  border-radius: 4px;\n  min-height: 40px;\n  padding: 7px 10px;\n  resize: vertical;\n  -webkit-appearance: none;\n  -moz-appearance: none; }\n\n.w100 {\n  display: block;\n  width: 100%; }\n\n.imgCheckBox {\n  height: 34px;\n  width: 34px;\n  border-radius: 20px;\n  margin: 5px 11px; }\n\n.conteinInput {\n  margin-bottom: 30px; }\n\n.labelBy {\n  display: inline-block;\n  margin-bottom: 10px;\n  font-size: 16px;\n  font-weight: 500 !important;\n  line-height: 1.5;\n  color: #383734; }\n\n.selectedItem {\n  background: dimgrey;\n  color: white; }\n\nmat-list-item:hover {\n  background: dimgrey !important;\n  color: white; }\n\nmat-list-item {\n  border-bottom: solid 1px lightgray; }\n\n.tagStaff {\n  color: #00beb7;\n  background: #e5f8f7;\n  font-size: 10px;\n  font-weight: 500;\n  line-height: 12px;\n  text-align: center;\n  text-transform: uppercase;\n  border-radius: 2px;\n  display: inline-block;\n  padding: 2px 10px;\n  min-width: 100px;\n  vertical-align: middle; }\n"
+module.exports = ".txtF {\n  color: #383734;\n  font-size: 16px; }\n\n.tituloCateg {\n  font-size: 16px;\n  margin-bottom: 10px;\n  margin-top: 15px;\n  font-weight: 400; }\n\n.iconGG:hover {\n  background-color: #34bfa3 !important; }\n\n.w50 {\n  display: flex;\n  width: 50%; }\n\ninput:focus {\n  outline: none !important;\n  border: 1px solid #34bfa3; }\n\n.inputBy {\n  color: #383734;\n  background: #fff;\n  border: 1px solid #e1e1e1;\n  border-radius: 4px;\n  min-height: 40px;\n  padding: 7px 10px;\n  resize: vertical;\n  -webkit-appearance: none;\n  -moz-appearance: none; }\n\n.w100 {\n  display: block;\n  width: 100%; }\n\n.imgCheckBox {\n  height: 34px;\n  width: 34px;\n  border-radius: 20px;\n  margin: 5px 11px; }\n\n.conteinInput {\n  margin-bottom: 30px; }\n\n.labelBy {\n  display: inline-block;\n  margin-bottom: 10px;\n  font-size: 16px;\n  font-weight: 500 !important;\n  line-height: 1.5;\n  color: #383734; }\n\n.selectedItem {\n  background: dimgrey;\n  color: white; }\n\nmat-list-item:hover {\n  background: dimgrey !important;\n  color: white; }\n\nmat-list-item {\n  border-bottom: solid 1px lightgray; }\n\n.tagStaff {\n  color: #00beb7;\n  background: #e5f8f7;\n  font-size: 10px;\n  font-weight: 500;\n  line-height: 12px;\n  text-align: center;\n  text-transform: uppercase;\n  border-radius: 2px;\n  display: inline-block;\n  padding: 2px 10px;\n  min-width: 100px;\n  vertical-align: middle; }\n"
 
 /***/ }),
 
@@ -1445,6 +1904,7 @@ module.exports = ".txtF {\n  color: #383734;\n  font-size: 16px; }\n\n.tituloCat
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HorarioComponent", function() { return HorarioComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../core/auth/authentication.service */ "./src/app/core/auth/authentication.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1455,10 +1915,396 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 var HorarioComponent = /** @class */ (function () {
-    function HorarioComponent() {
+    function HorarioComponent(authService, cdr) {
+        this.authService = authService;
+        this.cdr = cdr;
+        this.horarioHoras = [
+            { 'text': '12:00 AM', 'valor': '00:00:00' },
+            { 'text': '12:05 AM', 'valor': '00:05:00' },
+            { 'text': '12:10 AM', 'valor': '00:10:00' },
+            { 'text': '12:15 AM', 'valor': '00:15:00' },
+            { 'text': '12:20 AM', 'valor': '00:20:00' },
+            { 'text': '12:25 AM', 'valor': '00:25:00' },
+            { 'text': '12:30 AM', 'valor': '00:30:00' },
+            { 'text': '12:35 AM', 'valor': '00:35:00' },
+            { 'text': '12:40 AM', 'valor': '00:40:00' },
+            { 'text': '12:45 AM', 'valor': '00:45:00' },
+            { 'text': '12:55 AM', 'valor': '00:55:00' },
+            { 'text': '01:00 AM', 'valor': '01:00:00' },
+            { 'text': '01:05 AM', 'valor': '01:05:00' },
+            { 'text': '01:10 AM', 'valor': '01:10:00' },
+            { 'text': '01:15 AM', 'valor': '01:15:00' },
+            { 'text': '01:20 AM', 'valor': '01:20:00' },
+            { 'text': '01:25 AM', 'valor': '01:25:00' },
+            { 'text': '01:30 AM', 'valor': '01:30:00' },
+            { 'text': '01:35 AM', 'valor': '01:35:00' },
+            { 'text': '01:40 AM', 'valor': '01:40:00' },
+            { 'text': '01:45 AM', 'valor': '01:45:00' },
+            { 'text': '01:55 AM', 'valor': '01:55:00' },
+            { 'text': '02:00 AM', 'valor': '02:00:00' },
+            { 'text': '02:05 AM', 'valor': '02:05:00' },
+            { 'text': '02:10 AM', 'valor': '02:10:00' },
+            { 'text': '02:15 AM', 'valor': '02:15:00' },
+            { 'text': '02:20 AM', 'valor': '02:20:00' },
+            { 'text': '02:25 AM', 'valor': '02:25:00' },
+            { 'text': '02:30 AM', 'valor': '02:30:00' },
+            { 'text': '02:35 AM', 'valor': '02:35:00' },
+            { 'text': '02:40 AM', 'valor': '02:40:00' },
+            { 'text': '02:45 AM', 'valor': '02:45:00' },
+            { 'text': '02:55 AM', 'valor': '02:55:00' },
+            { 'text': '03:00 AM', 'valor': '03:00:00' },
+            { 'text': '03:05 AM', 'valor': '03:05:00' },
+            { 'text': '03:10 AM', 'valor': '03:10:00' },
+            { 'text': '03:15 AM', 'valor': '03:15:00' },
+            { 'text': '03:20 AM', 'valor': '03:20:00' },
+            { 'text': '03:25 AM', 'valor': '03:25:00' },
+            { 'text': '03:30 AM', 'valor': '03:30:00' },
+            { 'text': '03:35 AM', 'valor': '03:35:00' },
+            { 'text': '03:40 AM', 'valor': '03:40:00' },
+            { 'text': '03:45 AM', 'valor': '03:45:00' },
+            { 'text': '03:55 AM', 'valor': '03:55:00' },
+            { 'text': '04:00 AM', 'valor': '04:00:00' },
+            { 'text': '04:05 AM', 'valor': '04:05:00' },
+            { 'text': '04:10 AM', 'valor': '04:10:00' },
+            { 'text': '04:15 AM', 'valor': '04:15:00' },
+            { 'text': '04:20 AM', 'valor': '04:20:00' },
+            { 'text': '04:25 AM', 'valor': '04:25:00' },
+            { 'text': '04:30 AM', 'valor': '04:30:00' },
+            { 'text': '04:35 AM', 'valor': '04:35:00' },
+            { 'text': '04:40 AM', 'valor': '04:40:00' },
+            { 'text': '04:45 AM', 'valor': '04:45:00' },
+            { 'text': '04:55 AM', 'valor': '04:55:00' },
+            { 'text': '05:00 AM', 'valor': '05:00:00' },
+            { 'text': '05:05 AM', 'valor': '05:05:00' },
+            { 'text': '05:10 AM', 'valor': '05:10:00' },
+            { 'text': '05:15 AM', 'valor': '05:15:00' },
+            { 'text': '05:20 AM', 'valor': '05:20:00' },
+            { 'text': '05:25 AM', 'valor': '05:25:00' },
+            { 'text': '05:30 AM', 'valor': '05:30:00' },
+            { 'text': '05:35 AM', 'valor': '05:35:00' },
+            { 'text': '05:40 AM', 'valor': '05:40:00' },
+            { 'text': '05:45 AM', 'valor': '05:45:00' },
+            { 'text': '05:55 AM', 'valor': '05:55:00' },
+            { 'text': '06:00 AM', 'valor': '06:00:00' },
+            { 'text': '06:05 AM', 'valor': '06:05:00' },
+            { 'text': '06:10 AM', 'valor': '06:10:00' },
+            { 'text': '06:15 AM', 'valor': '06:15:00' },
+            { 'text': '06:20 AM', 'valor': '06:20:00' },
+            { 'text': '06:25 AM', 'valor': '06:25:00' },
+            { 'text': '06:30 AM', 'valor': '06:30:00' },
+            { 'text': '06:35 AM', 'valor': '06:35:00' },
+            { 'text': '06:40 AM', 'valor': '06:40:00' },
+            { 'text': '06:45 AM', 'valor': '06:45:00' },
+            { 'text': '06:55 AM', 'valor': '06:55:00' },
+            { 'text': '07:00 AM', 'valor': '07:00:00' },
+            { 'text': '07:05 AM', 'valor': '07:05:00' },
+            { 'text': '07:10 AM', 'valor': '07:10:00' },
+            { 'text': '07:15 AM', 'valor': '07:15:00' },
+            { 'text': '07:20 AM', 'valor': '07:20:00' },
+            { 'text': '07:25 AM', 'valor': '07:25:00' },
+            { 'text': '07:30 AM', 'valor': '07:30:00' },
+            { 'text': '07:35 AM', 'valor': '07:35:00' },
+            { 'text': '07:40 AM', 'valor': '07:40:00' },
+            { 'text': '07:45 AM', 'valor': '07:45:00' },
+            { 'text': '07:55 AM', 'valor': '07:55:00' },
+            { 'text': '08:00 AM', 'valor': '08:00:00' },
+            { 'text': '08:05 AM', 'valor': '08:05:00' },
+            { 'text': '08:10 AM', 'valor': '08:10:00' },
+            { 'text': '08:15 AM', 'valor': '08:15:00' },
+            { 'text': '08:20 AM', 'valor': '08:20:00' },
+            { 'text': '08:25 AM', 'valor': '08:25:00' },
+            { 'text': '08:30 AM', 'valor': '08:30:00' },
+            { 'text': '08:35 AM', 'valor': '08:35:00' },
+            { 'text': '08:40 AM', 'valor': '08:40:00' },
+            { 'text': '08:45 AM', 'valor': '08:45:00' },
+            { 'text': '08:55 AM', 'valor': '08:55:00' },
+            { 'text': '09:00 AM', 'valor': '09:00:00' },
+            { 'text': '09:05 AM', 'valor': '09:05:00' },
+            { 'text': '09:10 AM', 'valor': '09:10:00' },
+            { 'text': '09:15 AM', 'valor': '09:15:00' },
+            { 'text': '09:20 AM', 'valor': '09:20:00' },
+            { 'text': '09:25 AM', 'valor': '09:25:00' },
+            { 'text': '09:30 AM', 'valor': '09:30:00' },
+            { 'text': '09:35 AM', 'valor': '09:35:00' },
+            { 'text': '09:40 AM', 'valor': '09:40:00' },
+            { 'text': '09:45 AM', 'valor': '09:45:00' },
+            { 'text': '09:55 AM', 'valor': '09:55:00' },
+            { 'text': '10:00 AM', 'valor': '10:00:00' },
+            { 'text': '10:05 AM', 'valor': '10:05:00' },
+            { 'text': '10:10 AM', 'valor': '10:10:00' },
+            { 'text': '10:15 AM', 'valor': '10:15:00' },
+            { 'text': '10:20 AM', 'valor': '10:20:00' },
+            { 'text': '10:25 AM', 'valor': '10:25:00' },
+            { 'text': '10:30 AM', 'valor': '10:30:00' },
+            { 'text': '10:35 AM', 'valor': '10:35:00' },
+            { 'text': '10:40 AM', 'valor': '10:40:00' },
+            { 'text': '10:45 AM', 'valor': '10:45:00' },
+            { 'text': '10:55 AM', 'valor': '10:55:00' },
+            { 'text': '11:00 AM', 'valor': '11:00:00' },
+            { 'text': '11:05 AM', 'valor': '11:05:00' },
+            { 'text': '11:10 AM', 'valor': '11:10:00' },
+            { 'text': '11:15 AM', 'valor': '11:15:00' },
+            { 'text': '11:20 AM', 'valor': '11:20:00' },
+            { 'text': '11:25 AM', 'valor': '11:25:00' },
+            { 'text': '11:30 AM', 'valor': '11:30:00' },
+            { 'text': '11:35 AM', 'valor': '11:35:00' },
+            { 'text': '11:40 AM', 'valor': '11:40:00' },
+            { 'text': '11:45 AM', 'valor': '11:45:00' },
+            { 'text': '11:55 AM', 'valor': '11:55:00' },
+            { 'text': '12:00 PM', 'valor': '12:00:00' },
+            { 'text': '12:05 PM', 'valor': '12:05:00' },
+            { 'text': '12:12 PM', 'valor': '12:12:00' },
+            { 'text': '12:15 PM', 'valor': '12:15:00' },
+            { 'text': '12:20 PM', 'valor': '12:20:00' },
+            { 'text': '12:25 PM', 'valor': '12:25:00' },
+            { 'text': '12:30 PM', 'valor': '12:30:00' },
+            { 'text': '12:35 PM', 'valor': '12:35:00' },
+            { 'text': '12:40 PM', 'valor': '12:40:00' },
+            { 'text': '12:45 PM', 'valor': '12:45:00' },
+            { 'text': '12:55 PM', 'valor': '12:55:00' },
+            { 'text': '01:00 PM', 'valor': '13:00:00' },
+            { 'text': '01:05 PM', 'valor': '13:05:00' },
+            { 'text': '01:01 PM', 'valor': '13:01:00' },
+            { 'text': '01:15 PM', 'valor': '13:15:00' },
+            { 'text': '01:20 PM', 'valor': '13:20:00' },
+            { 'text': '01:25 PM', 'valor': '13:25:00' },
+            { 'text': '01:30 PM', 'valor': '13:30:00' },
+            { 'text': '01:35 PM', 'valor': '13:35:00' },
+            { 'text': '01:40 PM', 'valor': '13:40:00' },
+            { 'text': '01:45 PM', 'valor': '13:45:00' },
+            { 'text': '01:55 PM', 'valor': '13:55:00' },
+            { 'text': '02:00 PM', 'valor': '14:00:00' },
+            { 'text': '02:05 PM', 'valor': '14:05:00' },
+            { 'text': '02:02 PM', 'valor': '14:02:00' },
+            { 'text': '02:15 PM', 'valor': '14:15:00' },
+            { 'text': '02:20 PM', 'valor': '14:20:00' },
+            { 'text': '02:25 PM', 'valor': '14:25:00' },
+            { 'text': '02:30 PM', 'valor': '14:30:00' },
+            { 'text': '02:35 PM', 'valor': '14:35:00' },
+            { 'text': '02:40 PM', 'valor': '14:40:00' },
+            { 'text': '02:45 PM', 'valor': '14:45:00' },
+            { 'text': '02:55 PM', 'valor': '14:55:00' },
+            { 'text': '03:00 PM', 'valor': '15:00:00' },
+            { 'text': '03:05 PM', 'valor': '15:05:00' },
+            { 'text': '03:03 PM', 'valor': '15:03:00' },
+            { 'text': '03:15 PM', 'valor': '15:15:00' },
+            { 'text': '03:20 PM', 'valor': '15:20:00' },
+            { 'text': '03:25 PM', 'valor': '15:25:00' },
+            { 'text': '03:30 PM', 'valor': '15:30:00' },
+            { 'text': '03:35 PM', 'valor': '15:35:00' },
+            { 'text': '03:40 PM', 'valor': '15:40:00' },
+            { 'text': '03:45 PM', 'valor': '15:45:00' },
+            { 'text': '03:55 PM', 'valor': '15:55:00' },
+            { 'text': '04:00 PM', 'valor': '16:00:00' },
+            { 'text': '04:05 PM', 'valor': '16:05:00' },
+            { 'text': '04:10 PM', 'valor': '16:10:00' },
+            { 'text': '04:15 PM', 'valor': '16:15:00' },
+            { 'text': '04:20 PM', 'valor': '16:20:00' },
+            { 'text': '04:25 PM', 'valor': '16:25:00' },
+            { 'text': '04:30 PM', 'valor': '16:30:00' },
+            { 'text': '04:35 PM', 'valor': '16:35:00' },
+            { 'text': '04:40 PM', 'valor': '16:40:00' },
+            { 'text': '04:45 PM', 'valor': '16:45:00' },
+            { 'text': '04:55 PM', 'valor': '16:55:00' },
+            { 'text': '05:00 PM', 'valor': '17:00:00' },
+            { 'text': '05:05 PM', 'valor': '17:05:00' },
+            { 'text': '05:10 PM', 'valor': '17:15:00' },
+            { 'text': '05:15 PM', 'valor': '17:15:00' },
+            { 'text': '05:20 PM', 'valor': '17:20:00' },
+            { 'text': '05:25 PM', 'valor': '17:25:00' },
+            { 'text': '05:30 PM', 'valor': '17:30:00' },
+            { 'text': '05:35 PM', 'valor': '17:35:00' },
+            { 'text': '05:40 PM', 'valor': '17:40:00' },
+            { 'text': '05:45 PM', 'valor': '17:45:00' },
+            { 'text': '05:55 PM', 'valor': '17:55:00' },
+            { 'text': '06:00 PM', 'valor': '18:00:00' },
+            { 'text': '06:05 PM', 'valor': '18:05:00' },
+            { 'text': '06:10 PM', 'valor': '18:10:00' },
+            { 'text': '06:15 PM', 'valor': '18:15:00' },
+            { 'text': '06:20 PM', 'valor': '18:20:00' },
+            { 'text': '06:25 PM', 'valor': '18:25:00' },
+            { 'text': '06:30 PM', 'valor': '18:30:00' },
+            { 'text': '06:35 PM', 'valor': '18:35:00' },
+            { 'text': '06:40 PM', 'valor': '18:40:00' },
+            { 'text': '06:45 PM', 'valor': '18:45:00' },
+            { 'text': '06:55 PM', 'valor': '18:55:00' },
+            { 'text': '07:00 PM', 'valor': '19:00:00' },
+            { 'text': '07:05 PM', 'valor': '19:05:00' },
+            { 'text': '07:10 PM', 'valor': '19:10:00' },
+            { 'text': '07:15 PM', 'valor': '19:15:00' },
+            { 'text': '07:20 PM', 'valor': '19:20:00' },
+            { 'text': '07:25 PM', 'valor': '19:25:00' },
+            { 'text': '07:30 PM', 'valor': '19:30:00' },
+            { 'text': '07:35 PM', 'valor': '19:35:00' },
+            { 'text': '07:40 PM', 'valor': '19:40:00' },
+            { 'text': '07:45 PM', 'valor': '19:45:00' },
+            { 'text': '07:55 PM', 'valor': '19:55:00' },
+            { 'text': '08:00 PM', 'valor': '20:00:00' },
+            { 'text': '08:05 PM', 'valor': '20:05:00' },
+            { 'text': '08:10 PM', 'valor': '20:10:00' },
+            { 'text': '08:15 PM', 'valor': '20:15:00' },
+            { 'text': '08:20 PM', 'valor': '20:20:00' },
+            { 'text': '08:25 PM', 'valor': '20:25:00' },
+            { 'text': '08:30 PM', 'valor': '20:30:00' },
+            { 'text': '08:35 PM', 'valor': '20:35:00' },
+            { 'text': '08:40 PM', 'valor': '20:40:00' },
+            { 'text': '08:45 PM', 'valor': '20:45:00' },
+            { 'text': '08:55 PM', 'valor': '20:55:00' },
+            { 'text': '09:00 PM', 'valor': '21:00:00' },
+            { 'text': '09:05 PM', 'valor': '21:05:00' },
+            { 'text': '09:10 PM', 'valor': '21:10:00' },
+            { 'text': '09:15 PM', 'valor': '21:15:00' },
+            { 'text': '09:20 PM', 'valor': '21:20:00' },
+            { 'text': '09:25 PM', 'valor': '21:25:00' },
+            { 'text': '09:30 PM', 'valor': '21:30:00' },
+            { 'text': '09:35 PM', 'valor': '21:35:00' },
+            { 'text': '09:40 PM', 'valor': '21:40:00' },
+            { 'text': '09:45 PM', 'valor': '21:45:00' },
+            { 'text': '09:55 PM', 'valor': '21:55:00' },
+            { 'text': '10:00 PM', 'valor': '22:00:00' },
+            { 'text': '10:05 PM', 'valor': '22:05:00' },
+            { 'text': '10:10 PM', 'valor': '22:10:00' },
+            { 'text': '10:15 PM', 'valor': '22:15:00' },
+            { 'text': '10:20 PM', 'valor': '22:20:00' },
+            { 'text': '10:25 PM', 'valor': '22:25:00' },
+            { 'text': '10:30 PM', 'valor': '22:30:00' },
+            { 'text': '10:35 PM', 'valor': '22:35:00' },
+            { 'text': '10:40 PM', 'valor': '22:40:00' },
+            { 'text': '10:45 PM', 'valor': '22:45:00' },
+            { 'text': '10:55 PM', 'valor': '22:55:00' },
+            { 'text': '11:00 PM', 'valor': '23:00:00' },
+            { 'text': '11:05 PM', 'valor': '23:05:00' },
+            { 'text': '11:10 PM', 'valor': '23:10:00' },
+            { 'text': '11:15 PM', 'valor': '23:15:00' },
+            { 'text': '11:20 PM', 'valor': '23:20:00' },
+            { 'text': '11:25 PM', 'valor': '23:25:00' },
+            { 'text': '11:30 PM', 'valor': '23:30:00' },
+            { 'text': '11:35 PM', 'valor': '23:35:00' },
+            { 'text': '11:40 PM', 'valor': '23:40:00' },
+            { 'text': '11:45 PM', 'valor': '23:45:00' },
+            { 'text': '11:55 PM', 'valor': '23:55:00' },
+        ];
+        this.loadingScreen = false;
+        this.tiempoLibre = {};
+        this.diasSemana = { domingo: {}, lunes: {}, martes: {}, miercoles: {}, jueves: {}, viernes: {}, sabado: {} };
+        this.horario = [];
+        this.horarioEmpleado = [];
+        this.horarioEspecial = [];
+        var retrievedObject = JSON.parse(localStorage.getItem('userADby2as'));
+        this.idCentro = retrievedObject.idCentro;
+        this.diasSemana.domingo = { diaSemana: 0, estado: 0 };
+        this.diasSemana.lunes = { diaSemana: 1, estado: 0 };
+        this.diasSemana.martes = { diaSemana: 2, estado: 0 };
+        this.diasSemana.miercoles = { diaSemana: 3, estado: 0 };
+        this.diasSemana.jueves = { diaSemana: 4, estado: 0 };
+        this.diasSemana.viernes = { diaSemana: 5, estado: 0 };
+        this.diasSemana.sabado = { diaSemana: 6, estado: 0 };
     }
     HorarioComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.loadingScreen = true;
+        this.authService.getHorarioNC({ idCentro: this.idCentro })
+            .subscribe(function (data) {
+            _this.loadingScreen = false;
+            _this.horarioEmpleado = data.horario;
+            _this.horarioEspecial = data.horarioEspecial;
+            _this.horarioEmpleado.forEach(function (item) {
+                if (item.diaSemana == 0) {
+                    _this.diasSemana.domingo = item;
+                }
+                ;
+                if (item.diaSemana == 1) {
+                    _this.diasSemana.lunes = item;
+                }
+                ;
+                if (item.diaSemana == 2) {
+                    _this.diasSemana.martes = item;
+                }
+                ;
+                if (item.diaSemana == 3) {
+                    _this.diasSemana.miercoles = item;
+                }
+                ;
+                if (item.diaSemana == 4) {
+                    _this.diasSemana.jueves = item;
+                }
+                ;
+                if (item.diaSemana == 5) {
+                    _this.diasSemana.viernes = item;
+                }
+                ;
+                if (item.diaSemana == 6) {
+                    _this.diasSemana.sabado = item;
+                }
+                ;
+            });
+            _this.cdr.detectChanges();
+            console.log(data);
+        }, function (err) {
+            _this.loadingScreen = false;
+            _this.cdr.detectChanges();
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+    };
+    HorarioComponent.prototype.borrarBloque = function (id) {
+        var _this = this;
+        this.loadingScreen = true;
+        this.authService.borrarFechaEspecial({ idHorarioEspecial: id })
+            .subscribe(function (data) {
+            _this.loadingScreen = false;
+            console.log(data);
+            _this.ngOnInit();
+        }, function (err) {
+            _this.loadingScreen = false;
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+    };
+    HorarioComponent.prototype.guardarHS = function () {
+        var _this = this;
+        this.loadingScreen = true;
+        var inicio = this.tiempoLibre.inicio.getFullYear() + '-' + ('0' + (this.tiempoLibre.inicio.getMonth() + 1)).slice(-2) + '-' + ('0' + this.tiempoLibre.inicio.getDate()).slice(-2);
+        var dataEnv = { horaAbrir: this.tiempoLibre.horaAbrir, horaCerrar: this.tiempoLibre.horaCerrar,
+            fecha: inicio, idCentro: this.idCentro
+        };
+        console.log(dataEnv);
+        this.tiempoLibre.inicio = undefined;
+        this.tiempoLibre.horaAbrir = undefined;
+        this.tiempoLibre.horaCerrar = undefined;
+        this.authService.agregarHENC(dataEnv)
+            .subscribe(function (data) {
+            _this.loadingScreen = false;
+            _this.ngOnInit();
+            console.log(data);
+        }, function (err) {
+            _this.loadingScreen = false;
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+    };
+    HorarioComponent.prototype.guardarHorario = function () {
+        var _this = this;
+        this.loadingScreen = true;
+        var dataEnv = { horario: Object.values(this.diasSemana), idCentro: this.idCentro };
+        //dataEnv.horario = Object.values(this.diasSemana);
+        //dataEnv.idCentro = this.idCentro;
+        console.log(dataEnv);
+        this.authService.guardarHorarioCentroNC(dataEnv)
+            .subscribe(function (data) {
+            _this.loadingScreen = false;
+            _this.cdr.detectChanges();
+            console.log(data);
+            alert('Horario guardado Correctamente');
+            _this.ngOnInit();
+        }, function (err) {
+            _this.loadingScreen = false;
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
     };
     HorarioComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -1466,7 +2312,8 @@ var HorarioComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./horario.component.html */ "./src/app/content/pages/components/horario/horario.component.html"),
             styles: [__webpack_require__(/*! ./horario.component.scss */ "./src/app/content/pages/components/horario/horario.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_1__["AuthenticationService"],
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"]])
     ], HorarioComponent);
     return HorarioComponent;
 }());
@@ -1545,7 +2392,7 @@ var InnerComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n<!-- \r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n -->\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 15px;\">Perfil de Negocio</div>\r\n\r\n\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" >Guardar</button>\r\n\r\n<!-- \t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button> -->\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"text-align: center\">\r\n\t\t\t<img   style='    height: 70px;\r\n    width: 70px;\r\n    margin-bottom: 40px;\r\n    border-radius: 100px;\r\n    margin: 5px 11px;' src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\">\r\n</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t\r\n\r\n\t\t\t\t<label class='labelBy'>Nombre del Negocio</label>\r\n\t\t\t\t<input class='inputBy w100' placeholder=\"cual es el nombre del negocio\"  autocomplete=\"off\"  type=\"text\" name=\"nombre\">\r\n\t\t\t</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Telefono</label>\r\n\t\t\t\t<input class='inputBy w100' placeholder=\"cual es el telefono del negocio\"  autocomplete=\"off\"  type=\"tel\" name=\"telefono\">\r\n\t\t\t</div>\r\n\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Descripcion de Negocio</label>\r\n\t\t\t\t<textarea  style='height: 175px;resize: none;' class='inputBy w100' placeholder=\"email del staff\"  autocomplete=\"off\"  type=\"text\" name=\"descripcion\"></textarea>\r\n\t\t\t</div>\r\n\r\n\r\n\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\r\n<div class=\"conteinInput\">\r\n\t\t\t<div>\t<label class='labelBy'>Banner App</label></div>\r\n\t\t\t\t<img   style='       height: 230px;\r\n    width: 375px;' src=\"http://50.116.17.150:3000/uploads/imageB-1527357998442.png\">\r\n\t\t\t</div>\r\n\r\n\r\n<!-- \r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Telefono</label>\r\n\t\t\t\t<input class='inputBy w100' placeholder=\"cual es el telefono del negocio\"  autocomplete=\"off\"  type=\"tel\" name=\"telefono\">\r\n\t\t\t</div> -->\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n  <div  class=\"form-group row\">\r\n\r\n  \t<div style=\"    padding-left: 15px;\">\t<label class='labelBy'>Ubicacion del Negocio</label></div>\r\n\r\n    <div  class=\"col-sm-10\">\r\n\r\n    <div class=\"form-group\">\r\n        <input  placeholder=\"busca por lugar\" autocorrect=\"off\" autocapitalize=\"off\" spellcheck=\"off\" type=\"text\" class=\"form-control\" #search [formControl]=\"searchControl\" >\r\n      </div>\r\n\r\n<agm-map style='height: 400px; width: 100%' \r\n  [latitude]=\"dataCentro.latitud\"\r\n  [longitude]=\"dataCentro.longitud\"\r\n  [zoom]=\"zoom\"\r\n  [disableDefaultUI]=\"false\"\r\n  [zoomControl]=\"true\"\r\n  [mapDraggable]=\"editarOn\"\r\n  \r\n  (mapClick)=\"mapClicked($event)\">\r\n \r\n  <agm-marker \r\n      *ngFor=\"let m of markers; let i = index\"\r\n      (markerClick)=\"clickedMarker(m.label, i)\"\r\n      [latitude]=\"m.lat\"\r\n      [longitude]=\"m.lng\"\r\n      [label]=\"m.label\"\r\n      [markerDraggable]=\"m.draggable\"\r\n      (dragEnd)=\"markerDragEnd(m, $event)\">\r\n      \r\n    <agm-info-window>\r\n      <strong>InfoWindow content</strong>\r\n    </agm-info-window>\r\n    \r\n  </agm-marker> \r\n  <!--\r\n  <agm-circle [latitude]=\"lat + 0.3\" [longitude]=\"lng\" \r\n      [radius]=\"5000\"\r\n      [fillColor]=\"'red'\"\r\n      [circleDraggable]=\"true\"\r\n      [editable]=\"true\">\r\n  </agm-circle>\r\n-->\r\n</agm-map>\r\n</div>\r\n</div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t\t</div>\r\n\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n<!-- \r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n -->\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 15px;\">Perfil de Negocio</div>\r\n\r\n\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='editarCentroInfo()' \r\n    [disabled]='!centroInfo.nombre' >Guardar</button>\r\n\r\n<!-- \t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button> -->\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n<ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"text-align: center\">\r\n\t\t\t<img   style='    height: 70px;\r\n    width: 70px;\r\n    margin-bottom: 40px;\r\n\r\n    margin: 5px 11px;' src=\"http://50.116.17.150:3000/{{centroInfo.idFoto}}\" \r\n    onError=\"this.src='assets/app/media/img/fotoComercio.png'\">\r\n\r\n<div style=\"margin-bottom: 15px;\">\r\n    <label style='border: solid 1px lightgray;\r\n    padding: 5px;\r\n    margin-top: 13px;' for=\"filesL\" class=\"btn cambImg\">cambiar logo</label>\r\n  <input [hidden]='true'  id=\"filesL\" style='margin-top: 10px;' type=\"file\" (change)=\"onFileChanged2($event)\">\r\n\r\n</div>\r\n</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t\r\n\r\n\t\t\t\t<label class='labelBy'>Nombre del Negocio</label>\r\n\t\t\t\t<input [(ngModel)]='centroInfo.nombre' class='inputBy w100' placeholder=\"cual es el nombre del negocio\"  autocomplete=\"off\"  type=\"text\" name=\"nombre\">\r\n\t\t\t</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Telefono</label>\r\n\t\t\t\t<input  [(ngModel)]='centroInfo.telefono' class='inputBy w100' placeholder=\"cual es el telefono del negocio\"  autocomplete=\"off\"  type=\"tel\" name=\"telefono\">\r\n\t\t\t</div>\r\n\r\n      <div class=\"conteinInput\">\r\n        <label class='labelBy'>Web</label>\r\n        <input  [(ngModel)]='centroInfo.fbLink' class='inputBy w100' placeholder=\"cual es el telefono del negocio\"  autocomplete=\"off\"  type=\"tel\" name=\"telefono\">\r\n      </div>\r\n\r\n\r\n\r\n\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\r\n<div class=\"conteinInput\">\r\n\t\t\t<div>\t<label class='labelBy'>Banner App</label></div>\r\n\t\t\t\t<img   style='       height: 230px;\r\n    width: 375px;' src=\"http://50.116.17.150:3000/{{centroInfo.imagenBanner}}\" \r\n    onError=\"this.src='assets/app/media/img/banner.png'\">\r\n<div style=\"    text-align: center;\">\r\n   <label  style='border: solid 1px lightgray;\r\n    padding: 5px;\r\n    margin-top: 13px;' for=\"filesB\" class=\"btn cambImg\">cambiar foto de Banner</label>\r\n<input id='filesB' [hidden]='true' style='margin-top: 20px;' type=\"file\" (change)=\"onFileChanged($event)\">\r\n</div>\r\n\r\n\r\n\r\n\t\t\t</div>\r\n\r\n\r\n<!-- \r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Telefono</label>\r\n\t\t\t\t<input class='inputBy w100' placeholder=\"cual es el telefono del negocio\"  autocomplete=\"off\"  type=\"tel\" name=\"telefono\">\r\n\t\t\t</div> -->\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n  <div  class=\"form-group row\">\r\n\r\n  \t<div style=\"    padding-left: 15px;\">\t<label class='labelBy'>Ubicacion del Negocio</label></div>\r\n\r\n    <div  class=\"col-sm-10\">\r\n\r\n    <div class=\"form-group\">\r\n        <input [(ngModel)]='centroInfo.direccion' placeholder=\"busca por lugar\" autocorrect=\"off\" autocapitalize=\"off\" spellcheck=\"off\" type=\"text\" class=\"form-control\" #search [formControl]=\"searchControl\" >\r\n      </div>\r\n\r\n<agm-map style='height: 400px; width: 100%' \r\n  [latitude]=\"centroInfo.latitud\"\r\n  [longitude]=\"centroInfo.longitud\"\r\n  [zoom]=\"zoom\"\r\n  [disableDefaultUI]=\"false\"\r\n  [zoomControl]=\"true\"\r\n  [mapDraggable]=\"true\"\r\n  \r\n  (mapClick)=\"mapClicked($event)\">\r\n \r\n  <agm-marker \r\n      *ngFor=\"let m of markers; let i = index\"\r\n      (markerClick)=\"clickedMarker(m.label, i)\"\r\n      [latitude]=\"m.lat\"\r\n      [longitude]=\"m.lng\"\r\n      [label]=\"m.label\"\r\n      [markerDraggable]=\"m.draggable\"\r\n      (dragEnd)=\"markerDragEnd(m, $event)\">\r\n      \r\n    <agm-info-window>\r\n      <strong>InfoWindow content</strong>\r\n    </agm-info-window>\r\n    \r\n  </agm-marker> \r\n  <!--\r\n  <agm-circle [latitude]=\"lat + 0.3\" [longitude]=\"lng\" \r\n      [radius]=\"5000\"\r\n      [fillColor]=\"'red'\"\r\n      [circleDraggable]=\"true\"\r\n      [editable]=\"true\">\r\n  </agm-circle>\r\n-->\r\n</agm-map>\r\n</div>\r\n</div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t\t</div>\r\n\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -1556,7 +2403,7 @@ module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,24
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".inputBy {\n  color: #383734;\n  background: #fff;\n  border: 1px solid #e1e1e1;\n  border-radius: 4px;\n  min-height: 40px;\n  padding: 7px 10px;\n  resize: vertical;\n  -webkit-appearance: none;\n  -moz-appearance: none; }\n\n.w100 {\n  display: block;\n  width: 100%; }\n\n.imgCheckBox {\n  height: 34px;\n  width: 34px;\n  border-radius: 20px;\n  margin: 5px 11px; }\n\n.txtF {\n  color: #383734;\n  font-size: 16px; }\n\n.w50 {\n  display: flex;\n  width: 50%; }\n\n.conteinInput {\n  margin-bottom: 30px; }\n\n.labelBy {\n  display: inline-block;\n  margin-bottom: 10px;\n  font-size: 16px;\n  font-weight: 500 !important;\n  line-height: 1.5;\n  color: #383734; }\n\ninput:focus {\n  outline: none !important;\n  border: 1px solid #34bfa3; }\n"
+module.exports = ".inputBy {\n  color: #383734;\n  background: #fff;\n  border: 1px solid #e1e1e1;\n  border-radius: 4px;\n  min-height: 40px;\n  padding: 7px 10px;\n  resize: vertical;\n  -webkit-appearance: none;\n  -moz-appearance: none; }\n\n.cambImg:hover {\n  background: #e1e1e1 !important; }\n\n.w100 {\n  display: block;\n  width: 100%; }\n\n.imgCheckBox {\n  height: 34px;\n  width: 34px;\n  border-radius: 20px;\n  margin: 5px 11px; }\n\n.txtF {\n  color: #383734;\n  font-size: 16px; }\n\n.w50 {\n  display: flex;\n  width: 50%; }\n\n.conteinInput {\n  margin-bottom: 30px; }\n\n.labelBy {\n  display: inline-block;\n  margin-bottom: 10px;\n  font-size: 16px;\n  font-weight: 500 !important;\n  line-height: 1.5;\n  color: #383734; }\n\ninput:focus {\n  outline: none !important;\n  border: 1px solid #34bfa3; }\n"
 
 /***/ }),
 
@@ -1573,9 +2420,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _agm_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @agm/core */ "./node_modules/@agm/core/index.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _core_services_layout_subheader_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../core/services/layout/subheader.service */ "./src/app/core/services/layout/subheader.service.ts");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../core/auth/authentication.service */ "./src/app/core/auth/authentication.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _core_services_layout_subheader_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../core/services/layout/subheader.service */ "./src/app/core/services/layout/subheader.service.ts");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1592,9 +2440,10 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var PerfilnegocioComponent = /** @class */ (function () {
     //asd
-    function PerfilnegocioComponent(router, _location, activatedRoute, subheaderService, fb, mapsAPILoader, ngZone, cdr) {
+    function PerfilnegocioComponent(router, _location, activatedRoute, subheaderService, fb, mapsAPILoader, ngZone, cdr, authService) {
         this.router = router;
         this._location = _location;
         this.activatedRoute = activatedRoute;
@@ -1603,34 +2452,60 @@ var PerfilnegocioComponent = /** @class */ (function () {
         this.mapsAPILoader = mapsAPILoader;
         this.ngZone = ngZone;
         this.cdr = cdr;
+        this.authService = authService;
+        this.centroInfo = {};
+        this.loadingScreen = false;
         this.dataCentro = [];
         this.editarOn = false;
         this.markers = [];
         this.zoom = 16;
         this.searchControl = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]();
+        var retrievedObject = JSON.parse(localStorage.getItem('userADby2as'));
+        this.idCentro = retrievedObject.idCentro;
         this.dataCentro['latitud'] = 51.673858;
         this.dataCentro['longitud'] = 7.815982;
     }
     PerfilnegocioComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.loadingScreen = true;
+        this.authService.getCentroInfoNC({ idCentro: this.idCentro })
+            .subscribe(function (data) {
+            _this.loadingScreen = false;
+            _this.centroInfo = data[0];
+            _this.markers[0] = {
+                lat: _this.centroInfo.latitud,
+                lng: _this.centroInfo.longitud,
+                label: 'Ubicacion',
+                draggable: true
+            };
+            _this.cdr.detectChanges();
+            console.log(data);
+        }, function (err) {
+            _this.loadingScreen = false;
+            _this.cdr.detectChanges();
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
         this.mapsAPILoader.load().then(function () {
             var autocomplete = new google.maps.places.Autocomplete(_this.searchElementRef.nativeElement, {
                 componentRestrictions: { country: "pa" }
             });
             autocomplete.addListener("place_changed", function () {
-                //  this.ngZone.run(() => {
-                //get the place result
                 var place = autocomplete.getPlace();
-                //verify result
                 if (place.geometry === undefined || place.geometry === null) {
                     return;
                 }
-                //set latitude, longitude and zoom
-                _this.dataCentro['latitud'] = place.geometry.location.lat();
-                _this.dataCentro['longitud'] = place.geometry.location.lng();
+                _this.centroInfo.latitud = place.geometry.location.lat();
+                _this.centroInfo.longitud = place.geometry.location.lng();
+                _this.centroInfo.direccion = place.formatted_address;
+                _this.markers[0] = {
+                    lat: _this.centroInfo.latitud,
+                    lng: _this.centroInfo.longitud,
+                    label: 'Nueva Ubicacion',
+                    draggable: true
+                };
                 _this.zoom = 16;
                 _this.cdr.detectChanges();
-                //});
             });
         });
     };
@@ -1639,10 +2514,61 @@ var PerfilnegocioComponent = /** @class */ (function () {
         //	let _backUrl = 'servicios';
         //this.router.navigateByUrl(_backUrl);
     };
+    PerfilnegocioComponent.prototype.editarCentroInfo = function () {
+        var _this = this;
+        this.loadingScreen = true;
+        console.log(this.centroInfo);
+        this.authService.updateCICN(this.centroInfo)
+            .subscribe(function (data) {
+            _this.loadingScreen = false;
+            _this.cdr.detectChanges();
+            _this.ngOnInit();
+        }, function (err) {
+            _this.loadingScreen = false;
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+    };
+    PerfilnegocioComponent.prototype.onFileChanged = function (event) {
+        var _this = this;
+        this.loadingScreen = true;
+        this.selectedFile = event.target.files[0];
+        var uploadData = new FormData();
+        uploadData.append('idCentro', this.centroInfo.idCentro);
+        uploadData.append('imageU', this.selectedFile, this.selectedFile.name);
+        this.authService.actualizarBannerNC(uploadData)
+            .subscribe(function (data) {
+            _this.loadingScreen = false;
+            _this.ngOnInit();
+        }, function (err) {
+            _this.loadingScreen = false;
+            _this.ngOnInit();
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+    };
+    PerfilnegocioComponent.prototype.onFileChanged2 = function (event) {
+        var _this = this;
+        this.loadingScreen = true;
+        this.selectedFile2 = event.target.files[0];
+        var uploadData = new FormData();
+        uploadData.append('idCentro', this.centroInfo.idCentro);
+        uploadData.append('imageU', this.selectedFile2, this.selectedFile2.name);
+        this.authService.actualizarFotoNC(uploadData)
+            .subscribe(function (data) {
+            _this.loadingScreen = false;
+            _this.ngOnInit();
+        }, function (err) {
+            _this.loadingScreen = false;
+            _this.ngOnInit();
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+    };
     PerfilnegocioComponent.prototype.mapClicked = function ($event) {
-        if (this.editarOn) {
-            this.dataCentro['longitud'] = $event.coords.lng;
-            this.dataCentro['latitud'] = $event.coords.lat;
+        if (true) {
+            this.centroInfo['longitud'] = $event.coords.lng;
+            this.centroInfo['latitud'] = $event.coords.lat;
             this.markers[0] = {
                 lat: $event.coords.lat,
                 lng: $event.coords.lng,
@@ -1673,7 +2599,8 @@ var PerfilnegocioComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./perfilnegocio.component.html */ "./src/app/content/pages/components/perfilnegocio/perfilnegocio.component.html"),
             styles: [__webpack_require__(/*! ./perfilnegocio.component.scss */ "./src/app/content/pages/components/perfilnegocio/perfilnegocio.component.scss")]
         }),
-        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"], _angular_common__WEBPACK_IMPORTED_MODULE_5__["Location"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"], _core_services_layout_subheader_service__WEBPACK_IMPORTED_MODULE_4__["SubheaderService"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"], _agm_core__WEBPACK_IMPORTED_MODULE_2__["MapsAPILoader"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"]])
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_common__WEBPACK_IMPORTED_MODULE_6__["Location"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"], _core_services_layout_subheader_service__WEBPACK_IMPORTED_MODULE_5__["SubheaderService"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"], _agm_core__WEBPACK_IMPORTED_MODULE_2__["MapsAPILoader"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"],
+            _core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_3__["AuthenticationService"]])
     ], PerfilnegocioComponent);
     return PerfilnegocioComponent;
 }());
@@ -1689,7 +2616,7 @@ var PerfilnegocioComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 30px;\">Servicios</div>\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" \r\n\t\t[routerLink]=\"['/editservicio']\" \r\n\t\t[queryParams]=\"{id: 34}\" mat-raised-button color=\"primary\" matTooltip=\"Crear nuevo servicio\">Agregar Servicio</button>\r\n\r\n</div>\r\n\r\n<div class=\"row\">\r\n\t<div class=\"col-xl-4\" style=\"padding-right: 0px;    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"width: 100%\">\r\n\t\t\t\r\n\t\t\t<div style=\"margin-bottom: 30px;    box-shadow: 0 1px 15px 1px rgba(69,65,78,.08); background-color: #fff;\">\r\n\t\t\t\t<div style=\"display: flex;\r\n    flex-direction: row;\r\n    align-items: stretch;\r\n    justify-content: space-between;\r\n    padding: 16px 20px;\r\n    height: 69px;\r\n    position: relative;\r\n    font-size: 16px;\r\n    font-weight: 500;\r\n    border-bottom: solid 1px lightgray;\">\r\n\r\n\t\t\t\t\t<div style=\"    display: flex;\r\n\t\t\t\t\talign-items: center;\r\n\t\t\t\t\talign-content: flex-start;\">Ofertas</div>\r\n\r\n\t<button  class=\"btn btn-sm btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" color=\"primary\" [routerLink]=\"['/agregaroferta']\" >Agregar Oferta</button>\r\n\r\n\r\n\r\n\t\t\t\t</div>\r\n\r\n\r\n<!-- \t\t\t\t\t\t\t\t\t<div class=\"itemServicios\">\r\n\t\t\t\t\t<div class=\"boxItem\">\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t<div class=\"txtItemServ\">\r\n\t\t\t\t\t\t\t<h3 style=\" font-size: 16px !important;   color: #5f5d5b;\">Corte y Estilo</h3>\r\n\t\t\t\t\t\t\t<p style=\"color: #989794;font-size: 12px;\">\r\n\t\t\t\t\t\t\t\tHasta el 01/01/2018\r\n\t\t\t\t\t\t\t</p>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"txtItemServP\" style=\"color:darkgray !important; text-decoration: line-through;\">$50</div>\r\n\t\t\t\t\t\t<div class=\"txtItemServP\" >$30</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n -->\r\n\t\r\n<div class=\"example-container \" >\r\n  <mat-table #table [dataSource]=\"dataSource\">\r\n    <!-- Position Column -->\r\n    <ng-container matColumnDef=\"position\">\r\n      <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element\"> {{element.position}} </mat-cell>\r\n    </ng-container>\r\n    <!-- Name Column -->\r\n    <ng-container matColumnDef=\"name\">\r\n      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element\"> {{element.name}} </mat-cell>\r\n    </ng-container>\r\n    <!-- Weight Column -->\r\n    <ng-container matColumnDef=\"weight\">\r\n      <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element\"> {{element.weight}} </mat-cell>\r\n    </ng-container>\r\n    <!-- Symbol Column -->\r\n    <ng-container matColumnDef=\"symbol\">\r\n      <mat-header-cell *matHeaderCellDef> Symbol </mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element\"> {{element.symbol}} </mat-cell>\r\n    </ng-container>\r\n    <mat-header-row *matHeaderRowDef=\"displayedColumns\"></mat-header-row>\r\n    <mat-row *matRowDef=\"let row; columns: displayedColumns;\"></mat-row>\r\n  </mat-table>\r\n  \r\n  <mat-paginator #paginator\r\n    [pageSize]=\"5\"\r\n\r\n    [showFirstLastButtons]=\"true\">\r\n  </mat-paginator>\r\n</div>\r\n\r\n\r\n\r\n\r\n\t\t\t</div>\r\n\r\n\r\n\r\n\t\t\t<div style=\"    box-shadow: 0 1px 15px 1px rgba(69,65,78,.08); background-color: #fff;\">\r\n\t\t\t\t<div style=\"display: flex;\r\n    flex-direction: row;\r\n    align-items: stretch;\r\n    justify-content: space-between;\r\n    padding: 16px 20px;\r\n    height: 69px;\r\n    position: relative;\r\n    font-size: 16px;\r\n    font-weight: 500;\r\n    border-bottom: solid 1px lightgray;border-top: solid 1px lightgray;\">\r\n\r\n\t\t\t\t\t<div style=\"    display: flex;\r\n\t\t\t\t\talign-items: center;\r\n\t\t\t\t\talign-content: flex-start;\">Paquetes</div>\r\n\r\n\t<button  class=\"btn btn-sm btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" color=\"primary\" >Agregar Paquete</button>\r\n\r\n\r\n\r\n\t\t\t\t</div>\r\n\r\n\r\n<div class=\"example-container \">\r\n  <mat-table #table [dataSource]=\"dataSource2\">\r\n    <!-- Position Column -->\r\n    <ng-container matColumnDef=\"position\">\r\n      <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element\"> {{element.position}} </mat-cell>\r\n    </ng-container>\r\n    <!-- Name Column -->\r\n    <ng-container matColumnDef=\"name\">\r\n      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element\"> {{element.name}} </mat-cell>\r\n    </ng-container>\r\n    <!-- Weight Column -->\r\n    <ng-container matColumnDef=\"weight\">\r\n      <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element\"> {{element.weight}} </mat-cell>\r\n    </ng-container>\r\n    <!-- Symbol Column -->\r\n    <ng-container matColumnDef=\"symbol\">\r\n      <mat-header-cell *matHeaderCellDef> Symbol </mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element\"> {{element.symbol}} </mat-cell>\r\n    </ng-container>\r\n    <mat-header-row *matHeaderRowDef=\"displayedColumns\"></mat-header-row>\r\n    <mat-row *matRowDef=\"let row; columns: displayedColumns;\"></mat-row>\r\n  </mat-table>\r\n  \r\n  <mat-paginator #paginator2\r\n    [pageSize]=\"5\"\r\n\r\n    [showFirstLastButtons]=\"true\">\r\n  </mat-paginator>\r\n</div>\r\n\r\n\r\n\r\n\r\n\r\n\t\t\t</div>\r\n\r\n\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"col-xl-8\" >\r\n\r\n\r\n\t\t<div style=\"    padding: 40px 60px;width: 100%\">\r\n\r\n\t\t\t\t<div style=\"width: 100%; display: table;\">\r\n\t\t\t\t\t<input class='inputBy searchInput' style=\"padding-left: 10px\" placeholder=\"buscar servicios\"  autocomplete=\"off\"  type=\"text\" name=\"nombre\">\r\n\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t<div class=\"itemServicios\" *ngFor=\"let s of serviciosC; let i = index\" >\r\n\t\t\t\t\t<div class=\"boxItem\">\r\n\t\t\t\t\t\t<i class=\"la  la-angle-right iconR\"></i>\r\n\t\t\t\t\t\t<div class=\"txtItemServ\">\r\n\t\t\t\t\t\t\t<h3 style=\" font-size: 16px !important;   color: #5f5d5b;\">\r\n\t\t\t\t\t\t\t{{s.nombre}}</h3>\r\n\t\t\t\t\t\t\t<p style=\"color: #989794;font-size: 12px;\">\r\n\t\t\t\t\t\t\t\t{{s.nombreCategoria}} / {{s.nombreSubcategoria}}\r\n\t\t\t\t\t\t\t</p>\r\n\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t<!-- \t<div class=\"txtItemServP\"> \r\n\t\t\t\t<span >{{s.duracion}}min</span> \r\n\t\t\t\t\t\t</div>\r\n -->\r\n\r\n\t\t\t\t\t<div class=\"txtItemServP\">\r\n\t\t\t\t<span>{{getHoras(s.duracion)}}h</span>\t\t \r\n\t\t\t\t<span style=\"margin-left: 6px\">{{s.duracion % 60}}min</span> \r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t<div class=\"txtItemServP\">${{s.precio}}</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\r\n<!-- \t\t\t\t\t\t\t\t<div class=\"itemServicios\">\r\n\t\t\t\t\t<div class=\"boxItem\">\r\n\t\t\t\t\t\t<i class=\"la  la-angle-right iconR\"></i>\r\n\t\t\t\t\t\t<div class=\"txtItemServ\">\r\n\t\t\t\t\t\t\t<h3 style=\" font-size: 16px !important;   color: #5f5d5b;\">Corte y Estilo</h3>\r\n\t\t\t\t\t\t\t<p style=\"color: #989794;font-size: 12px;\">\r\n\t\t\t\t\t\t\t\tPeluqueria / Cortes de Mujer\r\n\t\t\t\t\t\t\t</p>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"txtItemServP\">30min</div>\r\n\t\t\t\t\t\t<div class=\"txtItemServP\">30min</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t\t\t<div class=\"itemServicios\">\r\n\t\t\t\t\t<div class=\"boxItem\">\r\n\t\t\t\t\t\t<i class=\"la  la-angle-right iconR\"></i>\r\n\t\t\t\t\t\t<div class=\"txtItemServ\">\r\n\t\t\t\t\t\t\t<h3 style=\" font-size: 16px !important;   color: #5f5d5b;\">Corte y Estilo</h3>\r\n\t\t\t\t\t\t\t<p style=\"color: #989794;font-size: 12px;\">\r\n\t\t\t\t\t\t\t\tPeluqueria / Cortes de Mujer\r\n\t\t\t\t\t\t\t</p>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"txtItemServP\">30min</div>\r\n\t\t\t\t\t\t<div class=\"txtItemServP\">30min</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div> -->\r\n\r\n\t\t</div>\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 30px;\">Servicios</div>\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" \r\n\t\t[routerLink]=\"['/agregarservicio']\"  mat-raised-button color=\"primary\" matTooltip=\"Crear nuevo servicio\">Agregar Servicio</button>\r\n\r\n</div>\r\n\r\n<div class=\"row\">\r\n\t <ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\t<div class=\"col-xl-4\" style=\"padding-right: 0px;    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"width: 100%\">\r\n\t\t\t\r\n\t\t\t<div style=\"margin-bottom: 30px;    box-shadow: 0 1px 15px 1px rgba(69,65,78,.08); background-color: #fff;\">\r\n\t\t\t\t<div style=\"display: flex;\r\n    flex-direction: row;\r\n    align-items: stretch;\r\n    justify-content: space-between;\r\n    padding: 16px 20px;\r\n    height: 69px;\r\n    position: relative;\r\n    font-size: 16px;\r\n    font-weight: 500;\r\n    border-bottom: solid 1px lightgray;\">\r\n\r\n\t\t\t\t\t<div style=\"    display: flex;\r\n\t\t\t\t\talign-items: center;\r\n\t\t\t\t\talign-content: flex-start;\">Ofertas</div>\r\n\r\n\t<button  class=\"btn btn-sm btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" color=\"primary\" [routerLink]=\"['/agregaroferta']\" >Agregar Oferta</button>\r\n\r\n\r\n\r\n\t\t\t\t</div>\r\n\r\n\r\n<!-- \t\t\t\t\t\t\t\t\t<div class=\"itemServicios\">\r\n\t\t\t\t\t<div class=\"boxItem\">\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t<div class=\"txtItemServ\">\r\n\t\t\t\t\t\t\t<h3 style=\" font-size: 16px !important;   color: #5f5d5b;\">Corte y Estilo</h3>\r\n\t\t\t\t\t\t\t<p style=\"color: #989794;font-size: 12px;\">\r\n\t\t\t\t\t\t\t\tHasta el 01/01/2018\r\n\t\t\t\t\t\t\t</p>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"txtItemServP\" style=\"color:darkgray !important; text-decoration: line-through;\">$50</div>\r\n\t\t\t\t\t\t<div class=\"txtItemServP\" >$30</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n -->\r\n\t\r\n<div class=\"example-container \" >\r\n  <mat-table #table [dataSource]=\"dataSource\">\r\n    <!-- Position Column -->\r\n    <ng-container matColumnDef=\"nombre\">\r\n      <mat-header-cell *matHeaderCellDef> Servicio </mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element\"> {{element.nombre}} </mat-cell>\r\n    </ng-container>\r\n\r\n        <ng-container matColumnDef=\"precioOferta\">\r\n      <mat-header-cell *matHeaderCellDef> Precio </mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element\"> {{element.precioOferta}} </mat-cell>\r\n    </ng-container>\r\n\r\n        <ng-container matColumnDef=\"fechaCaducidad\">\r\n      <mat-header-cell *matHeaderCellDef> Caducidad </mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element\"> {{element.fechaCaducidad.split('T')[0]}} </mat-cell>\r\n    </ng-container>\r\n\r\n\r\n\r\n\r\n    <mat-header-row *matHeaderRowDef=\"displayedColumns\"></mat-header-row>\r\n    <mat-row *matRowDef=\"let row; columns: displayedColumns;\"></mat-row>\r\n  </mat-table>\r\n  \r\n  <mat-paginator #paginator\r\n    [pageSize]=\"5\"\r\n\r\n    [showFirstLastButtons]=\"true\">\r\n  </mat-paginator>\r\n</div>\r\n\r\n\r\n\r\n\r\n\t\t\t</div>\r\n\r\n\r\n\r\n\t\t\t<div style=\"    box-shadow: 0 1px 15px 1px rgba(69,65,78,.08); background-color: #fff;\">\r\n\t\t\t\t<div style=\"display: flex;\r\n    flex-direction: row;\r\n    align-items: stretch;\r\n    justify-content: space-between;\r\n    padding: 16px 20px;\r\n    height: 69px;\r\n    position: relative;\r\n    font-size: 16px;\r\n    font-weight: 500;\r\n    border-bottom: solid 1px lightgray;border-top: solid 1px lightgray;\">\r\n\r\n\t\t\t\t\t<div style=\"    display: flex;\r\n\t\t\t\t\talign-items: center;\r\n\t\t\t\t\talign-content: flex-start;\">Paquetes</div>\r\n\r\n\t<button  class=\"btn btn-sm btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" color=\"primary\" >Agregar Paquete</button>\r\n\r\n\r\n\r\n\t\t\t\t</div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t\t\t</div>\r\n\r\n\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"col-xl-8\" >\r\n\r\n\r\n\t\t<div style=\"    padding: 40px 60px;width: 100%\">\r\n\r\n\t\t\t\t<div style=\"width: 100%; display: table;\">\r\n\t\t\t\t\t<input class='inputBy searchInput' style=\"padding-left: 10px\" placeholder=\"buscar servicios\"  autocomplete=\"off\"  type=\"text\" name=\"nombre\">\r\n\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t<div [routerLink]=\"['/editservicio']\" [queryParams]=\"{id: s.idServicio}\" class=\"itemServicios\" *ngFor=\"let s of serviciosC; let i = index\" >\r\n\t\t\t\t\t<div class=\"boxItem\">\r\n\t\t\t\t\t\t<i class=\"la  la-angle-right iconR\"></i>\r\n\t\t\t\t\t\t<div class=\"txtItemServ\">\r\n\t\t\t\t\t\t\t<h3 style=\" font-size: 16px !important;   color: #5f5d5b;\">\r\n\t\t\t\t\t\t\t{{s.nombre}}</h3>\r\n\t\t\t\t\t\t\t<p style=\"color: #989794;font-size: 12px;\">\r\n\t\t\t\t\t\t\t\t{{s.nombreCategoria}} / {{s.nombreSubcategoria}}\r\n\t\t\t\t\t\t\t</p>\r\n\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t<!-- \t<div class=\"txtItemServP\"> \r\n\t\t\t\t<span >{{s.duracion}}min</span> \r\n\t\t\t\t\t\t</div>\r\n -->\r\n\r\n\t\t\t\t\t<div class=\"txtItemServP\">\r\n\t\t\t\t<span>{{getHoras(s.duracion)}}h</span>\t\t \r\n\t\t\t\t<span style=\"margin-left: 6px\">{{s.duracion % 60}}min</span> \r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t<div [ngClass]=\"{'underl': s.oferta}\" class=\"txtItemServP\">${{s.precio}}</div>\r\n\t\t\t\t\t\t\t<div *ngIf='s.oferta' class=\"txtItemServOferta\">${{s.oferta}}</div>\r\n\r\n\r\n\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\r\n<!-- \t\t\t\t\t\t\t\t<div class=\"itemServicios\">\r\n\t\t\t\t\t<div class=\"boxItem\">\r\n\t\t\t\t\t\t<i class=\"la  la-angle-right iconR\"></i>\r\n\t\t\t\t\t\t<div class=\"txtItemServ\">\r\n\t\t\t\t\t\t\t<h3 style=\" font-size: 16px !important;   color: #5f5d5b;\">Corte y Estilo</h3>\r\n\t\t\t\t\t\t\t<p style=\"color: #989794;font-size: 12px;\">\r\n\t\t\t\t\t\t\t\tPeluqueria / Cortes de Mujer\r\n\t\t\t\t\t\t\t</p>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"txtItemServP\">30min</div>\r\n\t\t\t\t\t\t<div class=\"txtItemServP\">30min</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t\t\t<div class=\"itemServicios\">\r\n\t\t\t\t\t<div class=\"boxItem\">\r\n\t\t\t\t\t\t<i class=\"la  la-angle-right iconR\"></i>\r\n\t\t\t\t\t\t<div class=\"txtItemServ\">\r\n\t\t\t\t\t\t\t<h3 style=\" font-size: 16px !important;   color: #5f5d5b;\">Corte y Estilo</h3>\r\n\t\t\t\t\t\t\t<p style=\"color: #989794;font-size: 12px;\">\r\n\t\t\t\t\t\t\t\tPeluqueria / Cortes de Mujer\r\n\t\t\t\t\t\t\t</p>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"txtItemServP\">30min</div>\r\n\t\t\t\t\t\t<div class=\"txtItemServP\">30min</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div> -->\r\n\r\n\t\t</div>\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -1700,7 +2627,7 @@ module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,24
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".itemServicios {\n  border: 1px solid #e1e1e1;\n  border-radius: 4px;\n  display: block;\n  margin-bottom: 10px; }\n\n.itemServicios:hover {\n  opacity: 0.8; }\n\n.boxItem {\n  position: relative;\n  background: #faf9f7 !important;\n  padding: 10px 50px 2px 40px; }\n\n.inputBy:focus {\n  outline: none !important;\n  border: 1px solid #34bfa3; }\n\n.searchInput {\n  float: right;\n  height: 40px;\n  width: 35%;\n  margin-bottom: 40px; }\n\n.iconR {\n  font-size: 16px;\n  position: absolute;\n  right: 5px;\n  top: 29px;\n  color: darkgray; }\n\n.txtItemServ {\n  width: 60% !important;\n  display: inline-block;\n  min-height: 1px;\n  vertical-align: top;\n  margin: 0;\n  padding: 0; }\n\n.txtItemServP {\n  width: 20% !important;\n  text-align: right !important;\n  display: inline-block;\n  min-height: 1px;\n  vertical-align: top;\n  margin: 0;\n  padding-left: 20px;\n  font-size: 16px;\n  font-weight: 400; }\n"
+module.exports = ".itemServicios {\n  border: 1px solid #e1e1e1;\n  border-radius: 4px;\n  display: block;\n  margin-bottom: 10px; }\n\n.underl {\n  text-decoration: line-through;\n  color: darkgray !important; }\n\n.txtItemServOferta {\n  text-align: right !important;\n  display: inline-block;\n  min-height: 1px;\n  vertical-align: top;\n  margin: 0;\n  padding-left: 8px;\n  font-size: 16px;\n  font-weight: 400; }\n\n.itemServicios:hover {\n  opacity: 0.8; }\n\n.boxItem {\n  position: relative;\n  background: #faf9f7 !important;\n  padding: 10px 50px 2px 40px; }\n\n.inputBy:focus {\n  outline: none !important;\n  border: 1px solid #34bfa3; }\n\n.searchInput {\n  float: right;\n  height: 40px;\n  width: 35%;\n  margin-bottom: 40px; }\n\n.iconR {\n  font-size: 16px;\n  position: absolute;\n  right: 5px;\n  top: 29px;\n  color: darkgray; }\n\n.txtItemServ {\n  width: 60% !important;\n  display: inline-block;\n  min-height: 1px;\n  vertical-align: top;\n  margin: 0;\n  padding: 0; }\n\n.txtItemServP {\n  text-align: right !important;\n  display: inline-block;\n  min-height: 1px;\n  vertical-align: top;\n  margin: 0;\n  padding-left: 20px;\n  font-size: 16px;\n  font-weight: 400; }\n"
 
 /***/ }),
 
@@ -1729,9 +2656,11 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var ServiciosComponent = /** @class */ (function () {
-    function ServiciosComponent(authService) {
+    function ServiciosComponent(authService, cdr) {
         this.authService = authService;
+        this.cdr = cdr;
         /*
          interface Element {
           name: string;
@@ -1741,36 +2670,47 @@ var ServiciosComponent = /** @class */ (function () {
         }
         */
         //const ELEMENT_DATA: Element[] = [
-        this.ELEMENT_DATA = [
-            { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-            { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-            { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-            { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-            { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-            { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-            { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-            { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-            { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-        ];
+        this.ELEMENT_DATA = [];
         this.ELEMENT_DATA2 = [
             { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
             { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
             { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
         ];
-        this.displayedColumns = ['position', 'name', 'weight', 'symbol'];
-        this.dataSource = new _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatTableDataSource"](this.ELEMENT_DATA);
+        this.displayedColumns = ['nombre', 'precioOferta', 'fechaCaducidad'];
+        //dataSource = new MatTableDataSource(this.ELEMENT_DATA);
         this.dataSource2 = new _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatTableDataSource"](this.ELEMENT_DATA2);
         this.serviciosC = [];
+        this.ofertas = [];
+        this.loadingScreen = false;
+        this.paquetes = [];
         var retrievedObject = JSON.parse(localStorage.getItem('userADby2as'));
         this.idCentro = retrievedObject.idCentro;
         console.log(this.idCentro);
     }
     ServiciosComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.loadingScreen = true;
         this.authService.serviciosC({ idCentro: this.idCentro })
             .subscribe(function (data) {
+            _this.loadingScreen = false;
             _this.serviciosC = data;
+            _this.cdr.detectChanges();
             console.log(data);
+        }, function (err) {
+            _this.loadingScreen = false;
+            _this.cdr.detectChanges();
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+        this.authService.getPaquetes({ idCentro: this.idCentro })
+            .subscribe(function (data) {
+            console.log(data);
+            _this.ofertas = data.ofertas;
+            _this.paquetes = data.paquetes;
+            _this.ELEMENT_DATA = data.ofertas;
+            _this.dataSource = new _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatTableDataSource"](_this.ELEMENT_DATA);
+            _this.dataSource.paginator = _this.paginator;
+            _this.cdr.detectChanges();
         }, function (err) {
             console.log('someError');
             alert('Ups! Algo ha salido mal');
@@ -1780,8 +2720,8 @@ var ServiciosComponent = /** @class */ (function () {
         return Math.floor(hora / 60);
     };
     ServiciosComponent.prototype.ngAfterViewInit = function () {
-        this.dataSource.paginator = this.paginator;
-        this.dataSource2.paginator = this.paginator2;
+        // this.dataSource.paginator = this.paginator;
+        // this.dataSource2.paginator = this.paginator2;
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])(_angular_material__WEBPACK_IMPORTED_MODULE_1__["MatPaginator"]),
@@ -1797,7 +2737,8 @@ var ServiciosComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./servicios.component.html */ "./src/app/content/pages/components/servicios/servicios.component.html"),
             styles: [__webpack_require__(/*! ./servicios.component.scss */ "./src/app/content/pages/components/servicios/servicios.component.scss")]
         }),
-        __metadata("design:paramtypes", [_core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"]])
+        __metadata("design:paramtypes", [_core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"],
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"]])
     ], ServiciosComponent);
     return ServiciosComponent;
 }());
@@ -1813,7 +2754,7 @@ var ServiciosComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 30px;\">Staff</div>\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" \r\n\t\t[routerLink]=\"['/editservicio']\" \r\n\t\t[queryParams]=\"{id: 34}\" mat-raised-button color=\"primary\" matTooltip=\"Crear nuevo servicio\">Agregar miembro del Staff</button>\r\n\r\n</div>\r\n\r\n<div class=\"row\">\r\n\t<div class=\"col-xl-4\" style=\"padding-right: 0px;    border-right: solid 1px lightgray;\" >\r\n\r\n\r\n\r\n<mat-nav-list style='padding-top: 0px '>\r\n  <mat-list-item [ngClass]=\"{'selectedItem': selected == 1}\" (click)=\"itemSelectedChange(1)\">\r\n    <img matListAvatar src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\" >\r\n    <h3 matLine> Juan Ricardo Arguedas </h3>\r\n    <p matLine>\r\n      <span class=\"tagStaff\">MIEMBRO BASICO</span>\r\n \r\n    </p>\r\n  </mat-list-item>\r\n\r\n    <mat-list-item [ngClass]=\"{'selectedItem': selected == 2}\" (click)=\"itemSelectedChange(2)\">\r\n    <img matListAvatar src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\" >\r\n    <h3 matLine> Maria Segura  </h3>\r\n    <p matLine>\r\n        <span class=\"tagStaff\">MIEMBRO ADMINISTRADOR</span>\r\n    </p>\r\n  </mat-list-item>\r\n\r\n      <mat-list-item [ngClass]=\"{'selectedItem': selected == 3}\" (click)=\"itemSelectedChange(3)\">\r\n    <img matListAvatar src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\" >\r\n    <h3 matLine> Luisa Corrales </h3>\r\n    <p matLine>\r\n      <span class=\"tagStaff\">MIEMBRO ADMINISTRADOR</span>\r\n    </p>\r\n  </mat-list-item>\r\n\r\n\r\n\r\n</mat-nav-list>\r\n\r\n\r\n\r\n\r\n\t\t\t\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\r\n\r\n\t<div class=\"col-xl-8\" style=\"padding-left: 0px !important\">\r\n\r\n\t\t<div style=\"\">\r\n\t\t\t<div style=\"    border-bottom: solid 1px lightgray;font-size: 16px;font-weight: 400;line-height: 1.5;color: #383734;background: #fff;\">\r\n\t\t\t\t<div style=\"display: table-cell;padding: 0 10px;vertical-align: middle;\">\r\n\t\t\t\t\t<div style=\"font-size: 70px; width: 72px;min-height: 72px;\">\r\n\t\t\t\t\t\t <img  src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\" style=\"border-radius: 50%;z-index: 1;position: relative;height: 70px;width: 70px;\">\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div style=\"display: table-cell;padding: 0 10px;vertical-align: middle;    width: 100%;\">\r\n\t\t\t\t\t<div style=\"width: 100%;\">Hernry Morgan <span class=\"tagStaff\">MIEMBRO BASICO</span></div>\r\n\r\n\t\t\t\t\t<div style=\"display: block;vertical-align: top;\">\r\n\t\t\t\t\t\t\t\t\t\t<div style=\"float: right !important;display: inline-block; min-height: 1px;vertical-align: top; margin: 0;padding: 0;\">\r\n\t\t\t\t\t\t\t<button  \t[routerLink]=\"['/editstaff']\" \r\n\t\t class=\"btn btn-outline-success\" style=\"margin-top: 3px;float: right;margin-right: 10px;\"  mat-raised-button color=\"primary\" >Editar Perfil</button>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div style=\"float: right !important;display: inline-block; min-height: 1px;vertical-align: top; margin: 0;padding: 0;\">\r\n\t\t\t\t\t\t\t\t<button  class=\"btn btn-success\" style=\"margin-top: 3px;float: right;margin-right: 10px;\"  mat-raised-button color=\"primary\" >Nueva Reserva</button>\r\n\t\t\t\t\t\t</div>\r\n\t\t\r\n\t\t\t\t\t\t    \r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\r\n\r\n\t\t<div class=\"m-section\" style=\"margin-top: 30px\">\r\n\t\t\t<div class=\"m-section__content\">\r\n\t\t\t\t<ngb-tabset>\r\n\t\t\t\t\t<ngb-tab title=\"Servicios\">\r\n\t\t\t\t\t<ng-template ngbTabContent>\r\n\r\n\r\n\r\n\t\t\t\t\t\t\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t<div style=\"color:darkgray;font-size: 16px;font-weight: 500 !important;margin-bottom: 20px;\">\r\n\t\t\tElige los servicios que el empleado brinda</div>\r\n\t\t\t\t\t<div style=\"border: solid 1px lightgray;padding: 20px;\">\r\n\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t<div class='tituloCateg'>Peluqueria</div>\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: rgb(250,249,247);padding: 10px 10px;\" *ngFor=\"let item of [{nombre:'Corte y Estilo',precio:30},{nombre:'Lavado y tinte',precio:40}];  let i = index\">\r\n\t\t\t\t\t\t<mat-checkbox >\r\n\t\t\t\t\t\t\t<span class=\"txtF\">{{item.nombre}} / ${{item.precio}}.00</span></mat-checkbox>\r\n\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t<div class='tituloCateg'>Rostro y Cuerpo</div>\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: rgb(250,249,247);padding: 10px 10px;\" *ngFor=\"let item of [{nombre:'Masaje espalda',precio:20}];  let i = index\">\r\n\t\t\t\t\t\t<mat-checkbox  >\r\n\t\t\t\t\t\t\t<span class=\"txtF\">{{item.nombre}} / ${{item.precio}}.00</span></mat-checkbox>\r\n\r\n\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t</div>\r\n\r\n\t\t</div>\r\n\r\n\r\n\t\t\t\t\t</ng-template>\r\n\t\t\t\t\t</ngb-tab>\r\n\t\t\t\t\t<ngb-tab  title=\"Horario\">\r\n\t\t\t\t\t<ng-template ngbTabContent >\r\n\t\t\t\t\t\t<div style='padding: 30px 45px;'>\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" *ngFor=\"let item of [{nombre:'Domingo'},{nombre:'Lunes'},{nombre:'Martes'}\r\n\t\t\t\t\t\t,{nombre:'Miercoles'},{nombre:'Jueves'},{nombre:'Viernes'},{nombre:'Sabado'}];  let i = index\">\r\n\t\t\t\t\t\t<mat-checkbox >\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>{{item.nombre}}</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select class='inputBy w50'>\r\n\t\t\t\t\t\t\t<mat-option>None</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:55 AM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:55 AM</mat-option>\r\n\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:55 AM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:55 AM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:55 AM</mat-option>\r\n\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:55 AM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:55 AM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:55 AM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:55 AM</mat-option>\r\n\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:55 AM</mat-option>\r\n\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:55 AM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:00 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:05 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:10 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:15 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:20 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:25 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:30 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:35 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:40 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:45 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:50 AM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:55 AM</mat-option>\r\n\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">12:55 PM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">01:55 PM</mat-option>\r\n\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">02:55 PM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">03:55 PM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">04:55 PM</mat-option>\r\n\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">05:55 PM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">06:55 PM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">07:55 PM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">08:55 PM</mat-option>\r\n\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">09:55 PM</mat-option>\r\n\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">10:55 PM</mat-option>\r\n\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:00 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:05 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:10 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:15 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:20 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:25 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:30 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:35 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:40 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:45 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:50 PM</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">11:55 PM</mat-option>\r\n\r\n\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t\t\t\t<mat-select class='inputBy w50'>\r\n\t\t\t\t\t\t\t<mat-option>None</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option1\">Option 1</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option2\">Option 2</mat-option>\r\n\t\t\t\t\t\t\t<mat-option value=\"option3\">Option 3</mat-option>\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t</ng-template>\r\n\t\t\t\t\t</ngb-tab>\r\n\t\t\t\t\t<ngb-tab title=\"Dias Libres\" >\r\n\t\t\t\t\t<ng-template ngbTabContent>\r\n\r\n\r\n\t\t\t\t\t</ng-template>\r\n\t\t\t\t\t</ngb-tab>\r\n\r\n\t\t\t\t\t<ngb-tab title=\"Detalle Contacto\" >\r\n\t\t\t\t\t<ng-template ngbTabContent>\r\n\r\n\r\n\t\t\t\t\t</ng-template>\r\n\t\t\t\t\t</ngb-tab>\r\n\r\n\t\t\t\t</ngb-tabset>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\r\n\r\n\r\n\t\t</div>\r\n<!-- \r\n\t\t<div style=\"    padding: 40px 60px;width: 100%\">\r\n\r\n\t\t\t\r\n\t</div> -->\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n</div>\r\n\r\n"
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 30px;\">Staff</div>\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" \r\n\t\t[routerLink]=\"['/addstaff']\"  mat-raised-button color=\"primary\" matTooltip=\"Crear nuevo servicio\">Agregar miembro del Staff</button>\r\n\r\n</div>\r\n\r\n<div class=\"row\">\r\n\r\n\t <ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\r\n\t \r\n\t<div class=\"col-xl-4\" style=\"padding-right: 0px;    border-right: solid 1px lightgray;\" >\r\n\r\n\r\n\r\n<mat-nav-list style='padding-top: 0px '>\r\n\r\n  <mat-list-item *ngFor=\"let e of empleados; let i = index\" [ngClass]=\"{'selectedItem': selected == e.idEmpleado}\" (click)=\"itemSelectedChange(e)\">\r\n    <img matListAvatar src=\"http://50.116.17.150:3000/{{e.idFoto}}\" \r\n    onError=\"this.src='assets/app/media/img/userB.png'\">\r\n    <h3 matLine> {{e.nombre}} </h3>\r\n    <p matLine>\r\n      <span class=\"tagStaff\">{{e.tipo == 1 ? 'MIEMBRO ADMINISTRADOR' : \r\n\t\t\t\t\t  e.tipo == 2 ? 'MIEMBRO BASICO' : 'RECEPCION'}}</span>\r\n \r\n    </p>\r\n  </mat-list-item>\r\n\r\n  <!-- \r\n\r\n    <mat-list-item [ngClass]=\"{'selectedItem': selected == 2}\" (click)=\"itemSelectedChange(2)\">\r\n    <img matListAvatar src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\" >\r\n    <h3 matLine> Maria Segura  </h3>\r\n    <p matLine>\r\n        <span class=\"tagStaff\">MIEMBRO ADMINISTRADOR</span>\r\n    </p>\r\n  </mat-list-item>\r\n\r\n      <mat-list-item [ngClass]=\"{'selectedItem': selected == 3}\" (click)=\"itemSelectedChange(3)\">\r\n    <img matListAvatar src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\" >\r\n    <h3 matLine> Luisa Corrales </h3>\r\n    <p matLine>\r\n      <span class=\"tagStaff\">MIEMBRO ADMINISTRADOR</span>\r\n    </p>\r\n  </mat-list-item> -->\r\n\r\n\r\n\r\n</mat-nav-list>\r\n\r\n\r\n\r\n\r\n\t\t\t\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\r\n\r\n\t<div class=\"col-xl-8\" style=\"padding-left: 0px !important\">\r\n\r\n\t\t<div style=\"\">\r\n\t\t\t<div style=\"    border-bottom: solid 1px lightgray;font-size: 16px;font-weight: 400;line-height: 1.5;color: #383734;background: #fff;\">\r\n\t\t\t\t<div style=\"display: table-cell;padding: 0 10px;vertical-align: middle;\">\r\n\t\t\t\t\t<div style=\"font-size: 70px; width: 72px;min-height: 72px;\">\r\n\t\t\t\t\t\t <img  src=\"http://50.116.17.150:3000/{{miembroSeleccionado.idFoto}}\" \r\n    onError=\"this.src='assets/app/media/img/userB.png'\" style=\"border-radius: 50%;z-index: 1;position: relative;height: 70px;width: 70px;\">\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div style=\"display: table-cell;padding: 0 10px;vertical-align: middle;    width: 100%;\">\r\n\t\t\t\t\t<div style=\"width: 100%;\">{{miembroSeleccionado.nombre}}<span class=\"tagStaff\">{{miembroSeleccionado.tipo == 1 ? 'MIEMBRO ADMINISTRADOR' : \r\n\t\t\t\t\t  miembroSeleccionado.tipo == 2 ? 'MIEMBRO BASICO' : 'RECEPCION'}}</span></div>\r\n\r\n\t\t\t\t\t<div style=\"display: block;vertical-align: top;\">\r\n\t\t\t\t\t\t\t\t\t\t<div style=\"float: right !important;display: inline-block; min-height: 1px;vertical-align: top; margin: 0;padding: 0;\">\r\n\t\t\t\t\t\t\t<button  \t[routerLink]=\"['/editstaff']\"  \r\n\t\t\t\t\t\t\t[queryParams]=miembroSeleccionado \r\n\t\t class=\"btn btn-outline-success\" style=\"margin-top: 3px;float: right;margin-right: 10px;\"  mat-raised-button color=\"primary\" >Editar Perfil</button>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div style=\"float: right !important;display: inline-block; min-height: 1px;vertical-align: top; margin: 0;padding: 0;\">\r\n\t\t\t\t\t\t\t\t<button  class=\"btn btn-success\" style=\"margin-top: 3px;float: right;margin-right: 10px;\" [disabled]='true' mat-raised-button color=\"primary\" >Nueva Reserva</button>\r\n\t\t\t\t\t\t</div>\r\n\t\t\r\n\t\t\t\t\t\t    \r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\r\n\r\n\t\t<div class=\"m-section\" style=\"margin-top: 30px\">\r\n\t\t\t<div class=\"m-section__content\">\r\n\t\t\t\t<ngb-tabset>\r\n\t\t\t\t\t<ngb-tab title=\"Servicios\">\r\n\t\t\t\t\t<ng-template ngbTabContent>\r\n\r\n\r\n\r\n\t\t\t\t\t\t\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t<div style=\"color:darkgray;font-size: 16px;font-weight: 500 !important;margin-bottom: 20px;\">\r\n\t\t\tElige los servicios que el empleado brinda</div>\r\n\t\t\t\t\t<div style=\"border: solid 1px lightgray;padding: 20px;\">\r\n\r\n\t\t\t\t\t\r\n\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t\t<div *ngFor=\"let k of keys;  let m = index\">\r\n\t\t\t\t\t\t\t<div class='tituloCateg'>{{k}}</div>\r\n\r\n\t\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: rgb(250,249,247);padding: 10px 10px;\" *ngFor=\"let item of serviciosValues[m];  let i = index\">\r\n\t\t\t\t\t\t\t<mat-checkbox name=\"{{item.idEmpleado}}-name\" (change)=\"OnChange($event,item)\" [checked]=\"item.idServicioEmpleado\">\r\n\t\t\t\t\t\t\t\t<span class=\"txtF\">\r\n\t\t\t\t\t\t\t\t\t{{item.nombre}} / \r\n\t\t\t\t\t\t\t\t\t<span  [ngClass]=\"{'underl': item.oferta}\">${{item.precio}}</span>\r\n\t\t\t\t\t\t\t\t\t<span style=\"margin-left: 10px;font-weight: 500;\" *ngIf='item.oferta' >${{item.oferta}}</span>\r\n\t\t\t\t\t\t\t\t</span></mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t</div>\t\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t</div>\r\n\r\n\t\t</div>\r\n\r\n\r\n\t\t\t\t\t</ng-template>\r\n\t\t\t\t\t</ngb-tab>\r\n\t\t\t\t\t<ngb-tab  title=\"Horario\">\r\n\t\t\t\t\t<ng-template ngbTabContent >\r\n\t\t\t\t\t\t<div style='padding: 30px 45px;'>\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t<mat-checkbox  [(ngModel)]='diasSemana.domingo.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Domingo</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.domingo.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tNO TRABAJA\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.domingo.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.domingo.horaEntrar' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.domingo.horaSalir' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t<mat-checkbox [(ngModel)]='diasSemana.lunes.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Lunes</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.lunes.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tNO TRABAJA\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.lunes.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.lunes.horaEntrar' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.lunes.horaSalir' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t<mat-checkbox [(ngModel)]='diasSemana.martes.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Martes</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.martes.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tNO TRABAJA\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.martes.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.martes.horaEntrar' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.martes.horaSalir' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t<mat-checkbox [(ngModel)]='diasSemana.miercoles.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Miercoles</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.miercoles.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tNO TRABAJA\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.miercoles.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.miercoles.horaEntrar' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.miercoles.horaSalir' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t<mat-checkbox [(ngModel)]='diasSemana.jueves.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Jueves</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.jueves.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tNO TRABAJA\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.jueves.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.jueves.horaEntrar' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.jueves.horaSalir' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t<mat-checkbox [(ngModel)]='diasSemana.viernes.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Viernes</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.viernes.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tNO TRABAJA\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.viernes.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.viernes.horaEntrar' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.viernes.horaSalir' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t<mat-checkbox [(ngModel)]='diasSemana.sabado.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Sabado</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.sabado.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tNO TRABAJA\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.sabado.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.sabado.horaEntrar' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t\t\t\t<mat-select [(ngModel)]='diasSemana.sabado.horaSalir' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n\t\t\t\t\t    float: right;\r\n\t\t\t\t\t    margin-right: 10px;\" (click)='guardarHorario()'>Guardar</button>\r\n\r\n\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t</ng-template>\r\n\t\t\t\t\t</ngb-tab>\r\n\t\t\t\t\t<ngb-tab title=\"Dias Libres\" >\r\n\t\t\t\t\t<ng-template ngbTabContent>\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\r\n\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t<p style=\"    text-align: center;\r\n    font-size: 16px;\r\n    font-weight: 400;\r\n    margin-top: 30px;\r\n    margin-bottom: 30px;\">Agrega un bloque libre para el empleado</p>\r\n\t\t\t\t\r\n\t\t\t\t\t\t\t<div  style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t  <mat-form-field style='    margin: auto;' class='inputBy'>\r\n\t\t\t\t\t\t\t\t    <input [(ngModel)]='tiempoLibre.inicio' matInput [matDatepicker]=\"dp3\" placeholder=\"Inicio\" disabled>\r\n\t\t\t\t\t\t\t\t\t<mat-datepicker-toggle matSuffix [for]=\"dp3\">\r\n\t\t\t\t\t\t\t\t  </mat-datepicker-toggle>\r\n\t\t\t\t\t\t\t\t  <mat-datepicker #dp3 disabled=\"false\"></mat-datepicker>\r\n\t\t\t\t\t\t\t\t    </mat-form-field>\r\n\t\t\t\t\t\t\t\t\r\n\r\n\r\n\t\t\t\t\t\t\t\t<mat-form-field  style='    margin: auto;'  class='inputBy'>\r\n\t\t\t\t\t\t\t\t    <input [(ngModel)]='tiempoLibre.fin' matInput [matDatepicker]=\"dp4\" placeholder=\"Finaliza\" disabled>\r\n\t\t\t\t\t\t\t\t\t<mat-datepicker-toggle matSuffix [for]=\"dp4\">\r\n\t\t\t\t\t\t\t\t  </mat-datepicker-toggle>\r\n\t\t\t\t\t\t\t\t  <mat-datepicker #dp4 disabled=\"false\"></mat-datepicker>\r\n\t\t\t\t\t\t\t\t    </mat-form-field>\r\n\r\n\t\t\t\t\t<button [disabled]='!tiempoLibre.fin || !tiempoLibre.inicio' class=\"btn btn-success\" style=\"margin: auto;float: right;margin-right: 20px;\" (click)='agregarBloque()'>Agregar</button>\r\n\r\n\t\t\t\t\t\t\t\t\r\n<!-- \t\t\t\t\t\t\t<mat-select [(ngModel)]='diasSemana.sabado.horaSalir' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select> -->\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t    <hr>\r\n\r\n\r\n\t\t\t\t\t    <!-- \tAQUI LOS ITEMNS -->\r\n\r\n\r\n\t\t\t\t\t    <div  *ngFor=\"let h of horarioEspecial; let i = index\"  style=\"border-bottom: solid 1px lightgray;display: flex;font-size: 16px;padding: 20px\"> \r\n\t\t\t\t\t    <div><span style=\"font-weight: 400; margin-right: 20px\">Inicia:</span>{{h.fechaInicio}}</div> \r\n\t\t\t\t\t    <span style=\"margin-left: 20px;margin-right: 20px\">- </span>\r\n\t\t\t\t\t    <div><span style=\"font-weight: 400;margin-right: 20px\">Finaliza:</span>{{h.fechaFinal}}</div>\r\n\r\n\t\t\t\t\t    \t<mat-icon class='iconGG' (click)='borrarBloque(h.idEmpleadoBloqueLibre)' style='margin-left: 23px;background: darkgray; margin: auto;height: 20px;line-height: 20px;color: white;text-align: center;'>\r\n\t\t\t\t\t    \tclose\r\n\t\t\t\t\t    \t</mat-icon>\r\n\r\n\t\t\t\t\t    </div>\r\n\r\n\r\n\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t</ng-template>\r\n\t\t\t\t\t</ngb-tab>\r\n\r\n\t\t\t\t\t<ngb-tab title=\"Detalle Contacto\" >\r\n\t\t\t\t\t<ng-template ngbTabContent>\r\n\r\n\t\t\t\t\t\t\t<div style='padding: 30px 45px;'>\r\n\r\n\t\t\t\t\t\t\t\t<div style=\"margin: 20px 0px;\">\r\n\t\t\t\t\t\t\t\t\t<span style=\"font-weight: 600;display: block;margin-bottom: 15px;\">Email</span>\r\n\t\t\t\t\t\t\t\t\t<span>{{miembroSeleccionado.email}}</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t<hr>\r\n\r\n\t\t\t\t\t\t\t\t<div  style=\"margin: 20px 0px;\">\r\n\t\t\t\t\t\t\t\t\t<span style=\"font-weight: 600;display: block;margin-bottom: 15px;\">Descripcion</span>\r\n\t\t\t\t\t\t\t\t\t<span>{{miembroSeleccionado.descripcion}}</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t</ng-template>\r\n\t\t\t\t\t</ngb-tab>\r\n\r\n\t\t\t\t</ngb-tabset>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\r\n\r\n\r\n\t\t</div>\r\n<!-- \r\n\t\t<div style=\"    padding: 40px 60px;width: 100%\">\r\n\r\n\t\t\t\r\n\t</div> -->\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -1824,7 +2765,7 @@ module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,24
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".txtF {\n  color: #383734;\n  font-size: 16px; }\n\n.tituloCateg {\n  font-size: 16px;\n  margin-bottom: 10px;\n  margin-top: 15px;\n  font-weight: 400; }\n\n.w50 {\n  display: flex;\n  width: 50%; }\n\ninput:focus {\n  outline: none !important;\n  border: 1px solid #34bfa3; }\n\n.inputBy {\n  color: #383734;\n  background: #fff;\n  border: 1px solid #e1e1e1;\n  border-radius: 4px;\n  min-height: 40px;\n  padding: 7px 10px;\n  resize: vertical;\n  -webkit-appearance: none;\n  -moz-appearance: none; }\n\n.w100 {\n  display: block;\n  width: 100%; }\n\n.imgCheckBox {\n  height: 34px;\n  width: 34px;\n  border-radius: 20px;\n  margin: 5px 11px; }\n\n.conteinInput {\n  margin-bottom: 30px; }\n\n.labelBy {\n  display: inline-block;\n  margin-bottom: 10px;\n  font-size: 16px;\n  font-weight: 500 !important;\n  line-height: 1.5;\n  color: #383734; }\n\n.selectedItem {\n  background: dimgrey;\n  color: white; }\n\nmat-list-item:hover {\n  background: dimgrey !important;\n  color: white; }\n\nmat-list-item {\n  border-bottom: solid 1px lightgray; }\n\n.tagStaff {\n  color: #00beb7;\n  background: #e5f8f7;\n  font-size: 10px;\n  font-weight: 500;\n  line-height: 12px;\n  text-align: center;\n  text-transform: uppercase;\n  border-radius: 2px;\n  display: inline-block;\n  padding: 2px 10px;\n  min-width: 100px;\n  vertical-align: middle; }\n"
+module.exports = ".txtF {\n  color: #383734;\n  font-size: 16px; }\n\n.tituloCateg {\n  font-size: 16px;\n  margin-bottom: 10px;\n  margin-top: 15px;\n  font-weight: 400; }\n\n.iconGG:hover {\n  background-color: #34bfa3 !important; }\n\n.w50 {\n  display: flex;\n  width: 50%; }\n\ninput:focus {\n  outline: none !important;\n  border: 1px solid #34bfa3; }\n\n.inputBy {\n  color: #383734;\n  background: #fff;\n  border: 1px solid #e1e1e1;\n  border-radius: 4px;\n  min-height: 40px;\n  padding: 7px 10px;\n  resize: vertical;\n  -webkit-appearance: none;\n  -moz-appearance: none; }\n\n.w100 {\n  display: block;\n  width: 100%; }\n\n.imgCheckBox {\n  height: 34px;\n  width: 34px;\n  border-radius: 20px;\n  margin: 5px 11px; }\n\n.conteinInput {\n  margin-bottom: 30px; }\n\n.labelBy {\n  display: inline-block;\n  margin-bottom: 10px;\n  font-size: 16px;\n  font-weight: 500 !important;\n  line-height: 1.5;\n  color: #383734; }\n\n.selectedItem {\n  background: dimgrey;\n  color: white; }\n\nmat-list-item:hover {\n  background: dimgrey !important;\n  color: white; }\n\nmat-list-item {\n  border-bottom: solid 1px lightgray; }\n\n.tagStaff {\n  color: #00beb7;\n  background: #e5f8f7;\n  font-size: 10px;\n  font-weight: 500;\n  line-height: 12px;\n  text-align: center;\n  text-transform: uppercase;\n  border-radius: 2px;\n  display: inline-block;\n  padding: 2px 10px;\n  min-width: 100px;\n  vertical-align: middle; }\n"
 
 /***/ }),
 
@@ -1839,6 +2780,7 @@ module.exports = ".txtF {\n  color: #383734;\n  font-size: 16px; }\n\n.tituloCat
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StaffComponent", function() { return StaffComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../core/auth/authentication.service */ "./src/app/core/auth/authentication.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1849,15 +2791,429 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 var StaffComponent = /** @class */ (function () {
-    function StaffComponent() {
+    function StaffComponent(authService, cdr) {
+        this.authService = authService;
+        this.cdr = cdr;
+        this.horarioHoras = [
+            { 'text': '12:00 AM', 'valor': '00:00:00' },
+            { 'text': '12:05 AM', 'valor': '00:05:00' },
+            { 'text': '12:10 AM', 'valor': '00:10:00' },
+            { 'text': '12:15 AM', 'valor': '00:15:00' },
+            { 'text': '12:20 AM', 'valor': '00:20:00' },
+            { 'text': '12:25 AM', 'valor': '00:25:00' },
+            { 'text': '12:30 AM', 'valor': '00:30:00' },
+            { 'text': '12:35 AM', 'valor': '00:35:00' },
+            { 'text': '12:40 AM', 'valor': '00:40:00' },
+            { 'text': '12:45 AM', 'valor': '00:45:00' },
+            { 'text': '12:55 AM', 'valor': '00:55:00' },
+            { 'text': '01:00 AM', 'valor': '01:00:00' },
+            { 'text': '01:05 AM', 'valor': '01:05:00' },
+            { 'text': '01:10 AM', 'valor': '01:10:00' },
+            { 'text': '01:15 AM', 'valor': '01:15:00' },
+            { 'text': '01:20 AM', 'valor': '01:20:00' },
+            { 'text': '01:25 AM', 'valor': '01:25:00' },
+            { 'text': '01:30 AM', 'valor': '01:30:00' },
+            { 'text': '01:35 AM', 'valor': '01:35:00' },
+            { 'text': '01:40 AM', 'valor': '01:40:00' },
+            { 'text': '01:45 AM', 'valor': '01:45:00' },
+            { 'text': '01:55 AM', 'valor': '01:55:00' },
+            { 'text': '02:00 AM', 'valor': '02:00:00' },
+            { 'text': '02:05 AM', 'valor': '02:05:00' },
+            { 'text': '02:10 AM', 'valor': '02:10:00' },
+            { 'text': '02:15 AM', 'valor': '02:15:00' },
+            { 'text': '02:20 AM', 'valor': '02:20:00' },
+            { 'text': '02:25 AM', 'valor': '02:25:00' },
+            { 'text': '02:30 AM', 'valor': '02:30:00' },
+            { 'text': '02:35 AM', 'valor': '02:35:00' },
+            { 'text': '02:40 AM', 'valor': '02:40:00' },
+            { 'text': '02:45 AM', 'valor': '02:45:00' },
+            { 'text': '02:55 AM', 'valor': '02:55:00' },
+            { 'text': '03:00 AM', 'valor': '03:00:00' },
+            { 'text': '03:05 AM', 'valor': '03:05:00' },
+            { 'text': '03:10 AM', 'valor': '03:10:00' },
+            { 'text': '03:15 AM', 'valor': '03:15:00' },
+            { 'text': '03:20 AM', 'valor': '03:20:00' },
+            { 'text': '03:25 AM', 'valor': '03:25:00' },
+            { 'text': '03:30 AM', 'valor': '03:30:00' },
+            { 'text': '03:35 AM', 'valor': '03:35:00' },
+            { 'text': '03:40 AM', 'valor': '03:40:00' },
+            { 'text': '03:45 AM', 'valor': '03:45:00' },
+            { 'text': '03:55 AM', 'valor': '03:55:00' },
+            { 'text': '04:00 AM', 'valor': '04:00:00' },
+            { 'text': '04:05 AM', 'valor': '04:05:00' },
+            { 'text': '04:10 AM', 'valor': '04:10:00' },
+            { 'text': '04:15 AM', 'valor': '04:15:00' },
+            { 'text': '04:20 AM', 'valor': '04:20:00' },
+            { 'text': '04:25 AM', 'valor': '04:25:00' },
+            { 'text': '04:30 AM', 'valor': '04:30:00' },
+            { 'text': '04:35 AM', 'valor': '04:35:00' },
+            { 'text': '04:40 AM', 'valor': '04:40:00' },
+            { 'text': '04:45 AM', 'valor': '04:45:00' },
+            { 'text': '04:55 AM', 'valor': '04:55:00' },
+            { 'text': '05:00 AM', 'valor': '05:00:00' },
+            { 'text': '05:05 AM', 'valor': '05:05:00' },
+            { 'text': '05:10 AM', 'valor': '05:10:00' },
+            { 'text': '05:15 AM', 'valor': '05:15:00' },
+            { 'text': '05:20 AM', 'valor': '05:20:00' },
+            { 'text': '05:25 AM', 'valor': '05:25:00' },
+            { 'text': '05:30 AM', 'valor': '05:30:00' },
+            { 'text': '05:35 AM', 'valor': '05:35:00' },
+            { 'text': '05:40 AM', 'valor': '05:40:00' },
+            { 'text': '05:45 AM', 'valor': '05:45:00' },
+            { 'text': '05:55 AM', 'valor': '05:55:00' },
+            { 'text': '06:00 AM', 'valor': '06:00:00' },
+            { 'text': '06:05 AM', 'valor': '06:05:00' },
+            { 'text': '06:10 AM', 'valor': '06:10:00' },
+            { 'text': '06:15 AM', 'valor': '06:15:00' },
+            { 'text': '06:20 AM', 'valor': '06:20:00' },
+            { 'text': '06:25 AM', 'valor': '06:25:00' },
+            { 'text': '06:30 AM', 'valor': '06:30:00' },
+            { 'text': '06:35 AM', 'valor': '06:35:00' },
+            { 'text': '06:40 AM', 'valor': '06:40:00' },
+            { 'text': '06:45 AM', 'valor': '06:45:00' },
+            { 'text': '06:55 AM', 'valor': '06:55:00' },
+            { 'text': '07:00 AM', 'valor': '07:00:00' },
+            { 'text': '07:05 AM', 'valor': '07:05:00' },
+            { 'text': '07:10 AM', 'valor': '07:10:00' },
+            { 'text': '07:15 AM', 'valor': '07:15:00' },
+            { 'text': '07:20 AM', 'valor': '07:20:00' },
+            { 'text': '07:25 AM', 'valor': '07:25:00' },
+            { 'text': '07:30 AM', 'valor': '07:30:00' },
+            { 'text': '07:35 AM', 'valor': '07:35:00' },
+            { 'text': '07:40 AM', 'valor': '07:40:00' },
+            { 'text': '07:45 AM', 'valor': '07:45:00' },
+            { 'text': '07:55 AM', 'valor': '07:55:00' },
+            { 'text': '08:00 AM', 'valor': '08:00:00' },
+            { 'text': '08:05 AM', 'valor': '08:05:00' },
+            { 'text': '08:10 AM', 'valor': '08:10:00' },
+            { 'text': '08:15 AM', 'valor': '08:15:00' },
+            { 'text': '08:20 AM', 'valor': '08:20:00' },
+            { 'text': '08:25 AM', 'valor': '08:25:00' },
+            { 'text': '08:30 AM', 'valor': '08:30:00' },
+            { 'text': '08:35 AM', 'valor': '08:35:00' },
+            { 'text': '08:40 AM', 'valor': '08:40:00' },
+            { 'text': '08:45 AM', 'valor': '08:45:00' },
+            { 'text': '08:55 AM', 'valor': '08:55:00' },
+            { 'text': '09:00 AM', 'valor': '09:00:00' },
+            { 'text': '09:05 AM', 'valor': '09:05:00' },
+            { 'text': '09:10 AM', 'valor': '09:10:00' },
+            { 'text': '09:15 AM', 'valor': '09:15:00' },
+            { 'text': '09:20 AM', 'valor': '09:20:00' },
+            { 'text': '09:25 AM', 'valor': '09:25:00' },
+            { 'text': '09:30 AM', 'valor': '09:30:00' },
+            { 'text': '09:35 AM', 'valor': '09:35:00' },
+            { 'text': '09:40 AM', 'valor': '09:40:00' },
+            { 'text': '09:45 AM', 'valor': '09:45:00' },
+            { 'text': '09:55 AM', 'valor': '09:55:00' },
+            { 'text': '10:00 AM', 'valor': '10:00:00' },
+            { 'text': '10:05 AM', 'valor': '10:05:00' },
+            { 'text': '10:10 AM', 'valor': '10:10:00' },
+            { 'text': '10:15 AM', 'valor': '10:15:00' },
+            { 'text': '10:20 AM', 'valor': '10:20:00' },
+            { 'text': '10:25 AM', 'valor': '10:25:00' },
+            { 'text': '10:30 AM', 'valor': '10:30:00' },
+            { 'text': '10:35 AM', 'valor': '10:35:00' },
+            { 'text': '10:40 AM', 'valor': '10:40:00' },
+            { 'text': '10:45 AM', 'valor': '10:45:00' },
+            { 'text': '10:55 AM', 'valor': '10:55:00' },
+            { 'text': '11:00 AM', 'valor': '11:00:00' },
+            { 'text': '11:05 AM', 'valor': '11:05:00' },
+            { 'text': '11:10 AM', 'valor': '11:10:00' },
+            { 'text': '11:15 AM', 'valor': '11:15:00' },
+            { 'text': '11:20 AM', 'valor': '11:20:00' },
+            { 'text': '11:25 AM', 'valor': '11:25:00' },
+            { 'text': '11:30 AM', 'valor': '11:30:00' },
+            { 'text': '11:35 AM', 'valor': '11:35:00' },
+            { 'text': '11:40 AM', 'valor': '11:40:00' },
+            { 'text': '11:45 AM', 'valor': '11:45:00' },
+            { 'text': '11:55 AM', 'valor': '11:55:00' },
+            { 'text': '12:00 PM', 'valor': '12:00:00' },
+            { 'text': '12:05 PM', 'valor': '12:05:00' },
+            { 'text': '12:12 PM', 'valor': '12:12:00' },
+            { 'text': '12:15 PM', 'valor': '12:15:00' },
+            { 'text': '12:20 PM', 'valor': '12:20:00' },
+            { 'text': '12:25 PM', 'valor': '12:25:00' },
+            { 'text': '12:30 PM', 'valor': '12:30:00' },
+            { 'text': '12:35 PM', 'valor': '12:35:00' },
+            { 'text': '12:40 PM', 'valor': '12:40:00' },
+            { 'text': '12:45 PM', 'valor': '12:45:00' },
+            { 'text': '12:55 PM', 'valor': '12:55:00' },
+            { 'text': '01:00 PM', 'valor': '13:00:00' },
+            { 'text': '01:05 PM', 'valor': '13:05:00' },
+            { 'text': '01:01 PM', 'valor': '13:01:00' },
+            { 'text': '01:15 PM', 'valor': '13:15:00' },
+            { 'text': '01:20 PM', 'valor': '13:20:00' },
+            { 'text': '01:25 PM', 'valor': '13:25:00' },
+            { 'text': '01:30 PM', 'valor': '13:30:00' },
+            { 'text': '01:35 PM', 'valor': '13:35:00' },
+            { 'text': '01:40 PM', 'valor': '13:40:00' },
+            { 'text': '01:45 PM', 'valor': '13:45:00' },
+            { 'text': '01:55 PM', 'valor': '13:55:00' },
+            { 'text': '02:00 PM', 'valor': '14:00:00' },
+            { 'text': '02:05 PM', 'valor': '14:05:00' },
+            { 'text': '02:02 PM', 'valor': '14:02:00' },
+            { 'text': '02:15 PM', 'valor': '14:15:00' },
+            { 'text': '02:20 PM', 'valor': '14:20:00' },
+            { 'text': '02:25 PM', 'valor': '14:25:00' },
+            { 'text': '02:30 PM', 'valor': '14:30:00' },
+            { 'text': '02:35 PM', 'valor': '14:35:00' },
+            { 'text': '02:40 PM', 'valor': '14:40:00' },
+            { 'text': '02:45 PM', 'valor': '14:45:00' },
+            { 'text': '02:55 PM', 'valor': '14:55:00' },
+            { 'text': '03:00 PM', 'valor': '15:00:00' },
+            { 'text': '03:05 PM', 'valor': '15:05:00' },
+            { 'text': '03:03 PM', 'valor': '15:03:00' },
+            { 'text': '03:15 PM', 'valor': '15:15:00' },
+            { 'text': '03:20 PM', 'valor': '15:20:00' },
+            { 'text': '03:25 PM', 'valor': '15:25:00' },
+            { 'text': '03:30 PM', 'valor': '15:30:00' },
+            { 'text': '03:35 PM', 'valor': '15:35:00' },
+            { 'text': '03:40 PM', 'valor': '15:40:00' },
+            { 'text': '03:45 PM', 'valor': '15:45:00' },
+            { 'text': '03:55 PM', 'valor': '15:55:00' },
+            { 'text': '04:00 PM', 'valor': '16:00:00' },
+            { 'text': '04:05 PM', 'valor': '16:05:00' },
+            { 'text': '04:10 PM', 'valor': '16:10:00' },
+            { 'text': '04:15 PM', 'valor': '16:15:00' },
+            { 'text': '04:20 PM', 'valor': '16:20:00' },
+            { 'text': '04:25 PM', 'valor': '16:25:00' },
+            { 'text': '04:30 PM', 'valor': '16:30:00' },
+            { 'text': '04:35 PM', 'valor': '16:35:00' },
+            { 'text': '04:40 PM', 'valor': '16:40:00' },
+            { 'text': '04:45 PM', 'valor': '16:45:00' },
+            { 'text': '04:55 PM', 'valor': '16:55:00' },
+            { 'text': '05:00 PM', 'valor': '17:00:00' },
+            { 'text': '05:05 PM', 'valor': '17:05:00' },
+            { 'text': '05:10 PM', 'valor': '17:15:00' },
+            { 'text': '05:15 PM', 'valor': '17:15:00' },
+            { 'text': '05:20 PM', 'valor': '17:20:00' },
+            { 'text': '05:25 PM', 'valor': '17:25:00' },
+            { 'text': '05:30 PM', 'valor': '17:30:00' },
+            { 'text': '05:35 PM', 'valor': '17:35:00' },
+            { 'text': '05:40 PM', 'valor': '17:40:00' },
+            { 'text': '05:45 PM', 'valor': '17:45:00' },
+            { 'text': '05:55 PM', 'valor': '17:55:00' },
+            { 'text': '06:00 PM', 'valor': '18:00:00' },
+            { 'text': '06:05 PM', 'valor': '18:05:00' },
+            { 'text': '06:10 PM', 'valor': '18:10:00' },
+            { 'text': '06:15 PM', 'valor': '18:15:00' },
+            { 'text': '06:20 PM', 'valor': '18:20:00' },
+            { 'text': '06:25 PM', 'valor': '18:25:00' },
+            { 'text': '06:30 PM', 'valor': '18:30:00' },
+            { 'text': '06:35 PM', 'valor': '18:35:00' },
+            { 'text': '06:40 PM', 'valor': '18:40:00' },
+            { 'text': '06:45 PM', 'valor': '18:45:00' },
+            { 'text': '06:55 PM', 'valor': '18:55:00' },
+            { 'text': '07:00 PM', 'valor': '19:00:00' },
+            { 'text': '07:05 PM', 'valor': '19:05:00' },
+            { 'text': '07:10 PM', 'valor': '19:10:00' },
+            { 'text': '07:15 PM', 'valor': '19:15:00' },
+            { 'text': '07:20 PM', 'valor': '19:20:00' },
+            { 'text': '07:25 PM', 'valor': '19:25:00' },
+            { 'text': '07:30 PM', 'valor': '19:30:00' },
+            { 'text': '07:35 PM', 'valor': '19:35:00' },
+            { 'text': '07:40 PM', 'valor': '19:40:00' },
+            { 'text': '07:45 PM', 'valor': '19:45:00' },
+            { 'text': '07:55 PM', 'valor': '19:55:00' },
+            { 'text': '08:00 PM', 'valor': '20:00:00' },
+            { 'text': '08:05 PM', 'valor': '20:05:00' },
+            { 'text': '08:10 PM', 'valor': '20:10:00' },
+            { 'text': '08:15 PM', 'valor': '20:15:00' },
+            { 'text': '08:20 PM', 'valor': '20:20:00' },
+            { 'text': '08:25 PM', 'valor': '20:25:00' },
+            { 'text': '08:30 PM', 'valor': '20:30:00' },
+            { 'text': '08:35 PM', 'valor': '20:35:00' },
+            { 'text': '08:40 PM', 'valor': '20:40:00' },
+            { 'text': '08:45 PM', 'valor': '20:45:00' },
+            { 'text': '08:55 PM', 'valor': '20:55:00' },
+            { 'text': '09:00 PM', 'valor': '21:00:00' },
+            { 'text': '09:05 PM', 'valor': '21:05:00' },
+            { 'text': '09:10 PM', 'valor': '21:10:00' },
+            { 'text': '09:15 PM', 'valor': '21:15:00' },
+            { 'text': '09:20 PM', 'valor': '21:20:00' },
+            { 'text': '09:25 PM', 'valor': '21:25:00' },
+            { 'text': '09:30 PM', 'valor': '21:30:00' },
+            { 'text': '09:35 PM', 'valor': '21:35:00' },
+            { 'text': '09:40 PM', 'valor': '21:40:00' },
+            { 'text': '09:45 PM', 'valor': '21:45:00' },
+            { 'text': '09:55 PM', 'valor': '21:55:00' },
+            { 'text': '10:00 PM', 'valor': '22:00:00' },
+            { 'text': '10:05 PM', 'valor': '22:05:00' },
+            { 'text': '10:10 PM', 'valor': '22:10:00' },
+            { 'text': '10:15 PM', 'valor': '22:15:00' },
+            { 'text': '10:20 PM', 'valor': '22:20:00' },
+            { 'text': '10:25 PM', 'valor': '22:25:00' },
+            { 'text': '10:30 PM', 'valor': '22:30:00' },
+            { 'text': '10:35 PM', 'valor': '22:35:00' },
+            { 'text': '10:40 PM', 'valor': '22:40:00' },
+            { 'text': '10:45 PM', 'valor': '22:45:00' },
+            { 'text': '10:55 PM', 'valor': '22:55:00' },
+            { 'text': '11:00 PM', 'valor': '23:00:00' },
+            { 'text': '11:05 PM', 'valor': '23:05:00' },
+            { 'text': '11:10 PM', 'valor': '23:10:00' },
+            { 'text': '11:15 PM', 'valor': '23:15:00' },
+            { 'text': '11:20 PM', 'valor': '23:20:00' },
+            { 'text': '11:25 PM', 'valor': '23:25:00' },
+            { 'text': '11:30 PM', 'valor': '23:30:00' },
+            { 'text': '11:35 PM', 'valor': '23:35:00' },
+            { 'text': '11:40 PM', 'valor': '23:40:00' },
+            { 'text': '11:45 PM', 'valor': '23:45:00' },
+            { 'text': '11:55 PM', 'valor': '23:55:00' },
+        ];
+        this.loadingScreen = false;
+        this.tiempoLibre = {};
+        this.diasSemana = { domingo: {}, lunes: {}, martes: {}, miercoles: {}, jueves: {}, viernes: {}, sabado: {} };
+        this.empleados = [];
+        this.miembroSeleccionado = {};
+        this.keys = [];
+        this.serviciosValues = [];
+        this.horarioEmpleado = [];
+        this.horarioEspecial = [];
         this.typesOfShoes = ['Juan Mario', 'Clogs Leys', 'Loafers Ramires', 'Juana R', 'Ines Sacnes'];
         this.selected = 0;
+        var retrievedObject = JSON.parse(localStorage.getItem('userADby2as'));
+        this.idCentro = retrievedObject.idCentro;
+        this.diasSemana.domingo = { diaSemana: 0, estado: 0 };
+        this.diasSemana.lunes = { diaSemana: 1, estado: 0 };
+        this.diasSemana.martes = { diaSemana: 2, estado: 0 };
+        this.diasSemana.miercoles = { diaSemana: 3, estado: 0 };
+        this.diasSemana.jueves = { diaSemana: 4, estado: 0 };
+        this.diasSemana.viernes = { diaSemana: 5, estado: 0 };
+        this.diasSemana.sabado = { diaSemana: 6, estado: 0 };
     }
     StaffComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.loadingScreen = true;
+        this.authService.getStaff({ idCentro: this.idCentro })
+            .subscribe(function (data) {
+            _this.loadingScreen = false;
+            _this.empleados = data;
+            if (_this.empleados.length > 0) {
+                _this.itemSelectedChange(_this.empleados[0]);
+            }
+            ;
+            _this.cdr.detectChanges();
+            console.log(data);
+        }, function (err) {
+            _this.loadingScreen = false;
+            _this.cdr.detectChanges();
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+    };
+    StaffComponent.prototype.borrarBloque = function (id) {
+        var _this = this;
+        this.authService.deleteLibresNC({ idEmpleadoBloqueLibre: id })
+            .subscribe(function (data) {
+            console.log(data);
+            _this.itemSelectedChange(_this.miembroSeleccionado);
+        }, function (err) {
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+    };
+    StaffComponent.prototype.agregarBloque = function () {
+        var _this = this;
+        var inicio = this.tiempoLibre.inicio.getFullYear() + '-' + ('0' + (this.tiempoLibre.inicio.getMonth() + 1)).slice(-2) + '-' + ('0' + this.tiempoLibre.inicio.getDate()).slice(-2);
+        var fin = this.tiempoLibre.fin.getFullYear() + '-' + ('0' + (this.tiempoLibre.fin.getMonth() + 1)).slice(-2) + '-' + ('0' + this.tiempoLibre.fin.getDate()).slice(-2);
+        console.log(inicio, fin);
+        this.authService.addDiasLibresNC({ idEmpleado: this.selected, inicio: inicio, fin: fin })
+            .subscribe(function (data) {
+            _this.tiempoLibre.inicio = undefined;
+            _this.tiempoLibre.fin = undefined;
+            _this.itemSelectedChange(_this.miembroSeleccionado);
+            console.log(data);
+        }, function (err) {
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
     };
     StaffComponent.prototype.itemSelectedChange = function (i) {
-        this.selected = i;
+        var _this = this;
+        this.diasSemana.domingo = { diaSemana: 0, estado: 0 };
+        this.diasSemana.lunes = { diaSemana: 1, estado: 0 };
+        this.diasSemana.martes = { diaSemana: 2, estado: 0 };
+        this.diasSemana.miercoles = { diaSemana: 3, estado: 0 };
+        this.diasSemana.jueves = { diaSemana: 4, estado: 0 };
+        this.diasSemana.viernes = { diaSemana: 5, estado: 0 };
+        this.diasSemana.sabado = { diaSemana: 6, estado: 0 };
+        this.selected = i.idEmpleado;
+        this.miembroSeleccionado = i;
+        this.authService.getInfoEmpleadoNC({ idEmpleado: i.idEmpleado, idCentro: this.idCentro })
+            .subscribe(function (data) {
+            //this.cdr.detectChanges();
+            console.log(data);
+            _this.keys = Object.keys(data.servicios);
+            _this.serviciosValues = Object.values(data.servicios);
+            _this.horarioEmpleado = data.horario;
+            _this.horarioEspecial = data.horarioEspecial;
+            _this.horarioEmpleado.forEach(function (item) {
+                if (item.diaSemana == 0) {
+                    _this.diasSemana.domingo = item;
+                }
+                ;
+                if (item.diaSemana == 1) {
+                    _this.diasSemana.lunes = item;
+                }
+                ;
+                if (item.diaSemana == 2) {
+                    _this.diasSemana.martes = item;
+                }
+                ;
+                if (item.diaSemana == 3) {
+                    _this.diasSemana.miercoles = item;
+                }
+                ;
+                if (item.diaSemana == 4) {
+                    _this.diasSemana.jueves = item;
+                }
+                ;
+                if (item.diaSemana == 5) {
+                    _this.diasSemana.viernes = item;
+                }
+                ;
+                if (item.diaSemana == 6) {
+                    _this.diasSemana.sabado = item;
+                }
+                ;
+            });
+            _this.cdr.detectChanges();
+        }, function (err) {
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+    };
+    StaffComponent.prototype.guardarHorario = function () {
+        console.log(Object.values(this.diasSemana));
+        //this.serviciosValues = Object.values(data.servicios);
+        var dataEnv = { horario: Object.values(this.diasSemana), idEmpleado: this.selected };
+        //dataEnv.horario = Object.values(this.diasSemana);
+        //dataEnv.idEmpleado = this.selected;
+        this.authService.guardarHorarioNC(dataEnv)
+            .subscribe(function (data) {
+            console.log(data);
+            alert('Horario Editado Correctamente');
+        }, function (err) {
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+    };
+    StaffComponent.prototype.OnChange = function ($event, i) {
+        console.log($event);
+        console.log(i);
+        var estadoC = $event.checked ? 1 : 0;
+        this.authService.cambiarEstadoSE({ idEmpleado: this.selected, idServicio: i.idServicio, estado: estadoC })
+            .subscribe(function (data) {
+            //   this.empleados = data;
+            //   this.cdr.detectChanges();
+            console.log(data);
+        }, function (err) {
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
     };
     StaffComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -1865,7 +3221,8 @@ var StaffComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./staff.component.html */ "./src/app/content/pages/components/staff/staff.component.html"),
             styles: [__webpack_require__(/*! ./staff.component.scss */ "./src/app/content/pages/components/staff/staff.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_1__["AuthenticationService"],
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"]])
     ], StaffComponent);
     return StaffComponent;
 }());
@@ -2028,12 +3385,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_perfilnegocio_perfilnegocio_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/perfilnegocio/perfilnegocio.component */ "./src/app/content/pages/components/perfilnegocio/perfilnegocio.component.ts");
 /* harmony import */ var _components_horario_horario_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/horario/horario.component */ "./src/app/content/pages/components/horario/horario.component.ts");
 /* harmony import */ var _components_estadistica_estadistica_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/estadistica/estadistica.component */ "./src/app/content/pages/components/estadistica/estadistica.component.ts");
+/* harmony import */ var _components_agregarservicio_agregarservicio_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/agregarservicio/agregarservicio.component */ "./src/app/content/pages/components/agregarservicio/agregarservicio.component.ts");
+/* harmony import */ var _components_addstaff_addstaff_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/addstaff/addstaff.component */ "./src/app/content/pages/components/addstaff/addstaff.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -2077,6 +3438,10 @@ var routes = [
                 component: _components_horario_horario_component__WEBPACK_IMPORTED_MODULE_14__["HorarioComponent"]
             },
             {
+                path: 'addstaff',
+                component: _components_addstaff_addstaff_component__WEBPACK_IMPORTED_MODULE_17__["AddstaffComponent"]
+            },
+            {
                 path: 'staff',
                 component: _components_staff_staff_component__WEBPACK_IMPORTED_MODULE_11__["StaffComponent"]
             }, {
@@ -2090,6 +3455,10 @@ var routes = [
             {
                 path: 'editstaff',
                 component: _components_editstaff_editstaff_component__WEBPACK_IMPORTED_MODULE_12__["EditstaffComponent"]
+            },
+            {
+                path: 'agregarservicio',
+                component: _components_agregarservicio_agregarservicio_component__WEBPACK_IMPORTED_MODULE_16__["AgregarservicioComponent"]
             },
             {
                 path: 'editservicio',
@@ -2339,27 +3708,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _header_profile_profile_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./header/profile/profile.component */ "./src/app/content/pages/header/profile/profile.component.ts");
 /* harmony import */ var _core_core_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../core/core.module */ "./src/app/core/core.module.ts");
 /* harmony import */ var _kolkov_angular_editor__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @kolkov/angular-editor */ "./node_modules/@kolkov/angular-editor/fesm5/kolkov-angular-editor.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var _snippets_error_page_error_page_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./snippets/error-page/error-page.component */ "./src/app/content/pages/snippets/error-page/error-page.component.ts");
-/* harmony import */ var _components_inner_inner_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/inner/inner.component */ "./src/app/content/pages/components/inner/inner.component.ts");
-/* harmony import */ var _components_servicios_servicios_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/servicios/servicios.component */ "./src/app/content/pages/components/servicios/servicios.component.ts");
-/* harmony import */ var _components_editservicio_editservicio_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/editservicio/editservicio.component */ "./src/app/content/pages/components/editservicio/editservicio.component.ts");
-/* harmony import */ var _components_agregaroferta_agregaroferta_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/agregaroferta/agregaroferta.component */ "./src/app/content/pages/components/agregaroferta/agregaroferta.component.ts");
-/* harmony import */ var _components_staff_staff_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/staff/staff.component */ "./src/app/content/pages/components/staff/staff.component.ts");
-/* harmony import */ var _components_editstaff_editstaff_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/editstaff/editstaff.component */ "./src/app/content/pages/components/editstaff/editstaff.component.ts");
-/* harmony import */ var _components_perfilnegocio_perfilnegocio_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/perfilnegocio/perfilnegocio.component */ "./src/app/content/pages/components/perfilnegocio/perfilnegocio.component.ts");
-/* harmony import */ var _components_horario_horario_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/horario/horario.component */ "./src/app/content/pages/components/horario/horario.component.ts");
-/* harmony import */ var _components_estadistica_estadistica_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/estadistica/estadistica.component */ "./src/app/content/pages/components/estadistica/estadistica.component.ts");
-/* harmony import */ var _agm_core__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @agm/core */ "./node_modules/@agm/core/index.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/index.js");
-/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
+/* harmony import */ var ngx_loading__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ngx-loading */ "./node_modules/ngx-loading/ngx-loading/ngx-loading.es5.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _snippets_error_page_error_page_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./snippets/error-page/error-page.component */ "./src/app/content/pages/snippets/error-page/error-page.component.ts");
+/* harmony import */ var _components_inner_inner_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/inner/inner.component */ "./src/app/content/pages/components/inner/inner.component.ts");
+/* harmony import */ var _components_servicios_servicios_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/servicios/servicios.component */ "./src/app/content/pages/components/servicios/servicios.component.ts");
+/* harmony import */ var _components_editservicio_editservicio_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/editservicio/editservicio.component */ "./src/app/content/pages/components/editservicio/editservicio.component.ts");
+/* harmony import */ var _components_agregaroferta_agregaroferta_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/agregaroferta/agregaroferta.component */ "./src/app/content/pages/components/agregaroferta/agregaroferta.component.ts");
+/* harmony import */ var _components_staff_staff_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/staff/staff.component */ "./src/app/content/pages/components/staff/staff.component.ts");
+/* harmony import */ var _components_editstaff_editstaff_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/editstaff/editstaff.component */ "./src/app/content/pages/components/editstaff/editstaff.component.ts");
+/* harmony import */ var _components_perfilnegocio_perfilnegocio_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/perfilnegocio/perfilnegocio.component */ "./src/app/content/pages/components/perfilnegocio/perfilnegocio.component.ts");
+/* harmony import */ var _components_agregarservicio_agregarservicio_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/agregarservicio/agregarservicio.component */ "./src/app/content/pages/components/agregarservicio/agregarservicio.component.ts");
+/* harmony import */ var _components_addstaff_addstaff_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/addstaff/addstaff.component */ "./src/app/content/pages/components/addstaff/addstaff.component.ts");
+/* harmony import */ var _components_horario_horario_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/horario/horario.component */ "./src/app/content/pages/components/horario/horario.component.ts");
+/* harmony import */ var _components_estadistica_estadistica_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/estadistica/estadistica.component */ "./src/app/content/pages/components/estadistica/estadistica.component.ts");
+/* harmony import */ var _agm_core__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @agm/core */ "./node_modules/@agm/core/index.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/index.js");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
+
 
 
 
@@ -2394,31 +3769,33 @@ var PagesModule = /** @class */ (function () {
                 _pages_component__WEBPACK_IMPORTED_MODULE_4__["PagesComponent"],
                 _header_action_action_component__WEBPACK_IMPORTED_MODULE_6__["ActionComponent"],
                 _header_profile_profile_component__WEBPACK_IMPORTED_MODULE_7__["ProfileComponent"],
-                _snippets_error_page_error_page_component__WEBPACK_IMPORTED_MODULE_11__["ErrorPageComponent"],
-                _components_inner_inner_component__WEBPACK_IMPORTED_MODULE_12__["InnerComponent"],
-                _components_servicios_servicios_component__WEBPACK_IMPORTED_MODULE_13__["ServiciosComponent"],
-                _components_editservicio_editservicio_component__WEBPACK_IMPORTED_MODULE_14__["EditservicioComponent"],
-                _components_agregaroferta_agregaroferta_component__WEBPACK_IMPORTED_MODULE_15__["AgregarofertaComponent"],
-                _components_staff_staff_component__WEBPACK_IMPORTED_MODULE_16__["StaffComponent"],
-                _components_editstaff_editstaff_component__WEBPACK_IMPORTED_MODULE_17__["EditstaffComponent"],
-                _components_perfilnegocio_perfilnegocio_component__WEBPACK_IMPORTED_MODULE_18__["PerfilnegocioComponent"],
-                _components_horario_horario_component__WEBPACK_IMPORTED_MODULE_19__["HorarioComponent"], _components_estadistica_estadistica_component__WEBPACK_IMPORTED_MODULE_20__["EstadisticaComponent"]
+                _snippets_error_page_error_page_component__WEBPACK_IMPORTED_MODULE_12__["ErrorPageComponent"],
+                _components_inner_inner_component__WEBPACK_IMPORTED_MODULE_13__["InnerComponent"],
+                _components_servicios_servicios_component__WEBPACK_IMPORTED_MODULE_14__["ServiciosComponent"],
+                _components_editservicio_editservicio_component__WEBPACK_IMPORTED_MODULE_15__["EditservicioComponent"],
+                _components_agregaroferta_agregaroferta_component__WEBPACK_IMPORTED_MODULE_16__["AgregarofertaComponent"],
+                _components_staff_staff_component__WEBPACK_IMPORTED_MODULE_17__["StaffComponent"], _components_addstaff_addstaff_component__WEBPACK_IMPORTED_MODULE_21__["AddstaffComponent"],
+                _components_agregarservicio_agregarservicio_component__WEBPACK_IMPORTED_MODULE_20__["AgregarservicioComponent"],
+                _components_editstaff_editstaff_component__WEBPACK_IMPORTED_MODULE_18__["EditstaffComponent"],
+                _components_perfilnegocio_perfilnegocio_component__WEBPACK_IMPORTED_MODULE_19__["PerfilnegocioComponent"],
+                _components_horario_horario_component__WEBPACK_IMPORTED_MODULE_22__["HorarioComponent"], _components_estadistica_estadistica_component__WEBPACK_IMPORTED_MODULE_23__["EstadisticaComponent"]
             ],
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_24__["MatSelectModule"],
-                _angular_common_http__WEBPACK_IMPORTED_MODULE_10__["HttpClientModule"],
-                _angular_forms__WEBPACK_IMPORTED_MODULE_22__["FormsModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_27__["MatSelectModule"],
+                _angular_common_http__WEBPACK_IMPORTED_MODULE_11__["HttpClientModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_25__["FormsModule"],
                 _pages_routing_module__WEBPACK_IMPORTED_MODULE_3__["PagesRoutingModule"],
                 _core_core_module__WEBPACK_IMPORTED_MODULE_8__["CoreModule"],
-                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_23__["NgbModule"],
-                _layout_layout_module__WEBPACK_IMPORTED_MODULE_0__["LayoutModule"],
+                ngx_loading__WEBPACK_IMPORTED_MODULE_10__["LoadingModule"], _angular_material__WEBPACK_IMPORTED_MODULE_27__["MatInputModule"],
+                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_26__["NgbModule"],
+                _layout_layout_module__WEBPACK_IMPORTED_MODULE_0__["LayoutModule"], _angular_material__WEBPACK_IMPORTED_MODULE_27__["MatNativeDateModule"],
                 _partials_partials_module__WEBPACK_IMPORTED_MODULE_5__["PartialsModule"],
                 _kolkov_angular_editor__WEBPACK_IMPORTED_MODULE_9__["AngularEditorModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_24__["MatStepperModule"], _angular_material__WEBPACK_IMPORTED_MODULE_24__["MatFormFieldModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_24__["MatCheckboxModule"], _angular_material__WEBPACK_IMPORTED_MODULE_24__["MatTableModule"], _angular_material__WEBPACK_IMPORTED_MODULE_24__["MatPaginatorModule"], _angular_material__WEBPACK_IMPORTED_MODULE_24__["MatListModule"],
-                _angular_forms__WEBPACK_IMPORTED_MODULE_22__["ReactiveFormsModule"], _angular_material__WEBPACK_IMPORTED_MODULE_24__["MatIconModule"],
-                _agm_core__WEBPACK_IMPORTED_MODULE_21__["AgmCoreModule"].forRoot({
+                _angular_material__WEBPACK_IMPORTED_MODULE_27__["MatStepperModule"], _angular_material__WEBPACK_IMPORTED_MODULE_27__["MatFormFieldModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_27__["MatCheckboxModule"], _angular_material__WEBPACK_IMPORTED_MODULE_27__["MatTableModule"], _angular_material__WEBPACK_IMPORTED_MODULE_27__["MatPaginatorModule"], _angular_material__WEBPACK_IMPORTED_MODULE_27__["MatListModule"], _angular_material__WEBPACK_IMPORTED_MODULE_27__["MatDatepickerModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_25__["ReactiveFormsModule"], _angular_material__WEBPACK_IMPORTED_MODULE_27__["MatIconModule"],
+                _agm_core__WEBPACK_IMPORTED_MODULE_24__["AgmCoreModule"].forRoot({
                     apiKey: 'AIzaSyAT-tTbOja69paXaiAgAtNi9nGHRh75bzk',
                     libraries: ['geometry', 'places']
                 })

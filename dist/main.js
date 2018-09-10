@@ -290,6 +290,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 var map = {
 	"./auth/auth.module": [
 		"./src/app/content/pages/auth/auth.module.ts",
+		"app-content-pages-pages-module~auth-auth-module",
 		"auth-auth-module"
 	],
 	"./builder/builder.module": [
@@ -302,6 +303,7 @@ var map = {
 	],
 	"app/content/pages/pages.module": [
 		"./src/app/content/pages/pages.module.ts",
+		"app-content-pages-pages-module~auth-auth-module",
 		"app-content-pages-pages-module"
 	]
 };
@@ -314,7 +316,7 @@ function webpackAsyncContext(req) {
 			throw e;
 		});
 	}
-	return __webpack_require__.e(ids[1]).then(function() {
+	return Promise.all(ids.slice(1).map(__webpack_require__.e)).then(function() {
 		var module = __webpack_require__(ids[0]);
 		return module;
 	});
@@ -1611,6 +1613,12 @@ var PagesConfig = /** @class */ (function () {
             },
             editservicio: {
                 page: { title: 'Editar Servicio', desc: 'Editar Page' }
+            },
+            addstaff: {
+                page: { title: 'addstaff', desc: 'addstaff' }
+            },
+            agregarservicio: {
+                page: { title: 'AgregarservicioComponent', desc: 'AgregarservicioComponent' }
             },
             agregaroferta: {
                 page: { title: 'agregaroferta', desc: 'agregaroferta' }
@@ -5973,6 +5981,9 @@ var AuthenticationService = /** @class */ (function () {
     AuthenticationService.prototype.actualizarBannerNC = function (image) {
         return this.http.post(this.API_URL + '/actualizarBannerNC', image);
     };
+    AuthenticationService.prototype.actualizarFotoNC = function (image) {
+        return this.http.post(this.API_URL + '/actualizarFotoNC', image);
+    };
     AuthenticationService.prototype.getCategorias = function () {
         return this.http.get(this.API_URL + '/categoriasHome2');
     };
@@ -5981,6 +5992,78 @@ var AuthenticationService = /** @class */ (function () {
     };
     AuthenticationService.prototype.serviciosC = function (data) {
         return this.http.post(this.API_URL + '/serviciosC', data);
+    };
+    AuthenticationService.prototype.getServicioNC = function (data) {
+        return this.http.post(this.API_URL + '/getServicioNC', data);
+    };
+    AuthenticationService.prototype.updateServicioNC = function (data) {
+        return this.http.post(this.API_URL + '/updateServicioNC', data);
+    };
+    AuthenticationService.prototype.getStaff = function (data) {
+        return this.http.post(this.API_URL + '/getStaff', data);
+    };
+    AuthenticationService.prototype.addServicioNC = function (data) {
+        return this.http.post(this.API_URL + '/addServicioNC', data);
+    };
+    AuthenticationService.prototype.serviciosGroupNC = function (data) {
+        return this.http.post(this.API_URL + '/serviciosGroupNC', data);
+    };
+    AuthenticationService.prototype.marcarEnOfertaNC = function (data) {
+        return this.http.post(this.API_URL + '/marcarEnOfertaNC', data);
+    };
+    AuthenticationService.prototype.getPaquetes = function (data) {
+        return this.http.post(this.API_URL + '/getPaquetes', data);
+    };
+    AuthenticationService.prototype.getInfoEmpleadoNC = function (data) {
+        return this.http.post(this.API_URL + '/getInfoEmpleadoNC', data);
+    };
+    AuthenticationService.prototype.cambiarEstadoSE = function (data) {
+        return this.http.post(this.API_URL + '/cambiarEstadoSE', data);
+    };
+    AuthenticationService.prototype.guardarHorarioNC = function (data) {
+        return this.http.post(this.API_URL + '/guardarHorarioNC', data);
+    };
+    AuthenticationService.prototype.addDiasLibresNC = function (data) {
+        return this.http.post(this.API_URL + '/addDiasLibresNC', data);
+    };
+    AuthenticationService.prototype.deleteLibresNC = function (data) {
+        return this.http.post(this.API_URL + '/deleteLibresNC', data);
+    };
+    AuthenticationService.prototype.getStaffIndi = function (data) {
+        return this.http.post(this.API_URL + '/getStaffIndi', data);
+    };
+    AuthenticationService.prototype.editarStafNC = function (data) {
+        return this.http.post(this.API_URL + '/editarStafNC', data);
+    };
+    AuthenticationService.prototype.eliminarStaff = function (data) {
+        return this.http.post(this.API_URL + '/eliminarStaff', data);
+    };
+    AuthenticationService.prototype.addStaffNC2 = function (data) {
+        return this.http.post(this.API_URL + '/addStaffNC2', data);
+    };
+    AuthenticationService.prototype.getCentroInfoNC = function (data) {
+        return this.http.post(this.API_URL + '/getCentroInfoNC', data);
+    };
+    AuthenticationService.prototype.updateCICN = function (data) {
+        return this.http.post(this.API_URL + '/updateCICN', data);
+    };
+    AuthenticationService.prototype.getHorarioNC = function (data) {
+        return this.http.post(this.API_URL + '/getHorarioNC', data);
+    };
+    AuthenticationService.prototype.getHorario = function (data) {
+        return this.http.post(this.API_URL + '/getHorario', data);
+    };
+    AuthenticationService.prototype.guardarHorarioCentroNC = function (data) {
+        return this.http.post(this.API_URL + '/guardarHorarioCentroNC', data);
+    };
+    AuthenticationService.prototype.borrarFechaEspecial = function (data) {
+        return this.http.post(this.API_URL + '/borrarFechaEspecial', data);
+    };
+    AuthenticationService.prototype.getInfoCentro = function (data) {
+        return this.http.post(this.API_URL + '/getInfoCentro', data);
+    };
+    AuthenticationService.prototype.agregarHENC = function (data) {
+        return this.http.post(this.API_URL + '/agregarHENC', data);
     };
     /**
      * Submit forgot password request
