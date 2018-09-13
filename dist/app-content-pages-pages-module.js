@@ -1449,6 +1449,637 @@ var AgregarservicioComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/content/pages/components/calendario/calendario.component.html":
+/*!*******************************************************************************!*\
+  !*** ./src/app/content/pages/components/calendario/calendario.component.html ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\r\n\r\n<div class=\"row \" style=\"background: rgb(250,249,247) !important;\r\n   \r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 22px;font-weight: 300;padding-left: 30px;width: 100%;\r\n    text-align: center;\r\n    margin-bottom: 10px;\r\n    margin-top: 10px;\">\r\n\t\t<mat-icon class='iconRo'>chevron_left</mat-icon><span>SET 10 - SET 14, 2018</span><mat-icon class='iconRo'>chevron_right</mat-icon>\r\n\t\t\r\n\t</div>\r\n\r\n\r\n\t<div style=\"  \r\n     width: 70%;\r\n    margin-left: 15%;\r\n  display: flex;\">\r\n\t\t\r\n  <p style=\"    margin: auto;\">\r\n    <mat-form-field  appearance=\"legacy\">\r\n      <mat-select placeholder=\"Filtrar por estado\" [multiple]=\"true\">\r\n     \r\n        <mat-option >\r\n         Confirmadas\r\n        </mat-option>\r\n\r\n                <mat-option >\r\n         Canceladas\r\n        </mat-option>\r\n\r\n                <mat-option >\r\n         Cliente por confirmar\r\n        </mat-option>\r\n\r\n                <mat-option >\r\n         Negocio por confirmar\r\n        </mat-option>\r\n\r\n                <mat-option >\r\n         Finalizadas\r\n        </mat-option>\r\n\r\n\r\n      </mat-select>\r\n    </mat-form-field>\r\n  </p>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t\t\r\n  <p style=\"    margin: auto;\">\r\n    <mat-form-field  appearance=\"legacy\">\r\n      <mat-select placeholder=\"Filtrar Staff\" [multiple]=\"true\">\r\n     \r\n        <mat-option [value]=\"'Ligia Fallas'\"  style='    border-bottom: solid 1px lightgray;\r\n    height: 60px;'>\r\n         <div style=\"     padding: 0px 45px;\">\r\n\t\t\t\t\t\t\t\t<img style='    display: inline-block; margin: auto; height: 35px;' matListAvatar src=\"assets/app/media/img/userB.png\">\r\n\t\t\t\t\t\t\t\t<span style=\"  color:#383734; margin-left: 10px;font-size: 16px;font-weight: 400; display: inline-block;\">Ligia Fallas</span>\r\n\t\t\t\t\t\t\t\t</div> \r\n        </mat-option > \r\n\r\n                <mat-option [value]=\"'Jane Rilay'\" style='    border-bottom: solid 1px lightgray;\r\n    height: 60px;'>\r\n        \t\t\t<div style=\"     padding: 0px 45px;\">\r\n\t\t\t\t\t\t\t\t<img style='    display: inline-block; margin: auto; height: 35px;' matListAvatar src=\"assets/app/media/img/userB.png\">\r\n\t\t\t\t\t\t\t\t<span style=\"  color:#383734; margin-left: 10px;font-size: 16px;font-weight: 400; display: inline-block;\">Jane Rilay</span>\r\n\t\t\t\t\t\t\t\t</div> \r\n        </mat-option>\r\n\r\n\r\n        <mat-option [value]=\"'Ligia Fallas'\" style='    border-bottom: solid 1px lightgray;\r\n    height: 60px;'>\r\n         <div style=\"     padding: 0px 45px;\">\r\n\t\t\t\t\t\t\t\t<img style='    display: inline-block; margin: auto; height: 35px;' matListAvatar src=\"assets/app/media/img/userB.png\">\r\n\t\t\t\t\t\t\t\t<span style=\"  color:#383734; margin-left: 10px;font-size: 16px;font-weight: 400; display: inline-block;\">Ligia Fallas</span>\r\n\t\t\t\t\t\t\t\t</div> \r\n        </mat-option > \r\n\r\n                <mat-option [value]=\"'Jane Rilay'\" style='    border-bottom: solid 1px lightgray;\r\n    height: 60px;'> \r\n        \t\t\t<div style=\"     padding: 0px 45px;\">\r\n\t\t\t\t\t\t\t\t<img style='    display: inline-block; margin: auto; height: 35px;' matListAvatar src=\"assets/app/media/img/userB.png\">\r\n\t\t\t\t\t\t\t\t<span style=\"  color:#383734; margin-left: 10px;font-size: 16px;font-weight: 400; display: inline-block;\">Jane Rilay</span>\r\n\t\t\t\t\t\t\t\t</div> \r\n        </mat-option>\r\n\r\n\r\n\r\n\r\n\r\n      </mat-select>\r\n    </mat-form-field>\r\n  </p>\r\n\r\n\r\n    <p style=\"    margin: auto;\">\r\n    <mat-form-field   appearance=\"legacy\"> \r\n        <mat-select placeholder=\"Buscar Cliente\" >\r\n        <ngx-mat-select-search [placeholderLabel]=\"'Buscar cliente'\" \r\n                       [noEntriesFoundLabel]=\"'no se han encontrado clientes'\" >\r\n                       \t\r\n                       </ngx-mat-select-search>\r\n       <mat-option style='    border-bottom: solid 1px lightgray;\r\n    height: 60px;' [value]=\"'Ligia Fallas'\">\r\n          \t\t\t<div style=\"     padding: 0px 45px;\">\r\n\t\t\t\t\t\t\t\t<img style='    display: inline-block; margin: auto; height: 35px;' matListAvatar src=\"assets/app/media/img/userB.png\">\r\n\t\t\t\t\t\t\t\t<span style=\"  color:#383734; margin-left: 10px;font-size: 16px;font-weight: 400; display: inline-block;\">Ligia Fallas</span>\r\n\t\t\t\t\t\t\t\t</div> \r\n        </mat-option>\r\n\r\n  <mat-option style='    border-bottom: solid 1px lightgray;\r\n    height: 60px;' [value]=\"'Jane Rilay'\">\r\n          \t\t\t<div style=\"     padding: 0px 45px;\">\r\n\t\t\t\t\t\t\t\t<img style='    display: inline-block; margin: auto; height: 35px;' matListAvatar src=\"assets/app/media/img/userB.png\">\r\n\t\t\t\t\t\t\t\t<span style=\"  color:#383734; margin-left: 10px;font-size: 16px;font-weight: 400; display: inline-block;\">Jane Rilay</span>\r\n\t\t\t\t\t\t\t\t</div> \r\n        </mat-option>\r\n\r\n         <mat-option style='    border-bottom: solid 1px lightgray;\r\n    height: 60px;' [value]=\"'Pedro Perez'\">\r\n          \t\t\t<div style=\"     padding: 0px 45px;\">\r\n\t\t\t\t\t\t\t\t<img style='    display: inline-block; margin: auto; height: 35px;' matListAvatar src=\"assets/app/media/img/userB.png\">\r\n\t\t\t\t\t\t\t\t<span style=\"  color:#383734; margin-left: 10px;font-size: 16px;font-weight: 400; display: inline-block;\">Pedro Perez</span>\r\n\t\t\t\t\t\t\t\t</div> \r\n        </mat-option>\r\n\r\n\r\n\r\n     \r\n\r\n      </mat-select>\r\n\r\n    </mat-form-field>\r\n  </p>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n<div class=\"row\">\r\n\r\n\t <ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\r\n\t\r\n\t<div class=\"col-md-12 col-xl-3\" style=\"    padding-right: 0px;    border-right: solid 1px lightgray;\">\r\n\t\r\n\r\n\t<mat-calendar [selected]=\"selectedDate\" (selectedChange)=\"selectedDate = $event;changeCalen( $event)\"></mat-calendar>\r\n\r\n\r\n<hr>\r\n\r\n\r\n\t<mat-nav-list style='padding-top: 0px '>\r\n\r\n  <mat-list-item style='    height: 54px !important;\r\n    border-bottom: solid 1px lightgray;' [routerLink]=\"['/detallecita']\" >\r\n\r\n  \t   <div>\r\n  \t  \r\n        <div  class=\"popOverDate\" style='background: white !important;padding: 0px !important'>\r\n\t\t\t\t\t\t\t\t<!-- <span>SEP</span>\r\n\t\t\t\t\t\t\t\t<span>25</span> -->\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 10px;\">SEP 10</div>\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 10px;\">10:00 AM</div>\r\n\t\t\t\t\t\t\t</div>\r\n        <div style=\"     padding-left: 8px;   display: inline-block;\"> \r\n\r\n          <div style=\"font-size: 12px;\">\r\n          \t<span>Jane Rilay</span>\r\n          \t<mat-icon style='color: #888;vertical-align: top;margin: 0px 3px;'>chevron_right</mat-icon>\r\n          \t<span>Juan perez</span>\r\n          </div>   \r\n \r\n        </div>\r\n      </div>\r\n\r\n  </mat-list-item>\r\n\r\n  <mat-list-item style='    height: 54px !important;\r\n    border-bottom: solid 1px lightgray;' [routerLink]=\"['/detallecita']\" >\r\n\r\n  \t   <div>\r\n  \t  \r\n        <div  class=\"popOverDate\" style='background: white !important;padding: 0px !important'>\r\n\t\t\t\t\t\t\t\t<!-- <span>SEP</span>\r\n\t\t\t\t\t\t\t\t<span>25</span> -->\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 10px;\">SEP 10</div>\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 10px;\">10:00 AM</div>\r\n\t\t\t\t\t\t\t</div>\r\n        <div style=\"     padding-left: 8px;   display: inline-block;\"> \r\n\r\n          <div style=\"font-size: 12px;\">\r\n          \t<span>Jane Rilay</span>\r\n          \t<mat-icon style='color: #888;vertical-align: top;margin: 0px 3px;'>chevron_right</mat-icon>\r\n          \t<span>Juan perez</span>\r\n          </div>   \r\n \r\n        </div>\r\n      </div>\r\n\r\n  </mat-list-item>\r\n\r\n  <mat-list-item style='    height: 54px !important;\r\n    border-bottom: solid 1px lightgray;' [routerLink]=\"['/detallecita']\" >\r\n\r\n  \t   <div>\r\n  \t  \r\n        <div  class=\"popOverDate\" style='background: white !important;padding: 0px !important'>\r\n\t\t\t\t\t\t\t\t<!-- <span>SEP</span>\r\n\t\t\t\t\t\t\t\t<span>25</span> -->\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 10px;\">SEP 10</div>\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 10px;\">10:00 AM</div>\r\n\t\t\t\t\t\t\t</div>\r\n        <div style=\"     padding-left: 8px;   display: inline-block;\"> \r\n\r\n          <div style=\"font-size: 12px;\">\r\n          \t<span>Jane Rilay</span>\r\n          \t<mat-icon style='color: #888;vertical-align: top;margin: 0px 3px;'>chevron_right</mat-icon>\r\n          \t<span>Juan perez</span>\r\n          </div>   \r\n \r\n        </div>\r\n      </div>\r\n\r\n  </mat-list-item>\r\n\r\n\r\n\r\n  <mat-list-item style='    height: 54px !important;\r\n    border-bottom: solid 1px lightgray;' [routerLink]=\"['/detallecita']\" >\r\n\r\n  \t   <div>\r\n  \t  \r\n        <div  class=\"popOverDate\" style='background: white !important;padding: 0px !important'>\r\n\t\t\t\t\t\t\t\t<!-- <span>SEP</span>\r\n\t\t\t\t\t\t\t\t<span>25</span> -->\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 10px;\">SEP 10</div>\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 10px;\">10:00 AM</div>\r\n\t\t\t\t\t\t\t</div>\r\n        <div style=\"     padding-left: 8px;   display: inline-block;\"> \r\n\r\n          <div style=\"font-size: 12px;\">\r\n          \t<span>Jane Rilay</span>\r\n          \t<mat-icon style='color: #888;vertical-align: top;margin: 0px 3px;'>chevron_right</mat-icon>\r\n          \t<span>Juan perez</span>\r\n          </div>   \r\n \r\n        </div>\r\n      </div>\r\n\r\n  </mat-list-item>\r\n\r\n\r\n\r\n  <mat-list-item style='    height: 54px !important;\r\n    border-bottom: solid 1px lightgray;' [routerLink]=\"['/detallecita']\" >\r\n\r\n  \t   <div>\r\n  \t  \r\n        <div  class=\"popOverDate\" style='background: white !important;padding: 0px !important'>\r\n\t\t\t\t\t\t\t\t<!-- <span>SEP</span>\r\n\t\t\t\t\t\t\t\t<span>25</span> -->\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 10px;\">SEP 10</div>\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 10px;\">10:00 AM</div>\r\n\t\t\t\t\t\t\t</div>\r\n        <div style=\"     padding-left: 8px;   display: inline-block;\"> \r\n\r\n          <div style=\"font-size: 12px;\">\r\n          \t<span>Jane Rilay</span>\r\n          \t<mat-icon style='color: #888;vertical-align: top;margin: 0px 3px;'>chevron_right</mat-icon>\r\n          \t<span>Juan perez</span>\r\n          </div>   \r\n \r\n        </div>\r\n      </div>\r\n\r\n  </mat-list-item>\r\n\r\n\r\n\r\n  <mat-list-item style='    height: 54px !important;\r\n    border-bottom: solid 1px lightgray;' [routerLink]=\"['/detallecita']\" >\r\n\r\n  \t   <div>\r\n  \t  \r\n        <div  class=\"popOverDate\" style='background: white !important;padding: 0px !important'>\r\n\t\t\t\t\t\t\t\t<!-- <span>SEP</span>\r\n\t\t\t\t\t\t\t\t<span>25</span> -->\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 10px;\">SEP 10</div>\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 10px;\">10:00 AM</div>\r\n\t\t\t\t\t\t\t</div>\r\n        <div style=\"     padding-left: 8px;   display: inline-block;\"> \r\n\r\n          <div style=\"font-size: 12px;\">\r\n          \t<span>Jane Rilay</span>\r\n          \t<mat-icon style='color: #888;vertical-align: top;margin: 0px 3px;'>chevron_right</mat-icon>\r\n          \t<span>Juan perez</span>\r\n          </div>   \r\n \r\n        </div>\r\n      </div>\r\n\r\n  </mat-list-item>\r\n\r\n\r\n  <mat-list-item style='    height: 54px !important;\r\n    border-bottom: solid 1px lightgray;' [routerLink]=\"['/detallecita']\" >\r\n\r\n  \t   <div>\r\n  \t  \r\n        <div  class=\"popOverDate\" style='background: white !important;padding: 0px !important'>\r\n\t\t\t\t\t\t\t\t<!-- <span>SEP</span>\r\n\t\t\t\t\t\t\t\t<span>25</span> -->\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 10px;\">SEP 10</div>\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 10px;\">10:00 AM</div>\r\n\t\t\t\t\t\t\t</div>\r\n        <div style=\"     padding-left: 8px;   display: inline-block;\"> \r\n\r\n          <div style=\"font-size: 12px;\">\r\n          \t<span>Jane Rilay</span>\r\n          \t<mat-icon style='color: #888;vertical-align: top;margin: 0px 3px;'>chevron_right</mat-icon>\r\n          \t<span>Juan perez</span>\r\n          </div>   \r\n \r\n        </div>\r\n      </div>\r\n\r\n  </mat-list-item>\r\n\r\n  <mat-list-item style='    height: 54px !important;\r\n    border-bottom: solid 1px lightgray;' [routerLink]=\"['/detallecita']\" >\r\n\r\n  \t   <div>\r\n  \t  \r\n        <div  class=\"popOverDate\" style='background: white !important;padding: 0px !important'>\r\n\t\t\t\t\t\t\t\t<!-- <span>SEP</span>\r\n\t\t\t\t\t\t\t\t<span>25</span> -->\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 10px;\">SEP 10</div>\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 10px;\">10:00 AM</div>\r\n\t\t\t\t\t\t\t</div>\r\n        <div style=\"     padding-left: 8px;   display: inline-block;\"> \r\n\r\n          <div style=\"font-size: 12px;\">\r\n          \t<span>Jane Rilay</span>\r\n          \t<mat-icon style='color: #888;vertical-align: top;margin: 0px 3px;'>chevron_right</mat-icon>\r\n          \t<span>Juan perez</span>\r\n          </div>   \r\n \r\n        </div>\r\n      </div>\r\n\r\n  </mat-list-item>\r\n\r\n  <mat-list-item style='    height: 54px !important;\r\n    border-bottom: solid 1px lightgray;' [routerLink]=\"['/detallecita']\" >\r\n\r\n  \t   <div>\r\n  \t  \r\n        <div  class=\"popOverDate\" style='background: white !important;padding: 0px !important'>\r\n\t\t\t\t\t\t\t\t<!-- <span>SEP</span>\r\n\t\t\t\t\t\t\t\t<span>25</span> -->\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 10px;\">SEP 10</div>\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 10px;\">10:00 AM</div>\r\n\t\t\t\t\t\t\t</div>\r\n        <div style=\"     padding-left: 8px;   display: inline-block;\"> \r\n\r\n          <div style=\"font-size: 12px;\">\r\n          \t<span>Jane Rilay</span>\r\n          \t<mat-icon style='color: #888;vertical-align: top;margin: 0px 3px;'>chevron_right</mat-icon>\r\n          \t<span>Juan perez</span>\r\n          </div>   \r\n \r\n        </div>\r\n      </div>\r\n\r\n  </mat-list-item>\r\n\r\n\r\n</mat-nav-list>\r\n\r\n\r\n\r\n\t</div>\r\n\r\n\t<div class=\"col-md-12 col-xl-9\" style=\"padding-left: 0px !important\">\r\n\t\t<table class=\"table\" >\r\n\t\t\t<thead>\r\n\t\t\t\t<tr style=\"    height: 72px;\">\r\n\t\t\t\t<th class=\"mw60\"></th>\r\n\t\t\t\t<th style=\" border-right: solid 1px lightgray;\">\r\n\t\t\t\t\t<div class=\"tittleCal\">Lun 10\r\n\t\t\t\t\t\t<span style=\"display: block;font-size: 11px;color: darkgray;\">2 citas</span>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</th>\r\n\t\t\t\t<th style=\" border-right: solid 1px lightgray;\">\r\n\t\t\t\t\t<div class=\"tittleCal\">Mar 11 \r\n\t\t\t\t\t\t<span style=\"display: block;font-size: 11px;color: darkgray;\">2 citas</span>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</th>\r\n\t\t\t\t<th style=\" border-right: solid 1px lightgray;\">\r\n\t\t\t\t\t<div class=\"tittleCal\">Mie 12 \r\n\t\t\t\t\t\t<span style=\"display: block;font-size: 11px;color: darkgray;\">2 citas</span>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</th>\r\n\t\t\t\t<th style=\" border-right: solid 1px lightgray;\">\r\n\t\t\t\t\t<div class=\"tittleCal\">Jue 13\r\n\t\t\t\t\t\t<span style=\"display: block;font-size: 11px;color: darkgray;\">2 citas</span>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</th>\r\n\t\t\t\t<th style=\" border-right: solid 1px lightgray;\">\r\n\t\t\t\t\t<div class=\"tittleCal\">Vie 14 \r\n\t\t\t\t\t\t<span style=\"display: block;font-size: 11px;color: darkgray;\">2 citas</span>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</th>\r\n\t\t\t\t</tr>\r\n\t\t\t</thead>\r\n\r\n\t\t\t<tbody>\r\n\t\t\t\t<tr style=\"border-bottom: solid 1px lightgray;\">\r\n\t\t\t\t\t<td class=\"mw60\" style=\" padding: 10px 3px;\">\t\r\n\t\t\t\t\t\t<div style=\"white-space: nowrap;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;text-align: center;max-width: 60px;\">\r\n\t\t\t\t\t\t<img style='display: block; margin: auto; height: 35px;' matListAvatar src=\"assets/app/media/img/userB.png\">\r\n\t\t\t\t\t\tLigia Fallas\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td class=\"mw210\">\r\n\t\t\t\t\t\t<div class=\"citaStyle\"  (click)='openDialogCita()' >\r\n\t\t\t\t\t\t\t<span>10:00 - 10:30</span>\r\n\t\t\t\t\t\t\t<span class='ml4'>Crisina Fernandez de ddd</span>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"citaStyle\" (click)='openDialogCita()' > \r\n\t\t\t\t\t\t\t<span>10:00 - 10:30</span>\r\n\t\t\t\t\t\t\t<span class='ml4'>Crisina Fernandez</span>\r\n\t\t\t\t\t\t</div>\t\r\n\r\n\t\t\t\t\t\t<div class=\"citaStyleA\" (click)='openDialogCita()' >\r\n\t\t\t\t\t\t\t<span>10:00 - 10:30</span>\r\n\t\t\t\t\t\t\t<span class='ml4'>Crisina Fernandez</span>\r\n\t\t\t\t\t\t</div>\t\r\n\r\n\t\t\t\t\t\t<div class=\"citaStyleN\" (click)='openDialogCita()' >\r\n\t\t\t\t\t\t\t<span>10:00 - 10:30</span>\r\n\t\t\t\t\t\t\t<span class='ml4'>Crisina Fernandez</span>\r\n\t\t\t\t\t\t</div>\t\r\n\r\n\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td class=\"mw210\">\r\n\t\t\t\t\t\t<div class=\"citaStyle\" (click)='openDialogCita()' >\r\n\t\t\t\t\t\t\t<span>10:00 - 10:30</span>\r\n\t\t\t\t\t\t\t<span class='ml4'>Crisina Fernandez</span>\r\n\t\t\t\t\t\t</div>\t\t\t\t\t\r\n\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td class=\"mw210\" style=\"background: repeating-linear-gradient( 45deg, #606dbc00, #ffffff 10px, #e8e8e8 10px, #ffffff 12px );\"></td>\r\n\t\t\t\t\t<td class=\"mw210\"></td>\r\n\t\t\t\t\t<td class=\"mw210\">\r\n\t\t\t\t\t\t<div class=\"citaStyleN\" (click)='openDialogCita()'>\r\n\t\t\t\t\t\t\t<span>10:00 - 10:30</span>\r\n\t\t\t\t\t\t\t<span class='ml4'>Crisina Fernandez</span>\r\n\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t</td>\r\n\t\t\t\t</tr>\r\n\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t<tr style=\"border-bottom: solid 1px lightgray;\">\r\n\t\t\t\t\t<td class=\"mw60\" style=\" padding: 10px 3px;\">\t\r\n\t\t\t\t\t\t<div style=\"white-space: nowrap;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;text-align: center;max-width: 60px;\">\r\n\t\t\t\t\t\t<img style='display: block; margin: auto; height: 35px;' matListAvatar src=\"assets/app/media/img/userB.png\">\r\n\t\t\t\t\t\tReinaldo Rivera\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td class=\"mw210\" style=\"background: repeating-linear-gradient( 45deg, #606dbc00, #ffffff 10px, #e8e8e8 10px, #ffffff 12px );\">\r\n\r\n\r\n\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td class=\"mw210\">\r\n\t\t\t\t\t\t<div class=\"citaStyle\" (click)='openDialogCita()' >\r\n\t\t\t\t\t\t\t<span>03:00 - 03:30</span>\r\n\t\t\t\t\t\t\t<span class='ml4'>Crisina Fernandez</span>\r\n\t\t\t\t\t\t</div>\t\r\n\r\n\t\t\t\t\t\t<div class=\"citaStyle\" (click)='openDialogCita()' >\r\n\t\t\t\t\t\t\t<span>10:00 - 10:30</span>\r\n\t\t\t\t\t\t\t<span class='ml4'>Crisina Fernandez</span>\r\n\t\t\t\t\t\t</div>\t\r\n\r\n\r\n\t\t\t\t\t</td>\r\n\r\n\r\n\t\t\t\t\t<td class=\"mw210\"></td>\r\n\t\t\t\t\t<td class=\"mw210\">\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t<div class=\"citaStyleN\" (click)='openDialogCita()' >\r\n\t\t\t\t\t\t\t<span>04:00 - 04:30</span>\r\n\t\t\t\t\t\t\t<span class='ml4'>Crisina Fernandez</span>\r\n\t\t\t\t\t\t</div>\t\r\n\r\n\t\t\t\t\t\t<div class=\"citaStyle\" (click)='openDialogCita()' >\r\n\t\t\t\t\t\t\t<span>05:00 - 06:00</span>\r\n\t\t\t\t\t\t\t<span class='ml4'>Crisina Fernandez</span>\r\n\t\t\t\t\t\t</div>\t\r\n\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td class=\"mw210\">\r\n\t\t\t\t\t\t<div class=\"citaStyle\" (click)='openDialogCita()'>\r\n\t\t\t\t\t\t\t<span>10:00 - 10:30</span>\r\n\t\t\t\t\t\t\t<span class='ml4'>Crisina Fernandez</span>\r\n\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t</td>\r\n\t\t\t\t</tr>\r\n\r\n\r\n\t\t\t\t<tr style=\"border-bottom: solid 1px lightgray;\">\r\n\t\t\t\t\t<td class=\"mw60\" style=\" padding: 10px 3px;\">\t\r\n\t\t\t\t\t\t<div style=\"white-space: nowrap;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;text-align: center;max-width: 60px;\">\r\n\t\t\t\t\t\t<img style='display: block; margin: auto; height: 35px;' matListAvatar src=\"assets/app/media/img/userB.png\">\r\n\t\t\t\t\t\tVeronica Rios\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td class=\"mw210\" style=\"background: repeating-linear-gradient( 45deg, #606dbc00, #ffffff 10px, #e8e8e8 10px, #ffffff 12px );\">\r\n\r\n\r\n\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td class=\"mw210\">\r\n\r\n\t\t\t\t\t</td>\r\n\r\n\r\n\t\t\t\t\t<td class=\"mw210\">\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t<div class=\"citaStyleA\" (click)='openDialogCita()' > \r\n\t\t\t\t\t\t\t<span>04:00 - 04:30</span>\r\n\t\t\t\t\t\t\t<span class='ml4'>Crisina Fernandez</span>\r\n\t\t\t\t\t\t</div>\t\r\n\r\n\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td class=\"mw210\">\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t<div class=\"citaStyleA\" (click)='openDialogCita()' >\r\n\t\t\t\t\t\t\t<span>04:00 - 04:30</span>\r\n\t\t\t\t\t\t\t<span class='ml4'>Crisina Fernandez</span>\r\n\t\t\t\t\t\t</div>\t\r\n\r\n\t\t\t\t\t\t<div class=\"citaStyle\" (click)='openDialogCita()' >\r\n\t\t\t\t\t\t\t<span>05:00 - 06:00</span>\r\n\t\t\t\t\t\t\t<span class='ml4'>Crisina Fernandez</span>\r\n\t\t\t\t\t\t</div>\t\r\n\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td class=\"mw210\">\r\n\r\n\t\t\t\t\t</td>\r\n\t\t\t\t</tr>\r\n\r\n\t\t\t\t<tr style=\"border-bottom: solid 1px lightgray;\">\r\n\t\t\t\t\t<td class=\"mw60\" style=\" padding: 10px 3px;\">\t\r\n\t\t\t\t\t\t<div style=\"white-space: nowrap;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;text-align: center;max-width: 60px;\">\r\n\t\t\t\t\t\t<img style='display: block; margin: auto; height: 35px;' matListAvatar src=\"assets/app/media/img/userB.png\">\r\n\t\t\t\t\t\tMaria R\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td class=\"mw210\" >\r\n\t\t\t\t\t\t<div class=\"citaStyleA\"  (click)='openDialogCita()' >\r\n\t\t\t\t\t\t\t<span>10:00 - 10:30</span>\r\n\t\t\t\t\t\t\t<span class='ml4'>Crisina Fernandez de ddd</span>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"citaStyleA\" (click)='openDialogCita()' >\r\n\t\t\t\t\t\t\t<span>10:00 - 10:30</span>\r\n\t\t\t\t\t\t\t<span class='ml4'>Crisina Fernandez</span>\r\n\t\t\t\t\t\t</div>\t\r\n\r\n\t\t\t\t\t\t<div class=\"citaStyle\" (click)='openDialogCita()' >\r\n\t\t\t\t\t\t\t<span>10:00 - 10:30</span>\r\n\t\t\t\t\t\t\t<span class='ml4'>Crisina Fernandez</span>\r\n\t\t\t\t\t\t</div>\t\r\n\r\n\t\t\t\t\t\t<div class=\"citaStyleN\" (click)='openDialogCita()' >\r\n\t\t\t\t\t\t\t<span>10:00 - 10:30</span>\r\n\t\t\t\t\t\t\t<span class='ml4'>Crisina Fernandez</span>\r\n\t\t\t\t\t\t</div>\t\r\n\r\n\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td class=\"mw210\">\r\n\t\t\t\t\t\t<div class=\"citaStyleA\" (click)='openDialogCita()' >\r\n\t\t\t\t\t\t\t<span>10:00 - 10:30</span>\r\n\t\t\t\t\t\t\t<span class='ml4'>Crisina Fernandez</span>\r\n\t\t\t\t\t\t</div>\t\r\n\r\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"citaStyle\" (click)='openDialogCita()' >\r\n\t\t\t\t\t\t\t<span>10:00 - 10:30</span>\r\n\t\t\t\t\t\t\t<span class='ml4'>Crisina Fernandez</span>\r\n\t\t\t\t\t\t</div>\t\r\n\r\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"citaStyle\" (click)='openDialogCita()' >\r\n\t\t\t\t\t\t\t<span>10:00 - 10:30</span>\r\n\t\t\t\t\t\t\t<span class='ml4'>Crisina Fernandez</span>\r\n\t\t\t\t\t\t</div>\t\r\n\r\n\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td class=\"mw210\" style=\"background: repeating-linear-gradient( 45deg, #606dbc00, #ffffff 10px, #e8e8e8 10px, #ffffff 12px );\"></td>\r\n\t\t\t\t\t<td class=\"mw210\"></td>\r\n\t\t\t\t\t<td class=\"mw210\">\r\n\t\t\t\t\t\t<div class=\"citaStyleN\" (click)='openDialogCita()'>\r\n\t\t\t\t\t\t\t<span>10:00 - 10:30</span>\r\n\t\t\t\t\t\t\t<span class='ml4'>Crisina Fernandez</span>\r\n\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t</td>\r\n\t\t\t\t</tr>\r\n\r\n\r\n\r\n\r\n\t\t\t</tbody>\r\n\t\t</table>\r\n\r\n\t</div>\r\n\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n\r\n"
+
+/***/ }),
+
+/***/ "./src/app/content/pages/components/calendario/calendario.component.scss":
+/*!*******************************************************************************!*\
+  !*** ./src/app/content/pages/components/calendario/calendario.component.scss ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".b-r-default {\n  border-right: 1px solid #bdc3c7; }\n\n::ng-deep mat-dialog-container {\n  padding: 0px !important;\n  border-radius: 5px !important; }\n\nh5 {\n  margin-bottom: 0;\n  color: #757575;\n  font-size: 16px;\n  font-weight: 600;\n  text-transform: uppercase;\n  display: inline-block;\n  margin-right: 10px; }\n\nh2 {\n  font-weight: 600; }\n\n.card-block-big {\n  padding: 25px; }\n\n.card-block {\n  padding: 20px; }\n\n.mw60 {\n  max-width: 60px !important;\n  width: 60px !important;\n  border-bottom: solid 1px lightgray;\n  border-right: solid 1px lightgray; }\n\n.mw210 {\n  padding: 0px;\n  max-width: 210px !important;\n  min-width: 210px !important;\n  width: 210px !important;\n  border-right: solid 1px lightgray;\n  border-bottom: solid 1px lightgray; }\n\n.citaStyle:not(:first-child) {\n  margin-top: 2px; }\n\n.ml4 {\n  margin-left: 4px; }\n\n.citaStyle {\n  border-left: solid 3px #77dd77;\n  background: #dcffdc;\n  width: 100%;\n  height: 38px;\n  padding: 4px;\n  font-weight: 500;\n  font-size: 12px;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap; }\n\n.iconRo {\n  font-size: 27px !important;\n  vertical-align: sub; }\n\n.iconRo:hover {\n  color: #34bfa3 !important; }\n\n.citaStyleA {\n  border-left: solid 3px #ffe716;\n  background: #fffcde;\n  width: 100%;\n  height: 38px;\n  padding: 4px;\n  font-weight: 500;\n  font-size: 12px;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap; }\n\n.citaStyleN {\n  border-left: solid 3px #ff940e;\n  background: #ffe0ba;\n  width: 100%;\n  height: 38px;\n  padding: 4px;\n  font-weight: 500;\n  font-size: 12px;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap; }\n\n.tittleCal {\n  font-size: 16px;\n  line-height: 20px;\n  text-align: center;\n  padding: 0 10px;\n  width: 100%;\n  -webkit-transform: translateY(0%);\n          transform: translateY(0%);\n  z-index: 100; }\n\n.popOverDate {\n  display: inline-block;\n  text-align: center;\n  min-width: 70px;\n  padding: 5px;\n  border-bottom: 1px solid #c3c1bc !important;\n  border-right: 1px solid #c3c1bc !important;\n  border-top: 1px solid #c3c1bc !important;\n  border-radius: 5px;\n  border-left: 3px solid #c400ff !important;\n  vertical-align: top; }\n\n.popOverDate span:nth-child(1) {\n  display: block;\n  color: #605f5d;\n  font-size: 14px;\n  line-height: 18px;\n  text-transform: uppercase; }\n\n.popOverDate span:nth-child(2) {\n  display: block;\n  font-size: 30px;\n  line-height: 36px;\n  color: #383734;\n  margin-bottom: 4px; }\n\n.popOverDate span:nth-child(3) {\n  display: block;\n  color: #605f5d;\n  font-size: 11px;\n  line-height: 18px;\n  text-transform: uppercase; }\n\n.tagStaff {\n  color: #00beb7;\n  background: #e5f8f7;\n  font-size: 16px;\n  font-weight: 500;\n  line-height: 13px;\n  text-align: center;\n  text-transform: uppercase;\n  border-radius: 4px;\n  display: block;\n  padding: 7px 22px;\n  min-width: 100px; }\n"
+
+/***/ }),
+
+/***/ "./src/app/content/pages/components/calendario/calendario.component.ts":
+/*!*****************************************************************************!*\
+  !*** ./src/app/content/pages/components/calendario/calendario.component.ts ***!
+  \*****************************************************************************/
+/*! exports provided: ModalcalenComponent, CalendarioComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ModalcalenComponent", function() { return ModalcalenComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CalendarioComponent", function() { return CalendarioComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
+/* harmony import */ var _core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../core/auth/authentication.service */ "./src/app/core/auth/authentication.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (undefined && undefined.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
+
+
+
+var ModalcalenComponent = /** @class */ (function () {
+    function ModalcalenComponent(data, dialog, cdr, authService, dialogRef) {
+        this.data = data;
+        this.dialog = dialog;
+        this.cdr = cdr;
+        this.authService = authService;
+        this.dialogRef = dialogRef;
+        this.onAdd3 = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        console.log(this.data);
+    }
+    ModalcalenComponent.prototype.cerrarDialog = function () {
+        //this.onAdd3.emit(dataServicio);
+        this.dialogRef.close();
+    };
+    ModalcalenComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'm-modalcalen',
+            template: "\n\n  <div style=\"    min-width: 500px;\">\n    <div style=\"border-radius: 6px; background: #fff;border: 1px solid #c3c1bc;box-shadow: 5px 12px 40px 0 rgba(0,0,0,.2);display: block;padding: 20px;\">\n      <div>\n        <div class=\"popOverDate\"><span>SEP</span><span>25</span><span>10:00 AM</span></div>\n        <div style=\"     padding-left: 18px;   display: inline-block;\"> \n          <div class=\"tagStaff\">CONFIRMADA</div>\n          <div style=\"    margin-top: 23px;\">\n          <img style='    display: inline-block; margin: auto; height: 35px;' matListAvatar src=\"assets/app/media/img/userB.png\">\n          <span style=\"   margin-left: 5px;font-size: 16px;font-weight: 400; display: inline-block;\">Ligia Fallas</span>\n          </div>    \n        </div>\n      </div>\n      <hr>\n      <div>\n        <span style=\"font-weight: 500;color: #383734;font-size: 16px;\">Corte de Cabello</span>\n        <mat-icon style='color: #888;vertical-align: middle;margin: 0px 3px;'>chevron_right</mat-icon>\n        <span style=\"color: #383734;font-size: 16px;\">Gerardo Vega</span>\n        <span style=\"    margin-left: 15px;color: #888;font-size: 16px;\">30min</span>\n      </div>\n      <hr>\n      <div>\n\n          <button  [routerLink]=\"['/detallecita']\" mat-dialog-close class=\"btn btn-sm btn-success\" style=\"\" color=\"primary\">Detalle de Cita</button>\n         \n          <button  style=\"    float: right;\" class=\"btn btn-sm btn-outline-danger\"  color=\"primary\">Cancelar Cita</button>\n      </div>\n    </div>\n  </div>\n\n",
+            styles: [__webpack_require__(/*! ./calendario.component.scss */ "./src/app/content/pages/components/calendario/calendario.component.scss")]
+        }),
+        __param(0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Optional"])()), __param(0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"])(_angular_material__WEBPACK_IMPORTED_MODULE_1__["MAT_DIALOG_DATA"])),
+        __metadata("design:paramtypes", [Object, _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatDialog"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"],
+            _core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"],
+            _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatDialogRef"]])
+    ], ModalcalenComponent);
+    return ModalcalenComponent;
+}());
+
+var CalendarioComponent = /** @class */ (function () {
+    function CalendarioComponent(authService, cdr, dialog) {
+        this.authService = authService;
+        this.cdr = cdr;
+        this.dialog = dialog;
+        this.loadingScreen = false;
+        this.info = [];
+        this.ingresos = [];
+        this.bests = [];
+        var retrievedObject = JSON.parse(localStorage.getItem('userADby2as'));
+        this.idCentro = retrievedObject.idCentro;
+    }
+    CalendarioComponent.prototype.ngOnInit = function () {
+        /*
+        
+                          this.loadingScreen = true;
+                  this.authService.getInfoCentro({idCentro:this.idCentro})
+              .subscribe((data:any) => {
+              this.loadingScreen = false;
+                console.log(data);
+        
+                this.info=data.info[0];
+                this.ingresos=data.dataV[0];
+                this.bests=data.clientes;
+        
+                this.cdr.detectChanges();
+                 
+                },err => {
+                   this.loadingScreen = false;
+                       console.log('someError');
+                        alert('Ups! Algo ha salido mal');
+                    });
+        
+        
+        */
+    };
+    CalendarioComponent.prototype.changeCalen = function (fecha) {
+        console.log(fecha);
+    };
+    CalendarioComponent.prototype.openDialogCita = function () {
+        // const dialogRef = this.dialog.open(Modal3Component,{data:this.horarioGuardado});
+        var dialogRef = this.dialog.open(ModalcalenComponent);
+    };
+    CalendarioComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'm-calendario',
+            template: __webpack_require__(/*! ./calendario.component.html */ "./src/app/content/pages/components/calendario/calendario.component.html"),
+            styles: [__webpack_require__(/*! ./calendario.component.scss */ "./src/app/content/pages/components/calendario/calendario.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"],
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"], _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatDialog"]])
+    ], CalendarioComponent);
+    return CalendarioComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/content/pages/components/detallecita/detallecita.component.html":
+/*!*********************************************************************************!*\
+  !*** ./src/app/content/pages/components/detallecita/detallecita.component.html ***!
+  \*********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px #ebedf2;    display: block;\">\r\n\t\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 30px;\">Cita\r\n\t\t\t<div class=\"tagStaff\" style=\"font-size: 17px !important;\r\n    padding: 9px !important;\">CONFIRMADA</div>\r\n\t</div>\r\n\r\n<!-- \t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" \r\n\t\t[routerLink]=\"['/addstaff']\"  mat-raised-button color=\"primary\" matTooltip=\"Crear nuevo servicio\">Agregar miembro del Staff</button>\r\n -->\r\n</div>\r\n\r\n<div class=\"row\">\r\n\r\n\t <ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\r\n\t \r\n\t<div class=\"col-xl-4\" style=\"padding-right: 0px;    border-right: solid 1px #ebedf2;\" >\r\n\r\n\r\n\r\n<div style='padding-top: 0px '>\r\n\r\n  <div style='height: 66px;padding: 10px;    border-bottom: solid 1px #ebedf2;'>\r\n    <img style=\"display: inline-block;vertical-align: bottom;margin-right: 10px;\" src=\"assets/app/media/img/userB.png\">\r\n    <div style=\"display: inline-block;\">\r\n    <span style=\"    font-weight: 400;font-size: 16px;line-height: 20px;display: inline-block;\">Jane Rilay</span>\r\n    <span style=\"display: block;\">\r\n     test@test.com\r\n    </span>\r\n\t</div>\r\n  </div>\r\n\r\n\r\n  <div style=\"display: flex;text-align: center;padding: 15px;border-bottom: solid 1px #ebedf2;\">\r\n\r\n  \t<div style=\"display: inline-block;margin: auto;\">\r\n  \t\t<span style=\"display: block\">3</span>\r\n  \t\t<span style=\"display: block\">Programadas</span>\r\n  \t</div>\r\n  \t<div style=\"display: inline-block;margin: auto;\">\r\n  \t\t<span style=\"display: block\">0</span>\r\n  \t\t<span style=\"display: block\">Completadas</span>\r\n  \t</div>\r\n  \t<div style=\"display: inline-block;margin: auto;\">\r\n  \t\t<span style=\"display: block\">0</span>\r\n  \t\t<span style=\"display: block\">Canceladas</span>\r\n  \t</div>\r\n\r\n  </div>\r\n\r\n\r\n<div style=\"color: #00beb7; margin-top: 12px;  font-size: 14px; padding-left: 22px;font-weight: 400;\">Citas</div>\r\n<hr>\r\n<mat-nav-list style='padding-top: 0px '>\r\n\r\n  <mat-list-item style='height: 100px !important;'>\r\n\r\n  \t   <div>\r\n  \t   \t<div class=\"priceS\">$15</div>\r\n        <div class=\"popOverDate\"><span>SEP</span><span>25</span><span>10:00 AM</span></div>\r\n        <div style=\"     padding-left: 18px;   display: inline-block;\"> \r\n          <div class=\"tagStaff\">CONFIRMADA</div>\r\n          <div style=\"font-size: 12px;\">\r\n          \t<span>Jane Rilay</span>\r\n          \t<mat-icon style='color: #888;vertical-align: middle;margin: 0px 3px;'>chevron_right</mat-icon>\r\n          \t<span>Juan perez</span>\r\n          </div>   \r\n          <div style=\"font-size: 12px;\">\r\n          \tCorte de cabello (20min)\r\n          </div> \r\n        </div>\r\n      </div>\r\n\r\n  </mat-list-item>\r\n\r\n  <mat-list-item style='height: 100px !important;'>\r\n\r\n  \t   <div>\r\n  \t   \t<div class=\"priceS\">$15</div>\r\n        <div class=\"popOverDate\"><span>SEP</span><span>25</span><span>10:00 AM</span></div>\r\n        <div style=\"     padding-left: 18px;   display: inline-block;\"> \r\n          <div class=\"tagStaff\">CONFIRMADA</div>\r\n          <div style=\"font-size: 12px;\">\r\n          \t<span>Jane Rilay</span>\r\n          \t<mat-icon style='color: #888;vertical-align: middle;margin: 0px 3px;'>chevron_right</mat-icon>\r\n          \t<span>Juan perez</span>\r\n          </div>   \r\n          <div style=\"font-size: 12px;\">\r\n          \tCorte de cabello (20min)\r\n          </div> \r\n        </div>\r\n      </div>\r\n\r\n  </mat-list-item>\r\n\r\n\r\n    <mat-list-item style='height: 100px !important;'>\r\n\r\n  \t   <div>\r\n  \t   \t<div class=\"priceS\">$15</div>\r\n        <div class=\"popOverDate\"><span>SEP</span><span>25</span><span>10:00 AM</span></div>\r\n        <div style=\"     padding-left: 18px;   display: inline-block;\"> \r\n          <div class=\"tagStaff\">CONFIRMADA</div>\r\n          <div style=\"font-size: 12px;\">\r\n          \t<span>Jane Rilay</span>\r\n          \t<mat-icon style='color: #888;vertical-align: middle;margin: 0px 3px;'>chevron_right</mat-icon>\r\n          \t<span>Juan perez</span>\r\n          </div>   \r\n          <div style=\"font-size: 12px;\">\r\n          \tCorte de cabello (20min)\r\n          </div> \r\n        </div>\r\n      </div>\r\n\r\n  </mat-list-item>\r\n\r\n\r\n\r\n</mat-nav-list>\r\n\r\n  <!-- \r\n\r\n    <mat-list-item [ngClass]=\"{'selectedItem': selected == 2}\" (click)=\"itemSelectedChange(2)\">\r\n    <img matListAvatar src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\" >\r\n    <h3 matLine> Maria Segura  </h3>\r\n    <p matLine>\r\n        <span class=\"tagStaff\">MIEMBRO ADMINISTRADOR</span>\r\n    </p>\r\n  </mat-list-item>\r\n\r\n      <mat-list-item [ngClass]=\"{'selectedItem': selected == 3}\" (click)=\"itemSelectedChange(3)\">\r\n    <img matListAvatar src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\" >\r\n    <h3 matLine> Luisa Corrales </h3>\r\n    <p matLine>\r\n      <span class=\"tagStaff\">MIEMBRO ADMINISTRADOR</span>\r\n    </p>\r\n  </mat-list-item> -->\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n\t\t\t\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\r\n\r\n\t<div class=\"col-xl-8\" style=\"padding-left: 0px !important\">\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t\t<m-portlet>\r\n\t<!-- use ng-container[mPortletHeadTitle] for the title -->\r\n\t<ng-container mPortletHeadTitle>\r\n\t\t<div class=\"m-portlet__head-title\">\r\n\t\t\t<h3 class=\"m-portlet__head-text\">\r\n\t\t\t\tServicios\r\n\t\t\t</h3>\r\n\t\t</div>\r\n\t</ng-container>\r\n\r\n\t<!-- use ng-container[mPortletBody] for the body content -->\r\n\t<ng-container mPortletBody>\r\n\t<!--\t<perfect-scrollbar class=\"m-scrollable m-scroller\" style=\"height: 40vh;\">\r\n\t\t\tBegin::Timeline 2 -->\r\n\t\t\t<div class=\"m-timeline-2\">\r\n\t\t\t\t<div class=\"m-timeline-2__items  m--padding-top-25 m--padding-bottom-30\">\r\n\t\t\t\t\t<div class=\"m-timeline-2__item\"  style=\"width: 100%\">\r\n\t\t\t\t\t\t<span class=\"m-timeline-2__item-time\" >\r\n\r\n\r\n\t\t\t\t\t\t\t<div  class=\"popOverDate\" style='background: white !important;'><span>SEP</span><span>25</span><span>10:00 AM</span></div>\r\n\r\n\r\n\t\t\t\t\t\t</span>\r\n\t<!-- \t\t\t\t\t<div class=\"m-timeline-2__item-cricle\">\r\n\t\t\t\t\t\t\t<i class=\"fa fa-genderless m--font-danger\"></i>\r\n\t\t\t\t\t\t</div> -->\r\n\t\t\t\t\t\t<div class=\"m-timeline-2__item-text  m--padding-top-5\" style=\"    width: 100%;padding-left: 90px !important;\">\r\n\r\n\t\t\t\t\t\t\t<div style=\"background: #faf9f7; border: 1px solid #e1e1e1; border-radius: 4px;padding: 20px 20px 20px 30px; position: relative;\">\r\n\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 16px;margin-bottom: 10px;\">\r\n\t\t\t\t\t\t\t\t\t<span style=\"color:#383734;font-weight: 400\">Corte de Pelo Dama</span>\r\n\t\t\t\t\t\t\t\t\t<span style=\"color:#383734;float: right;font-weight: 600\">$15</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 16px;\">\r\n\t\t\t\t\t\t\t\t\t1:15 PM - 2:00 PM\r\n\t\t\t\t\t\t\t\t\t<span style=\"float: right;\">30min</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t\t<div style=\"    margin-top: 23px;\">\r\n\t\t\t\t\t\t\t\t<img style='    display: inline-block; margin: auto; height: 35px;' matListAvatar src=\"assets/app/media/img/userB.png\">\r\n\t\t\t\t\t\t\t\t<span style=\"  color:#383734; margin-left: 5px;font-size: 16px;font-weight: 400; display: inline-block;\">Ligia Fallas</span>\r\n\t\t\t\t\t\t\t\t</div> \r\n\r\n\t\t\t\t\t\t\t\t<div style=\"margin-top: 13px\">\r\n\t\t\t\t\t\t\t\t<button   mat-dialog-close class=\"btn btn-sm btn-outline-success\" style=\"\" color=\"primary\">Confirmar</button>\r\n\r\n\t\t\t\t\t\t\t\t<button   mat-dialog-close class=\"btn btn-sm btn-outline-success\" style=\"\" color=\"primary\" style=\"margin-left: 10px;\">Reprogramar</button>\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</div>\r\n\t\t\r\n\r\n\r\n\r\n\r\n\t\t<div class=\"m-timeline-2__item\" style=\"width: 100% !important;\">\r\n\t\t\t\t\t\t<span class=\"m-timeline-2__item-time\" style=\"width: 100%\">\r\n\r\n\r\n\t\t\t\t\t\t\t<div  class=\"popOverDate\" style='background: white !important;'>\r\n\t\t\t\t\t\t\t\t<!-- <span>SEP</span>\r\n\t\t\t\t\t\t\t\t<span>25</span> -->\r\n\t\t\t\t\t\t\t\t<span>10:00 AM</span>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t</span>\r\n<!-- \t\t\t\t\t\t<div class=\"m-timeline-2__item-cricle\">\r\n\t\t\t\t\t\t\t<i class=\"fa fa-genderless m--font-danger\"></i>\r\n\t\t\t\t\t\t</div> -->\r\n\t\t\t\t\t\t<div class=\"m-timeline-2__item-text  m--padding-top-5\" \r\n\t\t\t\t\t\tstyle=\"      width: 100%;\r\n    padding-left: 90px !important; \">\r\n\r\n\t\t\t\t\t\t\t<div style=\"background: #faf9f7; border: 1px solid #e1e1e1; border-radius: 4px;padding: 20px 20px 20px 30px; position: relative;\">\r\n\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 16px;margin-bottom: 10px;\">\r\n\t\t\t\t\t\t\t\t\t<span style=\"color:#383734;font-weight: 400\">Corte de Pelo Dama</span>\r\n\t\t\t\t\t\t\t\t\t<span style=\"color:#383734;float: right;font-weight: 600\">$15</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 16px;\">\r\n\t\t\t\t\t\t\t\t\t1:15 PM - 2:00 PM\r\n\t\t\t\t\t\t\t\t\t<span style=\"float: right;\">30min</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t\t<div style=\"    margin-top: 23px;\">\r\n\t\t\t\t\t\t\t\t<img style='    display: inline-block; margin: auto; height: 35px;' matListAvatar src=\"assets/app/media/img/userB.png\">\r\n\t\t\t\t\t\t\t\t<span style=\"  color:#383734; margin-left: 5px;font-size: 16px;font-weight: 400; display: inline-block;\">Ligia Fallas</span>\r\n\t\t\t\t\t\t\t\t</div>    \r\n\r\n\r\n\t\t\t\t\t\t\t\t<div style=\"margin-top: 13px\">\r\n\t\t\t\t\t\t\t\t<button   mat-dialog-close class=\"btn btn-sm btn-outline-success\" style=\"\" color=\"primary\">Confirmar</button>\r\n\r\n\t\t\t\t\t\t\t\t<button   mat-dialog-close class=\"btn btn-sm btn-outline-success\" style=\"\" color=\"primary\" style=\"margin-left: 10px;\">Reprogramar</button>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t</div>\r\n\t\t\r\n\r\n\t\r\n\r\n\t<div class=\"m-timeline-2__item\" style=\"width: 100% !important;\">\r\n\t\t\t\t\t\t<span class=\"m-timeline-2__item-time\" style=\"width: 100%\">\r\n\r\n\r\n\t\t\t\t\t\t\t<div  class=\"popOverDate\" style='background: white !important;'>\r\n\t\t\t\t\t\t\t\t<!-- <span>SEP</span>\r\n\t\t\t\t\t\t\t\t<span>25</span> -->\r\n\t\t\t\t\t\t\t\t<span>10:00 AM</span>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t</span>\r\n<!-- \t\t\t\t\t\t<div class=\"m-timeline-2__item-cricle\">\r\n\t\t\t\t\t\t\t<i class=\"fa fa-genderless m--font-danger\"></i>\r\n\t\t\t\t\t\t</div> -->\r\n\t\t\t\t\t\t<div class=\"m-timeline-2__item-text  m--padding-top-5\" \r\n\t\t\t\t\t\tstyle=\"      width: 100%;\r\n    padding-left: 90px !important; \">\r\n\r\n\t\t\t\t\t\t\t<div style=\"background: #faf9f7; border: 1px solid #e1e1e1; border-radius: 4px;padding: 20px 20px 20px 30px; position: relative;\">\r\n\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 16px;margin-bottom: 10px;\">\r\n\t\t\t\t\t\t\t\t\t<span style=\"color:#383734;font-weight: 400\">Corte de Pelo Dama</span>\r\n\t\t\t\t\t\t\t\t\t<span style=\"color:#383734;float: right;font-weight: 600\">$15</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 16px;\">\r\n\t\t\t\t\t\t\t\t\t1:15 PM - 2:00 PM\r\n\t\t\t\t\t\t\t\t\t<span style=\"float: right;\">30min</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t\t<div style=\"    margin-top: 23px;\">\r\n\t\t\t\t\t\t\t\t<img style='    display: inline-block; margin: auto; height: 35px;' matListAvatar src=\"assets/app/media/img/userB.png\">\r\n\t\t\t\t\t\t\t\t<span style=\"  color:#383734; margin-left: 5px;font-size: 16px;font-weight: 400; display: inline-block;\">Ligia Fallas</span>\r\n\t\t\t\t\t\t\t\t</div>    \r\n\r\n\t\t\t\t\t\t\t\t<div style=\"margin-top: 13px\">\r\n\t\t\t\t\t\t\t\t<button   mat-dialog-close class=\"btn btn-sm btn-outline-success\" style=\"\" color=\"primary\">Confirmar</button>\r\n\r\n\t\t\t\t\t\t\t\t<button   mat-dialog-close class=\"btn btn-sm btn-outline-success\" style=\"\" color=\"primary\" style=\"margin-left: 10px;\">Reprogramar</button>\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</div>\r\n\t\t\r\n\r\n<div style=\"    float: right;\r\n    margin-top: 20px; margin-bottom: 20px;\">\r\n\t<span style=\"font-size: 16px;\">Total</span>\r\n\t<span style=\"    font-size: 30px;\r\n    color: #383734;\r\n    margin-left: 10px;\">$90.00</span>\r\n</div>\r\n\r\n\r\n\t\t\t\t<!-- \t<div class=\"m-timeline-2__item m--margin-top-30\">\r\n\t\t\t\t\t\t<span class=\"m-timeline-2__item-time\">17:00</span>\r\n\t\t\t\t\t\t<div class=\"m-timeline-2__item-cricle\">\r\n\t\t\t\t\t\t\t<i class=\"fa fa-genderless m--font-info\"></i>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"m-timeline-2__item-text m--padding-top-5\">\r\n\t\t\t\t\t\t\tPlaced a new order in\r\n\t\t\t\t\t\t\t<a href=\"#\" class=\"m-link m-link--brand m--font-bolder\">SIGNATURE MOBILE</a> marketplace.\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</div> -->\r\n\t\r\n\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t\t<!--End::Timeline 2 \r\n\t\t</perfect-scrollbar>-->\r\n\t</ng-container>\r\n</m-portlet>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t\t</div>\r\n<!-- \r\n\t\t<div style=\"    padding: 40px 60px;width: 100%\">\r\n\r\n\t\t\t\r\n\t</div> -->\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n"
+
+/***/ }),
+
+/***/ "./src/app/content/pages/components/detallecita/detallecita.component.scss":
+/*!*********************************************************************************!*\
+  !*** ./src/app/content/pages/components/detallecita/detallecita.component.scss ***!
+  \*********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".txtF {\n  color: #383734;\n  font-size: 16px; }\n\n.tituloCateg {\n  font-size: 16px;\n  margin-bottom: 10px;\n  margin-top: 15px;\n  font-weight: 400; }\n\n.iconGG:hover {\n  background-color: #34bfa3 !important; }\n\n.w50 {\n  display: flex;\n  width: 50%; }\n\ninput:focus {\n  outline: none !important;\n  border: 1px solid #34bfa3; }\n\n.inputBy {\n  color: #383734;\n  background: #fff;\n  border: 1px solid #e1e1e1;\n  border-radius: 4px;\n  min-height: 40px;\n  padding: 7px 10px;\n  resize: vertical;\n  -webkit-appearance: none;\n  -moz-appearance: none; }\n\n.w100 {\n  display: block;\n  width: 100%; }\n\n.imgCheckBox {\n  height: 34px;\n  width: 34px;\n  border-radius: 20px;\n  margin: 5px 11px; }\n\n.conteinInput {\n  margin-bottom: 30px; }\n\n.labelBy {\n  display: inline-block;\n  margin-bottom: 10px;\n  font-size: 16px;\n  font-weight: 500 !important;\n  line-height: 1.5;\n  color: #383734; }\n\n.selectedItem {\n  background: dimgrey;\n  color: white; }\n\n/*\nmat-list-item:hover{\n\t background: dimgrey !important;\n    color: white;\n}\n*/\n\nmat-list-item {\n  border-bottom: solid 1px lightgray; }\n\n.tagStaff {\n  color: #00beb7;\n  background: #e5f8f7;\n  font-size: 10px;\n  font-weight: 500;\n  line-height: 12px;\n  text-align: center;\n  text-transform: uppercase;\n  border-radius: 2px;\n  display: inline-block;\n  padding: 2px 10px;\n  min-width: 100px;\n  vertical-align: middle; }\n\n.citaStyle:not(:first-child) {\n  margin-top: 2px; }\n\n.ml4 {\n  margin-left: 4px; }\n\n.citaStyle {\n  border-left: solid 3px #c400ff;\n  background: #f6d9ff;\n  width: 100%;\n  height: 38px;\n  padding: 4px;\n  font-weight: 500;\n  font-size: 12px;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap; }\n\n.popOverDate {\n  display: inline-block;\n  text-align: center;\n  min-width: 70px;\n  padding: 2px;\n  border-bottom: 1px solid #c3c1bc !important;\n  border-right: 1px solid #c3c1bc !important;\n  border-top: 1px solid #c3c1bc !important;\n  border-radius: 5px;\n  border-left: 3px solid #c400ff !important;\n  vertical-align: top; }\n\n.popOverDate span:nth-child(1) {\n  display: block;\n  color: #605f5d;\n  font-size: 12px;\n  line-height: 18px;\n  text-transform: uppercase; }\n\n.m-timeline-2:before {\n  display: none !important; }\n\n.popOverDate span:nth-child(2) {\n  display: block;\n  font-size: 25px;\n  line-height: 36px;\n  color: #383734; }\n\n.priceS {\n  position: absolute;\n  right: 20px;\n  top: 20px;\n  font-weight: 400;\n  font-size: 14px; }\n\n.popOverDate span:nth-child(3) {\n  display: block;\n  color: #605f5d;\n  font-size: 11px;\n  line-height: 18px;\n  text-transform: uppercase; }\n"
+
+/***/ }),
+
+/***/ "./src/app/content/pages/components/detallecita/detallecita.component.ts":
+/*!*******************************************************************************!*\
+  !*** ./src/app/content/pages/components/detallecita/detallecita.component.ts ***!
+  \*******************************************************************************/
+/*! exports provided: DetallecitaComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DetallecitaComponent", function() { return DetallecitaComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../core/auth/authentication.service */ "./src/app/core/auth/authentication.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var DetallecitaComponent = /** @class */ (function () {
+    function DetallecitaComponent(authService, cdr, _location) {
+        this.authService = authService;
+        this.cdr = cdr;
+        this._location = _location;
+        this.horarioHoras = [
+            { 'text': '12:00 AM', 'valor': '00:00:00' },
+            { 'text': '12:05 AM', 'valor': '00:05:00' },
+            { 'text': '12:10 AM', 'valor': '00:10:00' },
+            { 'text': '12:15 AM', 'valor': '00:15:00' },
+            { 'text': '12:20 AM', 'valor': '00:20:00' },
+            { 'text': '12:25 AM', 'valor': '00:25:00' },
+            { 'text': '12:30 AM', 'valor': '00:30:00' },
+            { 'text': '12:35 AM', 'valor': '00:35:00' },
+            { 'text': '12:40 AM', 'valor': '00:40:00' },
+            { 'text': '12:45 AM', 'valor': '00:45:00' },
+            { 'text': '12:55 AM', 'valor': '00:55:00' },
+            { 'text': '01:00 AM', 'valor': '01:00:00' },
+            { 'text': '01:05 AM', 'valor': '01:05:00' },
+            { 'text': '01:10 AM', 'valor': '01:10:00' },
+            { 'text': '01:15 AM', 'valor': '01:15:00' },
+            { 'text': '01:20 AM', 'valor': '01:20:00' },
+            { 'text': '01:25 AM', 'valor': '01:25:00' },
+            { 'text': '01:30 AM', 'valor': '01:30:00' },
+            { 'text': '01:35 AM', 'valor': '01:35:00' },
+            { 'text': '01:40 AM', 'valor': '01:40:00' },
+            { 'text': '01:45 AM', 'valor': '01:45:00' },
+            { 'text': '01:55 AM', 'valor': '01:55:00' },
+            { 'text': '02:00 AM', 'valor': '02:00:00' },
+            { 'text': '02:05 AM', 'valor': '02:05:00' },
+            { 'text': '02:10 AM', 'valor': '02:10:00' },
+            { 'text': '02:15 AM', 'valor': '02:15:00' },
+            { 'text': '02:20 AM', 'valor': '02:20:00' },
+            { 'text': '02:25 AM', 'valor': '02:25:00' },
+            { 'text': '02:30 AM', 'valor': '02:30:00' },
+            { 'text': '02:35 AM', 'valor': '02:35:00' },
+            { 'text': '02:40 AM', 'valor': '02:40:00' },
+            { 'text': '02:45 AM', 'valor': '02:45:00' },
+            { 'text': '02:55 AM', 'valor': '02:55:00' },
+            { 'text': '03:00 AM', 'valor': '03:00:00' },
+            { 'text': '03:05 AM', 'valor': '03:05:00' },
+            { 'text': '03:10 AM', 'valor': '03:10:00' },
+            { 'text': '03:15 AM', 'valor': '03:15:00' },
+            { 'text': '03:20 AM', 'valor': '03:20:00' },
+            { 'text': '03:25 AM', 'valor': '03:25:00' },
+            { 'text': '03:30 AM', 'valor': '03:30:00' },
+            { 'text': '03:35 AM', 'valor': '03:35:00' },
+            { 'text': '03:40 AM', 'valor': '03:40:00' },
+            { 'text': '03:45 AM', 'valor': '03:45:00' },
+            { 'text': '03:55 AM', 'valor': '03:55:00' },
+            { 'text': '04:00 AM', 'valor': '04:00:00' },
+            { 'text': '04:05 AM', 'valor': '04:05:00' },
+            { 'text': '04:10 AM', 'valor': '04:10:00' },
+            { 'text': '04:15 AM', 'valor': '04:15:00' },
+            { 'text': '04:20 AM', 'valor': '04:20:00' },
+            { 'text': '04:25 AM', 'valor': '04:25:00' },
+            { 'text': '04:30 AM', 'valor': '04:30:00' },
+            { 'text': '04:35 AM', 'valor': '04:35:00' },
+            { 'text': '04:40 AM', 'valor': '04:40:00' },
+            { 'text': '04:45 AM', 'valor': '04:45:00' },
+            { 'text': '04:55 AM', 'valor': '04:55:00' },
+            { 'text': '05:00 AM', 'valor': '05:00:00' },
+            { 'text': '05:05 AM', 'valor': '05:05:00' },
+            { 'text': '05:10 AM', 'valor': '05:10:00' },
+            { 'text': '05:15 AM', 'valor': '05:15:00' },
+            { 'text': '05:20 AM', 'valor': '05:20:00' },
+            { 'text': '05:25 AM', 'valor': '05:25:00' },
+            { 'text': '05:30 AM', 'valor': '05:30:00' },
+            { 'text': '05:35 AM', 'valor': '05:35:00' },
+            { 'text': '05:40 AM', 'valor': '05:40:00' },
+            { 'text': '05:45 AM', 'valor': '05:45:00' },
+            { 'text': '05:55 AM', 'valor': '05:55:00' },
+            { 'text': '06:00 AM', 'valor': '06:00:00' },
+            { 'text': '06:05 AM', 'valor': '06:05:00' },
+            { 'text': '06:10 AM', 'valor': '06:10:00' },
+            { 'text': '06:15 AM', 'valor': '06:15:00' },
+            { 'text': '06:20 AM', 'valor': '06:20:00' },
+            { 'text': '06:25 AM', 'valor': '06:25:00' },
+            { 'text': '06:30 AM', 'valor': '06:30:00' },
+            { 'text': '06:35 AM', 'valor': '06:35:00' },
+            { 'text': '06:40 AM', 'valor': '06:40:00' },
+            { 'text': '06:45 AM', 'valor': '06:45:00' },
+            { 'text': '06:55 AM', 'valor': '06:55:00' },
+            { 'text': '07:00 AM', 'valor': '07:00:00' },
+            { 'text': '07:05 AM', 'valor': '07:05:00' },
+            { 'text': '07:10 AM', 'valor': '07:10:00' },
+            { 'text': '07:15 AM', 'valor': '07:15:00' },
+            { 'text': '07:20 AM', 'valor': '07:20:00' },
+            { 'text': '07:25 AM', 'valor': '07:25:00' },
+            { 'text': '07:30 AM', 'valor': '07:30:00' },
+            { 'text': '07:35 AM', 'valor': '07:35:00' },
+            { 'text': '07:40 AM', 'valor': '07:40:00' },
+            { 'text': '07:45 AM', 'valor': '07:45:00' },
+            { 'text': '07:55 AM', 'valor': '07:55:00' },
+            { 'text': '08:00 AM', 'valor': '08:00:00' },
+            { 'text': '08:05 AM', 'valor': '08:05:00' },
+            { 'text': '08:10 AM', 'valor': '08:10:00' },
+            { 'text': '08:15 AM', 'valor': '08:15:00' },
+            { 'text': '08:20 AM', 'valor': '08:20:00' },
+            { 'text': '08:25 AM', 'valor': '08:25:00' },
+            { 'text': '08:30 AM', 'valor': '08:30:00' },
+            { 'text': '08:35 AM', 'valor': '08:35:00' },
+            { 'text': '08:40 AM', 'valor': '08:40:00' },
+            { 'text': '08:45 AM', 'valor': '08:45:00' },
+            { 'text': '08:55 AM', 'valor': '08:55:00' },
+            { 'text': '09:00 AM', 'valor': '09:00:00' },
+            { 'text': '09:05 AM', 'valor': '09:05:00' },
+            { 'text': '09:10 AM', 'valor': '09:10:00' },
+            { 'text': '09:15 AM', 'valor': '09:15:00' },
+            { 'text': '09:20 AM', 'valor': '09:20:00' },
+            { 'text': '09:25 AM', 'valor': '09:25:00' },
+            { 'text': '09:30 AM', 'valor': '09:30:00' },
+            { 'text': '09:35 AM', 'valor': '09:35:00' },
+            { 'text': '09:40 AM', 'valor': '09:40:00' },
+            { 'text': '09:45 AM', 'valor': '09:45:00' },
+            { 'text': '09:55 AM', 'valor': '09:55:00' },
+            { 'text': '10:00 AM', 'valor': '10:00:00' },
+            { 'text': '10:05 AM', 'valor': '10:05:00' },
+            { 'text': '10:10 AM', 'valor': '10:10:00' },
+            { 'text': '10:15 AM', 'valor': '10:15:00' },
+            { 'text': '10:20 AM', 'valor': '10:20:00' },
+            { 'text': '10:25 AM', 'valor': '10:25:00' },
+            { 'text': '10:30 AM', 'valor': '10:30:00' },
+            { 'text': '10:35 AM', 'valor': '10:35:00' },
+            { 'text': '10:40 AM', 'valor': '10:40:00' },
+            { 'text': '10:45 AM', 'valor': '10:45:00' },
+            { 'text': '10:55 AM', 'valor': '10:55:00' },
+            { 'text': '11:00 AM', 'valor': '11:00:00' },
+            { 'text': '11:05 AM', 'valor': '11:05:00' },
+            { 'text': '11:10 AM', 'valor': '11:10:00' },
+            { 'text': '11:15 AM', 'valor': '11:15:00' },
+            { 'text': '11:20 AM', 'valor': '11:20:00' },
+            { 'text': '11:25 AM', 'valor': '11:25:00' },
+            { 'text': '11:30 AM', 'valor': '11:30:00' },
+            { 'text': '11:35 AM', 'valor': '11:35:00' },
+            { 'text': '11:40 AM', 'valor': '11:40:00' },
+            { 'text': '11:45 AM', 'valor': '11:45:00' },
+            { 'text': '11:55 AM', 'valor': '11:55:00' },
+            { 'text': '12:00 PM', 'valor': '12:00:00' },
+            { 'text': '12:05 PM', 'valor': '12:05:00' },
+            { 'text': '12:12 PM', 'valor': '12:12:00' },
+            { 'text': '12:15 PM', 'valor': '12:15:00' },
+            { 'text': '12:20 PM', 'valor': '12:20:00' },
+            { 'text': '12:25 PM', 'valor': '12:25:00' },
+            { 'text': '12:30 PM', 'valor': '12:30:00' },
+            { 'text': '12:35 PM', 'valor': '12:35:00' },
+            { 'text': '12:40 PM', 'valor': '12:40:00' },
+            { 'text': '12:45 PM', 'valor': '12:45:00' },
+            { 'text': '12:55 PM', 'valor': '12:55:00' },
+            { 'text': '01:00 PM', 'valor': '13:00:00' },
+            { 'text': '01:05 PM', 'valor': '13:05:00' },
+            { 'text': '01:01 PM', 'valor': '13:01:00' },
+            { 'text': '01:15 PM', 'valor': '13:15:00' },
+            { 'text': '01:20 PM', 'valor': '13:20:00' },
+            { 'text': '01:25 PM', 'valor': '13:25:00' },
+            { 'text': '01:30 PM', 'valor': '13:30:00' },
+            { 'text': '01:35 PM', 'valor': '13:35:00' },
+            { 'text': '01:40 PM', 'valor': '13:40:00' },
+            { 'text': '01:45 PM', 'valor': '13:45:00' },
+            { 'text': '01:55 PM', 'valor': '13:55:00' },
+            { 'text': '02:00 PM', 'valor': '14:00:00' },
+            { 'text': '02:05 PM', 'valor': '14:05:00' },
+            { 'text': '02:02 PM', 'valor': '14:02:00' },
+            { 'text': '02:15 PM', 'valor': '14:15:00' },
+            { 'text': '02:20 PM', 'valor': '14:20:00' },
+            { 'text': '02:25 PM', 'valor': '14:25:00' },
+            { 'text': '02:30 PM', 'valor': '14:30:00' },
+            { 'text': '02:35 PM', 'valor': '14:35:00' },
+            { 'text': '02:40 PM', 'valor': '14:40:00' },
+            { 'text': '02:45 PM', 'valor': '14:45:00' },
+            { 'text': '02:55 PM', 'valor': '14:55:00' },
+            { 'text': '03:00 PM', 'valor': '15:00:00' },
+            { 'text': '03:05 PM', 'valor': '15:05:00' },
+            { 'text': '03:03 PM', 'valor': '15:03:00' },
+            { 'text': '03:15 PM', 'valor': '15:15:00' },
+            { 'text': '03:20 PM', 'valor': '15:20:00' },
+            { 'text': '03:25 PM', 'valor': '15:25:00' },
+            { 'text': '03:30 PM', 'valor': '15:30:00' },
+            { 'text': '03:35 PM', 'valor': '15:35:00' },
+            { 'text': '03:40 PM', 'valor': '15:40:00' },
+            { 'text': '03:45 PM', 'valor': '15:45:00' },
+            { 'text': '03:55 PM', 'valor': '15:55:00' },
+            { 'text': '04:00 PM', 'valor': '16:00:00' },
+            { 'text': '04:05 PM', 'valor': '16:05:00' },
+            { 'text': '04:10 PM', 'valor': '16:10:00' },
+            { 'text': '04:15 PM', 'valor': '16:15:00' },
+            { 'text': '04:20 PM', 'valor': '16:20:00' },
+            { 'text': '04:25 PM', 'valor': '16:25:00' },
+            { 'text': '04:30 PM', 'valor': '16:30:00' },
+            { 'text': '04:35 PM', 'valor': '16:35:00' },
+            { 'text': '04:40 PM', 'valor': '16:40:00' },
+            { 'text': '04:45 PM', 'valor': '16:45:00' },
+            { 'text': '04:55 PM', 'valor': '16:55:00' },
+            { 'text': '05:00 PM', 'valor': '17:00:00' },
+            { 'text': '05:05 PM', 'valor': '17:05:00' },
+            { 'text': '05:10 PM', 'valor': '17:15:00' },
+            { 'text': '05:15 PM', 'valor': '17:15:00' },
+            { 'text': '05:20 PM', 'valor': '17:20:00' },
+            { 'text': '05:25 PM', 'valor': '17:25:00' },
+            { 'text': '05:30 PM', 'valor': '17:30:00' },
+            { 'text': '05:35 PM', 'valor': '17:35:00' },
+            { 'text': '05:40 PM', 'valor': '17:40:00' },
+            { 'text': '05:45 PM', 'valor': '17:45:00' },
+            { 'text': '05:55 PM', 'valor': '17:55:00' },
+            { 'text': '06:00 PM', 'valor': '18:00:00' },
+            { 'text': '06:05 PM', 'valor': '18:05:00' },
+            { 'text': '06:10 PM', 'valor': '18:10:00' },
+            { 'text': '06:15 PM', 'valor': '18:15:00' },
+            { 'text': '06:20 PM', 'valor': '18:20:00' },
+            { 'text': '06:25 PM', 'valor': '18:25:00' },
+            { 'text': '06:30 PM', 'valor': '18:30:00' },
+            { 'text': '06:35 PM', 'valor': '18:35:00' },
+            { 'text': '06:40 PM', 'valor': '18:40:00' },
+            { 'text': '06:45 PM', 'valor': '18:45:00' },
+            { 'text': '06:55 PM', 'valor': '18:55:00' },
+            { 'text': '07:00 PM', 'valor': '19:00:00' },
+            { 'text': '07:05 PM', 'valor': '19:05:00' },
+            { 'text': '07:10 PM', 'valor': '19:10:00' },
+            { 'text': '07:15 PM', 'valor': '19:15:00' },
+            { 'text': '07:20 PM', 'valor': '19:20:00' },
+            { 'text': '07:25 PM', 'valor': '19:25:00' },
+            { 'text': '07:30 PM', 'valor': '19:30:00' },
+            { 'text': '07:35 PM', 'valor': '19:35:00' },
+            { 'text': '07:40 PM', 'valor': '19:40:00' },
+            { 'text': '07:45 PM', 'valor': '19:45:00' },
+            { 'text': '07:55 PM', 'valor': '19:55:00' },
+            { 'text': '08:00 PM', 'valor': '20:00:00' },
+            { 'text': '08:05 PM', 'valor': '20:05:00' },
+            { 'text': '08:10 PM', 'valor': '20:10:00' },
+            { 'text': '08:15 PM', 'valor': '20:15:00' },
+            { 'text': '08:20 PM', 'valor': '20:20:00' },
+            { 'text': '08:25 PM', 'valor': '20:25:00' },
+            { 'text': '08:30 PM', 'valor': '20:30:00' },
+            { 'text': '08:35 PM', 'valor': '20:35:00' },
+            { 'text': '08:40 PM', 'valor': '20:40:00' },
+            { 'text': '08:45 PM', 'valor': '20:45:00' },
+            { 'text': '08:55 PM', 'valor': '20:55:00' },
+            { 'text': '09:00 PM', 'valor': '21:00:00' },
+            { 'text': '09:05 PM', 'valor': '21:05:00' },
+            { 'text': '09:10 PM', 'valor': '21:10:00' },
+            { 'text': '09:15 PM', 'valor': '21:15:00' },
+            { 'text': '09:20 PM', 'valor': '21:20:00' },
+            { 'text': '09:25 PM', 'valor': '21:25:00' },
+            { 'text': '09:30 PM', 'valor': '21:30:00' },
+            { 'text': '09:35 PM', 'valor': '21:35:00' },
+            { 'text': '09:40 PM', 'valor': '21:40:00' },
+            { 'text': '09:45 PM', 'valor': '21:45:00' },
+            { 'text': '09:55 PM', 'valor': '21:55:00' },
+            { 'text': '10:00 PM', 'valor': '22:00:00' },
+            { 'text': '10:05 PM', 'valor': '22:05:00' },
+            { 'text': '10:10 PM', 'valor': '22:10:00' },
+            { 'text': '10:15 PM', 'valor': '22:15:00' },
+            { 'text': '10:20 PM', 'valor': '22:20:00' },
+            { 'text': '10:25 PM', 'valor': '22:25:00' },
+            { 'text': '10:30 PM', 'valor': '22:30:00' },
+            { 'text': '10:35 PM', 'valor': '22:35:00' },
+            { 'text': '10:40 PM', 'valor': '22:40:00' },
+            { 'text': '10:45 PM', 'valor': '22:45:00' },
+            { 'text': '10:55 PM', 'valor': '22:55:00' },
+            { 'text': '11:00 PM', 'valor': '23:00:00' },
+            { 'text': '11:05 PM', 'valor': '23:05:00' },
+            { 'text': '11:10 PM', 'valor': '23:10:00' },
+            { 'text': '11:15 PM', 'valor': '23:15:00' },
+            { 'text': '11:20 PM', 'valor': '23:20:00' },
+            { 'text': '11:25 PM', 'valor': '23:25:00' },
+            { 'text': '11:30 PM', 'valor': '23:30:00' },
+            { 'text': '11:35 PM', 'valor': '23:35:00' },
+            { 'text': '11:40 PM', 'valor': '23:40:00' },
+            { 'text': '11:45 PM', 'valor': '23:45:00' },
+            { 'text': '11:55 PM', 'valor': '23:55:00' },
+        ];
+        this.loadingScreen = false;
+        this.tiempoLibre = {};
+        this.diasSemana = { domingo: {}, lunes: {}, martes: {}, miercoles: {}, jueves: {}, viernes: {}, sabado: {} };
+        this.empleados = [];
+        this.miembroSeleccionado = {};
+        this.keys = [];
+        this.serviciosValues = [];
+        this.horarioEmpleado = [];
+        this.horarioEspecial = [];
+        this.typesOfShoes = ['Juan Mario', 'Clogs Leys', 'Loafers Ramires', 'Juana R', 'Ines Sacnes'];
+        this.selected = 0;
+        var retrievedObject = JSON.parse(localStorage.getItem('userADby2as'));
+        this.idCentro = retrievedObject.idCentro;
+        this.diasSemana.domingo = { diaSemana: 0, estado: 0 };
+        this.diasSemana.lunes = { diaSemana: 1, estado: 0 };
+        this.diasSemana.martes = { diaSemana: 2, estado: 0 };
+        this.diasSemana.miercoles = { diaSemana: 3, estado: 0 };
+        this.diasSemana.jueves = { diaSemana: 4, estado: 0 };
+        this.diasSemana.viernes = { diaSemana: 5, estado: 0 };
+        this.diasSemana.sabado = { diaSemana: 6, estado: 0 };
+    }
+    DetallecitaComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.loadingScreen = true;
+        this.authService.getStaff({ idCentro: this.idCentro })
+            .subscribe(function (data) {
+            _this.loadingScreen = false;
+            _this.empleados = data;
+            if (_this.empleados.length > 0) {
+                _this.itemSelectedChange(_this.empleados[0]);
+            }
+            ;
+            _this.cdr.detectChanges();
+            console.log(data);
+        }, function (err) {
+            _this.loadingScreen = false;
+            _this.cdr.detectChanges();
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+    };
+    DetallecitaComponent.prototype.borrarBloque = function (id) {
+        var _this = this;
+        this.authService.deleteLibresNC({ idEmpleadoBloqueLibre: id })
+            .subscribe(function (data) {
+            console.log(data);
+            _this.itemSelectedChange(_this.miembroSeleccionado);
+        }, function (err) {
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+    };
+    DetallecitaComponent.prototype.agregarBloque = function () {
+        var _this = this;
+        var inicio = this.tiempoLibre.inicio.getFullYear() + '-' + ('0' + (this.tiempoLibre.inicio.getMonth() + 1)).slice(-2) + '-' + ('0' + this.tiempoLibre.inicio.getDate()).slice(-2);
+        var fin = this.tiempoLibre.fin.getFullYear() + '-' + ('0' + (this.tiempoLibre.fin.getMonth() + 1)).slice(-2) + '-' + ('0' + this.tiempoLibre.fin.getDate()).slice(-2);
+        console.log(inicio, fin);
+        this.authService.addDiasLibresNC({ idEmpleado: this.selected, inicio: inicio, fin: fin })
+            .subscribe(function (data) {
+            _this.tiempoLibre.inicio = undefined;
+            _this.tiempoLibre.fin = undefined;
+            _this.itemSelectedChange(_this.miembroSeleccionado);
+            console.log(data);
+        }, function (err) {
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+    };
+    DetallecitaComponent.prototype.itemSelectedChange = function (i) {
+        var _this = this;
+        this.diasSemana.domingo = { diaSemana: 0, estado: 0 };
+        this.diasSemana.lunes = { diaSemana: 1, estado: 0 };
+        this.diasSemana.martes = { diaSemana: 2, estado: 0 };
+        this.diasSemana.miercoles = { diaSemana: 3, estado: 0 };
+        this.diasSemana.jueves = { diaSemana: 4, estado: 0 };
+        this.diasSemana.viernes = { diaSemana: 5, estado: 0 };
+        this.diasSemana.sabado = { diaSemana: 6, estado: 0 };
+        this.selected = i.idEmpleado;
+        this.miembroSeleccionado = i;
+        this.authService.getInfoEmpleadoNC({ idEmpleado: i.idEmpleado, idCentro: this.idCentro })
+            .subscribe(function (data) {
+            //this.cdr.detectChanges();
+            console.log(data);
+            _this.keys = Object.keys(data.servicios);
+            _this.serviciosValues = Object.values(data.servicios);
+            _this.horarioEmpleado = data.horario;
+            _this.horarioEspecial = data.horarioEspecial;
+            _this.horarioEmpleado.forEach(function (item) {
+                if (item.diaSemana == 0) {
+                    _this.diasSemana.domingo = item;
+                }
+                ;
+                if (item.diaSemana == 1) {
+                    _this.diasSemana.lunes = item;
+                }
+                ;
+                if (item.diaSemana == 2) {
+                    _this.diasSemana.martes = item;
+                }
+                ;
+                if (item.diaSemana == 3) {
+                    _this.diasSemana.miercoles = item;
+                }
+                ;
+                if (item.diaSemana == 4) {
+                    _this.diasSemana.jueves = item;
+                }
+                ;
+                if (item.diaSemana == 5) {
+                    _this.diasSemana.viernes = item;
+                }
+                ;
+                if (item.diaSemana == 6) {
+                    _this.diasSemana.sabado = item;
+                }
+                ;
+            });
+            _this.cdr.detectChanges();
+        }, function (err) {
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+    };
+    DetallecitaComponent.prototype.guardarHorario = function () {
+        console.log(Object.values(this.diasSemana));
+        //this.serviciosValues = Object.values(data.servicios);
+        var dataEnv = { horario: Object.values(this.diasSemana), idEmpleado: this.selected };
+        //dataEnv.horario = Object.values(this.diasSemana);
+        //dataEnv.idEmpleado = this.selected;
+        this.authService.guardarHorarioNC(dataEnv)
+            .subscribe(function (data) {
+            console.log(data);
+            alert('Horario Editado Correctamente');
+        }, function (err) {
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+    };
+    DetallecitaComponent.prototype.goBack = function () {
+        this._location.back();
+        //  let _backUrl = 'servicios';
+        //this.router.navigateByUrl(_backUrl);
+    };
+    DetallecitaComponent.prototype.OnChange = function ($event, i) {
+        console.log($event);
+        console.log(i);
+        var estadoC = $event.checked ? 1 : 0;
+        this.authService.cambiarEstadoSE({ idEmpleado: this.selected, idServicio: i.idServicio, estado: estadoC })
+            .subscribe(function (data) {
+            //   this.empleados = data;
+            //   this.cdr.detectChanges();
+            console.log(data);
+        }, function (err) {
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+    };
+    DetallecitaComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'm-detallecita',
+            template: __webpack_require__(/*! ./detallecita.component.html */ "./src/app/content/pages/components/detallecita/detallecita.component.html"),
+            styles: [__webpack_require__(/*! ./detallecita.component.scss */ "./src/app/content/pages/components/detallecita/detallecita.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"],
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"], _angular_common__WEBPACK_IMPORTED_MODULE_1__["Location"]])
+    ], DetallecitaComponent);
+    return DetallecitaComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/content/pages/components/editservicio/editservicio.component.html":
 /*!***********************************************************************************!*\
   !*** ./src/app/content/pages/components/editservicio/editservicio.component.html ***!
@@ -3387,12 +4018,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_estadistica_estadistica_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/estadistica/estadistica.component */ "./src/app/content/pages/components/estadistica/estadistica.component.ts");
 /* harmony import */ var _components_agregarservicio_agregarservicio_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/agregarservicio/agregarservicio.component */ "./src/app/content/pages/components/agregarservicio/agregarservicio.component.ts");
 /* harmony import */ var _components_addstaff_addstaff_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/addstaff/addstaff.component */ "./src/app/content/pages/components/addstaff/addstaff.component.ts");
+/* harmony import */ var _components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/calendario/calendario.component */ "./src/app/content/pages/components/calendario/calendario.component.ts");
+/* harmony import */ var _components_detallecita_detallecita_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/detallecita/detallecita.component */ "./src/app/content/pages/components/detallecita/detallecita.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -3442,15 +4077,28 @@ var routes = [
                 component: _components_addstaff_addstaff_component__WEBPACK_IMPORTED_MODULE_17__["AddstaffComponent"]
             },
             {
-                path: 'staff',
-                component: _components_staff_staff_component__WEBPACK_IMPORTED_MODULE_11__["StaffComponent"]
-            }, {
                 path: 'estadistica',
                 component: _components_estadistica_estadistica_component__WEBPACK_IMPORTED_MODULE_15__["EstadisticaComponent"]
             },
             {
+                path: 'staff',
+                component: _components_staff_staff_component__WEBPACK_IMPORTED_MODULE_11__["StaffComponent"]
+            },
+            {
+                path: 'staff',
+                component: _components_staff_staff_component__WEBPACK_IMPORTED_MODULE_11__["StaffComponent"]
+            },
+            {
+                path: 'detallecita',
+                component: _components_detallecita_detallecita_component__WEBPACK_IMPORTED_MODULE_19__["DetallecitaComponent"]
+            },
+            {
                 path: 'perfilnegocio',
                 component: _components_perfilnegocio_perfilnegocio_component__WEBPACK_IMPORTED_MODULE_13__["PerfilnegocioComponent"]
+            },
+            {
+                path: 'calendario',
+                component: _components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_18__["CalendarioComponent"]
             },
             {
                 path: 'editstaff',
@@ -3720,18 +4368,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_perfilnegocio_perfilnegocio_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/perfilnegocio/perfilnegocio.component */ "./src/app/content/pages/components/perfilnegocio/perfilnegocio.component.ts");
 /* harmony import */ var _components_agregarservicio_agregarservicio_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/agregarservicio/agregarservicio.component */ "./src/app/content/pages/components/agregarservicio/agregarservicio.component.ts");
 /* harmony import */ var _components_addstaff_addstaff_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/addstaff/addstaff.component */ "./src/app/content/pages/components/addstaff/addstaff.component.ts");
-/* harmony import */ var _components_horario_horario_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/horario/horario.component */ "./src/app/content/pages/components/horario/horario.component.ts");
-/* harmony import */ var _components_estadistica_estadistica_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/estadistica/estadistica.component */ "./src/app/content/pages/components/estadistica/estadistica.component.ts");
-/* harmony import */ var _agm_core__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @agm/core */ "./node_modules/@agm/core/index.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/index.js");
-/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
+/* harmony import */ var _components_detallecita_detallecita_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/detallecita/detallecita.component */ "./src/app/content/pages/components/detallecita/detallecita.component.ts");
+/* harmony import */ var ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ngx-perfect-scrollbar */ "./node_modules/ngx-perfect-scrollbar/dist/ngx-perfect-scrollbar.es5.js");
+/* harmony import */ var ngx_mat_select_search__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ngx-mat-select-search */ "./node_modules/ngx-mat-select-search/esm5/ngx-mat-select-search.js");
+/* harmony import */ var _components_horario_horario_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/horario/horario.component */ "./src/app/content/pages/components/horario/horario.component.ts");
+/* harmony import */ var _components_estadistica_estadistica_component__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/estadistica/estadistica.component */ "./src/app/content/pages/components/estadistica/estadistica.component.ts");
+/* harmony import */ var _components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./components/calendario/calendario.component */ "./src/app/content/pages/components/calendario/calendario.component.ts");
+/* harmony import */ var _agm_core__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! @agm/core */ "./node_modules/@agm/core/index.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/index.js");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
+
+
+
 
 
 
@@ -3777,29 +4434,34 @@ var PagesModule = /** @class */ (function () {
                 _components_staff_staff_component__WEBPACK_IMPORTED_MODULE_17__["StaffComponent"], _components_addstaff_addstaff_component__WEBPACK_IMPORTED_MODULE_21__["AddstaffComponent"],
                 _components_agregarservicio_agregarservicio_component__WEBPACK_IMPORTED_MODULE_20__["AgregarservicioComponent"],
                 _components_editstaff_editstaff_component__WEBPACK_IMPORTED_MODULE_18__["EditstaffComponent"],
+                _components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_27__["CalendarioComponent"],
                 _components_perfilnegocio_perfilnegocio_component__WEBPACK_IMPORTED_MODULE_19__["PerfilnegocioComponent"],
-                _components_horario_horario_component__WEBPACK_IMPORTED_MODULE_22__["HorarioComponent"], _components_estadistica_estadistica_component__WEBPACK_IMPORTED_MODULE_23__["EstadisticaComponent"]
+                _components_detallecita_detallecita_component__WEBPACK_IMPORTED_MODULE_22__["DetallecitaComponent"],
+                _components_horario_horario_component__WEBPACK_IMPORTED_MODULE_25__["HorarioComponent"], _components_estadistica_estadistica_component__WEBPACK_IMPORTED_MODULE_26__["EstadisticaComponent"], _components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_27__["ModalcalenComponent"]
             ],
             imports: [
+                ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_23__["PerfectScrollbarModule"],
+                ngx_mat_select_search__WEBPACK_IMPORTED_MODULE_24__["NgxMatSelectSearchModule"],
                 _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_27__["MatSelectModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatSelectModule"],
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_11__["HttpClientModule"],
-                _angular_forms__WEBPACK_IMPORTED_MODULE_25__["FormsModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_29__["FormsModule"],
                 _pages_routing_module__WEBPACK_IMPORTED_MODULE_3__["PagesRoutingModule"],
                 _core_core_module__WEBPACK_IMPORTED_MODULE_8__["CoreModule"],
-                ngx_loading__WEBPACK_IMPORTED_MODULE_10__["LoadingModule"], _angular_material__WEBPACK_IMPORTED_MODULE_27__["MatInputModule"],
-                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_26__["NgbModule"],
-                _layout_layout_module__WEBPACK_IMPORTED_MODULE_0__["LayoutModule"], _angular_material__WEBPACK_IMPORTED_MODULE_27__["MatNativeDateModule"],
+                ngx_loading__WEBPACK_IMPORTED_MODULE_10__["LoadingModule"], _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatInputModule"],
+                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_30__["NgbModule"],
+                _layout_layout_module__WEBPACK_IMPORTED_MODULE_0__["LayoutModule"], _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatNativeDateModule"],
                 _partials_partials_module__WEBPACK_IMPORTED_MODULE_5__["PartialsModule"],
-                _kolkov_angular_editor__WEBPACK_IMPORTED_MODULE_9__["AngularEditorModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_27__["MatStepperModule"], _angular_material__WEBPACK_IMPORTED_MODULE_27__["MatFormFieldModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_27__["MatCheckboxModule"], _angular_material__WEBPACK_IMPORTED_MODULE_27__["MatTableModule"], _angular_material__WEBPACK_IMPORTED_MODULE_27__["MatPaginatorModule"], _angular_material__WEBPACK_IMPORTED_MODULE_27__["MatListModule"], _angular_material__WEBPACK_IMPORTED_MODULE_27__["MatDatepickerModule"],
-                _angular_forms__WEBPACK_IMPORTED_MODULE_25__["ReactiveFormsModule"], _angular_material__WEBPACK_IMPORTED_MODULE_27__["MatIconModule"],
-                _agm_core__WEBPACK_IMPORTED_MODULE_24__["AgmCoreModule"].forRoot({
+                _kolkov_angular_editor__WEBPACK_IMPORTED_MODULE_9__["AngularEditorModule"], _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatDialogModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatStepperModule"], _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatFormFieldModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatCheckboxModule"], _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatTableModule"], _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatPaginatorModule"], _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatListModule"], _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatDatepickerModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_29__["ReactiveFormsModule"], _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatIconModule"],
+                _agm_core__WEBPACK_IMPORTED_MODULE_28__["AgmCoreModule"].forRoot({
                     apiKey: 'AIzaSyAT-tTbOja69paXaiAgAtNi9nGHRh75bzk',
                     libraries: ['geometry', 'places']
                 })
             ],
+            entryComponents: [_components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_27__["ModalcalenComponent"]],
             providers: []
         })
     ], PagesModule);

@@ -574,14 +574,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_services_datatable_service__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./core/services/datatable.service */ "./src/app/core/services/datatable.service.ts");
 /* harmony import */ var _agm_core__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! @agm/core */ "./node_modules/@agm/core/index.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var hammerjs__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! hammerjs */ "./node_modules/hammerjs/hammer.js");
-/* harmony import */ var hammerjs__WEBPACK_IMPORTED_MODULE_37___default = /*#__PURE__*/__webpack_require__.n(hammerjs__WEBPACK_IMPORTED_MODULE_37__);
+/* harmony import */ var ngx_mat_select_search__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ngx-mat-select-search */ "./node_modules/ngx-mat-select-search/esm5/ngx-mat-select-search.js");
+/* harmony import */ var hammerjs__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! hammerjs */ "./node_modules/hammerjs/hammer.js");
+/* harmony import */ var hammerjs__WEBPACK_IMPORTED_MODULE_38___default = /*#__PURE__*/__webpack_require__.n(hammerjs__WEBPACK_IMPORTED_MODULE_38__);
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -633,6 +635,7 @@ var AppModule = /** @class */ (function () {
                 _app_routing_module__WEBPACK_IMPORTED_MODULE_5__["AppRoutingModule"],
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"],
                 _content_layout_layout_module__WEBPACK_IMPORTED_MODULE_8__["LayoutModule"],
+                ngx_mat_select_search__WEBPACK_IMPORTED_MODULE_37__["NgxMatSelectSearchModule"],
                 _content_partials_partials_module__WEBPACK_IMPORTED_MODULE_9__["PartialsModule"],
                 _core_core_module__WEBPACK_IMPORTED_MODULE_10__["CoreModule"],
                 _angular_cdk_overlay__WEBPACK_IMPORTED_MODULE_21__["OverlayModule"],
@@ -1566,6 +1569,13 @@ var MenuConfig = /** @class */ (function () {
                         icon: 'flaticon-statistics',
                         page: '/estadistica'
                     },
+                    {
+                        title: 'Calendario',
+                        desc: 'Calendario',
+                        root: true,
+                        icon: '	flaticon-event-calendar-symbol',
+                        page: '/calendario'
+                    },
                 ]
             }
         };
@@ -1602,7 +1612,8 @@ var PagesConfig = /** @class */ (function () {
             },
             staff: {
                 page: { title: 'Staff', desc: 'staff Page' }
-            }, estadistica: {
+            },
+            estadistica: {
                 page: { title: 'estadistica', desc: 'estadistica' }
             },
             perfilnegocio: {
@@ -1610,6 +1621,9 @@ var PagesConfig = /** @class */ (function () {
             },
             horario: {
                 page: { title: 'horario', desc: 'horario' }
+            },
+            calendario: {
+                page: { title: 'calendario', desc: 'calendario' }
             },
             editservicio: {
                 page: { title: 'Editar Servicio', desc: 'Editar Page' }
