@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 // Send all other requests to the Angular app
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, './consolaAS/dist/index.html'));
+    res.sendFile(path.join(__dirname, './dist/index.html'));
 });
 
 //Set Port
