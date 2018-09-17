@@ -25,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 // Send all other requests to the Angular app
 app.get('*', (req, res) => {
+	console.log(req.subdomains);
     res.sendFile(path.join(__dirname, './dist/index.html'));
 });
 
