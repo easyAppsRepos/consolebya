@@ -33,7 +33,7 @@ app.get('*', (req, res) => {
 
 app.get('*', (req, res) => {
 			console.log(req.subdomains);
-		console.log(req.subdomains[1]);
+		console.log(req.subdomains[1] == 'gestion');
 
 
 	if(req.subdomains[1]=='gestion'){
