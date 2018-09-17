@@ -32,7 +32,9 @@ app.get('*', (req, res) => {
 */
 
 app.get('*', (req, res) => {
-		console.log(req.subdomains);
+			console.log(req.subdomains);
+		console.log(req.subdomains[1]);
+
 
 	if(req.subdomains[1]=='gestion'){
 		res.sendFile(path.join(__dirname, './gestion/dist/index.html'));
