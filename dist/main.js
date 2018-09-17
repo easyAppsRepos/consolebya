@@ -385,7 +385,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- splash screen -->\r\n<div #splashScreen class=\"m-splash-screen\">\r\n<!-- \t<img [attr.src]=\"splashScreenImage\" style=\"width: 90px; margin-bottom: 30px;\" alt=\"Logo\"> -->\r\n\r\n<img src=\"assets/app/media/img/logo1.png\" style=\"width: 90px; margin-bottom: 30px;\" alt=\"Logo\"> \r\n\r\n\r\n\t<!--here we will have circle progress bar-->\r\n\t<mat-spinner diameter=\"40\"></mat-spinner>\r\n</div>\r\n\r\n<router-outlet ></router-outlet>"
+module.exports = "<!-- splash screen -->\r\n<div #splashScreen class=\"m-splash-screen\">\r\n<!-- \t<img [attr.src]=\"splashScreenImage\" style=\"width: 90px; margin-bottom: 30px;\" alt=\"Logo\"> -->\r\n\r\n<img src=\"assets/app/media/img/logo1.png\" style=\"height: 100px !important; margin-bottom: 30px;\" alt=\"Logo\"> \r\n\r\n\r\n\t<!--here we will have circle progress bar-->\r\n\t<mat-spinner diameter=\"40\"></mat-spinner>\r\n</div>\r\n\r\n<router-outlet ></router-outlet>"
 
 /***/ }),
 
