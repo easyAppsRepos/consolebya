@@ -20,6 +20,7 @@ app.use(cors({origin: 'http://localhost:3003'}));
 
 // Angular DIST output folder
 app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, './gestion/dist')));
 
 
 
