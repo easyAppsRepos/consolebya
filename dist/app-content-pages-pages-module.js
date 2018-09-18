@@ -4318,6 +4318,71 @@ var PerfilnegocioComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/content/pages/components/review/review.component.html":
+/*!***********************************************************************!*\
+  !*** ./src/app/content/pages/components/review/review.component.html ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n<!-- \r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n -->\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 15px;\">Valoraciones</div>\r\n\r\n\r\n<!--\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='editarCentroInfo()' \r\n    [disabled]='!centroInfo.nombre' >Guardar</button>\r\n\r\n \t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button> -->\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n<ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\r\n\r\n<mat-nav-list style='padding-top: 0px '>\r\n\r\n\t  <mat-list-item  >\r\n    <img matListAvatar src=\"assets/app/media/img/userB.png\">\r\n    <h3 style='    margin-top: 28px;' matLine> Maria Perez </h3>\r\n    \t\t\t<div matLine>\r\n\t\t\t\t<mat-icon style='color: #FFC107;'>star</mat-icon>\r\n\t\t\t\t<mat-icon style='color: #FFC107;'>star</mat-icon>\r\n\t\t\t\t<mat-icon style='color: #FFC107;'>star</mat-icon>\r\n\t\t\t\t<mat-icon style='color: #FFC107;'>star</mat-icon>\r\n\t\t\t\t<mat-icon >star_border</mat-icon>\r\n\t\t\t</div>\r\n    <p matLine style=\"    margin-bottom: 10px;\">\r\n\r\n      <span >Me ha gustado mucho el servicio</span>\r\n \r\n    </p>\r\n\r\n        <div matLine>\r\n    \t<input [(ngModel)]='respuestaFake' disabled='true' style=\"    width: 80%;\" type=\"text\" name=\"\">\r\n    \t\t\r\n\r\n   </div>\r\n\r\n\r\n  </mat-list-item>\r\n\r\n<hr>\r\n  <mat-list-item  >\r\n    <img matListAvatar src=\"assets/app/media/img/userB.png\">\r\n    <h3 style='    margin-top: 28px;' matLine> Gerardi Vega </h3>\r\n    \t\t\t<div matLine>\r\n\t\t\t\t<mat-icon style='color: #FFC107;'>star</mat-icon>\r\n\t\t\t\t<mat-icon style='color: #FFC107;'>star</mat-icon>\r\n\t\t\t\t<mat-icon style='color: #FFC107;'>star</mat-icon>\r\n\t\t\t\t<mat-icon style='color: #FFC107;'>star</mat-icon>\r\n\t\t\t\t<mat-icon>star_border</mat-icon>\r\n\t\t\t</div>\r\n    <p matLine style=\"    margin-bottom: 10px;\">\r\n\r\n      <span >Me ha gustado mucho el servicio</span>\r\n \r\n    </p>\r\n\r\n    <div matLine>\r\n    \t<input style=\"    width: 80%;\" type=\"text\" name=\"\">\r\n    \t\t\r\n\r\n   </div><button matLine style=\"       margin-top: 9px;\r\n    width: 104px;\" class=\"btn btn-sm btn-success\" >Responder</button>\r\n  </mat-list-item>\r\n\r\n\r\n\r\n\r\n\r\n</mat-nav-list>\r\n\r\n\r\n\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\r\n\t\t<div style=\"padding: 20px;\r\n    text-align: center;\r\n    display: inline-block;\">\r\n\t\t\t<div style=\"border-bottom: solid 1px #34bfa3;\r\n    color: #34bfa3;\r\n    background-color: white;\r\n    padding: 7px;\r\n    font-size: 14px;\">Puntuacion del negocio</div>\r\n\t\t\t<div style=\"padding: 20px;\r\n    text-align: center;\r\n    display: inline-block;font-size: 32px\">4</div>\r\n\t\t\t<div>\r\n\t\t\t\t<mat-icon style='color: #FFC107;'>star</mat-icon>\r\n\t\t\t\t<mat-icon style='color: #FFC107;'>star</mat-icon>\r\n\t\t\t\t<mat-icon style='color: #FFC107;'>star</mat-icon>\r\n\t\t\t\t<mat-icon style='color: #FFC107;'>star</mat-icon>\r\n\t\t\t\t<mat-icon>star_border</mat-icon>\r\n\t\t\t</div>\r\n\t\t\t<div style=\"color: #6b6b6b;\">Puntuacion basada en 2 valoraciones de los clientes</div>\r\n\t\t</div>\r\n\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
+
+/***/ }),
+
+/***/ "./src/app/content/pages/components/review/review.component.scss":
+/*!***********************************************************************!*\
+  !*** ./src/app/content/pages/components/review/review.component.scss ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/content/pages/components/review/review.component.ts":
+/*!*********************************************************************!*\
+  !*** ./src/app/content/pages/components/review/review.component.ts ***!
+  \*********************************************************************/
+/*! exports provided: ReviewComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ReviewComponent", function() { return ReviewComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var ReviewComponent = /** @class */ (function () {
+    function ReviewComponent() {
+        this.loadingScreen = false;
+        this.respuestaFake = 'Encantados de servirle, le esperamos pronto';
+    }
+    ReviewComponent.prototype.ngOnInit = function () {
+    };
+    ReviewComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'm-review',
+            template: __webpack_require__(/*! ./review.component.html */ "./src/app/content/pages/components/review/review.component.html"),
+            styles: [__webpack_require__(/*! ./review.component.scss */ "./src/app/content/pages/components/review/review.component.scss")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], ReviewComponent);
+    return ReviewComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/content/pages/components/servicios/servicios.component.html":
 /*!*****************************************************************************!*\
   !*** ./src/app/content/pages/components/servicios/servicios.component.html ***!
@@ -5102,13 +5167,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_addstaff_addstaff_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/addstaff/addstaff.component */ "./src/app/content/pages/components/addstaff/addstaff.component.ts");
 /* harmony import */ var _components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/calendario/calendario.component */ "./src/app/content/pages/components/calendario/calendario.component.ts");
 /* harmony import */ var _components_detallecita_detallecita_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/detallecita/detallecita.component */ "./src/app/content/pages/components/detallecita/detallecita.component.ts");
-/* harmony import */ var _auth_register_register_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./auth/register/register.component */ "./src/app/content/pages/auth/register/register.component.ts");
+/* harmony import */ var _components_review_review_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/review/review.component */ "./src/app/content/pages/components/review/review.component.ts");
+/* harmony import */ var _auth_register_register_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./auth/register/register.component */ "./src/app/content/pages/auth/register/register.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -5163,6 +5230,10 @@ var routes = [
             {
                 path: 'estadistica',
                 component: _components_estadistica_estadistica_component__WEBPACK_IMPORTED_MODULE_15__["EstadisticaComponent"]
+            },
+            {
+                path: 'review',
+                component: _components_review_review_component__WEBPACK_IMPORTED_MODULE_20__["ReviewComponent"]
             },
             {
                 path: 'staff',
@@ -5232,7 +5303,7 @@ var routes = [
         path: 'registro',
         // canActivate: [NgxPermissionsGuard],
         //loadChildren: './auth/auth.module#AuthModule',
-        component: _auth_register_register_component__WEBPACK_IMPORTED_MODULE_20__["RegisterComponent"],
+        component: _auth_register_register_component__WEBPACK_IMPORTED_MODULE_21__["RegisterComponent"],
         data: {
             permissions: {
                 except: 'ADMIN'
@@ -5464,16 +5535,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_agregarservicio_agregarservicio_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/agregarservicio/agregarservicio.component */ "./src/app/content/pages/components/agregarservicio/agregarservicio.component.ts");
 /* harmony import */ var _components_addstaff_addstaff_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/addstaff/addstaff.component */ "./src/app/content/pages/components/addstaff/addstaff.component.ts");
 /* harmony import */ var _components_detallecita_detallecita_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/detallecita/detallecita.component */ "./src/app/content/pages/components/detallecita/detallecita.component.ts");
-/* harmony import */ var ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ngx-perfect-scrollbar */ "./node_modules/ngx-perfect-scrollbar/dist/ngx-perfect-scrollbar.es5.js");
-/* harmony import */ var ngx_mat_select_search__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ngx-mat-select-search */ "./node_modules/ngx-mat-select-search/esm5/ngx-mat-select-search.js");
-/* harmony import */ var _components_horario_horario_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/horario/horario.component */ "./src/app/content/pages/components/horario/horario.component.ts");
-/* harmony import */ var _components_estadistica_estadistica_component__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/estadistica/estadistica.component */ "./src/app/content/pages/components/estadistica/estadistica.component.ts");
-/* harmony import */ var _components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./components/calendario/calendario.component */ "./src/app/content/pages/components/calendario/calendario.component.ts");
-/* harmony import */ var _agm_core__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! @agm/core */ "./node_modules/@agm/core/index.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/index.js");
-/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var _auth_register_register_component__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./auth/register/register.component */ "./src/app/content/pages/auth/register/register.component.ts");
+/* harmony import */ var _components_review_review_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/review/review.component */ "./src/app/content/pages/components/review/review.component.ts");
+/* harmony import */ var ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ngx-perfect-scrollbar */ "./node_modules/ngx-perfect-scrollbar/dist/ngx-perfect-scrollbar.es5.js");
+/* harmony import */ var ngx_mat_select_search__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ngx-mat-select-search */ "./node_modules/ngx-mat-select-search/esm5/ngx-mat-select-search.js");
+/* harmony import */ var _components_horario_horario_component__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/horario/horario.component */ "./src/app/content/pages/components/horario/horario.component.ts");
+/* harmony import */ var _components_estadistica_estadistica_component__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./components/estadistica/estadistica.component */ "./src/app/content/pages/components/estadistica/estadistica.component.ts");
+/* harmony import */ var _components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./components/calendario/calendario.component */ "./src/app/content/pages/components/calendario/calendario.component.ts");
+/* harmony import */ var _agm_core__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! @agm/core */ "./node_modules/@agm/core/index.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/index.js");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
+/* harmony import */ var _auth_register_register_component__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./auth/register/register.component */ "./src/app/content/pages/auth/register/register.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5515,15 +5587,16 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
 var PagesModule = /** @class */ (function () {
     function PagesModule() {
     }
     PagesModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
             declarations: [
-                _auth_register_register_component__WEBPACK_IMPORTED_MODULE_32__["Modal3Component"],
-                _auth_register_register_component__WEBPACK_IMPORTED_MODULE_32__["ModalContentComponent"], _auth_register_register_component__WEBPACK_IMPORTED_MODULE_32__["Modal4Component"],
-                _auth_register_register_component__WEBPACK_IMPORTED_MODULE_32__["RegisterComponent"],
+                _auth_register_register_component__WEBPACK_IMPORTED_MODULE_33__["Modal3Component"],
+                _auth_register_register_component__WEBPACK_IMPORTED_MODULE_33__["ModalContentComponent"], _auth_register_register_component__WEBPACK_IMPORTED_MODULE_33__["Modal4Component"],
+                _auth_register_register_component__WEBPACK_IMPORTED_MODULE_33__["RegisterComponent"],
                 _pages_component__WEBPACK_IMPORTED_MODULE_4__["PagesComponent"],
                 _header_action_action_component__WEBPACK_IMPORTED_MODULE_6__["ActionComponent"],
                 _header_profile_profile_component__WEBPACK_IMPORTED_MODULE_7__["ProfileComponent"],
@@ -5535,36 +5608,37 @@ var PagesModule = /** @class */ (function () {
                 _components_staff_staff_component__WEBPACK_IMPORTED_MODULE_17__["StaffComponent"], _components_addstaff_addstaff_component__WEBPACK_IMPORTED_MODULE_21__["AddstaffComponent"],
                 _components_agregarservicio_agregarservicio_component__WEBPACK_IMPORTED_MODULE_20__["AgregarservicioComponent"],
                 _components_editstaff_editstaff_component__WEBPACK_IMPORTED_MODULE_18__["EditstaffComponent"],
-                _components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_27__["CalendarioComponent"],
+                _components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_28__["CalendarioComponent"],
                 _components_perfilnegocio_perfilnegocio_component__WEBPACK_IMPORTED_MODULE_19__["PerfilnegocioComponent"],
+                _components_review_review_component__WEBPACK_IMPORTED_MODULE_23__["ReviewComponent"],
                 _components_detallecita_detallecita_component__WEBPACK_IMPORTED_MODULE_22__["DetallecitaComponent"],
-                _components_horario_horario_component__WEBPACK_IMPORTED_MODULE_25__["HorarioComponent"], _components_estadistica_estadistica_component__WEBPACK_IMPORTED_MODULE_26__["EstadisticaComponent"], _components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_27__["ModalcalenComponent"]
+                _components_horario_horario_component__WEBPACK_IMPORTED_MODULE_26__["HorarioComponent"], _components_estadistica_estadistica_component__WEBPACK_IMPORTED_MODULE_27__["EstadisticaComponent"], _components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_28__["ModalcalenComponent"]
             ],
             imports: [
-                _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatButtonModule"], _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatCardModule"], _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatSlideToggleModule"],
-                ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_23__["PerfectScrollbarModule"],
-                ngx_mat_select_search__WEBPACK_IMPORTED_MODULE_24__["NgxMatSelectSearchModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_32__["MatButtonModule"], _angular_material__WEBPACK_IMPORTED_MODULE_32__["MatCardModule"], _angular_material__WEBPACK_IMPORTED_MODULE_32__["MatSlideToggleModule"],
+                ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_24__["PerfectScrollbarModule"],
+                ngx_mat_select_search__WEBPACK_IMPORTED_MODULE_25__["NgxMatSelectSearchModule"],
                 _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatSelectModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_32__["MatSelectModule"],
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_11__["HttpClientModule"],
-                _angular_forms__WEBPACK_IMPORTED_MODULE_29__["FormsModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_30__["FormsModule"],
                 _pages_routing_module__WEBPACK_IMPORTED_MODULE_3__["PagesRoutingModule"],
                 _core_core_module__WEBPACK_IMPORTED_MODULE_8__["CoreModule"],
-                ngx_loading__WEBPACK_IMPORTED_MODULE_10__["LoadingModule"], _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatInputModule"],
-                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_30__["NgbModule"],
-                _layout_layout_module__WEBPACK_IMPORTED_MODULE_0__["LayoutModule"], _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatNativeDateModule"],
+                ngx_loading__WEBPACK_IMPORTED_MODULE_10__["LoadingModule"], _angular_material__WEBPACK_IMPORTED_MODULE_32__["MatInputModule"],
+                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_31__["NgbModule"],
+                _layout_layout_module__WEBPACK_IMPORTED_MODULE_0__["LayoutModule"], _angular_material__WEBPACK_IMPORTED_MODULE_32__["MatNativeDateModule"],
                 _partials_partials_module__WEBPACK_IMPORTED_MODULE_5__["PartialsModule"],
-                _kolkov_angular_editor__WEBPACK_IMPORTED_MODULE_9__["AngularEditorModule"], _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatDialogModule"], _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatProgressSpinnerModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatStepperModule"], _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatFormFieldModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatCheckboxModule"], _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatTableModule"], _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatPaginatorModule"], _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatListModule"], _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatDatepickerModule"],
-                _angular_forms__WEBPACK_IMPORTED_MODULE_29__["ReactiveFormsModule"], _angular_material__WEBPACK_IMPORTED_MODULE_31__["MatIconModule"],
-                _agm_core__WEBPACK_IMPORTED_MODULE_28__["AgmCoreModule"].forRoot({
+                _kolkov_angular_editor__WEBPACK_IMPORTED_MODULE_9__["AngularEditorModule"], _angular_material__WEBPACK_IMPORTED_MODULE_32__["MatDialogModule"], _angular_material__WEBPACK_IMPORTED_MODULE_32__["MatProgressSpinnerModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_32__["MatStepperModule"], _angular_material__WEBPACK_IMPORTED_MODULE_32__["MatFormFieldModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_32__["MatCheckboxModule"], _angular_material__WEBPACK_IMPORTED_MODULE_32__["MatTableModule"], _angular_material__WEBPACK_IMPORTED_MODULE_32__["MatPaginatorModule"], _angular_material__WEBPACK_IMPORTED_MODULE_32__["MatListModule"], _angular_material__WEBPACK_IMPORTED_MODULE_32__["MatDatepickerModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_30__["ReactiveFormsModule"], _angular_material__WEBPACK_IMPORTED_MODULE_32__["MatIconModule"],
+                _agm_core__WEBPACK_IMPORTED_MODULE_29__["AgmCoreModule"].forRoot({
                     apiKey: 'AIzaSyAT-tTbOja69paXaiAgAtNi9nGHRh75bzk',
                     libraries: ['geometry', 'places']
                 })
             ],
-            entryComponents: [_components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_27__["ModalcalenComponent"], _auth_register_register_component__WEBPACK_IMPORTED_MODULE_32__["Modal3Component"],
-                _auth_register_register_component__WEBPACK_IMPORTED_MODULE_32__["ModalContentComponent"], _auth_register_register_component__WEBPACK_IMPORTED_MODULE_32__["Modal4Component"]],
+            entryComponents: [_components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_28__["ModalcalenComponent"], _auth_register_register_component__WEBPACK_IMPORTED_MODULE_33__["Modal3Component"],
+                _auth_register_register_component__WEBPACK_IMPORTED_MODULE_33__["ModalContentComponent"], _auth_register_register_component__WEBPACK_IMPORTED_MODULE_33__["Modal4Component"]],
             providers: []
         })
     ], PagesModule);

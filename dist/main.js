@@ -1556,6 +1556,13 @@ var MenuConfig = /** @class */ (function () {
                         page: '/perfilnegocio'
                     },
                     {
+                        title: 'Valoraciones',
+                        desc: 'reviews',
+                        root: true,
+                        icon: 'flaticon-star',
+                        page: '/review'
+                    },
+                    {
                         title: 'Horario',
                         desc: 'Horario',
                         root: true,
@@ -1621,6 +1628,9 @@ var PagesConfig = /** @class */ (function () {
             },
             horario: {
                 page: { title: 'horario', desc: 'horario' }
+            },
+            review: {
+                page: { title: 'review', desc: 'review' }
             },
             calendario: {
                 page: { title: 'calendario', desc: 'calendario' }
