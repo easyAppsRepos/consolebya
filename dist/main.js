@@ -1583,6 +1583,13 @@ var MenuConfig = /** @class */ (function () {
                         icon: '	flaticon-event-calendar-symbol',
                         page: '/calendario'
                     },
+                    {
+                        title: 'Configuracion',
+                        desc: 'Configuracion',
+                        root: true,
+                        icon: 'flaticon-cogwheel',
+                        page: '/configuracion'
+                    },
                 ]
             }
         };
@@ -1619,6 +1626,9 @@ var PagesConfig = /** @class */ (function () {
             },
             staff: {
                 page: { title: 'Staff', desc: 'staff Page' }
+            },
+            configuracion: {
+                page: { title: 'Configuracion', desc: 'configuracion' }
             },
             estadistica: {
                 page: { title: 'estadistica', desc: 'estadistica' }
@@ -6014,14 +6024,26 @@ var AuthenticationService = /** @class */ (function () {
     AuthenticationService.prototype.getSubcategorias = function (data) {
         return this.http.post(this.API_URL + '/getSubcategorias', data);
     };
+    AuthenticationService.prototype.eliminarServicio = function (data) {
+        return this.http.post(this.API_URL + '/eliminarServicio', data);
+    };
+    AuthenticationService.prototype.cambiarPaqueteNC = function (data) {
+        return this.http.post(this.API_URL + '/cambiarPaqueteNC', data);
+    };
     AuthenticationService.prototype.serviciosC = function (data) {
         return this.http.post(this.API_URL + '/serviciosC', data);
+    };
+    AuthenticationService.prototype.cambiarOfertaNC = function (data) {
+        return this.http.post(this.API_URL + '/cambiarOfertaNC', data);
     };
     AuthenticationService.prototype.getServicioNC = function (data) {
         return this.http.post(this.API_URL + '/getServicioNC', data);
     };
     AuthenticationService.prototype.updateServicioNC = function (data) {
         return this.http.post(this.API_URL + '/updateServicioNC', data);
+    };
+    AuthenticationService.prototype.getConfiguracionNC = function (data) {
+        return this.http.post(this.API_URL + '/getConfiguracionNC', data);
     };
     AuthenticationService.prototype.getStaff = function (data) {
         return this.http.post(this.API_URL + '/getStaff', data);
@@ -6049,6 +6071,9 @@ var AuthenticationService = /** @class */ (function () {
     };
     AuthenticationService.prototype.addDiasLibresNC = function (data) {
         return this.http.post(this.API_URL + '/addDiasLibresNC', data);
+    };
+    AuthenticationService.prototype.configuracionCentroNC = function (data) {
+        return this.http.post(this.API_URL + '/configuracionCentroNC', data);
     };
     AuthenticationService.prototype.deleteLibresNC = function (data) {
         return this.http.post(this.API_URL + '/deleteLibresNC', data);
@@ -6080,17 +6105,32 @@ var AuthenticationService = /** @class */ (function () {
     AuthenticationService.prototype.guardarHorarioCentroNC = function (data) {
         return this.http.post(this.API_URL + '/guardarHorarioCentroNC', data);
     };
+    AuthenticationService.prototype.agregarPaqueteNC = function (data) {
+        return this.http.post(this.API_URL + '/agregarPaqueteNC', data);
+    };
     AuthenticationService.prototype.borrarFechaEspecial = function (data) {
         return this.http.post(this.API_URL + '/borrarFechaEspecial', data);
     };
     AuthenticationService.prototype.getInfoCentro = function (data) {
         return this.http.post(this.API_URL + '/getInfoCentro', data);
     };
+    AuthenticationService.prototype.UpdateconfiguracionCentroNC = function (data) {
+        return this.http.post(this.API_URL + '/UpdateconfiguracionCentroNC', data);
+    };
     AuthenticationService.prototype.agregarHENC = function (data) {
         return this.http.post(this.API_URL + '/agregarHENC', data);
     };
     AuthenticationService.prototype.verificarEmail = function (data) {
         return this.http.post(this.API_URL + '/verificarEmail', data);
+    };
+    AuthenticationService.prototype.getCitaDetalleNC = function (data) {
+        return this.http.post(this.API_URL + '/getCitaDetalleNC', data);
+    };
+    AuthenticationService.prototype.serviciosCitaNC = function (data) {
+        return this.http.post(this.API_URL + '/serviciosCitaNC', data);
+    };
+    AuthenticationService.prototype.getCalendarioNC = function (data) {
+        return this.http.post(this.API_URL + '/getCalendarioNC', data);
     };
     /**
      * Submit forgot password request
