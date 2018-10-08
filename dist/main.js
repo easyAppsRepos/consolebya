@@ -385,7 +385,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- splash screen -->\r\n<div #splashScreen class=\"m-splash-screen\">\r\n<!-- \t<img [attr.src]=\"splashScreenImage\" style=\"width: 90px; margin-bottom: 30px;\" alt=\"Logo\"> -->\r\n\r\n<img src=\"assets/app/media/img/logo1.png\" style=\"height: 100px !important; margin-bottom: 30px;\" alt=\"Logo\"> \r\n\r\n\r\n\t<!--here we will have circle progress bar-->\r\n\t<mat-spinner diameter=\"40\"></mat-spinner>\r\n</div>\r\n\r\n<router-outlet ></router-outlet>"
+module.exports = "<!-- splash screen -->\r\n<div #splashScreen class=\"m-splash-screen\">\r\n<!-- \t<img [attr.src]=\"splashScreenImage\" style=\"width: 90px; margin-bottom: 30px;\" alt=\"Logo\"> -->\r\n\r\n<img src=\"assets/app/media/img/yb-icon.png\" style=\"height: 100px !important; margin-bottom: 30px;\" alt=\"Logo\"> \r\n\r\n\r\n\t<!--here we will have circle progress bar-->\r\n\t<mat-spinner diameter=\"40\"></mat-spinner>\r\n</div>\r\n\r\n<router-outlet ></router-outlet>"
 
 /***/ }),
 
@@ -1535,6 +1535,13 @@ var MenuConfig = /** @class */ (function () {
                 self: {},
                 items: [
                     {
+                        title: 'Calendario',
+                        desc: 'Calendario',
+                        root: true,
+                        icon: '	flaticon-event-calendar-symbol',
+                        page: '/calendario'
+                    },
+                    {
                         title: 'Servicios',
                         desc: 'Servicios administrar',
                         root: true,
@@ -1575,13 +1582,6 @@ var MenuConfig = /** @class */ (function () {
                         root: true,
                         icon: 'flaticon-statistics',
                         page: '/estadistica'
-                    },
-                    {
-                        title: 'Calendario',
-                        desc: 'Calendario',
-                        root: true,
-                        icon: '	flaticon-event-calendar-symbol',
-                        page: '/calendario'
                     },
                     {
                         title: 'Configuracion',
@@ -5940,9 +5940,8 @@ var AuthenticationService = /** @class */ (function () {
         console.log(credential);
         return this.http.post(this.API_URL + this.API_ENDPOINT_LOGIN, credential).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (result) {
             console.log(result);
-            localStorage.setItem('userADby2as', JSON.stringify(result));
-            if (result instanceof Array) {
-                return result.pop();
+            if (result.completo) {
+                localStorage.setItem('userADby2as', JSON.stringify(result));
             }
             return result;
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["tap"])(this.saveAccessData.bind(this)), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(this.handleError('login', [])));
@@ -6012,8 +6011,14 @@ var AuthenticationService = /** @class */ (function () {
     AuthenticationService.prototype.addServiciosNC = function (serv) {
         return this.http.post(this.API_URL + '/addServiciosNC', serv);
     };
+    AuthenticationService.prototype.updateStep = function (serv) {
+        return this.http.post(this.API_URL + '/updateStep', serv);
+    };
     AuthenticationService.prototype.actualizarBannerNC = function (image) {
         return this.http.post(this.API_URL + '/actualizarBannerNC', image);
+    };
+    AuthenticationService.prototype.actualizarBannerNC2 = function (image) {
+        return this.http.post(this.API_URL + '/actualizarBannerNC2', image);
     };
     AuthenticationService.prototype.actualizarFotoNC = function (image) {
         return this.http.post(this.API_URL + '/actualizarFotoNC', image);
@@ -6024,14 +6029,29 @@ var AuthenticationService = /** @class */ (function () {
     AuthenticationService.prototype.getSubcategorias = function (data) {
         return this.http.post(this.API_URL + '/getSubcategorias', data);
     };
+    AuthenticationService.prototype.getCalendarioDayNC = function (data) {
+        return this.http.post(this.API_URL + '/getCalendarioDayNC', data);
+    };
+    AuthenticationService.prototype.getDataCita = function (data) {
+        return this.http.post(this.API_URL + '/getDataCita', data);
+    };
+    AuthenticationService.prototype.reprogramarCitaNC = function (data) {
+        return this.http.post(this.API_URL + '/reprogramarCitaNC', data);
+    };
     AuthenticationService.prototype.eliminarServicio = function (data) {
         return this.http.post(this.API_URL + '/eliminarServicio', data);
+    };
+    AuthenticationService.prototype.getCentroServicios2 = function (data) {
+        return this.http.post(this.API_URL + '/getCentroServicios2', data);
     };
     AuthenticationService.prototype.cambiarPaqueteNC = function (data) {
         return this.http.post(this.API_URL + '/cambiarPaqueteNC', data);
     };
     AuthenticationService.prototype.serviciosC = function (data) {
         return this.http.post(this.API_URL + '/serviciosC', data);
+    };
+    AuthenticationService.prototype.cambiarServicioCitaNC = function (data) {
+        return this.http.post(this.API_URL + '/cambiarServicioCitaNC', data);
     };
     AuthenticationService.prototype.cambiarOfertaNC = function (data) {
         return this.http.post(this.API_URL + '/cambiarOfertaNC', data);
@@ -6045,8 +6065,20 @@ var AuthenticationService = /** @class */ (function () {
     AuthenticationService.prototype.getConfiguracionNC = function (data) {
         return this.http.post(this.API_URL + '/getConfiguracionNC', data);
     };
+    AuthenticationService.prototype.getStaffBasicNC = function (data) {
+        return this.http.post(this.API_URL + '/getStaffBasicNC', data);
+    };
     AuthenticationService.prototype.getStaff = function (data) {
         return this.http.post(this.API_URL + '/getStaff', data);
+    };
+    AuthenticationService.prototype.getHorasDispo = function (data) {
+        return this.http.post(this.API_URL + '/getHorasDispo', data);
+    };
+    AuthenticationService.prototype.getEmpleadosDisponibles = function (data) {
+        return this.http.post(this.API_URL + '/getEmpleadosDisponibles', data);
+    };
+    AuthenticationService.prototype.addCita = function (data) {
+        return this.http.post(this.API_URL + '/addCita', data);
     };
     AuthenticationService.prototype.addServicioNC = function (data) {
         return this.http.post(this.API_URL + '/addServicioNC', data);
@@ -6075,8 +6107,20 @@ var AuthenticationService = /** @class */ (function () {
     AuthenticationService.prototype.configuracionCentroNC = function (data) {
         return this.http.post(this.API_URL + '/configuracionCentroNC', data);
     };
+    AuthenticationService.prototype.getInfoEvaNC = function (data) {
+        return this.http.post(this.API_URL + '/getInfoEvaNC', data);
+    };
+    AuthenticationService.prototype.getEvaluacionesPeriodoNC = function (data) {
+        return this.http.post(this.API_URL + '/getEvaluacionesPeriodoNC', data);
+    };
+    AuthenticationService.prototype.responderOpinion = function (data) {
+        return this.http.post(this.API_URL + '/responderOpinion', data);
+    };
     AuthenticationService.prototype.deleteLibresNC = function (data) {
         return this.http.post(this.API_URL + '/deleteLibresNC', data);
+    };
+    AuthenticationService.prototype.getEvaluacionesNC = function (data) {
+        return this.http.post(this.API_URL + '/getEvaluacionesNC', data);
     };
     AuthenticationService.prototype.getStaffIndi = function (data) {
         return this.http.post(this.API_URL + '/getStaffIndi', data);
