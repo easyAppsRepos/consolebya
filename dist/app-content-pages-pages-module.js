@@ -1681,7 +1681,7 @@ var RegisterComponent = /** @class */ (function () {
         this.searchControl = new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]();
     }
     RegisterComponent.prototype.ngOnInit = function () {
-        if (localStorage.getItem('tempADby2as') !== 'undefined') {
+        if (localStorage.getItem('tempADby2as') !== 'undefined' && localStorage.getItem('tempADby2as') !== 'null' && localStorage.getItem('tempADby2as') !== null && localStorage.getItem('tempADby2as') !== undefined) {
             console.log(localStorage.getItem('tempADby2as'));
             var retrievedObject = JSON.parse(localStorage.getItem('tempADby2as'));
             //this.idCentro = retrievedObject.idCentro;
