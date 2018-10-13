@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--Begin::Section-->\r\n<div class=\"row\">\r\n\t<div style=\"    width: 100%;\r\n    text-align: center;\r\n    padding: 67px;\r\n    font-weight: 600;\r\n    font-size: 16px;\">\r\nBienvenido al Panel de administracion de yourBeauty \r\n</div>\r\n</div>\r\n<!--End::Section-->\r\n"
+module.exports = "<!--Begin::Section-->\r\n<div class=\"row\">\r\n\t<div style=\"    width: 100%;\r\n    text-align: center;\r\n    padding: 67px;\r\n    font-weight: 600;\r\n    font-size: 16px;\">\r\nBienvenido al Panel de administracion de Yourbeauty \r\n</div>\r\n</div>\r\n<!--End::Section-->\r\n"
 
 /***/ }),
 

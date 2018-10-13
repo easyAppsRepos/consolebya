@@ -2599,7 +2599,7 @@ module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,24
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".txtF {\n  color: #383734;\n  font-size: 16px; }\n\n.tituloCateg {\n  font-size: 16px;\n  margin-bottom: 10px;\n  margin-top: 15px;\n  font-weight: 400; }\n\n.w50 {\n  display: flex;\n  width: 50%; }\n\n.underl {\n  text-decoration: line-through; }\n\ninput:focus {\n  outline: none !important;\n  border: 1px solid #34bfa3; }\n\n.inputBy {\n  color: #383734;\n  background: #fff;\n  border: 1px solid #e1e1e1;\n  border-radius: 4px;\n  min-height: 40px;\n  padding: 7px 10px;\n  resize: vertical;\n  -webkit-appearance: none;\n  -moz-appearance: none; }\n\n.w100 {\n  display: block;\n  width: 100%; }\n\n.imgCheckBox {\n  height: 34px;\n  width: 34px;\n  border-radius: 20px;\n  margin: 5px 11px; }\n\n.conteinInput {\n  margin-bottom: 30px; }\n\n.labelBy {\n  display: inline-block;\n  margin-bottom: 10px;\n  font-size: 16px;\n  font-weight: 500 !important;\n  line-height: 1.5;\n  color: #383734; }\n"
+module.exports = ".txtF {\n  color: #383734;\n  font-size: 16px; }\n\n.tituloCateg {\n  font-size: 16px;\n  margin-bottom: 10px;\n  margin-top: 15px;\n  font-weight: 400; }\n\n.w50 {\n  display: flex;\n  width: 50%; }\n\n.underl {\n  text-decoration: line-through; }\n\ninput:focus {\n  outline: none !important;\n  border: 1px solid #34bfa3; }\n\n.inputBy {\n  color: #383734;\n  background: #fff;\n  border: 1px solid #e1e1e1;\n  border-radius: 4px;\n  min-height: 40px;\n  padding: 7px 10px;\n  resize: vertical;\n  -webkit-appearance: none;\n  -moz-appearance: none; }\n\n.w100 {\n  display: block;\n  width: 100%; }\n\n.imgCheckBox {\n  height: 34px;\n  width: 34px;\n  border-radius: 20px;\n  margin: 5px 11px; }\n\n.custom-dialog-container .mat-dialog-container {\n  padding: 24px !important; }\n\n.mat-dialog-container {\n  padding: 24px !important; }\n\n.conteinInput {\n  margin-bottom: 30px; }\n\n.labelBy {\n  display: inline-block;\n  margin-bottom: 10px;\n  font-size: 16px;\n  font-weight: 500 !important;\n  line-height: 1.5;\n  color: #383734; }\n"
 
 /***/ }),
 
@@ -2651,6 +2651,7 @@ var DialogOverviewExampleDialog = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'dialog-overview-example-dialog',
             template: __webpack_require__(/*! ./dialog-overview-example-dialog.html */ "./src/app/content/pages/components/agregaroferta/dialog-overview-example-dialog.html"),
+            styles: [__webpack_require__(/*! ./agregaroferta.component.scss */ "./src/app/content/pages/components/agregaroferta/agregaroferta.component.scss")]
         }),
         __param(1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_angular_material__WEBPACK_IMPORTED_MODULE_3__["MAT_DIALOG_DATA"])),
         __metadata("design:paramtypes", [_angular_material__WEBPACK_IMPORTED_MODULE_3__["MatDialogRef"], Object])
@@ -2691,8 +2692,9 @@ var AgregarofertaComponent = /** @class */ (function () {
         var _this = this;
         var dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
             data: { name: this.valorOferta, animal: '' },
-            height: '144px',
-            width: '320px',
+            // height: '144px',
+            width: '30%',
+            panelClass: 'custom-dialog-container'
         });
         dialogRef.afterClosed().subscribe(function (result) {
             console.log('The dialog was closed');
@@ -2759,7 +2761,7 @@ var AgregarofertaComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <h1 mat-dialog-title>Hi {{data.name}}</h1> -->\n<div mat-dialog-content>\n  <p>  ¿Desea agregar 1 ofertas por $7 dólares?</p>\n  <!--<mat-form-field>\n     <input matInput [(ngModel)]=\"data.animal\">\n  </mat-form-field> -->\n</div>\n<div mat-dialog-actions style=\"margin: auto;\" >\n  <button style=\"margin: auto;\" class=\"btn btn-outline-success btn-sm\"  (click)=\"onNoClick()\">Cancelar</button>\n  <button style=\"margin: auto;\" class=\"btn btn-success btn-sm\" (click)=\"onYClick()\" cdkFocusInitial>Confirmar</button>\n</div>\n"
+module.exports = "<!-- <h1 mat-dialog-title>Hi {{data.name}}</h1> -->\n<mat-dialog-content style='margin: auto !important;'>\n   ¿Desea agregar 1 ofertas por $7 dólares?\n  <!--<mat-form-field>\n     <input matInput [(ngModel)]=\"data.animal\">\n  </mat-form-field> -->\n</mat-dialog-content>\n<mat-dialog-actions style=\"margin: auto !important;\" >\n  <button style=\"margin: auto !important;\" class=\"btn btn-outline-success btn-sm\"  (click)=\"onNoClick()\">Cancelar</button>\n  <button style=\"margin: auto !important;\" class=\"btn btn-success btn-sm\" (click)=\"onYClick()\" cdkFocusInitial>Confirmar</button>\n</mat-dialog-actions>\n"
 
 /***/ }),
 
@@ -2781,7 +2783,7 @@ module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,24
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".txtF {\n  color: #383734;\n  font-size: 16px; }\n\n.tituloCateg {\n  font-size: 16px;\n  margin-bottom: 10px;\n  margin-top: 15px;\n  font-weight: 400; }\n\n.w50 {\n  width: 50%; }\n\n.underl {\n  text-decoration: line-through; }\n\ninput:focus {\n  outline: none !important;\n  border: 1px solid #34bfa3; }\n\n.inputBy {\n  color: #383734;\n  background: #fff;\n  border: 1px solid #e1e1e1;\n  border-radius: 4px;\n  min-height: 40px;\n  padding: 7px 10px;\n  resize: vertical;\n  -webkit-appearance: none;\n  -moz-appearance: none; }\n\n.w100 {\n  display: block;\n  width: 100%; }\n\n.imgCheckBox {\n  height: 34px;\n  width: 34px;\n  border-radius: 20px;\n  margin: 5px 11px; }\n\n.conteinInput {\n  margin-bottom: 30px; }\n\n.labelBy {\n  display: inline-block;\n  margin-bottom: 10px;\n  font-size: 16px;\n  font-weight: 500 !important;\n  line-height: 1.5;\n  color: #383734; }\n"
+module.exports = ".txtF {\n  color: #383734;\n  font-size: 16px; }\n\n.tituloCateg {\n  font-size: 16px;\n  margin-bottom: 10px;\n  margin-top: 15px;\n  font-weight: 400; }\n\n.w50 {\n  width: 50%; }\n\n.custom-dialog-container .mat-dialog-container {\n  padding: 24px !important; }\n\n.mat-dialog-container {\n  padding: 24px !important; }\n\n.underl {\n  text-decoration: line-through; }\n\ninput:focus {\n  outline: none !important;\n  border: 1px solid #34bfa3; }\n\n.inputBy {\n  color: #383734;\n  background: #fff;\n  border: 1px solid #e1e1e1;\n  border-radius: 4px;\n  min-height: 40px;\n  padding: 7px 10px;\n  resize: vertical;\n  -webkit-appearance: none;\n  -moz-appearance: none; }\n\n.w100 {\n  display: block;\n  width: 100%; }\n\n.imgCheckBox {\n  height: 34px;\n  width: 34px;\n  border-radius: 20px;\n  margin: 5px 11px; }\n\n.conteinInput {\n  margin-bottom: 30px; }\n\n.labelBy {\n  display: inline-block;\n  margin-bottom: 10px;\n  font-size: 16px;\n  font-weight: 500 !important;\n  line-height: 1.5;\n  color: #383734; }\n"
 
 /***/ }),
 
@@ -2833,6 +2835,7 @@ var DialogOverviewExampleDialog2 = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'dialog-overview-example-dialog2',
             template: __webpack_require__(/*! ./dialog-overview-example-dialog2.html */ "./src/app/content/pages/components/agregarpaquete/dialog-overview-example-dialog2.html"),
+            styles: [__webpack_require__(/*! ./agregarpaquete.component.scss */ "./src/app/content/pages/components/agregarpaquete/agregarpaquete.component.scss")]
         }),
         __param(1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_angular_material__WEBPACK_IMPORTED_MODULE_3__["MAT_DIALOG_DATA"])),
         __metadata("design:paramtypes", [_angular_material__WEBPACK_IMPORTED_MODULE_3__["MatDialogRef"], Object])
@@ -2878,8 +2881,9 @@ var AgregarpaqueteComponent = /** @class */ (function () {
     AgregarpaqueteComponent.prototype.openDialog = function () {
         var _this = this;
         var dialogRef = this.dialog.open(DialogOverviewExampleDialog2, {
-            height: '154px',
-            width: '320px',
+            //height: '144px',
+            width: '30%',
+            panelClass: 'custom-dialog-container',
             data: { name: this.valorOferta, animal: '' }
         });
         dialogRef.afterClosed().subscribe(function (result) {
@@ -2959,7 +2963,7 @@ var AgregarpaqueteComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <h1 mat-dialog-title>Hi {{data.name}}</h1> -->\n<div mat-dialog-content>\n  <p>  ¿Desea agregar un paquete por $7 dólares?</p>\n  <!--<mat-form-field>\n     <input matInput [(ngModel)]=\"data.animal\">\n  </mat-form-field> -->\n</div>\n<div mat-dialog-actions style=\"margin: auto;\" >\n  <button  style=\"margin: auto;\" class=\"btn btn-outline-success btn-sm\" (click)=\"onNoClick()\">Cancelar</button>\n  <button style=\"margin: auto;\" class=\"btn btn-success btn-sm\"  (click)=\"onYClick()\" cdkFocusInitial>Confirmar</button>\n</div>\n"
+module.exports = "<!-- <h1 mat-dialog-title>Hi {{data.name}}</h1> -->\n<mat-dialog-content style='margin: auto !important;'>\n   ¿Desea agregar un paquete por $7 dólares?\n  <!--<mat-form-field>\n     <input matInput [(ngModel)]=\"data.animal\">\n  </mat-form-field> -->\n</mat-dialog-content>\n<mat-dialog-actions style=\"margin: auto !important;\" >\n  <button  style=\"margin: auto !important;\" class=\"btn btn-outline-success btn-sm\" (click)=\"onNoClick()\">Cancelar</button>\n  <button style=\"margin: auto !important;\" class=\"btn btn-success btn-sm\"  (click)=\"onYClick()\" cdkFocusInitial>Confirmar</button>\n</mat-dialog-actions>\n"
 
 /***/ }),
 
@@ -6961,6 +6965,46 @@ var StaffComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/content/pages/custom-date-adapter.ts":
+/*!******************************************************!*\
+  !*** ./src/app/content/pages/custom-date-adapter.ts ***!
+  \******************************************************/
+/*! exports provided: CustomDateAdapter */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CustomDateAdapter", function() { return CustomDateAdapter; });
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+/** Adapts the native JS Date for use with cdk-based components that work with dates. */
+var CustomDateAdapter = /** @class */ (function (_super) {
+    __extends(CustomDateAdapter, _super);
+    function CustomDateAdapter() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    // parse the date from input component as it only expect dates in 
+    // mm-dd-yyyy format
+    CustomDateAdapter.prototype.getFirstDayOfWeek = function () {
+        return 1;
+    };
+    return CustomDateAdapter;
+}(_angular_material__WEBPACK_IMPORTED_MODULE_0__["NativeDateAdapter"]));
+
+
+
+/***/ }),
+
 /***/ "./src/app/content/pages/header/action/action.component.html":
 /*!*******************************************************************!*\
   !*** ./src/app/content/pages/header/action/action.component.html ***!
@@ -7525,9 +7569,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/index.js");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var _auth_register_register_component__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./auth/register/register.component */ "./src/app/content/pages/auth/register/register.component.ts");
-/* harmony import */ var _angular_common_locales_es__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! @angular/common/locales/es */ "./node_modules/@angular/common/locales/es.js");
-/* harmony import */ var _angular_common_locales_es__WEBPACK_IMPORTED_MODULE_38___default = /*#__PURE__*/__webpack_require__.n(_angular_common_locales_es__WEBPACK_IMPORTED_MODULE_38__);
+/* harmony import */ var _custom_date_adapter__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./custom-date-adapter */ "./src/app/content/pages/custom-date-adapter.ts");
+/* harmony import */ var _auth_register_register_component__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./auth/register/register.component */ "./src/app/content/pages/auth/register/register.component.ts");
+/* harmony import */ var _angular_common_locales_es__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! @angular/common/locales/es */ "./node_modules/@angular/common/locales/es.js");
+/* harmony import */ var _angular_common_locales_es__WEBPACK_IMPORTED_MODULE_39___default = /*#__PURE__*/__webpack_require__.n(_angular_common_locales_es__WEBPACK_IMPORTED_MODULE_39__);
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7581,17 +7626,18 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-Object(_angular_common__WEBPACK_IMPORTED_MODULE_2__["registerLocaleData"])(_angular_common_locales_es__WEBPACK_IMPORTED_MODULE_38___default.a);
+
+Object(_angular_common__WEBPACK_IMPORTED_MODULE_2__["registerLocaleData"])(_angular_common_locales_es__WEBPACK_IMPORTED_MODULE_39___default.a);
 var PagesModule = /** @class */ (function () {
     function PagesModule() {
     }
     PagesModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
             declarations: [
-                _auth_register_register_component__WEBPACK_IMPORTED_MODULE_37__["Modal3Component"],
+                _auth_register_register_component__WEBPACK_IMPORTED_MODULE_38__["Modal3Component"],
                 _components_servicios_servicios_component__WEBPACK_IMPORTED_MODULE_14__["CallbackPipe"],
-                _auth_register_register_component__WEBPACK_IMPORTED_MODULE_37__["ModalContentComponent"], _auth_register_register_component__WEBPACK_IMPORTED_MODULE_37__["Modal4Component"],
-                _auth_register_register_component__WEBPACK_IMPORTED_MODULE_37__["RegisterComponent"],
+                _auth_register_register_component__WEBPACK_IMPORTED_MODULE_38__["ModalContentComponent"], _auth_register_register_component__WEBPACK_IMPORTED_MODULE_38__["Modal4Component"],
+                _auth_register_register_component__WEBPACK_IMPORTED_MODULE_38__["RegisterComponent"],
                 _pages_component__WEBPACK_IMPORTED_MODULE_4__["PagesComponent"],
                 _header_action_action_component__WEBPACK_IMPORTED_MODULE_6__["ActionComponent"],
                 _components_configuracion_configuracion_component__WEBPACK_IMPORTED_MODULE_18__["ConfiguracionComponent"],
@@ -7638,9 +7684,10 @@ var PagesModule = /** @class */ (function () {
                     libraries: ['geometry', 'places']
                 })
             ],
-            entryComponents: [_components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_31__["ModalcalenComponent"], _auth_register_register_component__WEBPACK_IMPORTED_MODULE_37__["Modal3Component"],
-                _auth_register_register_component__WEBPACK_IMPORTED_MODULE_37__["ModalContentComponent"], _auth_register_register_component__WEBPACK_IMPORTED_MODULE_37__["Modal4Component"], _components_agregaroferta_agregaroferta_component__WEBPACK_IMPORTED_MODULE_16__["DialogOverviewExampleDialog"], _components_agregarpaquete_agregarpaquete_component__WEBPACK_IMPORTED_MODULE_17__["DialogOverviewExampleDialog2"]],
-            providers: [{ provide: _angular_core__WEBPACK_IMPORTED_MODULE_1__["LOCALE_ID"], useValue: 'es' }, { provide: _angular_material__WEBPACK_IMPORTED_MODULE_36__["MAT_DATE_LOCALE"], useValue: 'es-MX' }]
+            entryComponents: [_components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_31__["ModalcalenComponent"], _auth_register_register_component__WEBPACK_IMPORTED_MODULE_38__["Modal3Component"],
+                _auth_register_register_component__WEBPACK_IMPORTED_MODULE_38__["ModalContentComponent"], _auth_register_register_component__WEBPACK_IMPORTED_MODULE_38__["Modal4Component"], _components_agregaroferta_agregaroferta_component__WEBPACK_IMPORTED_MODULE_16__["DialogOverviewExampleDialog"], _components_agregarpaquete_agregarpaquete_component__WEBPACK_IMPORTED_MODULE_17__["DialogOverviewExampleDialog2"]],
+            providers: [{ provide: _angular_core__WEBPACK_IMPORTED_MODULE_1__["LOCALE_ID"], useValue: 'es' }, { provide: _angular_material__WEBPACK_IMPORTED_MODULE_36__["MAT_DATE_LOCALE"], useValue: 'es-MX' },
+                { provide: _angular_material__WEBPACK_IMPORTED_MODULE_36__["DateAdapter"], useClass: _custom_date_adapter__WEBPACK_IMPORTED_MODULE_37__["CustomDateAdapter"] }]
         })
     ], PagesModule);
     return PagesModule;
