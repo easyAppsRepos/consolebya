@@ -5921,8 +5921,11 @@ var ReprogramacionComponent = /** @class */ (function () {
         this.procesarData();
     };
     ReprogramacionComponent.prototype.getMinH = function () {
-        var d = new Date(this.fechaSeleccionadaN);
+        var d = new Date(this.fechaSeleccionadaN + ' 12:00:00');
         var dia = d.getDay();
+        console.log(this.fechaSeleccionadaN);
+        console.log(d);
+        console.log(dia);
         var horarioFix = '00:00';
         if (this.horarioCentro.find(function (x) { return x.diaSemana == dia; })) {
             this.diaCerrado = false;
@@ -5932,7 +5935,7 @@ var ReprogramacionComponent = /** @class */ (function () {
     };
     ReprogramacionComponent.prototype.getMaxH = function () {
         var horarioFix = '00:00';
-        var d = new Date(this.fechaSeleccionadaN);
+        var d = new Date(this.fechaSeleccionadaN + ' 12:00:00');
         var dia = d.getDay();
         if (this.horarioCentro.find(function (x) { return x.diaSemana == dia; })) {
             horarioFix = this.horarioCentro.find(function (x) { return x.diaSemana == dia; }).horaCerrar;
@@ -6021,10 +6024,11 @@ var ReprogramacionComponent = /** @class */ (function () {
                         indexx = 0;
                         d = new Date(this.datasCita.horaInicio);
                         diaS = d.getDay();
-                        console.log(this.datasCita.horaInicio);
+                        console.log(d);
                         fechaSeleccionada = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
                         //var fechaSeleccionada = this.datasCita.horaInicio.split('T')[0];
                         this.fechaSeleccionadaN = fechaSeleccionada;
+                        console.log(this.fechaSeleccionadaN);
                         _i = 0, _a = this.serviciosCita;
                         _b.label = 1;
                     case 1:
