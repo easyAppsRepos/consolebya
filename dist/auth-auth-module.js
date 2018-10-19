@@ -293,7 +293,7 @@ var AuthModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--begin::Signin-->\r\n<div class=\"m-login__signin\">\r\n\t<div class=\"m-login__title\">\r\n\t\t<h3 class=\"m-login__title\">Olvidó la contraseña ?</h3>\r\n\t\t<div class=\"m-login__desc\">Ingresa tu email para resetear la contraseña:</div>\r\n\t</div>\r\n\r\n\t<m-auth-notice></m-auth-notice>\r\n\r\n\t<!--begin::Form-->\r\n\t<form class=\"m-login__form m-form\" name=\"form\" (ngSubmit)=\"f.form.valid && submit()\" #f=\"ngForm\" novalidate>\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<mat-form-field>\r\n\t\t\t\t<mat-label>Email</mat-label>\r\n\t\t\t\t<input matInput type=\"email\" name=\"email\" placeholder=\"Email address\" autocomplete=\"off\" [(ngModel)]=\"model.email\" #email=\"ngModel\" email=\"true\" required>\r\n\t\t\t</mat-form-field>\r\n\t\t</div>\r\n\t</form>\r\n\t<!--end::Form-->\r\n\r\n\t<!--begin::Action-->\r\n\t<div class=\"m-login__action m-login__action--fit\">\r\n\t\t<button mat-button (click)=\"loginPage($event)\" >Atras</button>\r\n\t\t<m-spinner-button [options]=\"spinner\"  >Restablecer</m-spinner-button>\r\n\t</div>\r\n\t<!--end::Action-->\r\n</div>\r\n<!--end::Signin-->\r\n"
+module.exports = "<!--begin::Signin-->\r\n<div class=\"m-login__signin\">\r\n\t<div class=\"m-login__title\">\r\n\t\t<h3 class=\"m-login__title\">Olvidó la contraseña ?</h3>\r\n\t\t<div class=\"m-login__desc\">Ingresa tu email para resetear la contraseña:</div>\r\n\t</div>\r\n\r\n\t<m-auth-notice></m-auth-notice>\r\n\r\n\t<!--begin::Form-->\r\n\t<form class=\"m-login__form m-form\" name=\"form\" (ngSubmit)=\"f.form.valid && submit()\" #f=\"ngForm\" novalidate>\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<mat-form-field>\r\n\t\t\t\t<mat-label>Email</mat-label>\r\n\t\t\t\t<input matInput type=\"email\" name=\"email\" placeholder=\"Email address\" autocomplete=\"off\" [(ngModel)]=\"model.email\" #email=\"ngModel\" email=\"true\" required>\r\n\t\t\t</mat-form-field>\r\n\t\t</div>\r\n\t</form>\r\n\r\n\t<div *ngIf='messagePass' style=\"    text-align: center;\r\n    color: #57bb57;\r\n    font-size: 14px;\r\n    font-weight: 800;\">Su contraseña ha sido restablecida y enviada a tu correo.</div>\r\n    \r\n\t<div *ngIf='errPass' style=\"    text-align: center;\r\n    color: lightcoral;\r\n    font-size: 14px;\r\n    font-weight: 800;\"> El email indicado no es valido</div>\r\n\t<!--end::Form-->\r\n\r\n\t<!--begin::Action-->\r\n\t<div class=\"m-login__action m-login__action--fit\">\r\n\t\t<button mat-button (click)=\"loginPage($event)\" >Atras</button>\r\n\t\t<m-spinner-button [options]=\"spinner\" (click)=\"submit()\" >Restablecer</m-spinner-button>\r\n\t</div>\r\n\t<!--end::Action-->\r\n</div>\r\n<!--end::Signin-->\r\n"
 
 /***/ }),
 
@@ -322,10 +322,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var _core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../core/auth/authentication.service */ "./src/app/core/auth/authentication.service.ts");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var object_path__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! object-path */ "./node_modules/object-path/index.js");
-/* harmony import */ var object_path__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(object_path__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _core_auth_auth_notice_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../core/auth/auth-notice.service */ "./src/app/core/auth/auth-notice.service.ts");
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+/* harmony import */ var _core_auth_auth_notice_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../core/auth/auth-notice.service */ "./src/app/core/auth/auth-notice.service.ts");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -343,13 +341,16 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var ForgotPasswordComponent = /** @class */ (function () {
-    function ForgotPasswordComponent(authService, authNoticeService, translate) {
+    function ForgotPasswordComponent(authService, authNoticeService, translate, cdr) {
         this.authService = authService;
         this.authNoticeService = authNoticeService;
         this.translate = translate;
+        this.cdr = cdr;
         this.model = { email: '' };
         this.actionChange = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
         this.loading = false;
+        this.messagePass = false;
+        this.errPass = false;
         this.errors = [];
         this.spinner = {
             active: false,
@@ -367,38 +368,31 @@ var ForgotPasswordComponent = /** @class */ (function () {
         this.actionChange.next(this.action);
     };
     ForgotPasswordComponent.prototype.submit = function () {
+        //this.spinner.active = true;
+        //if (this.validate(this.f)) {
         var _this = this;
-        this.spinner.active = true;
-        if (this.validate(this.f)) {
-            this.authService.requestPassword(this.model).subscribe(function (response) {
-                if (typeof response !== 'undefined') {
-                    _this.action = 'login';
-                    _this.actionChange.next(_this.action);
-                }
-                else {
-                    // tslint:disable-next-line:max-line-length
-                    _this.authNoticeService.setNotice(_this.translate.instant('AUTH.VALIDATION.NOT_FOUND', { name: _this.translate.instant('AUTH.INPUT.EMAIL') }), 'error');
-                }
-                _this.spinner.active = false;
-            });
-        }
-    };
-    ForgotPasswordComponent.prototype.validate = function (f) {
-        if (f.form.status === 'VALID') {
-            return true;
-        }
-        this.errors = [];
-        if (object_path__WEBPACK_IMPORTED_MODULE_4__["get"](f, 'form.controls.email.errors.email')) {
-            this.errors.push(this.translate.instant('AUTH.VALIDATION.INVALID', { name: this.translate.instant('AUTH.INPUT.EMAIL') }));
-        }
-        if (object_path__WEBPACK_IMPORTED_MODULE_4__["get"](f, 'form.controls.email.errors.required')) {
-            this.errors.push(this.translate.instant('AUTH.VALIDATION.REQUIRED', { name: this.translate.instant('AUTH.INPUT.EMAIL') }));
-        }
-        if (this.errors.length > 0) {
-            this.authNoticeService.setNotice(this.errors.join('<br/>'), 'error');
-            this.spinner.active = false;
-        }
-        return false;
+        this.authService.recuperarPassNC(this.model).subscribe(function (response) {
+            console.log(response);
+            if (response !== 'null' && response !== null && response['affectedRows'] > 0 &&
+                response !== 'undefined' && response !== undefined) {
+                console.log('ok');
+                //this.action = 'login';
+                //this.actionChange.next(this.action);
+                _this.messagePass = true;
+                _this.errPass = false;
+                _this.cdr.detectChanges();
+            }
+            else {
+                console.log('err');
+                // tslint:disable-next-line:max-line-length
+                _this.errPass = true;
+                _this.messagePass = false;
+                _this.cdr.detectChanges();
+                /* this.authNoticeService.setNotice(this.translate.instant('AUTH.VALIDATION.NOT_FOUND', {name: this.translate.instant('AUTH.INPUT.EMAIL')}), 'error'); */
+            }
+            //this.spinner.active = false;
+        });
+        //}
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
@@ -419,8 +413,8 @@ var ForgotPasswordComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./forgot-password.component.scss */ "./src/app/content/pages/auth/forgot-password/forgot-password.component.scss")]
         }),
         __metadata("design:paramtypes", [_core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"],
-            _core_auth_auth_notice_service__WEBPACK_IMPORTED_MODULE_5__["AuthNoticeService"],
-            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateService"]])
+            _core_auth_auth_notice_service__WEBPACK_IMPORTED_MODULE_4__["AuthNoticeService"],
+            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateService"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"]])
     ], ForgotPasswordComponent);
     return ForgotPasswordComponent;
 }());
@@ -436,7 +430,7 @@ var ForgotPasswordComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--begin::Signin-->\r\n\r\n<div class=\"m-login__head\" style=\"top: 50px !important\">\r\n\t\t\t<span >No tienes cuenta aún?</span>\r\n\t\t\t<a  [routerLink]=\"['/registro']\" class=\"m-link m--font-danger\" >Regístrate</a>\r\n\t\t</div>\r\n\r\n\r\n\r\n\r\n<div class=\"m-login__signin\">\r\n\t<div class=\"m-login__title\">\r\n<!-- \t\t<h3 >YourBeauty</h3> -->\r\n\r\n<img style='    height: 160px;' src=\"assets/app/media/img/logo1.png\">\r\n\t</div>\r\n\r\n\r\n\r\n\t<!-- <m-auth-notice></m-auth-notice>\r\n<div class=\" alert-info show m-alert m-alert--outline m-alert--outline-2x alert fade\" role=\"alert\" #alertNotice>\r\n\t<span >Quieres ser parte de yourBeauty? \r\n\t\t\t<a (click)=\"register2()\"><strong>Registratre totalmente gratis</strong></a> o \r\n\t\t\t Inicia sesion  si ya tenes cuenta</span>\r\n</div>\r\n\r\n -->\r\n\r\n\r\n\t<!--begin::Form-->\r\n\t<form class=\"m-login__form m-form\" name=\"form\" (ngSubmit)=\"f.form.valid && submit()\" #f=\"ngForm\" novalidate>\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<mat-form-field>\r\n\t\t\t\t<mat-label>Email</mat-label>\r\n\t\t\t\t<input matInput type=\"email\" name=\"email\" placeholder=\"Email address\" autocomplete=\"off\" [(ngModel)]=\"model.email\" #email=\"ngModel\" email=\"true\" required>\r\n\t\t\t</mat-form-field>\r\n\t\t</div>\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<mat-form-field>\r\n\t\t\t\t<mat-label>Contraseña</mat-label>\r\n\t\t\t\t<input matInput minlength=\"4\" type=\"password\" name=\"password\" placeholder=\"Password\" autocomplete=\"off\" [(ngModel)]=\"model.password\" #password=\"ngModel\" required>\r\n\t\t\t</mat-form-field>\r\n\t\t</div>\r\n\t</form>\r\n\t<!--end::Form-->\r\n\r\n\t<!--begin::Action-->\r\n\t<div class=\"m-login__action m-login__action--fit\">\r\n\t\t<a href=\"javascript:;\" (click)=\"forgotPasswordPage($event)\" class=\"m-link\">\r\n\t\t\t<span >Olvidó la contraseña?</span>\r\n\t\t</a>\r\n<!-- \t\t<m-spinner-button [options]=\"spinner\" (click)=\"submit()\">{{'AUTH.LOGIN.BUTTON' | translate}}</m-spinner-button> -->\r\n\t\t<m-spinner-button [options]=\"spinner\" (click)=\"submit()\">Iniciar sesión</m-spinner-button>\r\n\t</div>\r\n\t<!--end::Action-->\r\n\r\n\t<!--begin::Divider-->\r\n<!-- \t<div class=\"m-login__form-divider\">\r\n\t\t<div class=\"m-divider\">\r\n\t\t\t<span></span>\r\n\t\t\t<span translate=\"AUTH.GENERAL.OR\">OR</span>\r\n\t\t\t<span></span>\r\n\t\t</div>\r\n\t</div> -->\r\n\t<!--end::Divider-->\r\n\r\n\t<!--begin::Options-->\r\n<!-- \t<div class=\"m-login__options\">\r\n\t\t<a href=\"javascript:;\" mat-raised-button color=\"primary\">\r\n\t\t\t<span>\r\n\t\t\t\t<i class=\"fab fa-facebook-f\"></i>&nbsp;\r\n\t\t\t\t<span>Facebook</span>\r\n\t\t\t</span>\r\n\t\t</a>\r\n\r\n\t\t<a href=\"javascript:;\" mat-raised-button color=\"accent\">\r\n\t\t\t<span>\r\n\t\t\t\t<i class=\"fab fa-twitter\"></i>&nbsp;\r\n\t\t\t\t<span>Twitter</span>\r\n\t\t\t</span>\r\n\t\t</a>\r\n\r\n\t\t<a href=\"javascript:;\" mat-raised-button color=\"warn\">\r\n\t\t\t<span>\r\n\t\t\t\t<i class=\"fab fa-google\"></i>&nbsp;\r\n\t\t\t\t<span>Google</span>\r\n\t\t\t</span>\r\n\t\t</a>\r\n\t</div> -->\r\n\t<!--end::Options-->\r\n</div>\r\n<!--end::Signin-->\r\n"
+module.exports = "<!--begin::Signin-->\r\n\r\n<div class=\"m-login__head\" style=\"top: 50px !important\">\r\n\t\t\t<span >No tienes cuenta aún?</span>\r\n\t\t\t<a  [routerLink]=\"['/registro']\" class=\"m-link m--font-danger\" >Regístrate</a>\r\n\t\t</div>\r\n\r\n\r\n\r\n\r\n<div class=\"m-login__signin\">\r\n\t<div class=\"m-login__title\">\r\n<!-- \t\t<h3 >YourBeauty</h3> -->\r\n\r\n<img style='    height: 160px;' src=\"assets/app/media/img/logo1.png\">\r\n\t</div>\r\n\r\n\r\n\r\n\t<!-- <m-auth-notice></m-auth-notice>\r\n<div class=\" alert-info show m-alert m-alert--outline m-alert--outline-2x alert fade\" role=\"alert\" #alertNotice>\r\n\t<span >Quieres ser parte de yourBeauty? \r\n\t\t\t<a (click)=\"register2()\"><strong>Registratre totalmente gratis</strong></a> o \r\n\t\t\t Inicia sesion  si ya tenes cuenta</span>\r\n</div>\r\n\r\n -->\r\n\r\n\r\n\t<!--begin::Form-->\r\n\t<form class=\"m-login__form m-form\" name=\"form\" (keyup.enter)=\"f.form.valid && submit()\" (ngSubmit)=\"f.form.valid && submit()\" #f=\"ngForm\" novalidate>\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<mat-form-field>\r\n\t\t\t\t<mat-label>Email</mat-label>\r\n\t\t\t\t<input matInput type=\"email\" name=\"email\" placeholder=\"Email address\" autocomplete=\"off\" [(ngModel)]=\"model.email\" #email=\"ngModel\" email=\"true\" required>\r\n\t\t\t</mat-form-field>\r\n\t\t</div>\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<mat-form-field>\r\n\t\t\t\t<mat-label>Contraseña</mat-label>\r\n\t\t\t\t<input matInput minlength=\"4\" type=\"password\" name=\"password\" placeholder=\"Password\" autocomplete=\"off\" [(ngModel)]=\"model.password\" #password=\"ngModel\" required>\r\n\t\t\t</mat-form-field>\r\n\t\t</div>\r\n\t</form>\r\n\t<div *ngIf='errMess' style=\"    text-align: center;\r\n    color: lightcoral;\r\n    font-size: 14px;\r\n    font-weight: 800;\">Credenciales invalidas</div>\r\n\t<!--end::Form-->\r\n\r\n\t<!--begin::Action-->\r\n\t<div class=\"m-login__action m-login__action--fit\">\r\n\t\t<a href=\"javascript:;\" (click)=\"forgotPasswordPage($event)\" class=\"m-link\">\r\n\t\t\t<span >Olvidó la contraseña?</span>\r\n\t\t</a>\r\n<!-- \t\t<m-spinner-button [options]=\"spinner\" (click)=\"submit()\">{{'AUTH.LOGIN.BUTTON' | translate}}</m-spinner-button> -->\r\n\r\n\t\t<m-spinner-button [options]=\"spinner\" (click)=\"submit()\">Iniciar sesión</m-spinner-button>\r\n\t</div>\r\n\t<!--end::Action-->\r\n\r\n\t<!--begin::Divider-->\r\n<!-- \t<div class=\"m-login__form-divider\">\r\n\t\t<div class=\"m-divider\">\r\n\t\t\t<span></span>\r\n\t\t\t<span translate=\"AUTH.GENERAL.OR\">OR</span>\r\n\t\t\t<span></span>\r\n\t\t</div>\r\n\t</div> -->\r\n\t<!--end::Divider-->\r\n\r\n\t<!--begin::Options-->\r\n<!-- \t<div class=\"m-login__options\">\r\n\t\t<a href=\"javascript:;\" mat-raised-button color=\"primary\">\r\n\t\t\t<span>\r\n\t\t\t\t<i class=\"fab fa-facebook-f\"></i>&nbsp;\r\n\t\t\t\t<span>Facebook</span>\r\n\t\t\t</span>\r\n\t\t</a>\r\n\r\n\t\t<a href=\"javascript:;\" mat-raised-button color=\"accent\">\r\n\t\t\t<span>\r\n\t\t\t\t<i class=\"fab fa-twitter\"></i>&nbsp;\r\n\t\t\t\t<span>Twitter</span>\r\n\t\t\t</span>\r\n\t\t</a>\r\n\r\n\t\t<a href=\"javascript:;\" mat-raised-button color=\"warn\">\r\n\t\t\t<span>\r\n\t\t\t\t<i class=\"fab fa-google\"></i>&nbsp;\r\n\t\t\t\t<span>Google</span>\r\n\t\t\t</span>\r\n\t\t</a>\r\n\t</div> -->\r\n\t<!--end::Options-->\r\n</div>\r\n<!--end::Signin-->\r\n"
 
 /***/ }),
 
@@ -494,6 +488,7 @@ var LoginComponent = /** @class */ (function () {
         this.authNoticeService = authNoticeService;
         this.translate = translate;
         this.cdr = cdr;
+        this.errMess = false;
         this.model = { email: '', password: '' };
         this.actionChange = new rxjs__WEBPACK_IMPORTED_MODULE_3__["Subject"]();
         this.loading = false;
@@ -515,6 +510,7 @@ var LoginComponent = /** @class */ (function () {
                 console.log(response.completo);
                 console.log(response);
                 if (typeof response !== 'undefined' && response.email) {
+                    _this.errMess = false;
                     if (response.completo) {
                         _this.router.navigate(['/calendario']);
                     }
@@ -527,10 +523,40 @@ var LoginComponent = /** @class */ (function () {
                 }
                 else {
                     _this.authNoticeService.setNotice(_this.translate.instant('AUTH.VALIDATION.INVALID_LOGIN'), 'error');
+                    _this.errMess = true;
                 }
                 _this.spinner.active = false;
                 _this.cdr.detectChanges();
             });
+        }
+    };
+    LoginComponent.prototype.submitEnter = function (event) {
+        var _this = this;
+        if (event.keyCode == 13) {
+            console.log('you just clicked enter');
+            this.spinner.active = true;
+            if (this.validate(this.f)) {
+                this.authService.login(this.model).subscribe(function (response) {
+                    console.log(response.completo);
+                    console.log(response);
+                    if (typeof response !== 'undefined' && response.email) {
+                        if (response.completo) {
+                            _this.router.navigate(['/calendario']);
+                        }
+                        else {
+                            response.ps = _this.model.password;
+                            localStorage.setItem('tempADby2as', JSON.stringify(response));
+                            console.log(response);
+                            _this.router.navigate(['/registro']);
+                        }
+                    }
+                    else {
+                        _this.authNoticeService.setNotice(_this.translate.instant('AUTH.VALIDATION.INVALID_LOGIN'), 'error');
+                    }
+                    _this.spinner.active = false;
+                    _this.cdr.detectChanges();
+                });
+            }
         }
     };
     LoginComponent.prototype.ngOnInit = function () {

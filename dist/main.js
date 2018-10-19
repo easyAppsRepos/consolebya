@@ -462,7 +462,7 @@ var AppComponent = /** @class */ (function () {
         // subscribe to class update event
         this.classInitService.onClassesUpdated$.subscribe(function (classes) {
             // get body class array, join as string classes and pass to host binding class
-            setTimeout(function () { return _this.classes = classes.body.join(' '); });
+            setTimeout(function () { return _this.classes = classes.body.join(' m-brand–minimize m-aside-left–minimize '); });
         });
         this.layoutConfigService.onLayoutConfigUpdated$.subscribe(function (model) {
             _this.classInitService.setConfig(model);
@@ -1420,7 +1420,7 @@ var LayoutConfig = /** @class */ (function () {
                     //  Left aside minimize toggle
                     minimize: {
                         toggle: true,
-                        default: false // Set left aside minimized by default
+                        default: true // Set left aside minimized by default
                     }
                 },
                 // Right aside(used for blank right aside)
@@ -1535,6 +1535,11 @@ var MenuConfig = /** @class */ (function () {
                 self: {},
                 items: [
                     {
+                        title: 'Yourbeauty',
+                        desc: '',
+                        function: 'logo'
+                    },
+                    {
                         title: 'Calendario',
                         desc: 'Calendario',
                         root: true,
@@ -1584,11 +1589,19 @@ var MenuConfig = /** @class */ (function () {
                         page: '/estadistica'
                     },
                     {
-                        title: 'Configuracion',
+                        title: 'Configuración',
                         desc: 'Configuracion',
                         root: true,
                         icon: 'flaticon-cogwheel',
                         page: '/configuracion'
+                    },
+                    {
+                        title: 'Cerrar Sesion',
+                        desc: 'cerrar sesion',
+                        root: true,
+                        icon: 'flaticon-logout',
+                        page: '',
+                        function: 'logout'
                     },
                 ]
             }
@@ -1690,7 +1703,7 @@ var PagesConfig = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- BEGIN: Left Aside -->\r\n\r\n<!-- <div mMenuAsideOffcanvas id=\"m_aside_left\" class=\"m-grid__item m-aside-left\" [ngClass]=\"asideLeftClasses\"> -->\r\n<!-- BEGIN: Aside Menu -->\r\n<div mMenuAside (mouseenter)=\"mouseEnter($event)\" (mouseleave)=\"mouseLeave($event)\" id=\"m_ver_menu\" class=\"m-aside-menu\" m-menu-vertical=\"1\" [ngClass]=\"classInitService.onClassesUpdated$ | async | mGetObject:'aside_menu' | mJoin\" [attr.m-menu-dropdown]=\"menuAsideService.isDropdown\" [attr.m-menu-dropdown-timeout]=\"menuAsideService.dropdownTimeout\" [attr.m-menu-scrollable]=\"menuAsideService.isScrollable\">\r\n\t<ul class=\"m-menu__nav\" [ngClass]=\"classInitService.onClassesUpdated$ | async | mGetObject:'aside_menu_nav' | mJoin\">\r\n\t\t<ng-container [ngTemplateOutlet]=\"mMenuListing\"></ng-container>\r\n\t</ul>\r\n</div>\r\n<!-- END: Aside Menu -->\r\n<!-- </div> -->\r\n\r\n<ng-template #mMenuListing>\r\n\t<ng-container *ngFor=\"let child of menuAsideService.menuList$ | async\">\r\n\t\t<m-menu-section *ngIf=\"child.section\" [item]=\"child\"></m-menu-section>\r\n\t\t<ng-container *ngIf=\"child.title\" [ngTemplateOutlet]=\"mMenuItem\" [ngTemplateOutletContext]=\"{ item: child, parentItem: item }\"></ng-container>\r\n\t</ng-container>\r\n</ng-template>\r\n\r\n<ng-template #mMenuItem let-item=\"item\" let-parentItem=\"parentItem\">\r\n\t<li class=\"m-menu__item\" [ngClass]=\"{ 'm-menu__item--submenu': item.submenu, 'm-menu__item--active' : !item.submenu && isMenuItemIsActive(item), 'm-menu__item--open' : item.submenu && isMenuItemIsActive(item) }\" aria-haspopup=\"true\">\r\n\r\n\t\t<!-- if menu item hasn't submenu -->\r\n\t\t<a *ngIf=\"!item.submenu\" [routerLink]=\"item.page\" class=\"m-menu__link m-menu__toggle\" [matTooltip]=\"item.tooltip\" matTooltipPosition=\"left\">\r\n\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItemText\" [ngTemplateOutletContext]=\"{ item: item, parentItem: parentItem }\"></ng-container>\r\n\t\t</a>\r\n\t\t<!-- if menu item has sumnenu child  -->\r\n\t\t<a href=\"javascript:;\" *ngIf=\"item.submenu\" class=\"m-menu__link m-menu__toggle\">\r\n\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItemText\" [ngTemplateOutletContext]=\"{ item: item, parentItem: parentItem }\"></ng-container>\r\n\t\t</a>\r\n\r\n\t\t<!-- if menu item has submenu child then recursively call new menu item component -->\r\n\t\t<div *ngIf=\"item.submenu\" class=\"m-menu__submenu\">\r\n\t\t\t<span class=\"m-menu__arrow\"></span>\r\n\t\t\t<ul class=\"m-menu__subnav\">\r\n\t\t\t\t<ng-container *ngFor=\"let child of item.submenu\">\r\n\t\t\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItem\" [ngTemplateOutletContext]=\"{ item: child, parentItem: item }\"></ng-container>\r\n\t\t\t\t</ng-container>\r\n\t\t\t</ul>\r\n\t\t</div>\r\n\t</li>\r\n</ng-template>\r\n\r\n<ng-template #mMenuItemText let-item=\"item\" let-parentItem=\"parentItem\">\r\n\t<!-- if menu item has icon -->\r\n\t<i *ngIf=\"item.icon\" class=\"m-menu__link-icon\" [ngClass]=\"item.icon\"></i>\r\n\r\n\t<!-- if menu item using bullet -->\r\n\t<i *ngIf=\"parentItem && parentItem.bullet === 'dot'\" class=\"m-menu__link-bullet m-menu__link-bullet--dot\">\r\n\t\t<span></span>\r\n\t</i>\r\n\t<i *ngIf=\"parentItem && parentItem.bullet === 'line'\" class=\"m-menu__link-bullet m-menu__link-bullet--line\">\r\n\t\t<span></span>\r\n\t</i>\r\n\r\n\t<ng-container *ngIf=\"!item.badge; else mMenuLinkBadge\">\r\n\t\t<!-- menu item title text -->\r\n\t\t<span class=\"m-menu__link-text\" [translate]=\"item.translate\">\r\n\t\t\t{{item.title}}\r\n\t\t</span>\r\n\t</ng-container>\r\n\r\n\t<ng-template #mMenuLinkBadge>\r\n\t\t<!-- menu item with badge -->\r\n\t\t<span class=\"m-menu__link-title\">\r\n\t\t\t<span class=\"m-menu__link-wrap\">\r\n\t\t\t\t<span class=\"m-menu__link-text\" [translate]=\"item.translate\">{{item.title}}</span>\r\n\t\t\t\t<span class=\"m-menu__link-badge\">\r\n\t\t\t\t\t<span class=\"m-badge\" [ngClass]=\"item.badge.type\">{{item.badge.value}}</span>\r\n\t\t\t\t</span>\r\n\t\t\t</span>\r\n\t\t</span>\r\n\t</ng-template>\r\n\r\n\t<!-- if menu item has submenu child then put arrow icon -->\r\n\t<i *ngIf=\"item.submenu\" class=\"m-menu__ver-arrow la la-angle-right\"></i>\r\n</ng-template>\r\n<!-- END: Left Aside -->\r\n"
+module.exports = "<!-- BEGIN: Left Aside -->\r\n\r\n<!-- <div mMenuAsideOffcanvas id=\"m_aside_left\" class=\"m-grid__item m-aside-left\" [ngClass]=\"asideLeftClasses\"> -->\r\n<!-- BEGIN: Aside Menu -->\r\n<div mMenuAside (mouseenter)=\"mouseEnter($event)\" (mouseleave)=\"mouseLeave($event)\" id=\"m_ver_menu\" class=\"m-aside-menu \" m-menu-vertical=\"1\" [ngClass]=\"classInitService.onClassesUpdated$ | async | mGetObject:'aside_menu' | mJoin\" [attr.m-menu-dropdown]=\"menuAsideService.isDropdown\" [attr.m-menu-dropdown-timeout]=\"menuAsideService.dropdownTimeout\" [attr.m-menu-scrollable]=\"menuAsideService.isScrollable\">\r\n\r\n<!-- \t<span *ngIf='getValueSideMenu()' style=\"display: block;color: white;text-align: center;padding: 20px;\">YourBeauty</span> -->\r\n\r\n\t<ul class=\"m-menu__nav\" [ngClass]=\"classInitService.onClassesUpdated$ | async | mGetObject:'aside_menu_nav' | mJoin\">\r\n\t\t<ng-container [ngTemplateOutlet]=\"mMenuListing\"></ng-container>\r\n\t</ul>\r\n</div>\r\n<!-- END: Aside Menu -->\r\n<!-- </div> -->\r\n\r\n<ng-template #mMenuListing>\r\n\t<ng-container *ngFor=\"let child of menuAsideService.menuList$ | async\">\r\n\t\t<m-menu-section *ngIf=\"child.section\" [item]=\"child\"></m-menu-section>\r\n\t\t<ng-container *ngIf=\"child.title\" [ngTemplateOutlet]=\"mMenuItem\" [ngTemplateOutletContext]=\"{ item: child, parentItem: item }\"></ng-container>\r\n\t</ng-container>\r\n</ng-template>\r\n\r\n<ng-template #mMenuItem let-item=\"item\" let-parentItem=\"parentItem\">\r\n\t<li class=\"m-menu__item\" [ngClass]=\"{ 'm-menu__item--submenu': item.submenu, 'm-menu__item--active' : !item.submenu && isMenuItemIsActive(item), 'm-menu__item--open' : item.submenu && isMenuItemIsActive(item) }\" aria-haspopup=\"true\">\r\n\r\n\t\t<!-- if menu item hasn't submenu -->\r\n\t\t<a [hidden]='item.function' *ngIf=\"!item.submenu\" [routerLink]=\"item.page\" class=\"m-menu__link m-menu__toggle\" [matTooltip]=\"item.tooltip\" matTooltipPosition=\"left\">\r\n\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItemText\" [ngTemplateOutletContext]=\"{ item: item, parentItem: parentItem }\"></ng-container>\r\n\t\t</a>\r\n\r\n\t\t<a *ngIf=\"!item.submenu && item.function=='logout'\" (click)='logout()' class=\"m-menu__link m-menu__toggle\" [matTooltip]=\"item.tooltip\" matTooltipPosition=\"left\">\r\n\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItemText\" [ngTemplateOutletContext]=\"{ item: item, parentItem: parentItem }\"></ng-container>\r\n\t\t</a>\r\n\t<a *ngIf=\"!item.submenu && item.function=='logo'\"  class=\"m-menu__link m-menu__toggle\" [matTooltip]=\"item.tooltip\" matTooltipPosition=\"left\">\r\n\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItemText\" [ngTemplateOutletContext]=\"{ item: item, parentItem: parentItem }\"></ng-container>\r\n\t\t</a>\r\n\r\n\r\n\r\n\t\t<!-- if menu item has sumnenu child  -->\r\n\t\t<a href=\"javascript:;\" *ngIf=\"item.submenu\" class=\"m-menu__link m-menu__toggle\">\r\n\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItemText\" [ngTemplateOutletContext]=\"{ item: item, parentItem: parentItem }\"></ng-container>\r\n\t\t</a>\r\n\r\n\t\t<!-- if menu item has submenu child then recursively call new menu item component -->\r\n\t\t<div *ngIf=\"item.submenu\" class=\"m-menu__submenu\">\r\n\t\t\t<span class=\"m-menu__arrow\"></span>\r\n\t\t\t<ul class=\"m-menu__subnav\">\r\n\t\t\t\t<ng-container *ngFor=\"let child of item.submenu\">\r\n\t\t\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItem\" [ngTemplateOutletContext]=\"{ item: child, parentItem: item }\"></ng-container>\r\n\t\t\t\t</ng-container>\r\n\t\t\t</ul>\r\n\t\t</div>\r\n\t</li>\r\n</ng-template>\r\n\r\n<ng-template #mMenuItemText let-item=\"item\" let-parentItem=\"parentItem\">\r\n\t<!-- if menu item has icon -->\r\n\t<i *ngIf=\"item.icon\" class=\"m-menu__link-icon\" [ngClass]=\"item.icon\"></i>\r\n\r\n\t<!-- if menu item using bullet -->\r\n\t<i *ngIf=\"parentItem && parentItem.bullet === 'dot'\" class=\"m-menu__link-bullet m-menu__link-bullet--dot\">\r\n\t\t<span></span>\r\n\t</i>\r\n\t<i *ngIf=\"parentItem && parentItem.bullet === 'line'\" class=\"m-menu__link-bullet m-menu__link-bullet--line\">\r\n\t\t<span></span>\r\n\t</i>\r\n\r\n\t<ng-container *ngIf=\"!item.badge; else mMenuLinkBadge\">\r\n\t\t<!-- menu item title text -->\r\n\t\t<span class=\"m-menu__link-text\" [translate]=\"item.translate\" \r\n\t\t[ngStyle]=\"{'color': item.function == 'logo' ? 'white' : 'normal', \r\n\t'font-weight': item.function == '400' ? 'white' : 'normal'}\">\r\n\t\t\t{{item.title}}\r\n\t\t</span>\r\n\r\n\r\n\r\n\t</ng-container>\r\n\r\n\t<ng-template #mMenuLinkBadge>\r\n\t\t<!-- menu item with badge -->\r\n\t\t<span class=\"m-menu__link-title\">\r\n\t\t\t<span class=\"m-menu__link-wrap\">\r\n\t\t\t\t<span class=\"m-menu__link-text\" [translate]=\"item.translate\">{{item.title}}</span>\r\n\t\t\t\t<span class=\"m-menu__link-badge\">\r\n\t\t\t\t\t<span class=\"m-badge\" [ngClass]=\"item.badge.type\">{{item.badge.value}}</span>\r\n\t\t\t\t</span>\r\n\t\t\t</span>\r\n\t\t</span>\r\n\t</ng-template>\r\n\r\n\t<!-- if menu item has submenu child then put arrow icon -->\r\n\t<i *ngIf=\"item.submenu\" class=\"m-menu__ver-arrow la la-angle-right\"></i>\r\n</ng-template>\r\n<!-- END: Left Aside -->\r\n"
 
 /***/ }),
 
@@ -1706,13 +1719,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AsideLeftComponent", function() { return AsideLeftComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _core_directives_menu_aside_offcanvas_directive__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../core/directives/menu-aside-offcanvas.directive */ "./src/app/core/directives/menu-aside-offcanvas.directive.ts");
-/* harmony import */ var _core_services_class_init_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../core/services/class-init.service */ "./src/app/core/services/class-init.service.ts");
-/* harmony import */ var _core_services_layout_config_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../core/services/layout-config.service */ "./src/app/core/services/layout-config.service.ts");
-/* harmony import */ var _core_services_layout_layout_ref_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../core/services/layout/layout-ref.service */ "./src/app/core/services/layout/layout-ref.service.ts");
-/* harmony import */ var _core_services_layout_menu_aside_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../core/services/layout/menu-aside.service */ "./src/app/core/services/layout/menu-aside.service.ts");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../core/auth/authentication.service */ "./src/app/core/auth/authentication.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _core_directives_menu_aside_offcanvas_directive__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../core/directives/menu-aside-offcanvas.directive */ "./src/app/core/directives/menu-aside-offcanvas.directive.ts");
+/* harmony import */ var _core_services_class_init_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../core/services/class-init.service */ "./src/app/core/services/class-init.service.ts");
+/* harmony import */ var _core_services_layout_config_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../core/services/layout-config.service */ "./src/app/core/services/layout-config.service.ts");
+/* harmony import */ var _core_services_layout_layout_ref_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../core/services/layout/layout-ref.service */ "./src/app/core/services/layout/layout-ref.service.ts");
+/* harmony import */ var _core_services_layout_menu_aside_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../core/services/layout/menu-aside.service */ "./src/app/core/services/layout/menu-aside.service.ts");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1734,12 +1748,14 @@ var __param = (undefined && undefined.__param) || function (paramIndex, decorato
 
 
 
+
 var AsideLeftComponent = /** @class */ (function () {
-    function AsideLeftComponent(el, classInitService, menuAsideService, layoutConfigService, router, layoutRefService, document) {
+    function AsideLeftComponent(el, classInitService, menuAsideService, authService, layoutConfigService, router, layoutRefService, document) {
         var _this = this;
         this.el = el;
         this.classInitService = classInitService;
         this.menuAsideService = menuAsideService;
+        this.authService = authService;
         this.layoutConfigService = layoutConfigService;
         this.router = router;
         this.layoutRefService = layoutRefService;
@@ -1756,7 +1772,7 @@ var AsideLeftComponent = /** @class */ (function () {
     AsideLeftComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
         setTimeout(function () {
-            _this.mMenuAsideOffcanvas = new _core_directives_menu_aside_offcanvas_directive__WEBPACK_IMPORTED_MODULE_3__["MenuAsideOffcanvasDirective"](_this.el);
+            _this.mMenuAsideOffcanvas = new _core_directives_menu_aside_offcanvas_directive__WEBPACK_IMPORTED_MODULE_4__["MenuAsideOffcanvasDirective"](_this.el);
             // manually call the directives' lifecycle hook method
             _this.mMenuAsideOffcanvas.ngAfterViewInit();
             // keep aside left element reference
@@ -1767,8 +1783,11 @@ var AsideLeftComponent = /** @class */ (function () {
         var _this = this;
         this.currentRouteUrl = this.router.url.split(/[?#]/)[0];
         this.router.events
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["filter"])(function (event) { return event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]; }))
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["filter"])(function (event) { return event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_3__["NavigationEnd"]; }))
             .subscribe(function (event) { return _this.currentRouteUrl = _this.router.url.split(/[?#]/)[0]; });
+    };
+    AsideLeftComponent.prototype.logout = function () {
+        this.authService.logout(true);
     };
     AsideLeftComponent.prototype.isMenuItemIsActive = function (item) {
         if (item.submenu) {
@@ -1793,6 +1812,11 @@ var AsideLeftComponent = /** @class */ (function () {
             }
         }
         return false;
+    };
+    AsideLeftComponent.prototype.getValueSideMenu = function () {
+        var ssd = this.document.body.classList.contains('m-aside-left--minimize');
+        console.log(ssd);
+        return ssd;
     };
     /**
      * Use for fixed left aside menu, to show menu on mouseenter event.
@@ -1847,7 +1871,7 @@ var AsideLeftComponent = /** @class */ (function () {
     ], AsideLeftComponent.prototype, "id", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostBinding"])('attr.mMenuAsideOffcanvas'),
-        __metadata("design:type", _core_directives_menu_aside_offcanvas_directive__WEBPACK_IMPORTED_MODULE_3__["MenuAsideOffcanvasDirective"])
+        __metadata("design:type", _core_directives_menu_aside_offcanvas_directive__WEBPACK_IMPORTED_MODULE_4__["MenuAsideOffcanvasDirective"])
     ], AsideLeftComponent.prototype, "mMenuAsideOffcanvas", void 0);
     AsideLeftComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -1855,13 +1879,14 @@ var AsideLeftComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./aside-left.component.html */ "./src/app/content/layout/aside/aside-left.component.html"),
             changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectionStrategy"].OnPush
         }),
-        __param(6, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"])(_angular_common__WEBPACK_IMPORTED_MODULE_8__["DOCUMENT"])),
+        __param(7, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"])(_angular_common__WEBPACK_IMPORTED_MODULE_9__["DOCUMENT"])),
         __metadata("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"],
-            _core_services_class_init_service__WEBPACK_IMPORTED_MODULE_4__["ClassInitService"],
-            _core_services_layout_menu_aside_service__WEBPACK_IMPORTED_MODULE_7__["MenuAsideService"],
-            _core_services_layout_config_service__WEBPACK_IMPORTED_MODULE_5__["LayoutConfigService"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"],
-            _core_services_layout_layout_ref_service__WEBPACK_IMPORTED_MODULE_6__["LayoutRefService"],
+            _core_services_class_init_service__WEBPACK_IMPORTED_MODULE_5__["ClassInitService"],
+            _core_services_layout_menu_aside_service__WEBPACK_IMPORTED_MODULE_8__["MenuAsideService"],
+            _core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"],
+            _core_services_layout_config_service__WEBPACK_IMPORTED_MODULE_6__["LayoutConfigService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"],
+            _core_services_layout_layout_ref_service__WEBPACK_IMPORTED_MODULE_7__["LayoutRefService"],
             Document])
     ], AsideLeftComponent);
     return AsideLeftComponent;
@@ -2072,7 +2097,7 @@ var FooterComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- BEGIN: Brand -->\r\n<!--<div class=\"m-stack__item m-brand\">-->\r\n<div class=\"m-stack m-stack--ver m-stack--general\">\r\n\t<div class=\"m-stack__item m-stack__item--middle m-brand__logo\">\r\n\t\t<a routerLink=\"/\" class=\"m-brand__logo-wrapper\">\r\n\t\t\t<!-- <img alt=\"\" [attr.src]=\"headerLogo\" /> -->\r\n\t\t\t<div>\r\n\t\t\t\r\n\t\t\t<span style=\"margin-left: 3px; color:white !important\">Yourbeauty</span>\r\n\t\t</div>\r\n\t\t</a>\r\n\t</div>\r\n\t<div class=\"m-stack__item m-stack__item--middle m-brand__tools\">\r\n\t\t<!-- BEGIN: Left Aside Minimize Toggle -->\r\n\t\t<a *ngIf=\"menuAsideMinimizToggle\" href=\"javascript:;\" [ngClass]=\"{ 'm-brand__toggler--active': menuAsideMinimizeDefault }\" mMenuAsideToggle id=\"m_aside_left_minimize_toggle\" class=\"m-brand__icon m-brand__toggler m-brand__toggler--left m--visible-desktop-inline-block\">\r\n\t\t\t<span></span>\r\n\t\t</a>\r\n\t\t<!-- END -->\r\n\r\n\t\t<!-- BEGIN: Responsive Aside Left Menu Toggler -->\r\n\t\t<a *ngIf=\"menuAsideDisplay\" href=\"javascript:;\" id=\"m_aside_left_offcanvas_toggle\" class=\"m-brand__icon m-brand__toggler m-brand__toggler--left m--visible-tablet-and-mobile-inline-block\">\r\n\t\t\t<span></span>\r\n\t\t</a>\r\n\t\t<!-- END -->\r\n\r\n\t\t<!-- BEGIN: Responsive Header Menu Toggler -->\r\n\t\t<!-- [BUG] issue with *ngIf=\"menuHeaderDisplay\", mOffcanvas trigger first before this DOM exist -->\r\n\t\t<a *ngIf=\"menuHeaderDisplay\" id=\"m_aside_header_menu_mobile_toggle\" href=\"javascript:;\" class=\"m-brand__icon m-brand__toggler m--visible-tablet-and-mobile-inline-block\">\r\n\t\t\t<span></span>\r\n\t\t</a>\r\n\t\t<!-- END -->\r\n\r\n\t\t<!-- BEGIN: Topbar Toggler -->\r\n\t\t<a id=\"m_aside_header_topbar_mobile_toggle\" (click)=\"clickTopbarToggle($event)\" href=\"javascript:;\" class=\"m-brand__icon m--visible-tablet-and-mobile-inline-block\">\r\n\t\t\t<i class=\"flaticon-more\"></i>\r\n\t\t</a>\r\n\t\t<!-- BEGIN: Topbar Toggler -->\r\n\t</div>\r\n</div>\r\n<!--</div>-->\r\n<!-- END: Brand -->\r\n"
+module.exports = "<!-- BEGIN: Brand -->\r\n<!--<div class=\"m-stack__item m-brand\">-->\r\n<div class=\"m-stack m-stack--ver m-stack--general\">\r\n\t<div class=\"m-stack__item m-stack__item--middle m-brand__logo\">\r\n\t\t<a routerLink=\"/\" class=\"m-brand__logo-wrapper\">\r\n\t\t\t<!-- <img alt=\"\" [attr.src]=\"headerLogo\" /> -->\r\n\t\t\t<div>\r\n\t\t\t\r\n\t\t\t<span style=\"margin-left: 3px; color:white !important\">Yourbeauty</span>\r\n\t\t</div>\r\n\t\t</a>\r\n\t</div>\r\n\t<div class=\"m-stack__item m-stack__item--middle m-brand__tools\">\r\n\t\t<!-- BEGIN: Left Aside Minimize Toggle -->\r\n\t\t<a *ngIf=\"menuAsideMinimizToggle\" href=\"javascript:;\" [ngClass]=\"{ 'm-brand__toggler--active': menuAsideMinimizeDefault }\" mMenuAsideToggle id=\"m_aside_left_minimize_toggle\" class=\"m-brand__icon m-brand__toggler m-brand__toggler--left m--visible-desktop-inline-block\">\r\n\t\t\t<span></span>\r\n\t\t</a>\r\n\t\t<!-- END -->\r\n\r\n\t\t<!-- BEGIN: Responsive Aside Left Menu Toggler -->\r\n\t\t<a *ngIf=\"menuAsideDisplay\" href=\"javascript:;\" id=\"m_aside_left_offcanvas_toggle\" class=\"m-brand__icon m-brand__toggler m-brand__toggler--left m--visible-tablet-and-mobile-inline-block\">\r\n\t\t\t<span></span>\r\n\t\t</a>\r\n\t\t<!-- END -->\r\n\r\n\t\t<!-- BEGIN: Responsive Header Menu Toggler -->\r\n\t\t<!-- [BUG] issue with *ngIf=\"menuHeaderDisplay\", mOffcanvas trigger first before this DOM exist -->\r\n\r\n\t\t\r\n\t\t<a *ngIf=\"menuHeaderDisplay\" id=\"m_aside_header_menu_mobile_toggle\" href=\"javascript:;\" class=\"m-brand__icon m-brand__toggler m--visible-tablet-and-mobile-inline-block\">\r\n\t\t\t<span></span>\r\n\t\t</a>\r\n\r\n\r\n\t\t<!-- END -->\r\n\r\n\t\t<!-- BEGIN: Topbar Toggler -->\r\n<!-- \t\t<a id=\"m_aside_header_topbar_mobile_toggle\" (click)=\"clickTopbarToggle($event)\" href=\"javascript:;\" class=\"m-brand__icon m--visible-tablet-and-mobile-inline-block\">\r\n\t\t\t<i class=\"flaticon-more\"></i>\r\n\t\t</a> -->\r\n\t\t<!-- BEGIN: Topbar Toggler -->\r\n\t</div>\r\n</div>\r\n<!--</div>-->\r\n<!-- END: Brand -->\r\n"
 
 /***/ }),
 
@@ -2278,7 +2303,7 @@ var HeaderSearchComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- BEGIN: Header -->\r\n<header mHeader #mHeader class=\"m-grid__item m-header\" [attr.m-minimize-offset]=\"headerService.attrMinimizeOffset\" [attr.m-minimize-mobile-offset]=\"headerService.attrMinimizeMobileOffset\">\r\n\t<div [ngClass]=\"headerService.containerClass\">\r\n\t\t<div class=\"m-stack m-stack--ver m-stack--desktop\">\r\n\t\t\t<m-brand></m-brand>\r\n\t\t\t<mat-progress-bar class=\"m-loading-bar\" *ngIf=\"(loader.progress$|async) > 0\" [value]=\"loader.progress$|async\"></mat-progress-bar>\r\n\t\t\t<div class=\"m-stack__item m-stack__item--fluid m-header-head\" id=\"m_header_nav\">\r\n\t\t\t\t<!-- BEGIN: Horizontal Menu -->\r\n\t\t\t\t<ng-container *ngIf=\"headerService.menuHeaderDisplay\">\r\n\t\t\t\t\t<!-- show/hide horizontal menu based on menu.header.display option -->\r\n\t\t\t\t\t<button class=\"m-aside-header-menu-mobile-close\" id=\"m_aside_header_menu_mobile_close_btn\" [ngClass]=\"headerService.headerMenuCloseClass\">\r\n\t\t\t\t\t\t<i class=\"la la-close\"></i>\r\n\t\t\t\t\t</button>\r\n\t\t\t\t\t<m-menu-horizontal></m-menu-horizontal>\r\n\t\t\t\t</ng-container>\r\n\t\t\t\t<!-- END: Horizontal Menu -->\r\n\t\t\t\t<m-topbar></m-topbar>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n</header>\r\n<!-- END: Header -->\r\n"
+module.exports = "<!-- BEGIN: Header -->\r\n<header mHeader #mHeader class=\"m-grid__item m-header\" [attr.m-minimize-offset]=\"headerService.attrMinimizeOffset\" [attr.m-minimize-mobile-offset]=\"headerService.attrMinimizeMobileOffset\">\r\n\t<div [ngClass]=\"headerService.containerClass\">\r\n\t\t<div class=\"m-stack m-stack--ver m-stack--desktop\">\r\n\t\t\t<m-brand></m-brand>\r\n\t\t\t<mat-progress-bar class=\"m-loading-bar\" *ngIf=\"(loader.progress$|async) > 0\" [value]=\"loader.progress$|async\"></mat-progress-bar>\r\n\t\t\t<div class=\"m-stack__item m-stack__item--fluid m-header-head\" id=\"m_header_nav\">\r\n\t\t\t\t<!-- BEGIN: Horizontal Menu -->\r\n\t\t\t\t<ng-container *ngIf=\"headerService.menuHeaderDisplay\">\r\n\t\t\t\t\t<!-- show/hide horizontal menu based on menu.header.display option -->\r\n\t\t\t\t\t<button class=\"m-aside-header-menu-mobile-close\" id=\"m_aside_header_menu_mobile_close_btn\" [ngClass]=\"headerService.headerMenuCloseClass\">\r\n\t\t\t\t\t\t<i class=\"la la-close\"></i>\r\n\t\t\t\t\t</button>\r\n\t\t\t\t\t<m-menu-horizontal></m-menu-horizontal>\r\n\t\t\t\t</ng-container>\r\n\t\t\t\t<!-- END: Horizontal Menu \r\n\r\n\t\t\t\t\tmenu con logout\r\n\t\t\t\t<m-topbar></m-topbar>\r\n\r\n\t\t\t-->\r\n\r\n\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n</header>\r\n<!-- END: Header -->\r\n"
 
 /***/ }),
 
@@ -6032,6 +6057,15 @@ var AuthenticationService = /** @class */ (function () {
     AuthenticationService.prototype.getCalendarioDayNC = function (data) {
         return this.http.post(this.API_URL + '/getCalendarioDayNC', data);
     };
+    AuthenticationService.prototype.completasssrCita = function (data) {
+        return this.http.post(this.API_URL + '/completasssrCita', data);
+    };
+    AuthenticationService.prototype.getCategoriasCentro = function (data) {
+        return this.http.post(this.API_URL + '/getCategoriasCentro', data);
+    };
+    AuthenticationService.prototype.getSubcategoriasCentro = function (data) {
+        return this.http.post(this.API_URL + '/getSubcategoriasCentro', data);
+    };
     AuthenticationService.prototype.getDataCita = function (data) {
         return this.http.post(this.API_URL + '/getDataCita', data);
     };
@@ -6052,6 +6086,9 @@ var AuthenticationService = /** @class */ (function () {
     };
     AuthenticationService.prototype.cambiarServicioCitaNC = function (data) {
         return this.http.post(this.API_URL + '/cambiarServicioCitaNC', data);
+    };
+    AuthenticationService.prototype.recuperarPassNC = function (data) {
+        return this.http.post(this.API_URL + '/recuperarPassNC', data);
     };
     AuthenticationService.prototype.cambiarOfertaNC = function (data) {
         return this.http.post(this.API_URL + '/cambiarOfertaNC', data);
@@ -6079,6 +6116,9 @@ var AuthenticationService = /** @class */ (function () {
     };
     AuthenticationService.prototype.addCita = function (data) {
         return this.http.post(this.API_URL + '/addCita', data);
+    };
+    AuthenticationService.prototype.addCitaManual = function (data) {
+        return this.http.post(this.API_URL + '/addCitaManual', data);
     };
     AuthenticationService.prototype.addServicioNC = function (data) {
         return this.http.post(this.API_URL + '/addServicioNC', data);
