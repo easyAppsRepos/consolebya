@@ -1153,6 +1153,6535 @@ var AngularEditorModule = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./node_modules/angular-custom-dropdown/angular-custom-dropdown.es5.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/angular-custom-dropdown/angular-custom-dropdown.es5.js ***!
+  \*****************************************************************************/
+/*! exports provided: DropdownMenuDirective, DropdownDirective, DropdownModule, TOGGLE_STATUS, ɵa */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DropdownMenuDirective", function() { return DropdownMenuDirective; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DropdownDirective", function() { return DropdownDirective; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DropdownModule", function() { return DropdownModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TOGGLE_STATUS", function() { return TOGGLE_STATUS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵa", function() { return DropdownToggleDirective; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var rxjs_Subject__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/Subject */ "./node_modules/rxjs-compat/_esm5/Subject.js");
+/* harmony import */ var rxjs_add_operator_takeUntil__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/add/operator/takeUntil */ "./node_modules/rxjs-compat/_esm5/add/operator/takeUntil.js");
+
+
+
+var TOGGLE_STATUS = {};
+TOGGLE_STATUS.OPEN = 0;
+TOGGLE_STATUS.CLOSE = 1;
+TOGGLE_STATUS[TOGGLE_STATUS.OPEN] = "OPEN";
+TOGGLE_STATUS[TOGGLE_STATUS.CLOSE] = "CLOSE";
+var DropdownDirective = (function () {
+    /**
+     * @param {?} elementRef
+     * @param {?} renderer
+     */
+    function DropdownDirective(elementRef, renderer) {
+        this.elementRef = elementRef;
+        this.renderer = renderer;
+        this.status = TOGGLE_STATUS.CLOSE;
+        this.status$ = new rxjs_Subject__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
+    }
+    /**
+     * @param {?=} active
+     * @return {?}
+     */
+    DropdownDirective.prototype.setActive = function (active) {
+        if (active === void 0) { active = true; }
+        this.renderer.setElementClass(this.elementRef.nativeElement, 'active', active);
+    };
+    /**
+     * @return {?}
+     */
+    DropdownDirective.prototype.toggle = function () {
+        if (this.status === TOGGLE_STATUS.OPEN) {
+            this.close();
+        }
+        else {
+            this.open();
+        }
+    };
+    /**
+     * @return {?}
+     */
+    DropdownDirective.prototype.open = function () {
+        this.renderer.setElementClass(this.elementRef.nativeElement, 'open', true);
+        if (this.status !== TOGGLE_STATUS.OPEN) {
+            this.status$.next(TOGGLE_STATUS.OPEN);
+        }
+        this.status = TOGGLE_STATUS.OPEN;
+    };
+    /**
+     * @return {?}
+     */
+    DropdownDirective.prototype.close = function () {
+        this.renderer.setElementClass(this.elementRef.nativeElement, 'open', false);
+        if (this.status !== TOGGLE_STATUS.CLOSE) {
+            this.status$.next(TOGGLE_STATUS.CLOSE);
+        }
+        this.status = TOGGLE_STATUS.CLOSE;
+    };
+    /**
+     * @return {?}
+     */
+    DropdownDirective.prototype.statusChange = function () {
+        return this.status$.asObservable();
+    };
+    return DropdownDirective;
+}());
+DropdownDirective.decorators = [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"], args: [{
+                selector: '[dropdown]',
+                exportAs: 'dropdown',
+            },] },
+];
+/**
+ * @nocollapse
+ */
+DropdownDirective.ctorParameters = function () { return [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"], },
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer"], },
+]; };
+var DropdownMenuDirective = (function () {
+    /**
+     * @param {?} dropdown
+     * @param {?} elementRef
+     */
+    function DropdownMenuDirective(dropdown, elementRef) {
+        this.dropdown = dropdown;
+        this.elementRef = elementRef;
+        this.ngUnsubscribe = new rxjs_Subject__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
+    }
+    /**
+     * @return {?}
+     */
+    DropdownMenuDirective.prototype.ngOnInit = function () {
+        var _this = this;
+        this.dropdown.statusChange()
+            .takeUntil(this.ngUnsubscribe)
+            .subscribe(function (newStatus) {
+            if (newStatus === TOGGLE_STATUS.OPEN) {
+                // Listen to click events to realise when to close the dropdown.
+                document.addEventListener('click', _this.onDocumentClick.bind(_this), true);
+            }
+            else {
+                document.removeEventListener('click', _this.onDocumentClick, true);
+            }
+        });
+    };
+    /**
+     * @return {?}
+     */
+    DropdownMenuDirective.prototype.ngOnDestroy = function () {
+        this.ngUnsubscribe.next();
+        this.ngUnsubscribe.complete();
+        document.removeEventListener('click', this.onDocumentClick, true);
+    };
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    DropdownMenuDirective.prototype.onDocumentClick = function (event) {
+        var /** @type {?} */ target = event.target;
+        if (target instanceof HTMLElement && target.hasAttribute('dropdownToggle')) {
+            // Ignore dropdownToggle element, even if it's outside the menu.
+            return;
+        }
+        var /** @type {?} */ isInsideClick = this.elementRef.nativeElement.contains(target);
+        if (!isInsideClick || target instanceof HTMLElement && target.hasAttribute('href')) {
+            this.dropdown.close();
+        }
+        else {
+            this.dropdown.open();
+        }
+    };
+    return DropdownMenuDirective;
+}());
+DropdownMenuDirective.decorators = [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"], args: [{
+                selector: '[dropdownMenu]',
+                exportAs: 'dropdownMenu',
+            },] },
+];
+/**
+ * @nocollapse
+ */
+DropdownMenuDirective.ctorParameters = function () { return [
+    { type: DropdownDirective, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Host"] },] },
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"], },
+]; };
+var DropdownToggleDirective = (function () {
+    /**
+     * @param {?} dropdown
+     */
+    function DropdownToggleDirective(dropdown) {
+        this.dropdown = dropdown;
+    }
+    /**
+     * @return {?}
+     */
+    DropdownToggleDirective.prototype.toggle = function () {
+        this.dropdown.toggle();
+    };
+    return DropdownToggleDirective;
+}());
+DropdownToggleDirective.decorators = [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"], args: [{
+                selector: '[dropdownToggle]',
+                exportAs: 'dropdownToggle',
+            },] },
+];
+/**
+ * @nocollapse
+ */
+DropdownToggleDirective.ctorParameters = function () { return [
+    { type: DropdownDirective, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Host"] },] },
+]; };
+DropdownToggleDirective.propDecorators = {
+    'toggle': [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"], args: ['click',] },],
+};
+var DropdownModule = (function () {
+    function DropdownModule() {
+    }
+    return DropdownModule;
+}());
+DropdownModule.decorators = [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"], args: [{
+                imports: [],
+                exports: [
+                    DropdownDirective,
+                    DropdownToggleDirective,
+                    DropdownMenuDirective,
+                ],
+                declarations: [
+                    DropdownDirective,
+                    DropdownToggleDirective,
+                    DropdownMenuDirective,
+                ],
+                providers: [],
+            },] },
+];
+/**
+ * @nocollapse
+ */
+DropdownModule.ctorParameters = function () { return []; };
+/**
+ * Generated bundle index. Do not edit.
+ */
+
+//# sourceMappingURL=angular-custom-dropdown.es5.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/Rx.js":
+/*!**********************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/Rx.js ***!
+  \**********************************************/
+/*! exports provided: Observable, Subject, AnonymousSubject, config, Subscription, ReplaySubject, BehaviorSubject, Notification, EmptyError, ArgumentOutOfRangeError, ObjectUnsubscribedError, UnsubscriptionError, pipe, TestScheduler, Subscriber, AsyncSubject, ConnectableObservable, TimeoutError, VirtualTimeScheduler, AjaxResponse, AjaxError, AjaxTimeoutError, TimeInterval, Timestamp, operators, Scheduler, Symbol */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "operators", function() { return operators; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Scheduler", function() { return Scheduler; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Symbol", function() { return Symbol; });
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Observable", function() { return rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Subject", function() { return rxjs__WEBPACK_IMPORTED_MODULE_0__["Subject"]; });
+
+/* harmony import */ var rxjs_internal_compatibility__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/internal-compatibility */ "./node_modules/rxjs/_esm5/internal-compatibility/index.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AnonymousSubject", function() { return rxjs_internal_compatibility__WEBPACK_IMPORTED_MODULE_1__["AnonymousSubject"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "config", function() { return rxjs_internal_compatibility__WEBPACK_IMPORTED_MODULE_1__["config"]; });
+
+/* harmony import */ var _add_observable_bindCallback__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./add/observable/bindCallback */ "./node_modules/rxjs-compat/_esm5/add/observable/bindCallback.js");
+/* harmony import */ var _add_observable_bindNodeCallback__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./add/observable/bindNodeCallback */ "./node_modules/rxjs-compat/_esm5/add/observable/bindNodeCallback.js");
+/* harmony import */ var _add_observable_combineLatest__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./add/observable/combineLatest */ "./node_modules/rxjs-compat/_esm5/add/observable/combineLatest.js");
+/* harmony import */ var _add_observable_concat__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./add/observable/concat */ "./node_modules/rxjs-compat/_esm5/add/observable/concat.js");
+/* harmony import */ var _add_observable_defer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./add/observable/defer */ "./node_modules/rxjs-compat/_esm5/add/observable/defer.js");
+/* harmony import */ var _add_observable_empty__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./add/observable/empty */ "./node_modules/rxjs-compat/_esm5/add/observable/empty.js");
+/* harmony import */ var _add_observable_forkJoin__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./add/observable/forkJoin */ "./node_modules/rxjs-compat/_esm5/add/observable/forkJoin.js");
+/* harmony import */ var _add_observable_from__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./add/observable/from */ "./node_modules/rxjs-compat/_esm5/add/observable/from.js");
+/* harmony import */ var _add_observable_fromEvent__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./add/observable/fromEvent */ "./node_modules/rxjs-compat/_esm5/add/observable/fromEvent.js");
+/* harmony import */ var _add_observable_fromEventPattern__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./add/observable/fromEventPattern */ "./node_modules/rxjs-compat/_esm5/add/observable/fromEventPattern.js");
+/* harmony import */ var _add_observable_fromPromise__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./add/observable/fromPromise */ "./node_modules/rxjs-compat/_esm5/add/observable/fromPromise.js");
+/* harmony import */ var _add_observable_generate__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./add/observable/generate */ "./node_modules/rxjs-compat/_esm5/add/observable/generate.js");
+/* harmony import */ var _add_observable_if__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./add/observable/if */ "./node_modules/rxjs-compat/_esm5/add/observable/if.js");
+/* harmony import */ var _add_observable_interval__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./add/observable/interval */ "./node_modules/rxjs-compat/_esm5/add/observable/interval.js");
+/* harmony import */ var _add_observable_merge__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./add/observable/merge */ "./node_modules/rxjs-compat/_esm5/add/observable/merge.js");
+/* harmony import */ var _add_observable_race__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./add/observable/race */ "./node_modules/rxjs-compat/_esm5/add/observable/race.js");
+/* harmony import */ var _add_observable_never__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./add/observable/never */ "./node_modules/rxjs-compat/_esm5/add/observable/never.js");
+/* harmony import */ var _add_observable_of__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./add/observable/of */ "./node_modules/rxjs-compat/_esm5/add/observable/of.js");
+/* harmony import */ var _add_observable_onErrorResumeNext__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./add/observable/onErrorResumeNext */ "./node_modules/rxjs-compat/_esm5/add/observable/onErrorResumeNext.js");
+/* harmony import */ var _add_observable_pairs__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./add/observable/pairs */ "./node_modules/rxjs-compat/_esm5/add/observable/pairs.js");
+/* harmony import */ var _add_observable_range__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./add/observable/range */ "./node_modules/rxjs-compat/_esm5/add/observable/range.js");
+/* harmony import */ var _add_observable_using__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./add/observable/using */ "./node_modules/rxjs-compat/_esm5/add/observable/using.js");
+/* harmony import */ var _add_observable_throw__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./add/observable/throw */ "./node_modules/rxjs-compat/_esm5/add/observable/throw.js");
+/* harmony import */ var _add_observable_timer__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./add/observable/timer */ "./node_modules/rxjs-compat/_esm5/add/observable/timer.js");
+/* harmony import */ var _add_observable_zip__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./add/observable/zip */ "./node_modules/rxjs-compat/_esm5/add/observable/zip.js");
+/* harmony import */ var _add_observable_dom_ajax__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./add/observable/dom/ajax */ "./node_modules/rxjs-compat/_esm5/add/observable/dom/ajax.js");
+/* harmony import */ var _add_observable_dom_webSocket__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./add/observable/dom/webSocket */ "./node_modules/rxjs-compat/_esm5/add/observable/dom/webSocket.js");
+/* harmony import */ var _add_operator_buffer__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./add/operator/buffer */ "./node_modules/rxjs-compat/_esm5/add/operator/buffer.js");
+/* harmony import */ var _add_operator_bufferCount__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./add/operator/bufferCount */ "./node_modules/rxjs-compat/_esm5/add/operator/bufferCount.js");
+/* harmony import */ var _add_operator_bufferTime__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./add/operator/bufferTime */ "./node_modules/rxjs-compat/_esm5/add/operator/bufferTime.js");
+/* harmony import */ var _add_operator_bufferToggle__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./add/operator/bufferToggle */ "./node_modules/rxjs-compat/_esm5/add/operator/bufferToggle.js");
+/* harmony import */ var _add_operator_bufferWhen__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./add/operator/bufferWhen */ "./node_modules/rxjs-compat/_esm5/add/operator/bufferWhen.js");
+/* harmony import */ var _add_operator_catch__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./add/operator/catch */ "./node_modules/rxjs-compat/_esm5/add/operator/catch.js");
+/* harmony import */ var _add_operator_combineAll__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./add/operator/combineAll */ "./node_modules/rxjs-compat/_esm5/add/operator/combineAll.js");
+/* harmony import */ var _add_operator_combineLatest__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./add/operator/combineLatest */ "./node_modules/rxjs-compat/_esm5/add/operator/combineLatest.js");
+/* harmony import */ var _add_operator_concat__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./add/operator/concat */ "./node_modules/rxjs-compat/_esm5/add/operator/concat.js");
+/* harmony import */ var _add_operator_concatAll__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./add/operator/concatAll */ "./node_modules/rxjs-compat/_esm5/add/operator/concatAll.js");
+/* harmony import */ var _add_operator_concatMap__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./add/operator/concatMap */ "./node_modules/rxjs-compat/_esm5/add/operator/concatMap.js");
+/* harmony import */ var _add_operator_concatMapTo__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./add/operator/concatMapTo */ "./node_modules/rxjs-compat/_esm5/add/operator/concatMapTo.js");
+/* harmony import */ var _add_operator_count__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./add/operator/count */ "./node_modules/rxjs-compat/_esm5/add/operator/count.js");
+/* harmony import */ var _add_operator_dematerialize__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./add/operator/dematerialize */ "./node_modules/rxjs-compat/_esm5/add/operator/dematerialize.js");
+/* harmony import */ var _add_operator_debounce__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./add/operator/debounce */ "./node_modules/rxjs-compat/_esm5/add/operator/debounce.js");
+/* harmony import */ var _add_operator_debounceTime__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./add/operator/debounceTime */ "./node_modules/rxjs-compat/_esm5/add/operator/debounceTime.js");
+/* harmony import */ var _add_operator_defaultIfEmpty__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./add/operator/defaultIfEmpty */ "./node_modules/rxjs-compat/_esm5/add/operator/defaultIfEmpty.js");
+/* harmony import */ var _add_operator_delay__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ./add/operator/delay */ "./node_modules/rxjs-compat/_esm5/add/operator/delay.js");
+/* harmony import */ var _add_operator_delayWhen__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ./add/operator/delayWhen */ "./node_modules/rxjs-compat/_esm5/add/operator/delayWhen.js");
+/* harmony import */ var _add_operator_distinct__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ./add/operator/distinct */ "./node_modules/rxjs-compat/_esm5/add/operator/distinct.js");
+/* harmony import */ var _add_operator_distinctUntilChanged__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ./add/operator/distinctUntilChanged */ "./node_modules/rxjs-compat/_esm5/add/operator/distinctUntilChanged.js");
+/* harmony import */ var _add_operator_distinctUntilKeyChanged__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ./add/operator/distinctUntilKeyChanged */ "./node_modules/rxjs-compat/_esm5/add/operator/distinctUntilKeyChanged.js");
+/* harmony import */ var _add_operator_do__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ./add/operator/do */ "./node_modules/rxjs-compat/_esm5/add/operator/do.js");
+/* harmony import */ var _add_operator_exhaust__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ./add/operator/exhaust */ "./node_modules/rxjs-compat/_esm5/add/operator/exhaust.js");
+/* harmony import */ var _add_operator_exhaustMap__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ./add/operator/exhaustMap */ "./node_modules/rxjs-compat/_esm5/add/operator/exhaustMap.js");
+/* harmony import */ var _add_operator_expand__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ./add/operator/expand */ "./node_modules/rxjs-compat/_esm5/add/operator/expand.js");
+/* harmony import */ var _add_operator_elementAt__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ./add/operator/elementAt */ "./node_modules/rxjs-compat/_esm5/add/operator/elementAt.js");
+/* harmony import */ var _add_operator_filter__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ./add/operator/filter */ "./node_modules/rxjs-compat/_esm5/add/operator/filter.js");
+/* harmony import */ var _add_operator_finally__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ./add/operator/finally */ "./node_modules/rxjs-compat/_esm5/add/operator/finally.js");
+/* harmony import */ var _add_operator_find__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ./add/operator/find */ "./node_modules/rxjs-compat/_esm5/add/operator/find.js");
+/* harmony import */ var _add_operator_findIndex__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ./add/operator/findIndex */ "./node_modules/rxjs-compat/_esm5/add/operator/findIndex.js");
+/* harmony import */ var _add_operator_first__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ./add/operator/first */ "./node_modules/rxjs-compat/_esm5/add/operator/first.js");
+/* harmony import */ var _add_operator_groupBy__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ./add/operator/groupBy */ "./node_modules/rxjs-compat/_esm5/add/operator/groupBy.js");
+/* harmony import */ var _add_operator_ignoreElements__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! ./add/operator/ignoreElements */ "./node_modules/rxjs-compat/_esm5/add/operator/ignoreElements.js");
+/* harmony import */ var _add_operator_isEmpty__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(/*! ./add/operator/isEmpty */ "./node_modules/rxjs-compat/_esm5/add/operator/isEmpty.js");
+/* harmony import */ var _add_operator_audit__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(/*! ./add/operator/audit */ "./node_modules/rxjs-compat/_esm5/add/operator/audit.js");
+/* harmony import */ var _add_operator_auditTime__WEBPACK_IMPORTED_MODULE_65__ = __webpack_require__(/*! ./add/operator/auditTime */ "./node_modules/rxjs-compat/_esm5/add/operator/auditTime.js");
+/* harmony import */ var _add_operator_last__WEBPACK_IMPORTED_MODULE_66__ = __webpack_require__(/*! ./add/operator/last */ "./node_modules/rxjs-compat/_esm5/add/operator/last.js");
+/* harmony import */ var _add_operator_let__WEBPACK_IMPORTED_MODULE_67__ = __webpack_require__(/*! ./add/operator/let */ "./node_modules/rxjs-compat/_esm5/add/operator/let.js");
+/* harmony import */ var _add_operator_every__WEBPACK_IMPORTED_MODULE_68__ = __webpack_require__(/*! ./add/operator/every */ "./node_modules/rxjs-compat/_esm5/add/operator/every.js");
+/* harmony import */ var _add_operator_map__WEBPACK_IMPORTED_MODULE_69__ = __webpack_require__(/*! ./add/operator/map */ "./node_modules/rxjs-compat/_esm5/add/operator/map.js");
+/* harmony import */ var _add_operator_mapTo__WEBPACK_IMPORTED_MODULE_70__ = __webpack_require__(/*! ./add/operator/mapTo */ "./node_modules/rxjs-compat/_esm5/add/operator/mapTo.js");
+/* harmony import */ var _add_operator_materialize__WEBPACK_IMPORTED_MODULE_71__ = __webpack_require__(/*! ./add/operator/materialize */ "./node_modules/rxjs-compat/_esm5/add/operator/materialize.js");
+/* harmony import */ var _add_operator_max__WEBPACK_IMPORTED_MODULE_72__ = __webpack_require__(/*! ./add/operator/max */ "./node_modules/rxjs-compat/_esm5/add/operator/max.js");
+/* harmony import */ var _add_operator_merge__WEBPACK_IMPORTED_MODULE_73__ = __webpack_require__(/*! ./add/operator/merge */ "./node_modules/rxjs-compat/_esm5/add/operator/merge.js");
+/* harmony import */ var _add_operator_mergeAll__WEBPACK_IMPORTED_MODULE_74__ = __webpack_require__(/*! ./add/operator/mergeAll */ "./node_modules/rxjs-compat/_esm5/add/operator/mergeAll.js");
+/* harmony import */ var _add_operator_mergeMap__WEBPACK_IMPORTED_MODULE_75__ = __webpack_require__(/*! ./add/operator/mergeMap */ "./node_modules/rxjs-compat/_esm5/add/operator/mergeMap.js");
+/* harmony import */ var _add_operator_mergeMapTo__WEBPACK_IMPORTED_MODULE_76__ = __webpack_require__(/*! ./add/operator/mergeMapTo */ "./node_modules/rxjs-compat/_esm5/add/operator/mergeMapTo.js");
+/* harmony import */ var _add_operator_mergeScan__WEBPACK_IMPORTED_MODULE_77__ = __webpack_require__(/*! ./add/operator/mergeScan */ "./node_modules/rxjs-compat/_esm5/add/operator/mergeScan.js");
+/* harmony import */ var _add_operator_min__WEBPACK_IMPORTED_MODULE_78__ = __webpack_require__(/*! ./add/operator/min */ "./node_modules/rxjs-compat/_esm5/add/operator/min.js");
+/* harmony import */ var _add_operator_multicast__WEBPACK_IMPORTED_MODULE_79__ = __webpack_require__(/*! ./add/operator/multicast */ "./node_modules/rxjs-compat/_esm5/add/operator/multicast.js");
+/* harmony import */ var _add_operator_observeOn__WEBPACK_IMPORTED_MODULE_80__ = __webpack_require__(/*! ./add/operator/observeOn */ "./node_modules/rxjs-compat/_esm5/add/operator/observeOn.js");
+/* harmony import */ var _add_operator_onErrorResumeNext__WEBPACK_IMPORTED_MODULE_81__ = __webpack_require__(/*! ./add/operator/onErrorResumeNext */ "./node_modules/rxjs-compat/_esm5/add/operator/onErrorResumeNext.js");
+/* harmony import */ var _add_operator_pairwise__WEBPACK_IMPORTED_MODULE_82__ = __webpack_require__(/*! ./add/operator/pairwise */ "./node_modules/rxjs-compat/_esm5/add/operator/pairwise.js");
+/* harmony import */ var _add_operator_partition__WEBPACK_IMPORTED_MODULE_83__ = __webpack_require__(/*! ./add/operator/partition */ "./node_modules/rxjs-compat/_esm5/add/operator/partition.js");
+/* harmony import */ var _add_operator_pluck__WEBPACK_IMPORTED_MODULE_84__ = __webpack_require__(/*! ./add/operator/pluck */ "./node_modules/rxjs-compat/_esm5/add/operator/pluck.js");
+/* harmony import */ var _add_operator_publish__WEBPACK_IMPORTED_MODULE_85__ = __webpack_require__(/*! ./add/operator/publish */ "./node_modules/rxjs-compat/_esm5/add/operator/publish.js");
+/* harmony import */ var _add_operator_publishBehavior__WEBPACK_IMPORTED_MODULE_86__ = __webpack_require__(/*! ./add/operator/publishBehavior */ "./node_modules/rxjs-compat/_esm5/add/operator/publishBehavior.js");
+/* harmony import */ var _add_operator_publishReplay__WEBPACK_IMPORTED_MODULE_87__ = __webpack_require__(/*! ./add/operator/publishReplay */ "./node_modules/rxjs-compat/_esm5/add/operator/publishReplay.js");
+/* harmony import */ var _add_operator_publishLast__WEBPACK_IMPORTED_MODULE_88__ = __webpack_require__(/*! ./add/operator/publishLast */ "./node_modules/rxjs-compat/_esm5/add/operator/publishLast.js");
+/* harmony import */ var _add_operator_race__WEBPACK_IMPORTED_MODULE_89__ = __webpack_require__(/*! ./add/operator/race */ "./node_modules/rxjs-compat/_esm5/add/operator/race.js");
+/* harmony import */ var _add_operator_reduce__WEBPACK_IMPORTED_MODULE_90__ = __webpack_require__(/*! ./add/operator/reduce */ "./node_modules/rxjs-compat/_esm5/add/operator/reduce.js");
+/* harmony import */ var _add_operator_repeat__WEBPACK_IMPORTED_MODULE_91__ = __webpack_require__(/*! ./add/operator/repeat */ "./node_modules/rxjs-compat/_esm5/add/operator/repeat.js");
+/* harmony import */ var _add_operator_repeatWhen__WEBPACK_IMPORTED_MODULE_92__ = __webpack_require__(/*! ./add/operator/repeatWhen */ "./node_modules/rxjs-compat/_esm5/add/operator/repeatWhen.js");
+/* harmony import */ var _add_operator_retry__WEBPACK_IMPORTED_MODULE_93__ = __webpack_require__(/*! ./add/operator/retry */ "./node_modules/rxjs-compat/_esm5/add/operator/retry.js");
+/* harmony import */ var _add_operator_retryWhen__WEBPACK_IMPORTED_MODULE_94__ = __webpack_require__(/*! ./add/operator/retryWhen */ "./node_modules/rxjs-compat/_esm5/add/operator/retryWhen.js");
+/* harmony import */ var _add_operator_sample__WEBPACK_IMPORTED_MODULE_95__ = __webpack_require__(/*! ./add/operator/sample */ "./node_modules/rxjs-compat/_esm5/add/operator/sample.js");
+/* harmony import */ var _add_operator_sampleTime__WEBPACK_IMPORTED_MODULE_96__ = __webpack_require__(/*! ./add/operator/sampleTime */ "./node_modules/rxjs-compat/_esm5/add/operator/sampleTime.js");
+/* harmony import */ var _add_operator_scan__WEBPACK_IMPORTED_MODULE_97__ = __webpack_require__(/*! ./add/operator/scan */ "./node_modules/rxjs-compat/_esm5/add/operator/scan.js");
+/* harmony import */ var _add_operator_sequenceEqual__WEBPACK_IMPORTED_MODULE_98__ = __webpack_require__(/*! ./add/operator/sequenceEqual */ "./node_modules/rxjs-compat/_esm5/add/operator/sequenceEqual.js");
+/* harmony import */ var _add_operator_share__WEBPACK_IMPORTED_MODULE_99__ = __webpack_require__(/*! ./add/operator/share */ "./node_modules/rxjs-compat/_esm5/add/operator/share.js");
+/* harmony import */ var _add_operator_shareReplay__WEBPACK_IMPORTED_MODULE_100__ = __webpack_require__(/*! ./add/operator/shareReplay */ "./node_modules/rxjs-compat/_esm5/add/operator/shareReplay.js");
+/* harmony import */ var _add_operator_single__WEBPACK_IMPORTED_MODULE_101__ = __webpack_require__(/*! ./add/operator/single */ "./node_modules/rxjs-compat/_esm5/add/operator/single.js");
+/* harmony import */ var _add_operator_skip__WEBPACK_IMPORTED_MODULE_102__ = __webpack_require__(/*! ./add/operator/skip */ "./node_modules/rxjs-compat/_esm5/add/operator/skip.js");
+/* harmony import */ var _add_operator_skipLast__WEBPACK_IMPORTED_MODULE_103__ = __webpack_require__(/*! ./add/operator/skipLast */ "./node_modules/rxjs-compat/_esm5/add/operator/skipLast.js");
+/* harmony import */ var _add_operator_skipUntil__WEBPACK_IMPORTED_MODULE_104__ = __webpack_require__(/*! ./add/operator/skipUntil */ "./node_modules/rxjs-compat/_esm5/add/operator/skipUntil.js");
+/* harmony import */ var _add_operator_skipWhile__WEBPACK_IMPORTED_MODULE_105__ = __webpack_require__(/*! ./add/operator/skipWhile */ "./node_modules/rxjs-compat/_esm5/add/operator/skipWhile.js");
+/* harmony import */ var _add_operator_startWith__WEBPACK_IMPORTED_MODULE_106__ = __webpack_require__(/*! ./add/operator/startWith */ "./node_modules/rxjs-compat/_esm5/add/operator/startWith.js");
+/* harmony import */ var _add_operator_subscribeOn__WEBPACK_IMPORTED_MODULE_107__ = __webpack_require__(/*! ./add/operator/subscribeOn */ "./node_modules/rxjs-compat/_esm5/add/operator/subscribeOn.js");
+/* harmony import */ var _add_operator_switch__WEBPACK_IMPORTED_MODULE_108__ = __webpack_require__(/*! ./add/operator/switch */ "./node_modules/rxjs-compat/_esm5/add/operator/switch.js");
+/* harmony import */ var _add_operator_switchMap__WEBPACK_IMPORTED_MODULE_109__ = __webpack_require__(/*! ./add/operator/switchMap */ "./node_modules/rxjs-compat/_esm5/add/operator/switchMap.js");
+/* harmony import */ var _add_operator_switchMapTo__WEBPACK_IMPORTED_MODULE_110__ = __webpack_require__(/*! ./add/operator/switchMapTo */ "./node_modules/rxjs-compat/_esm5/add/operator/switchMapTo.js");
+/* harmony import */ var _add_operator_take__WEBPACK_IMPORTED_MODULE_111__ = __webpack_require__(/*! ./add/operator/take */ "./node_modules/rxjs-compat/_esm5/add/operator/take.js");
+/* harmony import */ var _add_operator_takeLast__WEBPACK_IMPORTED_MODULE_112__ = __webpack_require__(/*! ./add/operator/takeLast */ "./node_modules/rxjs-compat/_esm5/add/operator/takeLast.js");
+/* harmony import */ var _add_operator_takeUntil__WEBPACK_IMPORTED_MODULE_113__ = __webpack_require__(/*! ./add/operator/takeUntil */ "./node_modules/rxjs-compat/_esm5/add/operator/takeUntil.js");
+/* harmony import */ var _add_operator_takeWhile__WEBPACK_IMPORTED_MODULE_114__ = __webpack_require__(/*! ./add/operator/takeWhile */ "./node_modules/rxjs-compat/_esm5/add/operator/takeWhile.js");
+/* harmony import */ var _add_operator_throttle__WEBPACK_IMPORTED_MODULE_115__ = __webpack_require__(/*! ./add/operator/throttle */ "./node_modules/rxjs-compat/_esm5/add/operator/throttle.js");
+/* harmony import */ var _add_operator_throttleTime__WEBPACK_IMPORTED_MODULE_116__ = __webpack_require__(/*! ./add/operator/throttleTime */ "./node_modules/rxjs-compat/_esm5/add/operator/throttleTime.js");
+/* harmony import */ var _add_operator_timeInterval__WEBPACK_IMPORTED_MODULE_117__ = __webpack_require__(/*! ./add/operator/timeInterval */ "./node_modules/rxjs-compat/_esm5/add/operator/timeInterval.js");
+/* harmony import */ var _add_operator_timeout__WEBPACK_IMPORTED_MODULE_118__ = __webpack_require__(/*! ./add/operator/timeout */ "./node_modules/rxjs-compat/_esm5/add/operator/timeout.js");
+/* harmony import */ var _add_operator_timeoutWith__WEBPACK_IMPORTED_MODULE_119__ = __webpack_require__(/*! ./add/operator/timeoutWith */ "./node_modules/rxjs-compat/_esm5/add/operator/timeoutWith.js");
+/* harmony import */ var _add_operator_timestamp__WEBPACK_IMPORTED_MODULE_120__ = __webpack_require__(/*! ./add/operator/timestamp */ "./node_modules/rxjs-compat/_esm5/add/operator/timestamp.js");
+/* harmony import */ var _add_operator_toArray__WEBPACK_IMPORTED_MODULE_121__ = __webpack_require__(/*! ./add/operator/toArray */ "./node_modules/rxjs-compat/_esm5/add/operator/toArray.js");
+/* harmony import */ var _add_operator_toPromise__WEBPACK_IMPORTED_MODULE_122__ = __webpack_require__(/*! ./add/operator/toPromise */ "./node_modules/rxjs-compat/_esm5/add/operator/toPromise.js");
+/* harmony import */ var _add_operator_toPromise__WEBPACK_IMPORTED_MODULE_122___default = /*#__PURE__*/__webpack_require__.n(_add_operator_toPromise__WEBPACK_IMPORTED_MODULE_122__);
+/* harmony import */ var _add_operator_window__WEBPACK_IMPORTED_MODULE_123__ = __webpack_require__(/*! ./add/operator/window */ "./node_modules/rxjs-compat/_esm5/add/operator/window.js");
+/* harmony import */ var _add_operator_windowCount__WEBPACK_IMPORTED_MODULE_124__ = __webpack_require__(/*! ./add/operator/windowCount */ "./node_modules/rxjs-compat/_esm5/add/operator/windowCount.js");
+/* harmony import */ var _add_operator_windowTime__WEBPACK_IMPORTED_MODULE_125__ = __webpack_require__(/*! ./add/operator/windowTime */ "./node_modules/rxjs-compat/_esm5/add/operator/windowTime.js");
+/* harmony import */ var _add_operator_windowToggle__WEBPACK_IMPORTED_MODULE_126__ = __webpack_require__(/*! ./add/operator/windowToggle */ "./node_modules/rxjs-compat/_esm5/add/operator/windowToggle.js");
+/* harmony import */ var _add_operator_windowWhen__WEBPACK_IMPORTED_MODULE_127__ = __webpack_require__(/*! ./add/operator/windowWhen */ "./node_modules/rxjs-compat/_esm5/add/operator/windowWhen.js");
+/* harmony import */ var _add_operator_withLatestFrom__WEBPACK_IMPORTED_MODULE_128__ = __webpack_require__(/*! ./add/operator/withLatestFrom */ "./node_modules/rxjs-compat/_esm5/add/operator/withLatestFrom.js");
+/* harmony import */ var _add_operator_zip__WEBPACK_IMPORTED_MODULE_129__ = __webpack_require__(/*! ./add/operator/zip */ "./node_modules/rxjs-compat/_esm5/add/operator/zip.js");
+/* harmony import */ var _add_operator_zipAll__WEBPACK_IMPORTED_MODULE_130__ = __webpack_require__(/*! ./add/operator/zipAll */ "./node_modules/rxjs-compat/_esm5/add/operator/zipAll.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Subscription", function() { return rxjs__WEBPACK_IMPORTED_MODULE_0__["Subscription"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ReplaySubject", function() { return rxjs__WEBPACK_IMPORTED_MODULE_0__["ReplaySubject"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "BehaviorSubject", function() { return rxjs__WEBPACK_IMPORTED_MODULE_0__["BehaviorSubject"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Notification", function() { return rxjs__WEBPACK_IMPORTED_MODULE_0__["Notification"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "EmptyError", function() { return rxjs__WEBPACK_IMPORTED_MODULE_0__["EmptyError"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ArgumentOutOfRangeError", function() { return rxjs__WEBPACK_IMPORTED_MODULE_0__["ArgumentOutOfRangeError"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ObjectUnsubscribedError", function() { return rxjs__WEBPACK_IMPORTED_MODULE_0__["ObjectUnsubscribedError"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UnsubscriptionError", function() { return rxjs__WEBPACK_IMPORTED_MODULE_0__["UnsubscriptionError"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "pipe", function() { return rxjs__WEBPACK_IMPORTED_MODULE_0__["pipe"]; });
+
+/* harmony import */ var rxjs_testing__WEBPACK_IMPORTED_MODULE_131__ = __webpack_require__(/*! rxjs/testing */ "./node_modules/rxjs/_esm5/testing/index.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TestScheduler", function() { return rxjs_testing__WEBPACK_IMPORTED_MODULE_131__["TestScheduler"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Subscriber", function() { return rxjs__WEBPACK_IMPORTED_MODULE_0__["Subscriber"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AsyncSubject", function() { return rxjs__WEBPACK_IMPORTED_MODULE_0__["AsyncSubject"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ConnectableObservable", function() { return rxjs__WEBPACK_IMPORTED_MODULE_0__["ConnectableObservable"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TimeoutError", function() { return rxjs__WEBPACK_IMPORTED_MODULE_0__["TimeoutError"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "VirtualTimeScheduler", function() { return rxjs__WEBPACK_IMPORTED_MODULE_0__["VirtualTimeScheduler"]; });
+
+/* harmony import */ var rxjs_ajax__WEBPACK_IMPORTED_MODULE_132__ = __webpack_require__(/*! rxjs/ajax */ "./node_modules/rxjs/_esm5/ajax/index.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AjaxResponse", function() { return rxjs_ajax__WEBPACK_IMPORTED_MODULE_132__["AjaxResponse"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AjaxError", function() { return rxjs_ajax__WEBPACK_IMPORTED_MODULE_132__["AjaxError"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AjaxTimeoutError", function() { return rxjs_ajax__WEBPACK_IMPORTED_MODULE_132__["AjaxTimeoutError"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TimeInterval", function() { return rxjs_internal_compatibility__WEBPACK_IMPORTED_MODULE_1__["TimeInterval"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Timestamp", function() { return rxjs_internal_compatibility__WEBPACK_IMPORTED_MODULE_1__["Timestamp"]; });
+
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_133__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var operators = rxjs_operators__WEBPACK_IMPORTED_MODULE_133__;
+var Scheduler = {
+    asap: rxjs__WEBPACK_IMPORTED_MODULE_0__["asapScheduler"],
+    queue: rxjs__WEBPACK_IMPORTED_MODULE_0__["queueScheduler"],
+    animationFrame: rxjs__WEBPACK_IMPORTED_MODULE_0__["animationFrameScheduler"],
+    async: rxjs__WEBPACK_IMPORTED_MODULE_0__["asyncScheduler"]
+};
+var Symbol = {
+    rxSubscriber: rxjs_internal_compatibility__WEBPACK_IMPORTED_MODULE_1__["rxSubscriber"],
+    observable: rxjs_internal_compatibility__WEBPACK_IMPORTED_MODULE_1__["observable"],
+    iterator: rxjs_internal_compatibility__WEBPACK_IMPORTED_MODULE_1__["iterator"]
+};
+
+//# sourceMappingURL=Rx.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/Subject.js":
+/*!***************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/Subject.js ***!
+  \***************************************************/
+/*! exports provided: Subject */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Subject", function() { return rxjs__WEBPACK_IMPORTED_MODULE_0__["Subject"]; });
+
+
+//# sourceMappingURL=Subject.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/observable/bindCallback.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/observable/bindCallback.js ***!
+  \***********************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].bindCallback = rxjs__WEBPACK_IMPORTED_MODULE_0__["bindCallback"];
+//# sourceMappingURL=bindCallback.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/observable/bindNodeCallback.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/observable/bindNodeCallback.js ***!
+  \***************************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].bindNodeCallback = rxjs__WEBPACK_IMPORTED_MODULE_0__["bindNodeCallback"];
+//# sourceMappingURL=bindNodeCallback.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/observable/combineLatest.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/observable/combineLatest.js ***!
+  \************************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].combineLatest = rxjs__WEBPACK_IMPORTED_MODULE_0__["combineLatest"];
+//# sourceMappingURL=combineLatest.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/observable/concat.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/observable/concat.js ***!
+  \*****************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].concat = rxjs__WEBPACK_IMPORTED_MODULE_0__["concat"];
+//# sourceMappingURL=concat.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/observable/defer.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/observable/defer.js ***!
+  \****************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].defer = rxjs__WEBPACK_IMPORTED_MODULE_0__["defer"];
+//# sourceMappingURL=defer.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/observable/dom/ajax.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/observable/dom/ajax.js ***!
+  \*******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_ajax__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/ajax */ "./node_modules/rxjs/_esm5/ajax/index.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].ajax = rxjs_ajax__WEBPACK_IMPORTED_MODULE_1__["ajax"];
+//# sourceMappingURL=ajax.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/observable/dom/webSocket.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/observable/dom/webSocket.js ***!
+  \************************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_webSocket__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/webSocket */ "./node_modules/rxjs/_esm5/webSocket/index.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].webSocket = rxjs_webSocket__WEBPACK_IMPORTED_MODULE_1__["webSocket"];
+//# sourceMappingURL=webSocket.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/observable/empty.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/observable/empty.js ***!
+  \****************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].empty = rxjs__WEBPACK_IMPORTED_MODULE_0__["empty"];
+//# sourceMappingURL=empty.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/observable/forkJoin.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/observable/forkJoin.js ***!
+  \*******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].forkJoin = rxjs__WEBPACK_IMPORTED_MODULE_0__["forkJoin"];
+//# sourceMappingURL=forkJoin.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/observable/from.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/observable/from.js ***!
+  \***************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].from = rxjs__WEBPACK_IMPORTED_MODULE_0__["from"];
+//# sourceMappingURL=from.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/observable/fromEvent.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/observable/fromEvent.js ***!
+  \********************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].fromEvent = rxjs__WEBPACK_IMPORTED_MODULE_0__["fromEvent"];
+//# sourceMappingURL=fromEvent.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/observable/fromEventPattern.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/observable/fromEventPattern.js ***!
+  \***************************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].fromEventPattern = rxjs__WEBPACK_IMPORTED_MODULE_0__["fromEventPattern"];
+//# sourceMappingURL=fromEventPattern.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/observable/fromPromise.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/observable/fromPromise.js ***!
+  \**********************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].fromPromise = rxjs__WEBPACK_IMPORTED_MODULE_0__["from"];
+//# sourceMappingURL=fromPromise.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/observable/generate.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/observable/generate.js ***!
+  \*******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].generate = rxjs__WEBPACK_IMPORTED_MODULE_0__["generate"];
+//# sourceMappingURL=generate.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/observable/if.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/observable/if.js ***!
+  \*************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].if = rxjs__WEBPACK_IMPORTED_MODULE_0__["iif"];
+//# sourceMappingURL=if.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/observable/interval.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/observable/interval.js ***!
+  \*******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].interval = rxjs__WEBPACK_IMPORTED_MODULE_0__["interval"];
+//# sourceMappingURL=interval.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/observable/merge.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/observable/merge.js ***!
+  \****************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].merge = rxjs__WEBPACK_IMPORTED_MODULE_0__["merge"];
+//# sourceMappingURL=merge.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/observable/never.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/observable/never.js ***!
+  \****************************************************************/
+/*! exports provided: staticNever */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticNever", function() { return staticNever; });
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+function staticNever() {
+    return rxjs__WEBPACK_IMPORTED_MODULE_0__["NEVER"];
+}
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].never = staticNever;
+//# sourceMappingURL=never.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/observable/of.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/observable/of.js ***!
+  \*************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].of = rxjs__WEBPACK_IMPORTED_MODULE_0__["of"];
+//# sourceMappingURL=of.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/observable/onErrorResumeNext.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/observable/onErrorResumeNext.js ***!
+  \****************************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].onErrorResumeNext = rxjs__WEBPACK_IMPORTED_MODULE_0__["onErrorResumeNext"];
+//# sourceMappingURL=onErrorResumeNext.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/observable/pairs.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/observable/pairs.js ***!
+  \****************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].pairs = rxjs__WEBPACK_IMPORTED_MODULE_0__["pairs"];
+//# sourceMappingURL=pairs.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/observable/race.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/observable/race.js ***!
+  \***************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].race = rxjs__WEBPACK_IMPORTED_MODULE_0__["race"];
+//# sourceMappingURL=race.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/observable/range.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/observable/range.js ***!
+  \****************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].range = rxjs__WEBPACK_IMPORTED_MODULE_0__["range"];
+//# sourceMappingURL=range.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/observable/throw.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/observable/throw.js ***!
+  \****************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].throw = rxjs__WEBPACK_IMPORTED_MODULE_0__["throwError"];
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].throwError = rxjs__WEBPACK_IMPORTED_MODULE_0__["throwError"];
+//# sourceMappingURL=throw.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/observable/timer.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/observable/timer.js ***!
+  \****************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].timer = rxjs__WEBPACK_IMPORTED_MODULE_0__["timer"];
+//# sourceMappingURL=timer.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/observable/using.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/observable/using.js ***!
+  \****************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].using = rxjs__WEBPACK_IMPORTED_MODULE_0__["using"];
+//# sourceMappingURL=using.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/observable/zip.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/observable/zip.js ***!
+  \**************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].zip = rxjs__WEBPACK_IMPORTED_MODULE_0__["zip"];
+//# sourceMappingURL=zip.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/audit.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/audit.js ***!
+  \**************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_audit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/audit */ "./node_modules/rxjs-compat/_esm5/operator/audit.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.audit = _operator_audit__WEBPACK_IMPORTED_MODULE_1__["audit"];
+//# sourceMappingURL=audit.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/auditTime.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/auditTime.js ***!
+  \******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_auditTime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/auditTime */ "./node_modules/rxjs-compat/_esm5/operator/auditTime.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.auditTime = _operator_auditTime__WEBPACK_IMPORTED_MODULE_1__["auditTime"];
+//# sourceMappingURL=auditTime.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/buffer.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/buffer.js ***!
+  \***************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_buffer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/buffer */ "./node_modules/rxjs-compat/_esm5/operator/buffer.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.buffer = _operator_buffer__WEBPACK_IMPORTED_MODULE_1__["buffer"];
+//# sourceMappingURL=buffer.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/bufferCount.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/bufferCount.js ***!
+  \********************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_bufferCount__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/bufferCount */ "./node_modules/rxjs-compat/_esm5/operator/bufferCount.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.bufferCount = _operator_bufferCount__WEBPACK_IMPORTED_MODULE_1__["bufferCount"];
+//# sourceMappingURL=bufferCount.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/bufferTime.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/bufferTime.js ***!
+  \*******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_bufferTime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/bufferTime */ "./node_modules/rxjs-compat/_esm5/operator/bufferTime.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.bufferTime = _operator_bufferTime__WEBPACK_IMPORTED_MODULE_1__["bufferTime"];
+//# sourceMappingURL=bufferTime.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/bufferToggle.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/bufferToggle.js ***!
+  \*********************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_bufferToggle__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/bufferToggle */ "./node_modules/rxjs-compat/_esm5/operator/bufferToggle.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.bufferToggle = _operator_bufferToggle__WEBPACK_IMPORTED_MODULE_1__["bufferToggle"];
+//# sourceMappingURL=bufferToggle.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/bufferWhen.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/bufferWhen.js ***!
+  \*******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_bufferWhen__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/bufferWhen */ "./node_modules/rxjs-compat/_esm5/operator/bufferWhen.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.bufferWhen = _operator_bufferWhen__WEBPACK_IMPORTED_MODULE_1__["bufferWhen"];
+//# sourceMappingURL=bufferWhen.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/catch.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/catch.js ***!
+  \**************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_catch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/catch */ "./node_modules/rxjs-compat/_esm5/operator/catch.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.catch = _operator_catch__WEBPACK_IMPORTED_MODULE_1__["_catch"];
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype._catch = _operator_catch__WEBPACK_IMPORTED_MODULE_1__["_catch"];
+//# sourceMappingURL=catch.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/combineAll.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/combineAll.js ***!
+  \*******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_combineAll__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/combineAll */ "./node_modules/rxjs-compat/_esm5/operator/combineAll.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.combineAll = _operator_combineAll__WEBPACK_IMPORTED_MODULE_1__["combineAll"];
+//# sourceMappingURL=combineAll.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/combineLatest.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/combineLatest.js ***!
+  \**********************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_combineLatest__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/combineLatest */ "./node_modules/rxjs-compat/_esm5/operator/combineLatest.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.combineLatest = _operator_combineLatest__WEBPACK_IMPORTED_MODULE_1__["combineLatest"];
+//# sourceMappingURL=combineLatest.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/concat.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/concat.js ***!
+  \***************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_concat__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/concat */ "./node_modules/rxjs-compat/_esm5/operator/concat.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.concat = _operator_concat__WEBPACK_IMPORTED_MODULE_1__["concat"];
+//# sourceMappingURL=concat.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/concatAll.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/concatAll.js ***!
+  \******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_concatAll__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/concatAll */ "./node_modules/rxjs-compat/_esm5/operator/concatAll.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.concatAll = _operator_concatAll__WEBPACK_IMPORTED_MODULE_1__["concatAll"];
+//# sourceMappingURL=concatAll.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/concatMap.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/concatMap.js ***!
+  \******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_concatMap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/concatMap */ "./node_modules/rxjs-compat/_esm5/operator/concatMap.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.concatMap = _operator_concatMap__WEBPACK_IMPORTED_MODULE_1__["concatMap"];
+//# sourceMappingURL=concatMap.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/concatMapTo.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/concatMapTo.js ***!
+  \********************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_concatMapTo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/concatMapTo */ "./node_modules/rxjs-compat/_esm5/operator/concatMapTo.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.concatMapTo = _operator_concatMapTo__WEBPACK_IMPORTED_MODULE_1__["concatMapTo"];
+//# sourceMappingURL=concatMapTo.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/count.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/count.js ***!
+  \**************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_count__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/count */ "./node_modules/rxjs-compat/_esm5/operator/count.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.count = _operator_count__WEBPACK_IMPORTED_MODULE_1__["count"];
+//# sourceMappingURL=count.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/debounce.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/debounce.js ***!
+  \*****************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_debounce__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/debounce */ "./node_modules/rxjs-compat/_esm5/operator/debounce.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.debounce = _operator_debounce__WEBPACK_IMPORTED_MODULE_1__["debounce"];
+//# sourceMappingURL=debounce.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/debounceTime.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/debounceTime.js ***!
+  \*********************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_debounceTime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/debounceTime */ "./node_modules/rxjs-compat/_esm5/operator/debounceTime.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.debounceTime = _operator_debounceTime__WEBPACK_IMPORTED_MODULE_1__["debounceTime"];
+//# sourceMappingURL=debounceTime.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/defaultIfEmpty.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/defaultIfEmpty.js ***!
+  \***********************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_defaultIfEmpty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/defaultIfEmpty */ "./node_modules/rxjs-compat/_esm5/operator/defaultIfEmpty.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.defaultIfEmpty = _operator_defaultIfEmpty__WEBPACK_IMPORTED_MODULE_1__["defaultIfEmpty"];
+//# sourceMappingURL=defaultIfEmpty.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/delay.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/delay.js ***!
+  \**************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_delay__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/delay */ "./node_modules/rxjs-compat/_esm5/operator/delay.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.delay = _operator_delay__WEBPACK_IMPORTED_MODULE_1__["delay"];
+//# sourceMappingURL=delay.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/delayWhen.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/delayWhen.js ***!
+  \******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_delayWhen__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/delayWhen */ "./node_modules/rxjs-compat/_esm5/operator/delayWhen.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.delayWhen = _operator_delayWhen__WEBPACK_IMPORTED_MODULE_1__["delayWhen"];
+//# sourceMappingURL=delayWhen.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/dematerialize.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/dematerialize.js ***!
+  \**********************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_dematerialize__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/dematerialize */ "./node_modules/rxjs-compat/_esm5/operator/dematerialize.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.dematerialize = _operator_dematerialize__WEBPACK_IMPORTED_MODULE_1__["dematerialize"];
+//# sourceMappingURL=dematerialize.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/distinct.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/distinct.js ***!
+  \*****************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_distinct__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/distinct */ "./node_modules/rxjs-compat/_esm5/operator/distinct.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.distinct = _operator_distinct__WEBPACK_IMPORTED_MODULE_1__["distinct"];
+//# sourceMappingURL=distinct.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/distinctUntilChanged.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/distinctUntilChanged.js ***!
+  \*****************************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_distinctUntilChanged__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/distinctUntilChanged */ "./node_modules/rxjs-compat/_esm5/operator/distinctUntilChanged.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.distinctUntilChanged = _operator_distinctUntilChanged__WEBPACK_IMPORTED_MODULE_1__["distinctUntilChanged"];
+//# sourceMappingURL=distinctUntilChanged.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/distinctUntilKeyChanged.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/distinctUntilKeyChanged.js ***!
+  \********************************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_distinctUntilKeyChanged__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/distinctUntilKeyChanged */ "./node_modules/rxjs-compat/_esm5/operator/distinctUntilKeyChanged.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.distinctUntilKeyChanged = _operator_distinctUntilKeyChanged__WEBPACK_IMPORTED_MODULE_1__["distinctUntilKeyChanged"];
+//# sourceMappingURL=distinctUntilKeyChanged.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/do.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/do.js ***!
+  \***********************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_do__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/do */ "./node_modules/rxjs-compat/_esm5/operator/do.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.do = _operator_do__WEBPACK_IMPORTED_MODULE_1__["_do"];
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype._do = _operator_do__WEBPACK_IMPORTED_MODULE_1__["_do"];
+//# sourceMappingURL=do.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/elementAt.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/elementAt.js ***!
+  \******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_elementAt__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/elementAt */ "./node_modules/rxjs-compat/_esm5/operator/elementAt.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.elementAt = _operator_elementAt__WEBPACK_IMPORTED_MODULE_1__["elementAt"];
+//# sourceMappingURL=elementAt.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/every.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/every.js ***!
+  \**************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_every__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/every */ "./node_modules/rxjs-compat/_esm5/operator/every.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.every = _operator_every__WEBPACK_IMPORTED_MODULE_1__["every"];
+//# sourceMappingURL=every.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/exhaust.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/exhaust.js ***!
+  \****************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_exhaust__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/exhaust */ "./node_modules/rxjs-compat/_esm5/operator/exhaust.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.exhaust = _operator_exhaust__WEBPACK_IMPORTED_MODULE_1__["exhaust"];
+//# sourceMappingURL=exhaust.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/exhaustMap.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/exhaustMap.js ***!
+  \*******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_exhaustMap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/exhaustMap */ "./node_modules/rxjs-compat/_esm5/operator/exhaustMap.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.exhaustMap = _operator_exhaustMap__WEBPACK_IMPORTED_MODULE_1__["exhaustMap"];
+//# sourceMappingURL=exhaustMap.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/expand.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/expand.js ***!
+  \***************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_expand__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/expand */ "./node_modules/rxjs-compat/_esm5/operator/expand.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.expand = _operator_expand__WEBPACK_IMPORTED_MODULE_1__["expand"];
+//# sourceMappingURL=expand.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/filter.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/filter.js ***!
+  \***************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_filter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/filter */ "./node_modules/rxjs-compat/_esm5/operator/filter.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.filter = _operator_filter__WEBPACK_IMPORTED_MODULE_1__["filter"];
+//# sourceMappingURL=filter.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/finally.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/finally.js ***!
+  \****************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_finally__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/finally */ "./node_modules/rxjs-compat/_esm5/operator/finally.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.finally = _operator_finally__WEBPACK_IMPORTED_MODULE_1__["_finally"];
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype._finally = _operator_finally__WEBPACK_IMPORTED_MODULE_1__["_finally"];
+//# sourceMappingURL=finally.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/find.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/find.js ***!
+  \*************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_find__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/find */ "./node_modules/rxjs-compat/_esm5/operator/find.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.find = _operator_find__WEBPACK_IMPORTED_MODULE_1__["find"];
+//# sourceMappingURL=find.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/findIndex.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/findIndex.js ***!
+  \******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_findIndex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/findIndex */ "./node_modules/rxjs-compat/_esm5/operator/findIndex.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.findIndex = _operator_findIndex__WEBPACK_IMPORTED_MODULE_1__["findIndex"];
+//# sourceMappingURL=findIndex.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/first.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/first.js ***!
+  \**************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_first__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/first */ "./node_modules/rxjs-compat/_esm5/operator/first.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.first = _operator_first__WEBPACK_IMPORTED_MODULE_1__["first"];
+//# sourceMappingURL=first.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/groupBy.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/groupBy.js ***!
+  \****************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_groupBy__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/groupBy */ "./node_modules/rxjs-compat/_esm5/operator/groupBy.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.groupBy = _operator_groupBy__WEBPACK_IMPORTED_MODULE_1__["groupBy"];
+//# sourceMappingURL=groupBy.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/ignoreElements.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/ignoreElements.js ***!
+  \***********************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_ignoreElements__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/ignoreElements */ "./node_modules/rxjs-compat/_esm5/operator/ignoreElements.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.ignoreElements = _operator_ignoreElements__WEBPACK_IMPORTED_MODULE_1__["ignoreElements"];
+//# sourceMappingURL=ignoreElements.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/isEmpty.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/isEmpty.js ***!
+  \****************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_isEmpty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/isEmpty */ "./node_modules/rxjs-compat/_esm5/operator/isEmpty.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.isEmpty = _operator_isEmpty__WEBPACK_IMPORTED_MODULE_1__["isEmpty"];
+//# sourceMappingURL=isEmpty.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/last.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/last.js ***!
+  \*************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_last__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/last */ "./node_modules/rxjs-compat/_esm5/operator/last.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.last = _operator_last__WEBPACK_IMPORTED_MODULE_1__["last"];
+//# sourceMappingURL=last.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/let.js":
+/*!************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/let.js ***!
+  \************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_let__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/let */ "./node_modules/rxjs-compat/_esm5/operator/let.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.let = _operator_let__WEBPACK_IMPORTED_MODULE_1__["letProto"];
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.letBind = _operator_let__WEBPACK_IMPORTED_MODULE_1__["letProto"];
+//# sourceMappingURL=let.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/map.js":
+/*!************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/map.js ***!
+  \************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_map__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/map */ "./node_modules/rxjs-compat/_esm5/operator/map.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.map = _operator_map__WEBPACK_IMPORTED_MODULE_1__["map"];
+//# sourceMappingURL=map.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/mapTo.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/mapTo.js ***!
+  \**************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_mapTo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/mapTo */ "./node_modules/rxjs-compat/_esm5/operator/mapTo.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.mapTo = _operator_mapTo__WEBPACK_IMPORTED_MODULE_1__["mapTo"];
+//# sourceMappingURL=mapTo.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/materialize.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/materialize.js ***!
+  \********************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_materialize__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/materialize */ "./node_modules/rxjs-compat/_esm5/operator/materialize.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.materialize = _operator_materialize__WEBPACK_IMPORTED_MODULE_1__["materialize"];
+//# sourceMappingURL=materialize.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/max.js":
+/*!************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/max.js ***!
+  \************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_max__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/max */ "./node_modules/rxjs-compat/_esm5/operator/max.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.max = _operator_max__WEBPACK_IMPORTED_MODULE_1__["max"];
+//# sourceMappingURL=max.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/merge.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/merge.js ***!
+  \**************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_merge__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/merge */ "./node_modules/rxjs-compat/_esm5/operator/merge.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.merge = _operator_merge__WEBPACK_IMPORTED_MODULE_1__["merge"];
+//# sourceMappingURL=merge.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/mergeAll.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/mergeAll.js ***!
+  \*****************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_mergeAll__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/mergeAll */ "./node_modules/rxjs-compat/_esm5/operator/mergeAll.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.mergeAll = _operator_mergeAll__WEBPACK_IMPORTED_MODULE_1__["mergeAll"];
+//# sourceMappingURL=mergeAll.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/mergeMap.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/mergeMap.js ***!
+  \*****************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_mergeMap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/mergeMap */ "./node_modules/rxjs-compat/_esm5/operator/mergeMap.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.mergeMap = _operator_mergeMap__WEBPACK_IMPORTED_MODULE_1__["mergeMap"];
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.flatMap = _operator_mergeMap__WEBPACK_IMPORTED_MODULE_1__["mergeMap"];
+//# sourceMappingURL=mergeMap.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/mergeMapTo.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/mergeMapTo.js ***!
+  \*******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_mergeMapTo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/mergeMapTo */ "./node_modules/rxjs-compat/_esm5/operator/mergeMapTo.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.flatMapTo = _operator_mergeMapTo__WEBPACK_IMPORTED_MODULE_1__["mergeMapTo"];
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.mergeMapTo = _operator_mergeMapTo__WEBPACK_IMPORTED_MODULE_1__["mergeMapTo"];
+//# sourceMappingURL=mergeMapTo.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/mergeScan.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/mergeScan.js ***!
+  \******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_mergeScan__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/mergeScan */ "./node_modules/rxjs-compat/_esm5/operator/mergeScan.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.mergeScan = _operator_mergeScan__WEBPACK_IMPORTED_MODULE_1__["mergeScan"];
+//# sourceMappingURL=mergeScan.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/min.js":
+/*!************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/min.js ***!
+  \************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_min__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/min */ "./node_modules/rxjs-compat/_esm5/operator/min.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.min = _operator_min__WEBPACK_IMPORTED_MODULE_1__["min"];
+//# sourceMappingURL=min.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/multicast.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/multicast.js ***!
+  \******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_multicast__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/multicast */ "./node_modules/rxjs-compat/_esm5/operator/multicast.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.multicast = _operator_multicast__WEBPACK_IMPORTED_MODULE_1__["multicast"];
+//# sourceMappingURL=multicast.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/observeOn.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/observeOn.js ***!
+  \******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_observeOn__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/observeOn */ "./node_modules/rxjs-compat/_esm5/operator/observeOn.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.observeOn = _operator_observeOn__WEBPACK_IMPORTED_MODULE_1__["observeOn"];
+//# sourceMappingURL=observeOn.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/onErrorResumeNext.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/onErrorResumeNext.js ***!
+  \**************************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_onErrorResumeNext__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/onErrorResumeNext */ "./node_modules/rxjs-compat/_esm5/operator/onErrorResumeNext.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.onErrorResumeNext = _operator_onErrorResumeNext__WEBPACK_IMPORTED_MODULE_1__["onErrorResumeNext"];
+//# sourceMappingURL=onErrorResumeNext.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/pairwise.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/pairwise.js ***!
+  \*****************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_pairwise__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/pairwise */ "./node_modules/rxjs-compat/_esm5/operator/pairwise.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.pairwise = _operator_pairwise__WEBPACK_IMPORTED_MODULE_1__["pairwise"];
+//# sourceMappingURL=pairwise.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/partition.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/partition.js ***!
+  \******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_partition__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/partition */ "./node_modules/rxjs-compat/_esm5/operator/partition.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.partition = _operator_partition__WEBPACK_IMPORTED_MODULE_1__["partition"];
+//# sourceMappingURL=partition.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/pluck.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/pluck.js ***!
+  \**************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_pluck__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/pluck */ "./node_modules/rxjs-compat/_esm5/operator/pluck.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.pluck = _operator_pluck__WEBPACK_IMPORTED_MODULE_1__["pluck"];
+//# sourceMappingURL=pluck.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/publish.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/publish.js ***!
+  \****************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_publish__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/publish */ "./node_modules/rxjs-compat/_esm5/operator/publish.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.publish = _operator_publish__WEBPACK_IMPORTED_MODULE_1__["publish"];
+//# sourceMappingURL=publish.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/publishBehavior.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/publishBehavior.js ***!
+  \************************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_publishBehavior__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/publishBehavior */ "./node_modules/rxjs-compat/_esm5/operator/publishBehavior.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.publishBehavior = _operator_publishBehavior__WEBPACK_IMPORTED_MODULE_1__["publishBehavior"];
+//# sourceMappingURL=publishBehavior.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/publishLast.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/publishLast.js ***!
+  \********************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_publishLast__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/publishLast */ "./node_modules/rxjs-compat/_esm5/operator/publishLast.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.publishLast = _operator_publishLast__WEBPACK_IMPORTED_MODULE_1__["publishLast"];
+//# sourceMappingURL=publishLast.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/publishReplay.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/publishReplay.js ***!
+  \**********************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_publishReplay__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/publishReplay */ "./node_modules/rxjs-compat/_esm5/operator/publishReplay.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.publishReplay = _operator_publishReplay__WEBPACK_IMPORTED_MODULE_1__["publishReplay"];
+//# sourceMappingURL=publishReplay.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/race.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/race.js ***!
+  \*************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_race__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/race */ "./node_modules/rxjs-compat/_esm5/operator/race.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.race = _operator_race__WEBPACK_IMPORTED_MODULE_1__["race"];
+//# sourceMappingURL=race.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/reduce.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/reduce.js ***!
+  \***************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_reduce__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/reduce */ "./node_modules/rxjs-compat/_esm5/operator/reduce.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.reduce = _operator_reduce__WEBPACK_IMPORTED_MODULE_1__["reduce"];
+//# sourceMappingURL=reduce.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/repeat.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/repeat.js ***!
+  \***************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_repeat__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/repeat */ "./node_modules/rxjs-compat/_esm5/operator/repeat.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.repeat = _operator_repeat__WEBPACK_IMPORTED_MODULE_1__["repeat"];
+//# sourceMappingURL=repeat.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/repeatWhen.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/repeatWhen.js ***!
+  \*******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_repeatWhen__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/repeatWhen */ "./node_modules/rxjs-compat/_esm5/operator/repeatWhen.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.repeatWhen = _operator_repeatWhen__WEBPACK_IMPORTED_MODULE_1__["repeatWhen"];
+//# sourceMappingURL=repeatWhen.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/retry.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/retry.js ***!
+  \**************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_retry__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/retry */ "./node_modules/rxjs-compat/_esm5/operator/retry.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.retry = _operator_retry__WEBPACK_IMPORTED_MODULE_1__["retry"];
+//# sourceMappingURL=retry.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/retryWhen.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/retryWhen.js ***!
+  \******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_retryWhen__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/retryWhen */ "./node_modules/rxjs-compat/_esm5/operator/retryWhen.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.retryWhen = _operator_retryWhen__WEBPACK_IMPORTED_MODULE_1__["retryWhen"];
+//# sourceMappingURL=retryWhen.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/sample.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/sample.js ***!
+  \***************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_sample__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/sample */ "./node_modules/rxjs-compat/_esm5/operator/sample.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.sample = _operator_sample__WEBPACK_IMPORTED_MODULE_1__["sample"];
+//# sourceMappingURL=sample.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/sampleTime.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/sampleTime.js ***!
+  \*******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_sampleTime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/sampleTime */ "./node_modules/rxjs-compat/_esm5/operator/sampleTime.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.sampleTime = _operator_sampleTime__WEBPACK_IMPORTED_MODULE_1__["sampleTime"];
+//# sourceMappingURL=sampleTime.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/scan.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/scan.js ***!
+  \*************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_scan__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/scan */ "./node_modules/rxjs-compat/_esm5/operator/scan.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.scan = _operator_scan__WEBPACK_IMPORTED_MODULE_1__["scan"];
+//# sourceMappingURL=scan.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/sequenceEqual.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/sequenceEqual.js ***!
+  \**********************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_sequenceEqual__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/sequenceEqual */ "./node_modules/rxjs-compat/_esm5/operator/sequenceEqual.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.sequenceEqual = _operator_sequenceEqual__WEBPACK_IMPORTED_MODULE_1__["sequenceEqual"];
+//# sourceMappingURL=sequenceEqual.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/share.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/share.js ***!
+  \**************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_share__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/share */ "./node_modules/rxjs-compat/_esm5/operator/share.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.share = _operator_share__WEBPACK_IMPORTED_MODULE_1__["share"];
+//# sourceMappingURL=share.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/shareReplay.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/shareReplay.js ***!
+  \********************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_shareReplay__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/shareReplay */ "./node_modules/rxjs-compat/_esm5/operator/shareReplay.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.shareReplay = _operator_shareReplay__WEBPACK_IMPORTED_MODULE_1__["shareReplay"];
+//# sourceMappingURL=shareReplay.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/single.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/single.js ***!
+  \***************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_single__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/single */ "./node_modules/rxjs-compat/_esm5/operator/single.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.single = _operator_single__WEBPACK_IMPORTED_MODULE_1__["single"];
+//# sourceMappingURL=single.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/skip.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/skip.js ***!
+  \*************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_skip__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/skip */ "./node_modules/rxjs-compat/_esm5/operator/skip.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.skip = _operator_skip__WEBPACK_IMPORTED_MODULE_1__["skip"];
+//# sourceMappingURL=skip.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/skipLast.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/skipLast.js ***!
+  \*****************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_skipLast__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/skipLast */ "./node_modules/rxjs-compat/_esm5/operator/skipLast.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.skipLast = _operator_skipLast__WEBPACK_IMPORTED_MODULE_1__["skipLast"];
+//# sourceMappingURL=skipLast.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/skipUntil.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/skipUntil.js ***!
+  \******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_skipUntil__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/skipUntil */ "./node_modules/rxjs-compat/_esm5/operator/skipUntil.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.skipUntil = _operator_skipUntil__WEBPACK_IMPORTED_MODULE_1__["skipUntil"];
+//# sourceMappingURL=skipUntil.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/skipWhile.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/skipWhile.js ***!
+  \******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_skipWhile__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/skipWhile */ "./node_modules/rxjs-compat/_esm5/operator/skipWhile.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.skipWhile = _operator_skipWhile__WEBPACK_IMPORTED_MODULE_1__["skipWhile"];
+//# sourceMappingURL=skipWhile.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/startWith.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/startWith.js ***!
+  \******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_startWith__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/startWith */ "./node_modules/rxjs-compat/_esm5/operator/startWith.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.startWith = _operator_startWith__WEBPACK_IMPORTED_MODULE_1__["startWith"];
+//# sourceMappingURL=startWith.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/subscribeOn.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/subscribeOn.js ***!
+  \********************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_subscribeOn__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/subscribeOn */ "./node_modules/rxjs-compat/_esm5/operator/subscribeOn.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.subscribeOn = _operator_subscribeOn__WEBPACK_IMPORTED_MODULE_1__["subscribeOn"];
+//# sourceMappingURL=subscribeOn.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/switch.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/switch.js ***!
+  \***************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_switch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/switch */ "./node_modules/rxjs-compat/_esm5/operator/switch.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.switch = _operator_switch__WEBPACK_IMPORTED_MODULE_1__["_switch"];
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype._switch = _operator_switch__WEBPACK_IMPORTED_MODULE_1__["_switch"];
+//# sourceMappingURL=switch.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/switchMap.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/switchMap.js ***!
+  \******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_switchMap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/switchMap */ "./node_modules/rxjs-compat/_esm5/operator/switchMap.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.switchMap = _operator_switchMap__WEBPACK_IMPORTED_MODULE_1__["switchMap"];
+//# sourceMappingURL=switchMap.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/switchMapTo.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/switchMapTo.js ***!
+  \********************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_switchMapTo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/switchMapTo */ "./node_modules/rxjs-compat/_esm5/operator/switchMapTo.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.switchMapTo = _operator_switchMapTo__WEBPACK_IMPORTED_MODULE_1__["switchMapTo"];
+//# sourceMappingURL=switchMapTo.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/take.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/take.js ***!
+  \*************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_take__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/take */ "./node_modules/rxjs-compat/_esm5/operator/take.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.take = _operator_take__WEBPACK_IMPORTED_MODULE_1__["take"];
+//# sourceMappingURL=take.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/takeLast.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/takeLast.js ***!
+  \*****************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_takeLast__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/takeLast */ "./node_modules/rxjs-compat/_esm5/operator/takeLast.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.takeLast = _operator_takeLast__WEBPACK_IMPORTED_MODULE_1__["takeLast"];
+//# sourceMappingURL=takeLast.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/takeUntil.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/takeUntil.js ***!
+  \******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_takeUntil__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/takeUntil */ "./node_modules/rxjs-compat/_esm5/operator/takeUntil.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.takeUntil = _operator_takeUntil__WEBPACK_IMPORTED_MODULE_1__["takeUntil"];
+//# sourceMappingURL=takeUntil.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/takeWhile.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/takeWhile.js ***!
+  \******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_takeWhile__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/takeWhile */ "./node_modules/rxjs-compat/_esm5/operator/takeWhile.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.takeWhile = _operator_takeWhile__WEBPACK_IMPORTED_MODULE_1__["takeWhile"];
+//# sourceMappingURL=takeWhile.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/throttle.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/throttle.js ***!
+  \*****************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_throttle__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/throttle */ "./node_modules/rxjs-compat/_esm5/operator/throttle.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.throttle = _operator_throttle__WEBPACK_IMPORTED_MODULE_1__["throttle"];
+//# sourceMappingURL=throttle.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/throttleTime.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/throttleTime.js ***!
+  \*********************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_throttleTime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/throttleTime */ "./node_modules/rxjs-compat/_esm5/operator/throttleTime.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.throttleTime = _operator_throttleTime__WEBPACK_IMPORTED_MODULE_1__["throttleTime"];
+//# sourceMappingURL=throttleTime.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/timeInterval.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/timeInterval.js ***!
+  \*********************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_timeInterval__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/timeInterval */ "./node_modules/rxjs-compat/_esm5/operator/timeInterval.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.timeInterval = _operator_timeInterval__WEBPACK_IMPORTED_MODULE_1__["timeInterval"];
+//# sourceMappingURL=timeInterval.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/timeout.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/timeout.js ***!
+  \****************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_timeout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/timeout */ "./node_modules/rxjs-compat/_esm5/operator/timeout.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.timeout = _operator_timeout__WEBPACK_IMPORTED_MODULE_1__["timeout"];
+//# sourceMappingURL=timeout.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/timeoutWith.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/timeoutWith.js ***!
+  \********************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_timeoutWith__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/timeoutWith */ "./node_modules/rxjs-compat/_esm5/operator/timeoutWith.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.timeoutWith = _operator_timeoutWith__WEBPACK_IMPORTED_MODULE_1__["timeoutWith"];
+//# sourceMappingURL=timeoutWith.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/timestamp.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/timestamp.js ***!
+  \******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_timestamp__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/timestamp */ "./node_modules/rxjs-compat/_esm5/operator/timestamp.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.timestamp = _operator_timestamp__WEBPACK_IMPORTED_MODULE_1__["timestamp"];
+//# sourceMappingURL=timestamp.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/toArray.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/toArray.js ***!
+  \****************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_toArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/toArray */ "./node_modules/rxjs-compat/_esm5/operator/toArray.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.toArray = _operator_toArray__WEBPACK_IMPORTED_MODULE_1__["toArray"];
+//# sourceMappingURL=toArray.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/toPromise.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/toPromise.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+//# sourceMappingURL=toPromise.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/window.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/window.js ***!
+  \***************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_window__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/window */ "./node_modules/rxjs-compat/_esm5/operator/window.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.window = _operator_window__WEBPACK_IMPORTED_MODULE_1__["window"];
+//# sourceMappingURL=window.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/windowCount.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/windowCount.js ***!
+  \********************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_windowCount__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/windowCount */ "./node_modules/rxjs-compat/_esm5/operator/windowCount.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.windowCount = _operator_windowCount__WEBPACK_IMPORTED_MODULE_1__["windowCount"];
+//# sourceMappingURL=windowCount.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/windowTime.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/windowTime.js ***!
+  \*******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_windowTime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/windowTime */ "./node_modules/rxjs-compat/_esm5/operator/windowTime.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.windowTime = _operator_windowTime__WEBPACK_IMPORTED_MODULE_1__["windowTime"];
+//# sourceMappingURL=windowTime.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/windowToggle.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/windowToggle.js ***!
+  \*********************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_windowToggle__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/windowToggle */ "./node_modules/rxjs-compat/_esm5/operator/windowToggle.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.windowToggle = _operator_windowToggle__WEBPACK_IMPORTED_MODULE_1__["windowToggle"];
+//# sourceMappingURL=windowToggle.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/windowWhen.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/windowWhen.js ***!
+  \*******************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_windowWhen__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/windowWhen */ "./node_modules/rxjs-compat/_esm5/operator/windowWhen.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.windowWhen = _operator_windowWhen__WEBPACK_IMPORTED_MODULE_1__["windowWhen"];
+//# sourceMappingURL=windowWhen.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/withLatestFrom.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/withLatestFrom.js ***!
+  \***********************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_withLatestFrom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/withLatestFrom */ "./node_modules/rxjs-compat/_esm5/operator/withLatestFrom.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.withLatestFrom = _operator_withLatestFrom__WEBPACK_IMPORTED_MODULE_1__["withLatestFrom"];
+//# sourceMappingURL=withLatestFrom.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/zip.js":
+/*!************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/zip.js ***!
+  \************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_zip__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/zip */ "./node_modules/rxjs-compat/_esm5/operator/zip.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.zip = _operator_zip__WEBPACK_IMPORTED_MODULE_1__["zipProto"];
+//# sourceMappingURL=zip.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/add/operator/zipAll.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/add/operator/zipAll.js ***!
+  \***************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _operator_zipAll__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../operator/zipAll */ "./node_modules/rxjs-compat/_esm5/operator/zipAll.js");
+
+
+rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"].prototype.zipAll = _operator_zipAll__WEBPACK_IMPORTED_MODULE_1__["zipAll"];
+//# sourceMappingURL=zipAll.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/audit.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/audit.js ***!
+  \**********************************************************/
+/*! exports provided: audit */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "audit", function() { return audit; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function audit(durationSelector) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["audit"])(durationSelector)(this);
+}
+//# sourceMappingURL=audit.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/auditTime.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/auditTime.js ***!
+  \**************************************************************/
+/*! exports provided: auditTime */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "auditTime", function() { return auditTime; });
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+
+function auditTime(duration, scheduler) {
+    if (scheduler === void 0) { scheduler = rxjs__WEBPACK_IMPORTED_MODULE_0__["asyncScheduler"]; }
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["auditTime"])(duration, scheduler)(this);
+}
+//# sourceMappingURL=auditTime.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/buffer.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/buffer.js ***!
+  \***********************************************************/
+/*! exports provided: buffer */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "buffer", function() { return buffer; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function buffer(closingNotifier) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["buffer"])(closingNotifier)(this);
+}
+//# sourceMappingURL=buffer.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/bufferCount.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/bufferCount.js ***!
+  \****************************************************************/
+/*! exports provided: bufferCount */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "bufferCount", function() { return bufferCount; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function bufferCount(bufferSize, startBufferEvery) {
+    if (startBufferEvery === void 0) { startBufferEvery = null; }
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["bufferCount"])(bufferSize, startBufferEvery)(this);
+}
+//# sourceMappingURL=bufferCount.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/bufferTime.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/bufferTime.js ***!
+  \***************************************************************/
+/*! exports provided: bufferTime */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "bufferTime", function() { return bufferTime; });
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_internal_compatibility__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/internal-compatibility */ "./node_modules/rxjs/_esm5/internal-compatibility/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+
+
+function bufferTime(bufferTimeSpan) {
+    var length = arguments.length;
+    var scheduler = rxjs__WEBPACK_IMPORTED_MODULE_0__["asyncScheduler"];
+    if (Object(rxjs_internal_compatibility__WEBPACK_IMPORTED_MODULE_1__["isScheduler"])(arguments[arguments.length - 1])) {
+        scheduler = arguments[arguments.length - 1];
+        length--;
+    }
+    var bufferCreationInterval = null;
+    if (length >= 2) {
+        bufferCreationInterval = arguments[1];
+    }
+    var maxBufferSize = Number.POSITIVE_INFINITY;
+    if (length >= 3) {
+        maxBufferSize = arguments[2];
+    }
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["bufferTime"])(bufferTimeSpan, bufferCreationInterval, maxBufferSize, scheduler)(this);
+}
+//# sourceMappingURL=bufferTime.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/bufferToggle.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/bufferToggle.js ***!
+  \*****************************************************************/
+/*! exports provided: bufferToggle */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "bufferToggle", function() { return bufferToggle; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function bufferToggle(openings, closingSelector) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["bufferToggle"])(openings, closingSelector)(this);
+}
+//# sourceMappingURL=bufferToggle.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/bufferWhen.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/bufferWhen.js ***!
+  \***************************************************************/
+/*! exports provided: bufferWhen */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "bufferWhen", function() { return bufferWhen; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function bufferWhen(closingSelector) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["bufferWhen"])(closingSelector)(this);
+}
+//# sourceMappingURL=bufferWhen.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/catch.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/catch.js ***!
+  \**********************************************************/
+/*! exports provided: _catch */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "_catch", function() { return _catch; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function _catch(selector) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["catchError"])(selector)(this);
+}
+//# sourceMappingURL=catch.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/combineAll.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/combineAll.js ***!
+  \***************************************************************/
+/*! exports provided: combineAll */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "combineAll", function() { return combineAll; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function combineAll(project) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["combineAll"])(project)(this);
+}
+//# sourceMappingURL=combineAll.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/combineLatest.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/combineLatest.js ***!
+  \******************************************************************/
+/*! exports provided: combineLatest */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "combineLatest", function() { return combineLatest; });
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_internal_compatibility__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/internal-compatibility */ "./node_modules/rxjs/_esm5/internal-compatibility/index.js");
+
+
+function combineLatest() {
+    var observables = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        observables[_i] = arguments[_i];
+    }
+    var project = null;
+    if (typeof observables[observables.length - 1] === 'function') {
+        project = observables.pop();
+    }
+    if (observables.length === 1 && Object(rxjs_internal_compatibility__WEBPACK_IMPORTED_MODULE_1__["isArray"])(observables[0])) {
+        observables = observables[0].slice();
+    }
+    return this.lift.call(rxjs__WEBPACK_IMPORTED_MODULE_0__["of"].apply(void 0, [this].concat(observables)), new rxjs_internal_compatibility__WEBPACK_IMPORTED_MODULE_1__["CombineLatestOperator"](project));
+}
+//# sourceMappingURL=combineLatest.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/concat.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/concat.js ***!
+  \***********************************************************/
+/*! exports provided: concat */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "concat", function() { return concat; });
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+function concat() {
+    var observables = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        observables[_i] = arguments[_i];
+    }
+    return this.lift.call(rxjs__WEBPACK_IMPORTED_MODULE_0__["concat"].apply(void 0, [this].concat(observables)));
+}
+//# sourceMappingURL=concat.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/concatAll.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/concatAll.js ***!
+  \**************************************************************/
+/*! exports provided: concatAll */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "concatAll", function() { return concatAll; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function concatAll() {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["concatAll"])()(this);
+}
+//# sourceMappingURL=concatAll.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/concatMap.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/concatMap.js ***!
+  \**************************************************************/
+/*! exports provided: concatMap */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "concatMap", function() { return concatMap; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function concatMap(project) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["concatMap"])(project)(this);
+}
+//# sourceMappingURL=concatMap.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/concatMapTo.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/concatMapTo.js ***!
+  \****************************************************************/
+/*! exports provided: concatMapTo */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "concatMapTo", function() { return concatMapTo; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function concatMapTo(innerObservable) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["concatMapTo"])(innerObservable)(this);
+}
+//# sourceMappingURL=concatMapTo.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/count.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/count.js ***!
+  \**********************************************************/
+/*! exports provided: count */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "count", function() { return count; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function count(predicate) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["count"])(predicate)(this);
+}
+//# sourceMappingURL=count.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/debounce.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/debounce.js ***!
+  \*************************************************************/
+/*! exports provided: debounce */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "debounce", function() { return debounce; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function debounce(durationSelector) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["debounce"])(durationSelector)(this);
+}
+//# sourceMappingURL=debounce.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/debounceTime.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/debounceTime.js ***!
+  \*****************************************************************/
+/*! exports provided: debounceTime */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "debounceTime", function() { return debounceTime; });
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+
+function debounceTime(dueTime, scheduler) {
+    if (scheduler === void 0) { scheduler = rxjs__WEBPACK_IMPORTED_MODULE_0__["asyncScheduler"]; }
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["debounceTime"])(dueTime, scheduler)(this);
+}
+//# sourceMappingURL=debounceTime.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/defaultIfEmpty.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/defaultIfEmpty.js ***!
+  \*******************************************************************/
+/*! exports provided: defaultIfEmpty */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultIfEmpty", function() { return defaultIfEmpty; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function defaultIfEmpty(defaultValue) {
+    if (defaultValue === void 0) { defaultValue = null; }
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["defaultIfEmpty"])(defaultValue)(this);
+}
+//# sourceMappingURL=defaultIfEmpty.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/delay.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/delay.js ***!
+  \**********************************************************/
+/*! exports provided: delay */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "delay", function() { return delay; });
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+
+function delay(delay, scheduler) {
+    if (scheduler === void 0) { scheduler = rxjs__WEBPACK_IMPORTED_MODULE_0__["asyncScheduler"]; }
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["delay"])(delay, scheduler)(this);
+}
+//# sourceMappingURL=delay.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/delayWhen.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/delayWhen.js ***!
+  \**************************************************************/
+/*! exports provided: delayWhen */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "delayWhen", function() { return delayWhen; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function delayWhen(delayDurationSelector, subscriptionDelay) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["delayWhen"])(delayDurationSelector, subscriptionDelay)(this);
+}
+//# sourceMappingURL=delayWhen.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/dematerialize.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/dematerialize.js ***!
+  \******************************************************************/
+/*! exports provided: dematerialize */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dematerialize", function() { return dematerialize; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function dematerialize() {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["dematerialize"])()(this);
+}
+//# sourceMappingURL=dematerialize.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/distinct.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/distinct.js ***!
+  \*************************************************************/
+/*! exports provided: distinct */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "distinct", function() { return distinct; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function distinct(keySelector, flushes) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["distinct"])(keySelector, flushes)(this);
+}
+//# sourceMappingURL=distinct.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/distinctUntilChanged.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/distinctUntilChanged.js ***!
+  \*************************************************************************/
+/*! exports provided: distinctUntilChanged */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "distinctUntilChanged", function() { return distinctUntilChanged; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function distinctUntilChanged(compare, keySelector) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["distinctUntilChanged"])(compare, keySelector)(this);
+}
+//# sourceMappingURL=distinctUntilChanged.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/distinctUntilKeyChanged.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/distinctUntilKeyChanged.js ***!
+  \****************************************************************************/
+/*! exports provided: distinctUntilKeyChanged */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "distinctUntilKeyChanged", function() { return distinctUntilKeyChanged; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function distinctUntilKeyChanged(key, compare) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["distinctUntilKeyChanged"])(key, compare)(this);
+}
+//# sourceMappingURL=distinctUntilKeyChanged.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/do.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/do.js ***!
+  \*******************************************************/
+/*! exports provided: _do */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "_do", function() { return _do; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function _do(nextOrObserver, error, complete) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["tap"])(nextOrObserver, error, complete)(this);
+}
+//# sourceMappingURL=do.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/elementAt.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/elementAt.js ***!
+  \**************************************************************/
+/*! exports provided: elementAt */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "elementAt", function() { return elementAt; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function elementAt(index, defaultValue) {
+    return rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["elementAt"].apply(undefined, arguments)(this);
+}
+//# sourceMappingURL=elementAt.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/every.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/every.js ***!
+  \**********************************************************/
+/*! exports provided: every */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "every", function() { return every; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function every(predicate, thisArg) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["every"])(predicate, thisArg)(this);
+}
+//# sourceMappingURL=every.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/exhaust.js":
+/*!************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/exhaust.js ***!
+  \************************************************************/
+/*! exports provided: exhaust */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "exhaust", function() { return exhaust; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function exhaust() {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["exhaust"])()(this);
+}
+//# sourceMappingURL=exhaust.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/exhaustMap.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/exhaustMap.js ***!
+  \***************************************************************/
+/*! exports provided: exhaustMap */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "exhaustMap", function() { return exhaustMap; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function exhaustMap(project) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["exhaustMap"])(project)(this);
+}
+//# sourceMappingURL=exhaustMap.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/expand.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/expand.js ***!
+  \***********************************************************/
+/*! exports provided: expand */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "expand", function() { return expand; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function expand(project, concurrent, scheduler) {
+    if (concurrent === void 0) { concurrent = Number.POSITIVE_INFINITY; }
+    if (scheduler === void 0) { scheduler = undefined; }
+    concurrent = (concurrent || 0) < 1 ? Number.POSITIVE_INFINITY : concurrent;
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["expand"])(project, concurrent, scheduler)(this);
+}
+//# sourceMappingURL=expand.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/filter.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/filter.js ***!
+  \***********************************************************/
+/*! exports provided: filter */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "filter", function() { return filter; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function filter(predicate, thisArg) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["filter"])(predicate, thisArg)(this);
+}
+//# sourceMappingURL=filter.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/finally.js":
+/*!************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/finally.js ***!
+  \************************************************************/
+/*! exports provided: _finally */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "_finally", function() { return _finally; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function _finally(callback) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["finalize"])(callback)(this);
+}
+//# sourceMappingURL=finally.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/find.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/find.js ***!
+  \*********************************************************/
+/*! exports provided: find */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "find", function() { return find; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function find(predicate, thisArg) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["find"])(predicate, thisArg)(this);
+}
+//# sourceMappingURL=find.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/findIndex.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/findIndex.js ***!
+  \**************************************************************/
+/*! exports provided: findIndex */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "findIndex", function() { return findIndex; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function findIndex(predicate, thisArg) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["findIndex"])(predicate, thisArg)(this);
+}
+//# sourceMappingURL=findIndex.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/first.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/first.js ***!
+  \**********************************************************/
+/*! exports provided: first */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "first", function() { return first; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function first() {
+    var args = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        args[_i] = arguments[_i];
+    }
+    return rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["first"].apply(void 0, args)(this);
+}
+//# sourceMappingURL=first.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/groupBy.js":
+/*!************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/groupBy.js ***!
+  \************************************************************/
+/*! exports provided: groupBy */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "groupBy", function() { return groupBy; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function groupBy(keySelector, elementSelector, durationSelector, subjectSelector) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["groupBy"])(keySelector, elementSelector, durationSelector, subjectSelector)(this);
+}
+//# sourceMappingURL=groupBy.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/ignoreElements.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/ignoreElements.js ***!
+  \*******************************************************************/
+/*! exports provided: ignoreElements */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ignoreElements", function() { return ignoreElements; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function ignoreElements() {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["ignoreElements"])()(this);
+}
+//# sourceMappingURL=ignoreElements.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/isEmpty.js":
+/*!************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/isEmpty.js ***!
+  \************************************************************/
+/*! exports provided: isEmpty */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isEmpty", function() { return isEmpty; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function isEmpty() {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["isEmpty"])()(this);
+}
+//# sourceMappingURL=isEmpty.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/last.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/last.js ***!
+  \*********************************************************/
+/*! exports provided: last */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "last", function() { return last; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function last() {
+    var args = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        args[_i] = arguments[_i];
+    }
+    return rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["last"].apply(void 0, args)(this);
+}
+//# sourceMappingURL=last.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/let.js":
+/*!********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/let.js ***!
+  \********************************************************/
+/*! exports provided: letProto */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "letProto", function() { return letProto; });
+function letProto(func) {
+    return func(this);
+}
+//# sourceMappingURL=let.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/map.js":
+/*!********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/map.js ***!
+  \********************************************************/
+/*! exports provided: map */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "map", function() { return map; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function map(project, thisArg) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["map"])(project, thisArg)(this);
+}
+//# sourceMappingURL=map.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/mapTo.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/mapTo.js ***!
+  \**********************************************************/
+/*! exports provided: mapTo */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapTo", function() { return mapTo; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function mapTo(value) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["mapTo"])(value)(this);
+}
+//# sourceMappingURL=mapTo.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/materialize.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/materialize.js ***!
+  \****************************************************************/
+/*! exports provided: materialize */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "materialize", function() { return materialize; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function materialize() {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["materialize"])()(this);
+}
+//# sourceMappingURL=materialize.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/max.js":
+/*!********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/max.js ***!
+  \********************************************************/
+/*! exports provided: max */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "max", function() { return max; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function max(comparer) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["max"])(comparer)(this);
+}
+//# sourceMappingURL=max.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/merge.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/merge.js ***!
+  \**********************************************************/
+/*! exports provided: merge */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "merge", function() { return merge; });
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+function merge() {
+    var observables = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        observables[_i] = arguments[_i];
+    }
+    return this.lift.call(rxjs__WEBPACK_IMPORTED_MODULE_0__["merge"].apply(void 0, [this].concat(observables)));
+}
+//# sourceMappingURL=merge.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/mergeAll.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/mergeAll.js ***!
+  \*************************************************************/
+/*! exports provided: mergeAll */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mergeAll", function() { return mergeAll; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function mergeAll(concurrent) {
+    if (concurrent === void 0) { concurrent = Number.POSITIVE_INFINITY; }
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["mergeAll"])(concurrent)(this);
+}
+//# sourceMappingURL=mergeAll.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/mergeMap.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/mergeMap.js ***!
+  \*************************************************************/
+/*! exports provided: mergeMap */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mergeMap", function() { return mergeMap; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function mergeMap(project, concurrent) {
+    if (concurrent === void 0) { concurrent = Number.POSITIVE_INFINITY; }
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["mergeMap"])(project, concurrent)(this);
+}
+//# sourceMappingURL=mergeMap.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/mergeMapTo.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/mergeMapTo.js ***!
+  \***************************************************************/
+/*! exports provided: mergeMapTo */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mergeMapTo", function() { return mergeMapTo; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function mergeMapTo(innerObservable, concurrent) {
+    if (concurrent === void 0) { concurrent = Number.POSITIVE_INFINITY; }
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["mergeMapTo"])(innerObservable, concurrent)(this);
+}
+//# sourceMappingURL=mergeMapTo.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/mergeScan.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/mergeScan.js ***!
+  \**************************************************************/
+/*! exports provided: mergeScan */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mergeScan", function() { return mergeScan; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function mergeScan(accumulator, seed, concurrent) {
+    if (concurrent === void 0) { concurrent = Number.POSITIVE_INFINITY; }
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["mergeScan"])(accumulator, seed, concurrent)(this);
+}
+//# sourceMappingURL=mergeScan.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/min.js":
+/*!********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/min.js ***!
+  \********************************************************/
+/*! exports provided: min */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "min", function() { return min; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function min(comparer) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["min"])(comparer)(this);
+}
+//# sourceMappingURL=min.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/multicast.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/multicast.js ***!
+  \**************************************************************/
+/*! exports provided: multicast */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "multicast", function() { return multicast; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function multicast(subjectOrSubjectFactory, selector) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["multicast"])(subjectOrSubjectFactory, selector)(this);
+}
+//# sourceMappingURL=multicast.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/observeOn.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/observeOn.js ***!
+  \**************************************************************/
+/*! exports provided: observeOn */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "observeOn", function() { return observeOn; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function observeOn(scheduler, delay) {
+    if (delay === void 0) { delay = 0; }
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["observeOn"])(scheduler, delay)(this);
+}
+//# sourceMappingURL=observeOn.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/onErrorResumeNext.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/onErrorResumeNext.js ***!
+  \**********************************************************************/
+/*! exports provided: onErrorResumeNext */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "onErrorResumeNext", function() { return onErrorResumeNext; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function onErrorResumeNext() {
+    var nextSources = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        nextSources[_i] = arguments[_i];
+    }
+    return rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["onErrorResumeNext"].apply(void 0, nextSources)(this);
+}
+//# sourceMappingURL=onErrorResumeNext.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/pairwise.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/pairwise.js ***!
+  \*************************************************************/
+/*! exports provided: pairwise */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "pairwise", function() { return pairwise; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function pairwise() {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["pairwise"])()(this);
+}
+//# sourceMappingURL=pairwise.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/partition.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/partition.js ***!
+  \**************************************************************/
+/*! exports provided: partition */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "partition", function() { return partition; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function partition(predicate, thisArg) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["partition"])(predicate, thisArg)(this);
+}
+//# sourceMappingURL=partition.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/pluck.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/pluck.js ***!
+  \**********************************************************/
+/*! exports provided: pluck */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "pluck", function() { return pluck; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function pluck() {
+    var properties = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        properties[_i] = arguments[_i];
+    }
+    return rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["pluck"].apply(void 0, properties)(this);
+}
+//# sourceMappingURL=pluck.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/publish.js":
+/*!************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/publish.js ***!
+  \************************************************************/
+/*! exports provided: publish */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "publish", function() { return publish; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function publish(selector) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["publish"])(selector)(this);
+}
+//# sourceMappingURL=publish.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/publishBehavior.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/publishBehavior.js ***!
+  \********************************************************************/
+/*! exports provided: publishBehavior */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "publishBehavior", function() { return publishBehavior; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function publishBehavior(value) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["publishBehavior"])(value)(this);
+}
+//# sourceMappingURL=publishBehavior.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/publishLast.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/publishLast.js ***!
+  \****************************************************************/
+/*! exports provided: publishLast */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "publishLast", function() { return publishLast; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function publishLast() {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["publishLast"])()(this);
+}
+//# sourceMappingURL=publishLast.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/publishReplay.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/publishReplay.js ***!
+  \******************************************************************/
+/*! exports provided: publishReplay */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "publishReplay", function() { return publishReplay; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function publishReplay(bufferSize, windowTime, selectorOrScheduler, scheduler) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["publishReplay"])(bufferSize, windowTime, selectorOrScheduler, scheduler)(this);
+}
+//# sourceMappingURL=publishReplay.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/race.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/race.js ***!
+  \*********************************************************/
+/*! exports provided: race */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "race", function() { return race; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function race() {
+    var observables = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        observables[_i] = arguments[_i];
+    }
+    return rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["race"].apply(void 0, observables)(this);
+}
+//# sourceMappingURL=race.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/reduce.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/reduce.js ***!
+  \***********************************************************/
+/*! exports provided: reduce */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "reduce", function() { return reduce; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function reduce(accumulator, seed) {
+    if (arguments.length >= 2) {
+        return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["reduce"])(accumulator, seed)(this);
+    }
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["reduce"])(accumulator)(this);
+}
+//# sourceMappingURL=reduce.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/repeat.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/repeat.js ***!
+  \***********************************************************/
+/*! exports provided: repeat */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "repeat", function() { return repeat; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function repeat(count) {
+    if (count === void 0) { count = -1; }
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["repeat"])(count)(this);
+}
+//# sourceMappingURL=repeat.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/repeatWhen.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/repeatWhen.js ***!
+  \***************************************************************/
+/*! exports provided: repeatWhen */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "repeatWhen", function() { return repeatWhen; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function repeatWhen(notifier) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["repeatWhen"])(notifier)(this);
+}
+//# sourceMappingURL=repeatWhen.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/retry.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/retry.js ***!
+  \**********************************************************/
+/*! exports provided: retry */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "retry", function() { return retry; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function retry(count) {
+    if (count === void 0) { count = -1; }
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["retry"])(count)(this);
+}
+//# sourceMappingURL=retry.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/retryWhen.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/retryWhen.js ***!
+  \**************************************************************/
+/*! exports provided: retryWhen */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "retryWhen", function() { return retryWhen; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function retryWhen(notifier) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["retryWhen"])(notifier)(this);
+}
+//# sourceMappingURL=retryWhen.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/sample.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/sample.js ***!
+  \***********************************************************/
+/*! exports provided: sample */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sample", function() { return sample; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function sample(notifier) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["sample"])(notifier)(this);
+}
+//# sourceMappingURL=sample.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/sampleTime.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/sampleTime.js ***!
+  \***************************************************************/
+/*! exports provided: sampleTime */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sampleTime", function() { return sampleTime; });
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+
+function sampleTime(period, scheduler) {
+    if (scheduler === void 0) { scheduler = rxjs__WEBPACK_IMPORTED_MODULE_0__["asyncScheduler"]; }
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["sampleTime"])(period, scheduler)(this);
+}
+//# sourceMappingURL=sampleTime.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/scan.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/scan.js ***!
+  \*********************************************************/
+/*! exports provided: scan */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "scan", function() { return scan; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function scan(accumulator, seed) {
+    if (arguments.length >= 2) {
+        return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["scan"])(accumulator, seed)(this);
+    }
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["scan"])(accumulator)(this);
+}
+//# sourceMappingURL=scan.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/sequenceEqual.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/sequenceEqual.js ***!
+  \******************************************************************/
+/*! exports provided: sequenceEqual */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sequenceEqual", function() { return sequenceEqual; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function sequenceEqual(compareTo, comparor) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["sequenceEqual"])(compareTo, comparor)(this);
+}
+//# sourceMappingURL=sequenceEqual.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/share.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/share.js ***!
+  \**********************************************************/
+/*! exports provided: share */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "share", function() { return share; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function share() {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["share"])()(this);
+}
+//# sourceMappingURL=share.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/shareReplay.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/shareReplay.js ***!
+  \****************************************************************/
+/*! exports provided: shareReplay */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "shareReplay", function() { return shareReplay; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function shareReplay(bufferSize, windowTime, scheduler) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["shareReplay"])(bufferSize, windowTime, scheduler)(this);
+}
+//# sourceMappingURL=shareReplay.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/single.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/single.js ***!
+  \***********************************************************/
+/*! exports provided: single */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "single", function() { return single; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function single(predicate) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["single"])(predicate)(this);
+}
+//# sourceMappingURL=single.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/skip.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/skip.js ***!
+  \*********************************************************/
+/*! exports provided: skip */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "skip", function() { return skip; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function skip(count) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["skip"])(count)(this);
+}
+//# sourceMappingURL=skip.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/skipLast.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/skipLast.js ***!
+  \*************************************************************/
+/*! exports provided: skipLast */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "skipLast", function() { return skipLast; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function skipLast(count) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["skipLast"])(count)(this);
+}
+//# sourceMappingURL=skipLast.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/skipUntil.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/skipUntil.js ***!
+  \**************************************************************/
+/*! exports provided: skipUntil */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "skipUntil", function() { return skipUntil; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function skipUntil(notifier) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["skipUntil"])(notifier)(this);
+}
+//# sourceMappingURL=skipUntil.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/skipWhile.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/skipWhile.js ***!
+  \**************************************************************/
+/*! exports provided: skipWhile */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "skipWhile", function() { return skipWhile; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function skipWhile(predicate) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["skipWhile"])(predicate)(this);
+}
+//# sourceMappingURL=skipWhile.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/startWith.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/startWith.js ***!
+  \**************************************************************/
+/*! exports provided: startWith */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "startWith", function() { return startWith; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function startWith() {
+    var array = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        array[_i] = arguments[_i];
+    }
+    return rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["startWith"].apply(void 0, array)(this);
+}
+//# sourceMappingURL=startWith.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/subscribeOn.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/subscribeOn.js ***!
+  \****************************************************************/
+/*! exports provided: subscribeOn */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "subscribeOn", function() { return subscribeOn; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function subscribeOn(scheduler, delay) {
+    if (delay === void 0) { delay = 0; }
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["subscribeOn"])(scheduler, delay)(this);
+}
+//# sourceMappingURL=subscribeOn.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/switch.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/switch.js ***!
+  \***********************************************************/
+/*! exports provided: _switch */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "_switch", function() { return _switch; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function _switch() {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["switchAll"])()(this);
+}
+//# sourceMappingURL=switch.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/switchMap.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/switchMap.js ***!
+  \**************************************************************/
+/*! exports provided: switchMap */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "switchMap", function() { return switchMap; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function switchMap(project) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["switchMap"])(project)(this);
+}
+//# sourceMappingURL=switchMap.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/switchMapTo.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/switchMapTo.js ***!
+  \****************************************************************/
+/*! exports provided: switchMapTo */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "switchMapTo", function() { return switchMapTo; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function switchMapTo(innerObservable) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["switchMapTo"])(innerObservable)(this);
+}
+//# sourceMappingURL=switchMapTo.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/take.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/take.js ***!
+  \*********************************************************/
+/*! exports provided: take */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "take", function() { return take; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function take(count) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["take"])(count)(this);
+}
+//# sourceMappingURL=take.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/takeLast.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/takeLast.js ***!
+  \*************************************************************/
+/*! exports provided: takeLast */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "takeLast", function() { return takeLast; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function takeLast(count) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["takeLast"])(count)(this);
+}
+//# sourceMappingURL=takeLast.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/takeUntil.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/takeUntil.js ***!
+  \**************************************************************/
+/*! exports provided: takeUntil */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "takeUntil", function() { return takeUntil; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function takeUntil(notifier) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["takeUntil"])(notifier)(this);
+}
+//# sourceMappingURL=takeUntil.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/takeWhile.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/takeWhile.js ***!
+  \**************************************************************/
+/*! exports provided: takeWhile */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "takeWhile", function() { return takeWhile; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function takeWhile(predicate) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["takeWhile"])(predicate)(this);
+}
+//# sourceMappingURL=takeWhile.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/throttle.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/throttle.js ***!
+  \*************************************************************/
+/*! exports provided: throttle */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "throttle", function() { return throttle; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var rxjs_internal_compatibility__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/internal-compatibility */ "./node_modules/rxjs/_esm5/internal-compatibility/index.js");
+
+
+function throttle(durationSelector, config) {
+    if (config === void 0) { config = rxjs_internal_compatibility__WEBPACK_IMPORTED_MODULE_1__["defaultThrottleConfig"]; }
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["throttle"])(durationSelector, config)(this);
+}
+//# sourceMappingURL=throttle.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/throttleTime.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/throttleTime.js ***!
+  \*****************************************************************/
+/*! exports provided: throttleTime */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "throttleTime", function() { return throttleTime; });
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_internal_compatibility__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/internal-compatibility */ "./node_modules/rxjs/_esm5/internal-compatibility/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+
+
+function throttleTime(duration, scheduler, config) {
+    if (scheduler === void 0) { scheduler = rxjs__WEBPACK_IMPORTED_MODULE_0__["asyncScheduler"]; }
+    if (config === void 0) { config = rxjs_internal_compatibility__WEBPACK_IMPORTED_MODULE_1__["defaultThrottleConfig"]; }
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["throttleTime"])(duration, scheduler, config)(this);
+}
+//# sourceMappingURL=throttleTime.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/timeInterval.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/timeInterval.js ***!
+  \*****************************************************************/
+/*! exports provided: timeInterval */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "timeInterval", function() { return timeInterval; });
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+
+function timeInterval(scheduler) {
+    if (scheduler === void 0) { scheduler = rxjs__WEBPACK_IMPORTED_MODULE_0__["asyncScheduler"]; }
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["timeInterval"])(scheduler)(this);
+}
+//# sourceMappingURL=timeInterval.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/timeout.js":
+/*!************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/timeout.js ***!
+  \************************************************************/
+/*! exports provided: timeout */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "timeout", function() { return timeout; });
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+
+function timeout(due, scheduler) {
+    if (scheduler === void 0) { scheduler = rxjs__WEBPACK_IMPORTED_MODULE_0__["asyncScheduler"]; }
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["timeout"])(due, scheduler)(this);
+}
+//# sourceMappingURL=timeout.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/timeoutWith.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/timeoutWith.js ***!
+  \****************************************************************/
+/*! exports provided: timeoutWith */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "timeoutWith", function() { return timeoutWith; });
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+
+function timeoutWith(due, withObservable, scheduler) {
+    if (scheduler === void 0) { scheduler = rxjs__WEBPACK_IMPORTED_MODULE_0__["asyncScheduler"]; }
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["timeoutWith"])(due, withObservable, scheduler)(this);
+}
+//# sourceMappingURL=timeoutWith.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/timestamp.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/timestamp.js ***!
+  \**************************************************************/
+/*! exports provided: timestamp */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "timestamp", function() { return timestamp; });
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+
+function timestamp(scheduler) {
+    if (scheduler === void 0) { scheduler = rxjs__WEBPACK_IMPORTED_MODULE_0__["asyncScheduler"]; }
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["timestamp"])(scheduler)(this);
+}
+//# sourceMappingURL=timestamp.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/toArray.js":
+/*!************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/toArray.js ***!
+  \************************************************************/
+/*! exports provided: toArray */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toArray", function() { return toArray; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function toArray() {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["toArray"])()(this);
+}
+//# sourceMappingURL=toArray.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/window.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/window.js ***!
+  \***********************************************************/
+/*! exports provided: window */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "window", function() { return window; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function window(windowBoundaries) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["window"])(windowBoundaries)(this);
+}
+//# sourceMappingURL=window.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/windowCount.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/windowCount.js ***!
+  \****************************************************************/
+/*! exports provided: windowCount */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "windowCount", function() { return windowCount; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function windowCount(windowSize, startWindowEvery) {
+    if (startWindowEvery === void 0) { startWindowEvery = 0; }
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["windowCount"])(windowSize, startWindowEvery)(this);
+}
+//# sourceMappingURL=windowCount.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/windowTime.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/windowTime.js ***!
+  \***************************************************************/
+/*! exports provided: windowTime */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "windowTime", function() { return windowTime; });
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_internal_compatibility__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/internal-compatibility */ "./node_modules/rxjs/_esm5/internal-compatibility/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+
+
+function windowTime(windowTimeSpan) {
+    var scheduler = rxjs__WEBPACK_IMPORTED_MODULE_0__["asyncScheduler"];
+    var windowCreationInterval = null;
+    var maxWindowSize = Number.POSITIVE_INFINITY;
+    if (Object(rxjs_internal_compatibility__WEBPACK_IMPORTED_MODULE_1__["isScheduler"])(arguments[3])) {
+        scheduler = arguments[3];
+    }
+    if (Object(rxjs_internal_compatibility__WEBPACK_IMPORTED_MODULE_1__["isScheduler"])(arguments[2])) {
+        scheduler = arguments[2];
+    }
+    else if (Object(rxjs_internal_compatibility__WEBPACK_IMPORTED_MODULE_1__["isNumeric"])(arguments[2])) {
+        maxWindowSize = arguments[2];
+    }
+    if (Object(rxjs_internal_compatibility__WEBPACK_IMPORTED_MODULE_1__["isScheduler"])(arguments[1])) {
+        scheduler = arguments[1];
+    }
+    else if (Object(rxjs_internal_compatibility__WEBPACK_IMPORTED_MODULE_1__["isNumeric"])(arguments[1])) {
+        windowCreationInterval = arguments[1];
+    }
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["windowTime"])(windowTimeSpan, windowCreationInterval, maxWindowSize, scheduler)(this);
+}
+//# sourceMappingURL=windowTime.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/windowToggle.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/windowToggle.js ***!
+  \*****************************************************************/
+/*! exports provided: windowToggle */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "windowToggle", function() { return windowToggle; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function windowToggle(openings, closingSelector) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["windowToggle"])(openings, closingSelector)(this);
+}
+//# sourceMappingURL=windowToggle.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/windowWhen.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/windowWhen.js ***!
+  \***************************************************************/
+/*! exports provided: windowWhen */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "windowWhen", function() { return windowWhen; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function windowWhen(closingSelector) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["windowWhen"])(closingSelector)(this);
+}
+//# sourceMappingURL=windowWhen.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/withLatestFrom.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/withLatestFrom.js ***!
+  \*******************************************************************/
+/*! exports provided: withLatestFrom */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "withLatestFrom", function() { return withLatestFrom; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function withLatestFrom() {
+    var args = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        args[_i] = arguments[_i];
+    }
+    return rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["withLatestFrom"].apply(void 0, args)(this);
+}
+//# sourceMappingURL=withLatestFrom.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/zip.js":
+/*!********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/zip.js ***!
+  \********************************************************/
+/*! exports provided: zipProto */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "zipProto", function() { return zipProto; });
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+function zipProto() {
+    var observables = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        observables[_i] = arguments[_i];
+    }
+    return this.lift.call(rxjs__WEBPACK_IMPORTED_MODULE_0__["zip"].apply(void 0, [this].concat(observables)));
+}
+//# sourceMappingURL=zip.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs-compat/_esm5/operator/zipAll.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/rxjs-compat/_esm5/operator/zipAll.js ***!
+  \***********************************************************/
+/*! exports provided: zipAll */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "zipAll", function() { return zipAll; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+function zipAll(project) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["zipAll"])(project)(this);
+}
+//# sourceMappingURL=zipAll.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs/_esm5/ajax/index.js":
+/*!***********************************************!*\
+  !*** ./node_modules/rxjs/_esm5/ajax/index.js ***!
+  \***********************************************/
+/*! exports provided: ajax, AjaxResponse, AjaxError, AjaxTimeoutError */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_observable_dom_ajax__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../internal/observable/dom/ajax */ "./node_modules/rxjs/_esm5/internal/observable/dom/ajax.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ajax", function() { return _internal_observable_dom_ajax__WEBPACK_IMPORTED_MODULE_0__["ajax"]; });
+
+/* harmony import */ var _internal_observable_dom_AjaxObservable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../internal/observable/dom/AjaxObservable */ "./node_modules/rxjs/_esm5/internal/observable/dom/AjaxObservable.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AjaxResponse", function() { return _internal_observable_dom_AjaxObservable__WEBPACK_IMPORTED_MODULE_1__["AjaxResponse"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AjaxError", function() { return _internal_observable_dom_AjaxObservable__WEBPACK_IMPORTED_MODULE_1__["AjaxError"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AjaxTimeoutError", function() { return _internal_observable_dom_AjaxObservable__WEBPACK_IMPORTED_MODULE_1__["AjaxTimeoutError"]; });
+
+/** PURE_IMPORTS_START  PURE_IMPORTS_END */
+
+
+//# sourceMappingURL=index.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/rxjs/_esm5/internal-compatibility/index.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/rxjs/_esm5/internal-compatibility/index.js ***!
+  \*****************************************************************/
+/*! exports provided: config, InnerSubscriber, OuterSubscriber, Scheduler, AnonymousSubject, SubjectSubscription, Subscriber, fromPromise, fromIterable, ajax, webSocket, ajaxGet, ajaxPost, ajaxDelete, ajaxPut, ajaxPatch, ajaxGetJSON, AjaxObservable, AjaxSubscriber, AjaxResponse, AjaxError, AjaxTimeoutError, WebSocketSubject, CombineLatestOperator, dispatch, SubscribeOnObservable, Timestamp, TimeInterval, GroupedObservable, defaultThrottleConfig, rxSubscriber, iterator, observable, ArgumentOutOfRangeError, EmptyError, Immediate, ObjectUnsubscribedError, TimeoutError, UnsubscriptionError, applyMixins, errorObject, hostReportError, identity, isArray, isArrayLike, isDate, isFunction, isIterable, isNumeric, isObject, isObservable, isPromise, isScheduler, noop, not, pipe, root, subscribeTo, subscribeToArray, subscribeToIterable, subscribeToObservable, subscribeToPromise, subscribeToResult, toSubscriber, tryCatch */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../internal/config */ "./node_modules/rxjs/_esm5/internal/config.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "config", function() { return _internal_config__WEBPACK_IMPORTED_MODULE_0__["config"]; });
+
+/* harmony import */ var _internal_InnerSubscriber__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../internal/InnerSubscriber */ "./node_modules/rxjs/_esm5/internal/InnerSubscriber.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "InnerSubscriber", function() { return _internal_InnerSubscriber__WEBPACK_IMPORTED_MODULE_1__["InnerSubscriber"]; });
+
+/* harmony import */ var _internal_OuterSubscriber__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../internal/OuterSubscriber */ "./node_modules/rxjs/_esm5/internal/OuterSubscriber.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "OuterSubscriber", function() { return _internal_OuterSubscriber__WEBPACK_IMPORTED_MODULE_2__["OuterSubscriber"]; });
+
+/* harmony import */ var _internal_Scheduler__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../internal/Scheduler */ "./node_modules/rxjs/_esm5/internal/Scheduler.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Scheduler", function() { return _internal_Scheduler__WEBPACK_IMPORTED_MODULE_3__["Scheduler"]; });
+
+/* harmony import */ var _internal_Subject__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../internal/Subject */ "./node_modules/rxjs/_esm5/internal/Subject.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AnonymousSubject", function() { return _internal_Subject__WEBPACK_IMPORTED_MODULE_4__["AnonymousSubject"]; });
+
+/* harmony import */ var _internal_SubjectSubscription__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../internal/SubjectSubscription */ "./node_modules/rxjs/_esm5/internal/SubjectSubscription.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SubjectSubscription", function() { return _internal_SubjectSubscription__WEBPACK_IMPORTED_MODULE_5__["SubjectSubscription"]; });
+
+/* harmony import */ var _internal_Subscriber__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../internal/Subscriber */ "./node_modules/rxjs/_esm5/internal/Subscriber.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Subscriber", function() { return _internal_Subscriber__WEBPACK_IMPORTED_MODULE_6__["Subscriber"]; });
+
+/* harmony import */ var _internal_observable_fromPromise__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../internal/observable/fromPromise */ "./node_modules/rxjs/_esm5/internal/observable/fromPromise.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "fromPromise", function() { return _internal_observable_fromPromise__WEBPACK_IMPORTED_MODULE_7__["fromPromise"]; });
+
+/* harmony import */ var _internal_observable_fromIterable__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../internal/observable/fromIterable */ "./node_modules/rxjs/_esm5/internal/observable/fromIterable.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "fromIterable", function() { return _internal_observable_fromIterable__WEBPACK_IMPORTED_MODULE_8__["fromIterable"]; });
+
+/* harmony import */ var _internal_observable_dom_ajax__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../internal/observable/dom/ajax */ "./node_modules/rxjs/_esm5/internal/observable/dom/ajax.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ajax", function() { return _internal_observable_dom_ajax__WEBPACK_IMPORTED_MODULE_9__["ajax"]; });
+
+/* harmony import */ var _internal_observable_dom_webSocket__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../internal/observable/dom/webSocket */ "./node_modules/rxjs/_esm5/internal/observable/dom/webSocket.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "webSocket", function() { return _internal_observable_dom_webSocket__WEBPACK_IMPORTED_MODULE_10__["webSocket"]; });
+
+/* harmony import */ var _internal_observable_dom_AjaxObservable__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../internal/observable/dom/AjaxObservable */ "./node_modules/rxjs/_esm5/internal/observable/dom/AjaxObservable.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ajaxGet", function() { return _internal_observable_dom_AjaxObservable__WEBPACK_IMPORTED_MODULE_11__["ajaxGet"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ajaxPost", function() { return _internal_observable_dom_AjaxObservable__WEBPACK_IMPORTED_MODULE_11__["ajaxPost"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ajaxDelete", function() { return _internal_observable_dom_AjaxObservable__WEBPACK_IMPORTED_MODULE_11__["ajaxDelete"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ajaxPut", function() { return _internal_observable_dom_AjaxObservable__WEBPACK_IMPORTED_MODULE_11__["ajaxPut"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ajaxPatch", function() { return _internal_observable_dom_AjaxObservable__WEBPACK_IMPORTED_MODULE_11__["ajaxPatch"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ajaxGetJSON", function() { return _internal_observable_dom_AjaxObservable__WEBPACK_IMPORTED_MODULE_11__["ajaxGetJSON"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AjaxObservable", function() { return _internal_observable_dom_AjaxObservable__WEBPACK_IMPORTED_MODULE_11__["AjaxObservable"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AjaxSubscriber", function() { return _internal_observable_dom_AjaxObservable__WEBPACK_IMPORTED_MODULE_11__["AjaxSubscriber"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AjaxResponse", function() { return _internal_observable_dom_AjaxObservable__WEBPACK_IMPORTED_MODULE_11__["AjaxResponse"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AjaxError", function() { return _internal_observable_dom_AjaxObservable__WEBPACK_IMPORTED_MODULE_11__["AjaxError"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AjaxTimeoutError", function() { return _internal_observable_dom_AjaxObservable__WEBPACK_IMPORTED_MODULE_11__["AjaxTimeoutError"]; });
+
+/* harmony import */ var _internal_observable_dom_WebSocketSubject__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../internal/observable/dom/WebSocketSubject */ "./node_modules/rxjs/_esm5/internal/observable/dom/WebSocketSubject.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WebSocketSubject", function() { return _internal_observable_dom_WebSocketSubject__WEBPACK_IMPORTED_MODULE_12__["WebSocketSubject"]; });
+
+/* harmony import */ var _internal_observable_combineLatest__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../internal/observable/combineLatest */ "./node_modules/rxjs/_esm5/internal/observable/combineLatest.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CombineLatestOperator", function() { return _internal_observable_combineLatest__WEBPACK_IMPORTED_MODULE_13__["CombineLatestOperator"]; });
+
+/* harmony import */ var _internal_observable_range__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../internal/observable/range */ "./node_modules/rxjs/_esm5/internal/observable/range.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "dispatch", function() { return _internal_observable_range__WEBPACK_IMPORTED_MODULE_14__["dispatch"]; });
+
+/* harmony import */ var _internal_observable_SubscribeOnObservable__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../internal/observable/SubscribeOnObservable */ "./node_modules/rxjs/_esm5/internal/observable/SubscribeOnObservable.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SubscribeOnObservable", function() { return _internal_observable_SubscribeOnObservable__WEBPACK_IMPORTED_MODULE_15__["SubscribeOnObservable"]; });
+
+/* harmony import */ var _internal_operators_timestamp__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../internal/operators/timestamp */ "./node_modules/rxjs/_esm5/internal/operators/timestamp.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Timestamp", function() { return _internal_operators_timestamp__WEBPACK_IMPORTED_MODULE_16__["Timestamp"]; });
+
+/* harmony import */ var _internal_operators_timeInterval__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../internal/operators/timeInterval */ "./node_modules/rxjs/_esm5/internal/operators/timeInterval.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TimeInterval", function() { return _internal_operators_timeInterval__WEBPACK_IMPORTED_MODULE_17__["TimeInterval"]; });
+
+/* harmony import */ var _internal_operators_groupBy__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../internal/operators/groupBy */ "./node_modules/rxjs/_esm5/internal/operators/groupBy.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GroupedObservable", function() { return _internal_operators_groupBy__WEBPACK_IMPORTED_MODULE_18__["GroupedObservable"]; });
+
+/* harmony import */ var _internal_operators_throttle__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../internal/operators/throttle */ "./node_modules/rxjs/_esm5/internal/operators/throttle.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "defaultThrottleConfig", function() { return _internal_operators_throttle__WEBPACK_IMPORTED_MODULE_19__["defaultThrottleConfig"]; });
+
+/* harmony import */ var _internal_symbol_rxSubscriber__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../internal/symbol/rxSubscriber */ "./node_modules/rxjs/_esm5/internal/symbol/rxSubscriber.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "rxSubscriber", function() { return _internal_symbol_rxSubscriber__WEBPACK_IMPORTED_MODULE_20__["rxSubscriber"]; });
+
+/* harmony import */ var _internal_symbol_iterator__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../internal/symbol/iterator */ "./node_modules/rxjs/_esm5/internal/symbol/iterator.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "iterator", function() { return _internal_symbol_iterator__WEBPACK_IMPORTED_MODULE_21__["iterator"]; });
+
+/* harmony import */ var _internal_symbol_observable__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../internal/symbol/observable */ "./node_modules/rxjs/_esm5/internal/symbol/observable.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "observable", function() { return _internal_symbol_observable__WEBPACK_IMPORTED_MODULE_22__["observable"]; });
+
+/* harmony import */ var _internal_util_ArgumentOutOfRangeError__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../internal/util/ArgumentOutOfRangeError */ "./node_modules/rxjs/_esm5/internal/util/ArgumentOutOfRangeError.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ArgumentOutOfRangeError", function() { return _internal_util_ArgumentOutOfRangeError__WEBPACK_IMPORTED_MODULE_23__["ArgumentOutOfRangeError"]; });
+
+/* harmony import */ var _internal_util_EmptyError__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../internal/util/EmptyError */ "./node_modules/rxjs/_esm5/internal/util/EmptyError.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "EmptyError", function() { return _internal_util_EmptyError__WEBPACK_IMPORTED_MODULE_24__["EmptyError"]; });
+
+/* harmony import */ var _internal_util_Immediate__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../internal/util/Immediate */ "./node_modules/rxjs/_esm5/internal/util/Immediate.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Immediate", function() { return _internal_util_Immediate__WEBPACK_IMPORTED_MODULE_25__["Immediate"]; });
+
+/* harmony import */ var _internal_util_ObjectUnsubscribedError__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../internal/util/ObjectUnsubscribedError */ "./node_modules/rxjs/_esm5/internal/util/ObjectUnsubscribedError.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ObjectUnsubscribedError", function() { return _internal_util_ObjectUnsubscribedError__WEBPACK_IMPORTED_MODULE_26__["ObjectUnsubscribedError"]; });
+
+/* harmony import */ var _internal_util_TimeoutError__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../internal/util/TimeoutError */ "./node_modules/rxjs/_esm5/internal/util/TimeoutError.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TimeoutError", function() { return _internal_util_TimeoutError__WEBPACK_IMPORTED_MODULE_27__["TimeoutError"]; });
+
+/* harmony import */ var _internal_util_UnsubscriptionError__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../internal/util/UnsubscriptionError */ "./node_modules/rxjs/_esm5/internal/util/UnsubscriptionError.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UnsubscriptionError", function() { return _internal_util_UnsubscriptionError__WEBPACK_IMPORTED_MODULE_28__["UnsubscriptionError"]; });
+
+/* harmony import */ var _internal_util_applyMixins__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../internal/util/applyMixins */ "./node_modules/rxjs/_esm5/internal/util/applyMixins.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "applyMixins", function() { return _internal_util_applyMixins__WEBPACK_IMPORTED_MODULE_29__["applyMixins"]; });
+
+/* harmony import */ var _internal_util_errorObject__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../internal/util/errorObject */ "./node_modules/rxjs/_esm5/internal/util/errorObject.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "errorObject", function() { return _internal_util_errorObject__WEBPACK_IMPORTED_MODULE_30__["errorObject"]; });
+
+/* harmony import */ var _internal_util_hostReportError__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ../internal/util/hostReportError */ "./node_modules/rxjs/_esm5/internal/util/hostReportError.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "hostReportError", function() { return _internal_util_hostReportError__WEBPACK_IMPORTED_MODULE_31__["hostReportError"]; });
+
+/* harmony import */ var _internal_util_identity__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ../internal/util/identity */ "./node_modules/rxjs/_esm5/internal/util/identity.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "identity", function() { return _internal_util_identity__WEBPACK_IMPORTED_MODULE_32__["identity"]; });
+
+/* harmony import */ var _internal_util_isArray__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ../internal/util/isArray */ "./node_modules/rxjs/_esm5/internal/util/isArray.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isArray", function() { return _internal_util_isArray__WEBPACK_IMPORTED_MODULE_33__["isArray"]; });
+
+/* harmony import */ var _internal_util_isArrayLike__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ../internal/util/isArrayLike */ "./node_modules/rxjs/_esm5/internal/util/isArrayLike.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isArrayLike", function() { return _internal_util_isArrayLike__WEBPACK_IMPORTED_MODULE_34__["isArrayLike"]; });
+
+/* harmony import */ var _internal_util_isDate__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ../internal/util/isDate */ "./node_modules/rxjs/_esm5/internal/util/isDate.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isDate", function() { return _internal_util_isDate__WEBPACK_IMPORTED_MODULE_35__["isDate"]; });
+
+/* harmony import */ var _internal_util_isFunction__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ../internal/util/isFunction */ "./node_modules/rxjs/_esm5/internal/util/isFunction.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isFunction", function() { return _internal_util_isFunction__WEBPACK_IMPORTED_MODULE_36__["isFunction"]; });
+
+/* harmony import */ var _internal_util_isIterable__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ../internal/util/isIterable */ "./node_modules/rxjs/_esm5/internal/util/isIterable.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isIterable", function() { return _internal_util_isIterable__WEBPACK_IMPORTED_MODULE_37__["isIterable"]; });
+
+/* harmony import */ var _internal_util_isNumeric__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ../internal/util/isNumeric */ "./node_modules/rxjs/_esm5/internal/util/isNumeric.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isNumeric", function() { return _internal_util_isNumeric__WEBPACK_IMPORTED_MODULE_38__["isNumeric"]; });
+
+/* harmony import */ var _internal_util_isObject__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ../internal/util/isObject */ "./node_modules/rxjs/_esm5/internal/util/isObject.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isObject", function() { return _internal_util_isObject__WEBPACK_IMPORTED_MODULE_39__["isObject"]; });
+
+/* harmony import */ var _internal_util_isInteropObservable__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ../internal/util/isInteropObservable */ "./node_modules/rxjs/_esm5/internal/util/isInteropObservable.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isObservable", function() { return _internal_util_isInteropObservable__WEBPACK_IMPORTED_MODULE_40__["isInteropObservable"]; });
+
+/* harmony import */ var _internal_util_isPromise__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ../internal/util/isPromise */ "./node_modules/rxjs/_esm5/internal/util/isPromise.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isPromise", function() { return _internal_util_isPromise__WEBPACK_IMPORTED_MODULE_41__["isPromise"]; });
+
+/* harmony import */ var _internal_util_isScheduler__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ../internal/util/isScheduler */ "./node_modules/rxjs/_esm5/internal/util/isScheduler.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isScheduler", function() { return _internal_util_isScheduler__WEBPACK_IMPORTED_MODULE_42__["isScheduler"]; });
+
+/* harmony import */ var _internal_util_noop__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ../internal/util/noop */ "./node_modules/rxjs/_esm5/internal/util/noop.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "noop", function() { return _internal_util_noop__WEBPACK_IMPORTED_MODULE_43__["noop"]; });
+
+/* harmony import */ var _internal_util_not__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ../internal/util/not */ "./node_modules/rxjs/_esm5/internal/util/not.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "not", function() { return _internal_util_not__WEBPACK_IMPORTED_MODULE_44__["not"]; });
+
+/* harmony import */ var _internal_util_pipe__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ../internal/util/pipe */ "./node_modules/rxjs/_esm5/internal/util/pipe.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "pipe", function() { return _internal_util_pipe__WEBPACK_IMPORTED_MODULE_45__["pipe"]; });
+
+/* harmony import */ var _internal_util_root__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ../internal/util/root */ "./node_modules/rxjs/_esm5/internal/util/root.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "root", function() { return _internal_util_root__WEBPACK_IMPORTED_MODULE_46__["root"]; });
+
+/* harmony import */ var _internal_util_subscribeTo__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ../internal/util/subscribeTo */ "./node_modules/rxjs/_esm5/internal/util/subscribeTo.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "subscribeTo", function() { return _internal_util_subscribeTo__WEBPACK_IMPORTED_MODULE_47__["subscribeTo"]; });
+
+/* harmony import */ var _internal_util_subscribeToArray__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ../internal/util/subscribeToArray */ "./node_modules/rxjs/_esm5/internal/util/subscribeToArray.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "subscribeToArray", function() { return _internal_util_subscribeToArray__WEBPACK_IMPORTED_MODULE_48__["subscribeToArray"]; });
+
+/* harmony import */ var _internal_util_subscribeToIterable__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ../internal/util/subscribeToIterable */ "./node_modules/rxjs/_esm5/internal/util/subscribeToIterable.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "subscribeToIterable", function() { return _internal_util_subscribeToIterable__WEBPACK_IMPORTED_MODULE_49__["subscribeToIterable"]; });
+
+/* harmony import */ var _internal_util_subscribeToObservable__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ../internal/util/subscribeToObservable */ "./node_modules/rxjs/_esm5/internal/util/subscribeToObservable.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "subscribeToObservable", function() { return _internal_util_subscribeToObservable__WEBPACK_IMPORTED_MODULE_50__["subscribeToObservable"]; });
+
+/* harmony import */ var _internal_util_subscribeToPromise__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ../internal/util/subscribeToPromise */ "./node_modules/rxjs/_esm5/internal/util/subscribeToPromise.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "subscribeToPromise", function() { return _internal_util_subscribeToPromise__WEBPACK_IMPORTED_MODULE_51__["subscribeToPromise"]; });
+
+/* harmony import */ var _internal_util_subscribeToResult__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ../internal/util/subscribeToResult */ "./node_modules/rxjs/_esm5/internal/util/subscribeToResult.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "subscribeToResult", function() { return _internal_util_subscribeToResult__WEBPACK_IMPORTED_MODULE_52__["subscribeToResult"]; });
+
+/* harmony import */ var _internal_util_toSubscriber__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ../internal/util/toSubscriber */ "./node_modules/rxjs/_esm5/internal/util/toSubscriber.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "toSubscriber", function() { return _internal_util_toSubscriber__WEBPACK_IMPORTED_MODULE_53__["toSubscriber"]; });
+
+/* harmony import */ var _internal_util_tryCatch__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../internal/util/tryCatch */ "./node_modules/rxjs/_esm5/internal/util/tryCatch.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "tryCatch", function() { return _internal_util_tryCatch__WEBPACK_IMPORTED_MODULE_54__["tryCatch"]; });
+
+/** PURE_IMPORTS_START  PURE_IMPORTS_END */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//# sourceMappingURL=index.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/rxjs/_esm5/internal/observable/dom/AjaxObservable.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/rxjs/_esm5/internal/observable/dom/AjaxObservable.js ***!
+  \***************************************************************************/
+/*! exports provided: ajaxGet, ajaxPost, ajaxDelete, ajaxPut, ajaxPatch, ajaxGetJSON, AjaxObservable, AjaxSubscriber, AjaxResponse, AjaxError, AjaxTimeoutError */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ajaxGet", function() { return ajaxGet; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ajaxPost", function() { return ajaxPost; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ajaxDelete", function() { return ajaxDelete; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ajaxPut", function() { return ajaxPut; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ajaxPatch", function() { return ajaxPatch; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ajaxGetJSON", function() { return ajaxGetJSON; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AjaxObservable", function() { return AjaxObservable; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AjaxSubscriber", function() { return AjaxSubscriber; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AjaxResponse", function() { return AjaxResponse; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AjaxError", function() { return AjaxError; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AjaxTimeoutError", function() { return AjaxTimeoutError; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _util_root__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/root */ "./node_modules/rxjs/_esm5/internal/util/root.js");
+/* harmony import */ var _util_tryCatch__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util/tryCatch */ "./node_modules/rxjs/_esm5/internal/util/tryCatch.js");
+/* harmony import */ var _util_errorObject__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../util/errorObject */ "./node_modules/rxjs/_esm5/internal/util/errorObject.js");
+/* harmony import */ var _Observable__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Observable */ "./node_modules/rxjs/_esm5/internal/Observable.js");
+/* harmony import */ var _Subscriber__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../Subscriber */ "./node_modules/rxjs/_esm5/internal/Subscriber.js");
+/* harmony import */ var _operators_map__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../operators/map */ "./node_modules/rxjs/_esm5/internal/operators/map.js");
+/** PURE_IMPORTS_START tslib,_.._util_root,_.._util_tryCatch,_.._util_errorObject,_.._Observable,_.._Subscriber,_.._operators_map PURE_IMPORTS_END */
+
+
+
+
+
+
+
+function getCORSRequest() {
+    if (_util_root__WEBPACK_IMPORTED_MODULE_1__["root"].XMLHttpRequest) {
+        return new _util_root__WEBPACK_IMPORTED_MODULE_1__["root"].XMLHttpRequest();
+    }
+    else if (!!_util_root__WEBPACK_IMPORTED_MODULE_1__["root"].XDomainRequest) {
+        return new _util_root__WEBPACK_IMPORTED_MODULE_1__["root"].XDomainRequest();
+    }
+    else {
+        throw new Error('CORS is not supported by your browser');
+    }
+}
+function getXMLHttpRequest() {
+    if (_util_root__WEBPACK_IMPORTED_MODULE_1__["root"].XMLHttpRequest) {
+        return new _util_root__WEBPACK_IMPORTED_MODULE_1__["root"].XMLHttpRequest();
+    }
+    else {
+        var progId = void 0;
+        try {
+            var progIds = ['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'];
+            for (var i = 0; i < 3; i++) {
+                try {
+                    progId = progIds[i];
+                    if (new _util_root__WEBPACK_IMPORTED_MODULE_1__["root"].ActiveXObject(progId)) {
+                        break;
+                    }
+                }
+                catch (e) {
+                }
+            }
+            return new _util_root__WEBPACK_IMPORTED_MODULE_1__["root"].ActiveXObject(progId);
+        }
+        catch (e) {
+            throw new Error('XMLHttpRequest is not supported by your browser');
+        }
+    }
+}
+function ajaxGet(url, headers) {
+    if (headers === void 0) {
+        headers = null;
+    }
+    return new AjaxObservable({ method: 'GET', url: url, headers: headers });
+}
+function ajaxPost(url, body, headers) {
+    return new AjaxObservable({ method: 'POST', url: url, body: body, headers: headers });
+}
+function ajaxDelete(url, headers) {
+    return new AjaxObservable({ method: 'DELETE', url: url, headers: headers });
+}
+function ajaxPut(url, body, headers) {
+    return new AjaxObservable({ method: 'PUT', url: url, body: body, headers: headers });
+}
+function ajaxPatch(url, body, headers) {
+    return new AjaxObservable({ method: 'PATCH', url: url, body: body, headers: headers });
+}
+var mapResponse = /*@__PURE__*/ Object(_operators_map__WEBPACK_IMPORTED_MODULE_6__["map"])(function (x, index) { return x.response; });
+function ajaxGetJSON(url, headers) {
+    return mapResponse(new AjaxObservable({
+        method: 'GET',
+        url: url,
+        responseType: 'json',
+        headers: headers
+    }));
+}
+var AjaxObservable = /*@__PURE__*/ (function (_super) {
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"](AjaxObservable, _super);
+    function AjaxObservable(urlOrRequest) {
+        var _this = _super.call(this) || this;
+        var request = {
+            async: true,
+            createXHR: function () {
+                return this.crossDomain ? getCORSRequest() : getXMLHttpRequest();
+            },
+            crossDomain: true,
+            withCredentials: false,
+            headers: {},
+            method: 'GET',
+            responseType: 'json',
+            timeout: 0
+        };
+        if (typeof urlOrRequest === 'string') {
+            request.url = urlOrRequest;
+        }
+        else {
+            for (var prop in urlOrRequest) {
+                if (urlOrRequest.hasOwnProperty(prop)) {
+                    request[prop] = urlOrRequest[prop];
+                }
+            }
+        }
+        _this.request = request;
+        return _this;
+    }
+    AjaxObservable.prototype._subscribe = function (subscriber) {
+        return new AjaxSubscriber(subscriber, this.request);
+    };
+    AjaxObservable.create = (function () {
+        var create = function (urlOrRequest) {
+            return new AjaxObservable(urlOrRequest);
+        };
+        create.get = ajaxGet;
+        create.post = ajaxPost;
+        create.delete = ajaxDelete;
+        create.put = ajaxPut;
+        create.patch = ajaxPatch;
+        create.getJSON = ajaxGetJSON;
+        return create;
+    })();
+    return AjaxObservable;
+}(_Observable__WEBPACK_IMPORTED_MODULE_4__["Observable"]));
+
+var AjaxSubscriber = /*@__PURE__*/ (function (_super) {
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"](AjaxSubscriber, _super);
+    function AjaxSubscriber(destination, request) {
+        var _this = _super.call(this, destination) || this;
+        _this.request = request;
+        _this.done = false;
+        var headers = request.headers = request.headers || {};
+        if (!request.crossDomain && !headers['X-Requested-With']) {
+            headers['X-Requested-With'] = 'XMLHttpRequest';
+        }
+        if (!('Content-Type' in headers) && !(_util_root__WEBPACK_IMPORTED_MODULE_1__["root"].FormData && request.body instanceof _util_root__WEBPACK_IMPORTED_MODULE_1__["root"].FormData) && typeof request.body !== 'undefined') {
+            headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
+        }
+        request.body = _this.serializeBody(request.body, request.headers['Content-Type']);
+        _this.send();
+        return _this;
+    }
+    AjaxSubscriber.prototype.next = function (e) {
+        this.done = true;
+        var _a = this, xhr = _a.xhr, request = _a.request, destination = _a.destination;
+        var response = new AjaxResponse(e, xhr, request);
+        destination.next(response);
+    };
+    AjaxSubscriber.prototype.send = function () {
+        var _a = this, request = _a.request, _b = _a.request, user = _b.user, method = _b.method, url = _b.url, async = _b.async, password = _b.password, headers = _b.headers, body = _b.body;
+        var createXHR = request.createXHR;
+        var xhr = Object(_util_tryCatch__WEBPACK_IMPORTED_MODULE_2__["tryCatch"])(createXHR).call(request);
+        if (xhr === _util_errorObject__WEBPACK_IMPORTED_MODULE_3__["errorObject"]) {
+            this.error(_util_errorObject__WEBPACK_IMPORTED_MODULE_3__["errorObject"].e);
+        }
+        else {
+            this.xhr = xhr;
+            this.setupEvents(xhr, request);
+            var result = void 0;
+            if (user) {
+                result = Object(_util_tryCatch__WEBPACK_IMPORTED_MODULE_2__["tryCatch"])(xhr.open).call(xhr, method, url, async, user, password);
+            }
+            else {
+                result = Object(_util_tryCatch__WEBPACK_IMPORTED_MODULE_2__["tryCatch"])(xhr.open).call(xhr, method, url, async);
+            }
+            if (result === _util_errorObject__WEBPACK_IMPORTED_MODULE_3__["errorObject"]) {
+                this.error(_util_errorObject__WEBPACK_IMPORTED_MODULE_3__["errorObject"].e);
+                return null;
+            }
+            if (async) {
+                xhr.timeout = request.timeout;
+                xhr.responseType = request.responseType;
+            }
+            if ('withCredentials' in xhr) {
+                xhr.withCredentials = !!request.withCredentials;
+            }
+            this.setHeaders(xhr, headers);
+            result = body ? Object(_util_tryCatch__WEBPACK_IMPORTED_MODULE_2__["tryCatch"])(xhr.send).call(xhr, body) : Object(_util_tryCatch__WEBPACK_IMPORTED_MODULE_2__["tryCatch"])(xhr.send).call(xhr);
+            if (result === _util_errorObject__WEBPACK_IMPORTED_MODULE_3__["errorObject"]) {
+                this.error(_util_errorObject__WEBPACK_IMPORTED_MODULE_3__["errorObject"].e);
+                return null;
+            }
+        }
+        return xhr;
+    };
+    AjaxSubscriber.prototype.serializeBody = function (body, contentType) {
+        if (!body || typeof body === 'string') {
+            return body;
+        }
+        else if (_util_root__WEBPACK_IMPORTED_MODULE_1__["root"].FormData && body instanceof _util_root__WEBPACK_IMPORTED_MODULE_1__["root"].FormData) {
+            return body;
+        }
+        if (contentType) {
+            var splitIndex = contentType.indexOf(';');
+            if (splitIndex !== -1) {
+                contentType = contentType.substring(0, splitIndex);
+            }
+        }
+        switch (contentType) {
+            case 'application/x-www-form-urlencoded':
+                return Object.keys(body).map(function (key) { return encodeURIComponent(key) + "=" + encodeURIComponent(body[key]); }).join('&');
+            case 'application/json':
+                return JSON.stringify(body);
+            default:
+                return body;
+        }
+    };
+    AjaxSubscriber.prototype.setHeaders = function (xhr, headers) {
+        for (var key in headers) {
+            if (headers.hasOwnProperty(key)) {
+                xhr.setRequestHeader(key, headers[key]);
+            }
+        }
+    };
+    AjaxSubscriber.prototype.setupEvents = function (xhr, request) {
+        var progressSubscriber = request.progressSubscriber;
+        function xhrTimeout(e) {
+            var _a = xhrTimeout, subscriber = _a.subscriber, progressSubscriber = _a.progressSubscriber, request = _a.request;
+            if (progressSubscriber) {
+                progressSubscriber.error(e);
+            }
+            subscriber.error(new AjaxTimeoutError(this, request));
+        }
+        xhr.ontimeout = xhrTimeout;
+        xhrTimeout.request = request;
+        xhrTimeout.subscriber = this;
+        xhrTimeout.progressSubscriber = progressSubscriber;
+        if (xhr.upload && 'withCredentials' in xhr) {
+            if (progressSubscriber) {
+                var xhrProgress_1;
+                xhrProgress_1 = function (e) {
+                    var progressSubscriber = xhrProgress_1.progressSubscriber;
+                    progressSubscriber.next(e);
+                };
+                if (_util_root__WEBPACK_IMPORTED_MODULE_1__["root"].XDomainRequest) {
+                    xhr.onprogress = xhrProgress_1;
+                }
+                else {
+                    xhr.upload.onprogress = xhrProgress_1;
+                }
+                xhrProgress_1.progressSubscriber = progressSubscriber;
+            }
+            var xhrError_1;
+            xhrError_1 = function (e) {
+                var _a = xhrError_1, progressSubscriber = _a.progressSubscriber, subscriber = _a.subscriber, request = _a.request;
+                if (progressSubscriber) {
+                    progressSubscriber.error(e);
+                }
+                subscriber.error(new AjaxError('ajax error', this, request));
+            };
+            xhr.onerror = xhrError_1;
+            xhrError_1.request = request;
+            xhrError_1.subscriber = this;
+            xhrError_1.progressSubscriber = progressSubscriber;
+        }
+        function xhrReadyStateChange(e) {
+            return;
+        }
+        xhr.onreadystatechange = xhrReadyStateChange;
+        xhrReadyStateChange.subscriber = this;
+        xhrReadyStateChange.progressSubscriber = progressSubscriber;
+        xhrReadyStateChange.request = request;
+        function xhrLoad(e) {
+            var _a = xhrLoad, subscriber = _a.subscriber, progressSubscriber = _a.progressSubscriber, request = _a.request;
+            if (this.readyState === 4) {
+                var status_1 = this.status === 1223 ? 204 : this.status;
+                var response = (this.responseType === 'text' ? (this.response || this.responseText) : this.response);
+                if (status_1 === 0) {
+                    status_1 = response ? 200 : 0;
+                }
+                if (status_1 < 400) {
+                    if (progressSubscriber) {
+                        progressSubscriber.complete();
+                    }
+                    subscriber.next(e);
+                    subscriber.complete();
+                }
+                else {
+                    if (progressSubscriber) {
+                        progressSubscriber.error(e);
+                    }
+                    subscriber.error(new AjaxError('ajax error ' + status_1, this, request));
+                }
+            }
+        }
+        xhr.onload = xhrLoad;
+        xhrLoad.subscriber = this;
+        xhrLoad.progressSubscriber = progressSubscriber;
+        xhrLoad.request = request;
+    };
+    AjaxSubscriber.prototype.unsubscribe = function () {
+        var _a = this, done = _a.done, xhr = _a.xhr;
+        if (!done && xhr && xhr.readyState !== 4 && typeof xhr.abort === 'function') {
+            xhr.abort();
+        }
+        _super.prototype.unsubscribe.call(this);
+    };
+    return AjaxSubscriber;
+}(_Subscriber__WEBPACK_IMPORTED_MODULE_5__["Subscriber"]));
+
+var AjaxResponse = /*@__PURE__*/ (function () {
+    function AjaxResponse(originalEvent, xhr, request) {
+        this.originalEvent = originalEvent;
+        this.xhr = xhr;
+        this.request = request;
+        this.status = xhr.status;
+        this.responseType = xhr.responseType || request.responseType;
+        this.response = parseXhrResponse(this.responseType, xhr);
+    }
+    return AjaxResponse;
+}());
+
+var AjaxError = /*@__PURE__*/ (function (_super) {
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"](AjaxError, _super);
+    function AjaxError(message, xhr, request) {
+        var _this = _super.call(this, message) || this;
+        _this.name = 'AjaxError';
+        _this.message = message;
+        _this.xhr = xhr;
+        _this.request = request;
+        _this.status = xhr.status;
+        _this.responseType = xhr.responseType || request.responseType;
+        _this.response = parseXhrResponse(_this.responseType, xhr);
+        Object.setPrototypeOf(_this, AjaxError.prototype);
+        return _this;
+    }
+    return AjaxError;
+}(Error));
+
+function parseXhrResponse(responseType, xhr) {
+    switch (responseType) {
+        case 'json':
+            if ('response' in xhr) {
+                return xhr.responseType ? xhr.response : JSON.parse(xhr.response || xhr.responseText || 'null');
+            }
+            else {
+                return JSON.parse(xhr.responseText || 'null');
+            }
+        case 'xml':
+            return xhr.responseXML;
+        case 'text':
+        default:
+            return ('response' in xhr) ? xhr.response : xhr.responseText;
+    }
+}
+var AjaxTimeoutError = /*@__PURE__*/ (function (_super) {
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"](AjaxTimeoutError, _super);
+    function AjaxTimeoutError(xhr, request) {
+        var _this = _super.call(this, 'ajax timeout', xhr, request) || this;
+        _this.name = 'AjaxTimeoutError';
+        Object.setPrototypeOf(_this, AjaxTimeoutError.prototype);
+        return _this;
+    }
+    return AjaxTimeoutError;
+}(AjaxError));
+
+//# sourceMappingURL=AjaxObservable.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/rxjs/_esm5/internal/observable/dom/WebSocketSubject.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/rxjs/_esm5/internal/observable/dom/WebSocketSubject.js ***!
+  \*****************************************************************************/
+/*! exports provided: WebSocketSubject */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WebSocketSubject", function() { return WebSocketSubject; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _Subject__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Subject */ "./node_modules/rxjs/_esm5/internal/Subject.js");
+/* harmony import */ var _Subscriber__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Subscriber */ "./node_modules/rxjs/_esm5/internal/Subscriber.js");
+/* harmony import */ var _Observable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Observable */ "./node_modules/rxjs/_esm5/internal/Observable.js");
+/* harmony import */ var _Subscription__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Subscription */ "./node_modules/rxjs/_esm5/internal/Subscription.js");
+/* harmony import */ var _ReplaySubject__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../ReplaySubject */ "./node_modules/rxjs/_esm5/internal/ReplaySubject.js");
+/* harmony import */ var _util_tryCatch__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../util/tryCatch */ "./node_modules/rxjs/_esm5/internal/util/tryCatch.js");
+/* harmony import */ var _util_errorObject__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../util/errorObject */ "./node_modules/rxjs/_esm5/internal/util/errorObject.js");
+/** PURE_IMPORTS_START tslib,_.._Subject,_.._Subscriber,_.._Observable,_.._Subscription,_.._ReplaySubject,_.._util_tryCatch,_.._util_errorObject PURE_IMPORTS_END */
+
+
+
+
+
+
+
+
+var DEFAULT_WEBSOCKET_CONFIG = {
+    url: '',
+    deserializer: function (e) { return JSON.parse(e.data); },
+    serializer: function (value) { return JSON.stringify(value); },
+};
+var WEBSOCKETSUBJECT_INVALID_ERROR_OBJECT = 'WebSocketSubject.error must be called with an object with an error code, and an optional reason: { code: number, reason: string }';
+var WebSocketSubject = /*@__PURE__*/ (function (_super) {
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"](WebSocketSubject, _super);
+    function WebSocketSubject(urlConfigOrSource, destination) {
+        var _this = _super.call(this) || this;
+        if (urlConfigOrSource instanceof _Observable__WEBPACK_IMPORTED_MODULE_3__["Observable"]) {
+            _this.destination = destination;
+            _this.source = urlConfigOrSource;
+        }
+        else {
+            var config = _this._config = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, DEFAULT_WEBSOCKET_CONFIG);
+            _this._output = new _Subject__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
+            if (typeof urlConfigOrSource === 'string') {
+                config.url = urlConfigOrSource;
+            }
+            else {
+                for (var key in urlConfigOrSource) {
+                    if (urlConfigOrSource.hasOwnProperty(key)) {
+                        config[key] = urlConfigOrSource[key];
+                    }
+                }
+            }
+            if (!config.WebSocketCtor && WebSocket) {
+                config.WebSocketCtor = WebSocket;
+            }
+            else if (!config.WebSocketCtor) {
+                throw new Error('no WebSocket constructor can be found');
+            }
+            _this.destination = new _ReplaySubject__WEBPACK_IMPORTED_MODULE_5__["ReplaySubject"]();
+        }
+        return _this;
+    }
+    WebSocketSubject.prototype.lift = function (operator) {
+        var sock = new WebSocketSubject(this._config, this.destination);
+        sock.operator = operator;
+        sock.source = this;
+        return sock;
+    };
+    WebSocketSubject.prototype._resetState = function () {
+        this._socket = null;
+        if (!this.source) {
+            this.destination = new _ReplaySubject__WEBPACK_IMPORTED_MODULE_5__["ReplaySubject"]();
+        }
+        this._output = new _Subject__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
+    };
+    WebSocketSubject.prototype.multiplex = function (subMsg, unsubMsg, messageFilter) {
+        var self = this;
+        return new _Observable__WEBPACK_IMPORTED_MODULE_3__["Observable"](function (observer) {
+            var result = Object(_util_tryCatch__WEBPACK_IMPORTED_MODULE_6__["tryCatch"])(subMsg)();
+            if (result === _util_errorObject__WEBPACK_IMPORTED_MODULE_7__["errorObject"]) {
+                observer.error(_util_errorObject__WEBPACK_IMPORTED_MODULE_7__["errorObject"].e);
+            }
+            else {
+                self.next(result);
+            }
+            var subscription = self.subscribe(function (x) {
+                var result = Object(_util_tryCatch__WEBPACK_IMPORTED_MODULE_6__["tryCatch"])(messageFilter)(x);
+                if (result === _util_errorObject__WEBPACK_IMPORTED_MODULE_7__["errorObject"]) {
+                    observer.error(_util_errorObject__WEBPACK_IMPORTED_MODULE_7__["errorObject"].e);
+                }
+                else if (result) {
+                    observer.next(x);
+                }
+            }, function (err) { return observer.error(err); }, function () { return observer.complete(); });
+            return function () {
+                var result = Object(_util_tryCatch__WEBPACK_IMPORTED_MODULE_6__["tryCatch"])(unsubMsg)();
+                if (result === _util_errorObject__WEBPACK_IMPORTED_MODULE_7__["errorObject"]) {
+                    observer.error(_util_errorObject__WEBPACK_IMPORTED_MODULE_7__["errorObject"].e);
+                }
+                else {
+                    self.next(result);
+                }
+                subscription.unsubscribe();
+            };
+        });
+    };
+    WebSocketSubject.prototype._connectSocket = function () {
+        var _this = this;
+        var _a = this._config, WebSocketCtor = _a.WebSocketCtor, protocol = _a.protocol, url = _a.url, binaryType = _a.binaryType;
+        var observer = this._output;
+        var socket = null;
+        try {
+            socket = protocol ?
+                new WebSocketCtor(url, protocol) :
+                new WebSocketCtor(url);
+            this._socket = socket;
+            if (binaryType) {
+                this._socket.binaryType = binaryType;
+            }
+        }
+        catch (e) {
+            observer.error(e);
+            return;
+        }
+        var subscription = new _Subscription__WEBPACK_IMPORTED_MODULE_4__["Subscription"](function () {
+            _this._socket = null;
+            if (socket && socket.readyState === 1) {
+                socket.close();
+            }
+        });
+        socket.onopen = function (e) {
+            var openObserver = _this._config.openObserver;
+            if (openObserver) {
+                openObserver.next(e);
+            }
+            var queue = _this.destination;
+            _this.destination = _Subscriber__WEBPACK_IMPORTED_MODULE_2__["Subscriber"].create(function (x) {
+                if (socket.readyState === 1) {
+                    var serializer = _this._config.serializer;
+                    var msg = Object(_util_tryCatch__WEBPACK_IMPORTED_MODULE_6__["tryCatch"])(serializer)(x);
+                    if (msg === _util_errorObject__WEBPACK_IMPORTED_MODULE_7__["errorObject"]) {
+                        _this.destination.error(_util_errorObject__WEBPACK_IMPORTED_MODULE_7__["errorObject"].e);
+                        return;
+                    }
+                    socket.send(msg);
+                }
+            }, function (e) {
+                var closingObserver = _this._config.closingObserver;
+                if (closingObserver) {
+                    closingObserver.next(undefined);
+                }
+                if (e && e.code) {
+                    socket.close(e.code, e.reason);
+                }
+                else {
+                    observer.error(new TypeError(WEBSOCKETSUBJECT_INVALID_ERROR_OBJECT));
+                }
+                _this._resetState();
+            }, function () {
+                var closingObserver = _this._config.closingObserver;
+                if (closingObserver) {
+                    closingObserver.next(undefined);
+                }
+                socket.close();
+                _this._resetState();
+            });
+            if (queue && queue instanceof _ReplaySubject__WEBPACK_IMPORTED_MODULE_5__["ReplaySubject"]) {
+                subscription.add(queue.subscribe(_this.destination));
+            }
+        };
+        socket.onerror = function (e) {
+            _this._resetState();
+            observer.error(e);
+        };
+        socket.onclose = function (e) {
+            _this._resetState();
+            var closeObserver = _this._config.closeObserver;
+            if (closeObserver) {
+                closeObserver.next(e);
+            }
+            if (e.wasClean) {
+                observer.complete();
+            }
+            else {
+                observer.error(e);
+            }
+        };
+        socket.onmessage = function (e) {
+            var deserializer = _this._config.deserializer;
+            var result = Object(_util_tryCatch__WEBPACK_IMPORTED_MODULE_6__["tryCatch"])(deserializer)(e);
+            if (result === _util_errorObject__WEBPACK_IMPORTED_MODULE_7__["errorObject"]) {
+                observer.error(_util_errorObject__WEBPACK_IMPORTED_MODULE_7__["errorObject"].e);
+            }
+            else {
+                observer.next(result);
+            }
+        };
+    };
+    WebSocketSubject.prototype._subscribe = function (subscriber) {
+        var _this = this;
+        var source = this.source;
+        if (source) {
+            return source.subscribe(subscriber);
+        }
+        if (!this._socket) {
+            this._connectSocket();
+        }
+        var subscription = new _Subscription__WEBPACK_IMPORTED_MODULE_4__["Subscription"]();
+        subscription.add(this._output.subscribe(subscriber));
+        subscription.add(function () {
+            var _socket = _this._socket;
+            if (_this._output.observers.length === 0) {
+                if (_socket && _socket.readyState === 1) {
+                    _socket.close();
+                }
+                _this._resetState();
+            }
+        });
+        return subscription;
+    };
+    WebSocketSubject.prototype.unsubscribe = function () {
+        var _a = this, source = _a.source, _socket = _a._socket;
+        if (_socket && _socket.readyState === 1) {
+            _socket.close();
+            this._resetState();
+        }
+        _super.prototype.unsubscribe.call(this);
+        if (!source) {
+            this.destination = new _ReplaySubject__WEBPACK_IMPORTED_MODULE_5__["ReplaySubject"]();
+        }
+    };
+    return WebSocketSubject;
+}(_Subject__WEBPACK_IMPORTED_MODULE_1__["AnonymousSubject"]));
+
+//# sourceMappingURL=WebSocketSubject.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/rxjs/_esm5/internal/observable/dom/ajax.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/rxjs/_esm5/internal/observable/dom/ajax.js ***!
+  \*****************************************************************/
+/*! exports provided: ajax */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ajax", function() { return ajax; });
+/* harmony import */ var _AjaxObservable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AjaxObservable */ "./node_modules/rxjs/_esm5/internal/observable/dom/AjaxObservable.js");
+/** PURE_IMPORTS_START _AjaxObservable PURE_IMPORTS_END */
+
+var ajax = _AjaxObservable__WEBPACK_IMPORTED_MODULE_0__["AjaxObservable"].create;
+//# sourceMappingURL=ajax.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/rxjs/_esm5/internal/observable/dom/webSocket.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/rxjs/_esm5/internal/observable/dom/webSocket.js ***!
+  \**********************************************************************/
+/*! exports provided: webSocket */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "webSocket", function() { return webSocket; });
+/* harmony import */ var _WebSocketSubject__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./WebSocketSubject */ "./node_modules/rxjs/_esm5/internal/observable/dom/WebSocketSubject.js");
+/** PURE_IMPORTS_START _WebSocketSubject PURE_IMPORTS_END */
+
+function webSocket(urlConfigOrSource) {
+    return new _WebSocketSubject__WEBPACK_IMPORTED_MODULE_0__["WebSocketSubject"](urlConfigOrSource);
+}
+//# sourceMappingURL=webSocket.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/rxjs/_esm5/internal/testing/ColdObservable.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/rxjs/_esm5/internal/testing/ColdObservable.js ***!
+  \********************************************************************/
+/*! exports provided: ColdObservable */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ColdObservable", function() { return ColdObservable; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _Observable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Observable */ "./node_modules/rxjs/_esm5/internal/Observable.js");
+/* harmony import */ var _Subscription__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Subscription */ "./node_modules/rxjs/_esm5/internal/Subscription.js");
+/* harmony import */ var _SubscriptionLoggable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SubscriptionLoggable */ "./node_modules/rxjs/_esm5/internal/testing/SubscriptionLoggable.js");
+/* harmony import */ var _util_applyMixins__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../util/applyMixins */ "./node_modules/rxjs/_esm5/internal/util/applyMixins.js");
+/** PURE_IMPORTS_START tslib,_Observable,_Subscription,_SubscriptionLoggable,_util_applyMixins PURE_IMPORTS_END */
+
+
+
+
+
+var ColdObservable = /*@__PURE__*/ (function (_super) {
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"](ColdObservable, _super);
+    function ColdObservable(messages, scheduler) {
+        var _this = _super.call(this, function (subscriber) {
+            var observable = this;
+            var index = observable.logSubscribedFrame();
+            subscriber.add(new _Subscription__WEBPACK_IMPORTED_MODULE_2__["Subscription"](function () {
+                observable.logUnsubscribedFrame(index);
+            }));
+            observable.scheduleMessages(subscriber);
+            return subscriber;
+        }) || this;
+        _this.messages = messages;
+        _this.subscriptions = [];
+        _this.scheduler = scheduler;
+        return _this;
+    }
+    ColdObservable.prototype.scheduleMessages = function (subscriber) {
+        var messagesLength = this.messages.length;
+        for (var i = 0; i < messagesLength; i++) {
+            var message = this.messages[i];
+            subscriber.add(this.scheduler.schedule(function (_a) {
+                var message = _a.message, subscriber = _a.subscriber;
+                message.notification.observe(subscriber);
+            }, message.frame, { message: message, subscriber: subscriber }));
+        }
+    };
+    return ColdObservable;
+}(_Observable__WEBPACK_IMPORTED_MODULE_1__["Observable"]));
+
+/*@__PURE__*/ Object(_util_applyMixins__WEBPACK_IMPORTED_MODULE_4__["applyMixins"])(ColdObservable, [_SubscriptionLoggable__WEBPACK_IMPORTED_MODULE_3__["SubscriptionLoggable"]]);
+//# sourceMappingURL=ColdObservable.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/rxjs/_esm5/internal/testing/HotObservable.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/rxjs/_esm5/internal/testing/HotObservable.js ***!
+  \*******************************************************************/
+/*! exports provided: HotObservable */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HotObservable", function() { return HotObservable; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _Subject__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Subject */ "./node_modules/rxjs/_esm5/internal/Subject.js");
+/* harmony import */ var _Subscription__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Subscription */ "./node_modules/rxjs/_esm5/internal/Subscription.js");
+/* harmony import */ var _SubscriptionLoggable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SubscriptionLoggable */ "./node_modules/rxjs/_esm5/internal/testing/SubscriptionLoggable.js");
+/* harmony import */ var _util_applyMixins__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../util/applyMixins */ "./node_modules/rxjs/_esm5/internal/util/applyMixins.js");
+/** PURE_IMPORTS_START tslib,_Subject,_Subscription,_SubscriptionLoggable,_util_applyMixins PURE_IMPORTS_END */
+
+
+
+
+
+var HotObservable = /*@__PURE__*/ (function (_super) {
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"](HotObservable, _super);
+    function HotObservable(messages, scheduler) {
+        var _this = _super.call(this) || this;
+        _this.messages = messages;
+        _this.subscriptions = [];
+        _this.scheduler = scheduler;
+        return _this;
+    }
+    HotObservable.prototype._subscribe = function (subscriber) {
+        var subject = this;
+        var index = subject.logSubscribedFrame();
+        subscriber.add(new _Subscription__WEBPACK_IMPORTED_MODULE_2__["Subscription"](function () {
+            subject.logUnsubscribedFrame(index);
+        }));
+        return _super.prototype._subscribe.call(this, subscriber);
+    };
+    HotObservable.prototype.setup = function () {
+        var subject = this;
+        var messagesLength = subject.messages.length;
+        for (var i = 0; i < messagesLength; i++) {
+            (function () {
+                var message = subject.messages[i];
+                subject.scheduler.schedule(function () { message.notification.observe(subject); }, message.frame);
+            })();
+        }
+    };
+    return HotObservable;
+}(_Subject__WEBPACK_IMPORTED_MODULE_1__["Subject"]));
+
+/*@__PURE__*/ Object(_util_applyMixins__WEBPACK_IMPORTED_MODULE_4__["applyMixins"])(HotObservable, [_SubscriptionLoggable__WEBPACK_IMPORTED_MODULE_3__["SubscriptionLoggable"]]);
+//# sourceMappingURL=HotObservable.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/rxjs/_esm5/internal/testing/SubscriptionLog.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/rxjs/_esm5/internal/testing/SubscriptionLog.js ***!
+  \*********************************************************************/
+/*! exports provided: SubscriptionLog */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SubscriptionLog", function() { return SubscriptionLog; });
+var SubscriptionLog = /*@__PURE__*/ (function () {
+    function SubscriptionLog(subscribedFrame, unsubscribedFrame) {
+        if (unsubscribedFrame === void 0) {
+            unsubscribedFrame = Number.POSITIVE_INFINITY;
+        }
+        this.subscribedFrame = subscribedFrame;
+        this.unsubscribedFrame = unsubscribedFrame;
+    }
+    return SubscriptionLog;
+}());
+
+//# sourceMappingURL=SubscriptionLog.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/rxjs/_esm5/internal/testing/SubscriptionLoggable.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/rxjs/_esm5/internal/testing/SubscriptionLoggable.js ***!
+  \**************************************************************************/
+/*! exports provided: SubscriptionLoggable */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SubscriptionLoggable", function() { return SubscriptionLoggable; });
+/* harmony import */ var _SubscriptionLog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SubscriptionLog */ "./node_modules/rxjs/_esm5/internal/testing/SubscriptionLog.js");
+/** PURE_IMPORTS_START _SubscriptionLog PURE_IMPORTS_END */
+
+var SubscriptionLoggable = /*@__PURE__*/ (function () {
+    function SubscriptionLoggable() {
+        this.subscriptions = [];
+    }
+    SubscriptionLoggable.prototype.logSubscribedFrame = function () {
+        this.subscriptions.push(new _SubscriptionLog__WEBPACK_IMPORTED_MODULE_0__["SubscriptionLog"](this.scheduler.now()));
+        return this.subscriptions.length - 1;
+    };
+    SubscriptionLoggable.prototype.logUnsubscribedFrame = function (index) {
+        var subscriptionLogs = this.subscriptions;
+        var oldSubscriptionLog = subscriptionLogs[index];
+        subscriptionLogs[index] = new _SubscriptionLog__WEBPACK_IMPORTED_MODULE_0__["SubscriptionLog"](oldSubscriptionLog.subscribedFrame, this.scheduler.now());
+    };
+    return SubscriptionLoggable;
+}());
+
+//# sourceMappingURL=SubscriptionLoggable.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/rxjs/_esm5/internal/testing/TestScheduler.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/rxjs/_esm5/internal/testing/TestScheduler.js ***!
+  \*******************************************************************/
+/*! exports provided: TestScheduler */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TestScheduler", function() { return TestScheduler; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _Observable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Observable */ "./node_modules/rxjs/_esm5/internal/Observable.js");
+/* harmony import */ var _Notification__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Notification */ "./node_modules/rxjs/_esm5/internal/Notification.js");
+/* harmony import */ var _ColdObservable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ColdObservable */ "./node_modules/rxjs/_esm5/internal/testing/ColdObservable.js");
+/* harmony import */ var _HotObservable__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./HotObservable */ "./node_modules/rxjs/_esm5/internal/testing/HotObservable.js");
+/* harmony import */ var _SubscriptionLog__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SubscriptionLog */ "./node_modules/rxjs/_esm5/internal/testing/SubscriptionLog.js");
+/* harmony import */ var _scheduler_VirtualTimeScheduler__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../scheduler/VirtualTimeScheduler */ "./node_modules/rxjs/_esm5/internal/scheduler/VirtualTimeScheduler.js");
+/* harmony import */ var _scheduler_AsyncScheduler__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../scheduler/AsyncScheduler */ "./node_modules/rxjs/_esm5/internal/scheduler/AsyncScheduler.js");
+/** PURE_IMPORTS_START tslib,_Observable,_Notification,_ColdObservable,_HotObservable,_SubscriptionLog,_scheduler_VirtualTimeScheduler,_scheduler_AsyncScheduler PURE_IMPORTS_END */
+
+
+
+
+
+
+
+
+var defaultMaxFrame = 750;
+var TestScheduler = /*@__PURE__*/ (function (_super) {
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"](TestScheduler, _super);
+    function TestScheduler(assertDeepEqual) {
+        var _this = _super.call(this, _scheduler_VirtualTimeScheduler__WEBPACK_IMPORTED_MODULE_6__["VirtualAction"], defaultMaxFrame) || this;
+        _this.assertDeepEqual = assertDeepEqual;
+        _this.hotObservables = [];
+        _this.coldObservables = [];
+        _this.flushTests = [];
+        _this.runMode = false;
+        return _this;
+    }
+    TestScheduler.prototype.createTime = function (marbles) {
+        var indexOf = marbles.indexOf('|');
+        if (indexOf === -1) {
+            throw new Error('marble diagram for time should have a completion marker "|"');
+        }
+        return indexOf * TestScheduler.frameTimeFactor;
+    };
+    TestScheduler.prototype.createColdObservable = function (marbles, values, error) {
+        if (marbles.indexOf('^') !== -1) {
+            throw new Error('cold observable cannot have subscription offset "^"');
+        }
+        if (marbles.indexOf('!') !== -1) {
+            throw new Error('cold observable cannot have unsubscription marker "!"');
+        }
+        var messages = TestScheduler.parseMarbles(marbles, values, error, undefined, this.runMode);
+        var cold = new _ColdObservable__WEBPACK_IMPORTED_MODULE_3__["ColdObservable"](messages, this);
+        this.coldObservables.push(cold);
+        return cold;
+    };
+    TestScheduler.prototype.createHotObservable = function (marbles, values, error) {
+        if (marbles.indexOf('!') !== -1) {
+            throw new Error('hot observable cannot have unsubscription marker "!"');
+        }
+        var messages = TestScheduler.parseMarbles(marbles, values, error, undefined, this.runMode);
+        var subject = new _HotObservable__WEBPACK_IMPORTED_MODULE_4__["HotObservable"](messages, this);
+        this.hotObservables.push(subject);
+        return subject;
+    };
+    TestScheduler.prototype.materializeInnerObservable = function (observable, outerFrame) {
+        var _this = this;
+        var messages = [];
+        observable.subscribe(function (value) {
+            messages.push({ frame: _this.frame - outerFrame, notification: _Notification__WEBPACK_IMPORTED_MODULE_2__["Notification"].createNext(value) });
+        }, function (err) {
+            messages.push({ frame: _this.frame - outerFrame, notification: _Notification__WEBPACK_IMPORTED_MODULE_2__["Notification"].createError(err) });
+        }, function () {
+            messages.push({ frame: _this.frame - outerFrame, notification: _Notification__WEBPACK_IMPORTED_MODULE_2__["Notification"].createComplete() });
+        });
+        return messages;
+    };
+    TestScheduler.prototype.expectObservable = function (observable, unsubscriptionMarbles) {
+        var _this = this;
+        if (unsubscriptionMarbles === void 0) {
+            unsubscriptionMarbles = null;
+        }
+        var actual = [];
+        var flushTest = { actual: actual, ready: false };
+        var unsubscriptionFrame = TestScheduler
+            .parseMarblesAsSubscriptions(unsubscriptionMarbles, this.runMode).unsubscribedFrame;
+        var subscription;
+        this.schedule(function () {
+            subscription = observable.subscribe(function (x) {
+                var value = x;
+                if (x instanceof _Observable__WEBPACK_IMPORTED_MODULE_1__["Observable"]) {
+                    value = _this.materializeInnerObservable(value, _this.frame);
+                }
+                actual.push({ frame: _this.frame, notification: _Notification__WEBPACK_IMPORTED_MODULE_2__["Notification"].createNext(value) });
+            }, function (err) {
+                actual.push({ frame: _this.frame, notification: _Notification__WEBPACK_IMPORTED_MODULE_2__["Notification"].createError(err) });
+            }, function () {
+                actual.push({ frame: _this.frame, notification: _Notification__WEBPACK_IMPORTED_MODULE_2__["Notification"].createComplete() });
+            });
+        }, 0);
+        if (unsubscriptionFrame !== Number.POSITIVE_INFINITY) {
+            this.schedule(function () { return subscription.unsubscribe(); }, unsubscriptionFrame);
+        }
+        this.flushTests.push(flushTest);
+        var runMode = this.runMode;
+        return {
+            toBe: function (marbles, values, errorValue) {
+                flushTest.ready = true;
+                flushTest.expected = TestScheduler.parseMarbles(marbles, values, errorValue, true, runMode);
+            }
+        };
+    };
+    TestScheduler.prototype.expectSubscriptions = function (actualSubscriptionLogs) {
+        var flushTest = { actual: actualSubscriptionLogs, ready: false };
+        this.flushTests.push(flushTest);
+        var runMode = this.runMode;
+        return {
+            toBe: function (marbles) {
+                var marblesArray = (typeof marbles === 'string') ? [marbles] : marbles;
+                flushTest.ready = true;
+                flushTest.expected = marblesArray.map(function (marbles) {
+                    return TestScheduler.parseMarblesAsSubscriptions(marbles, runMode);
+                });
+            }
+        };
+    };
+    TestScheduler.prototype.flush = function () {
+        var _this = this;
+        var hotObservables = this.hotObservables;
+        while (hotObservables.length > 0) {
+            hotObservables.shift().setup();
+        }
+        _super.prototype.flush.call(this);
+        this.flushTests = this.flushTests.filter(function (test) {
+            if (test.ready) {
+                _this.assertDeepEqual(test.actual, test.expected);
+                return false;
+            }
+            return true;
+        });
+    };
+    TestScheduler.parseMarblesAsSubscriptions = function (marbles, runMode) {
+        var _this = this;
+        if (runMode === void 0) {
+            runMode = false;
+        }
+        if (typeof marbles !== 'string') {
+            return new _SubscriptionLog__WEBPACK_IMPORTED_MODULE_5__["SubscriptionLog"](Number.POSITIVE_INFINITY);
+        }
+        var len = marbles.length;
+        var groupStart = -1;
+        var subscriptionFrame = Number.POSITIVE_INFINITY;
+        var unsubscriptionFrame = Number.POSITIVE_INFINITY;
+        var frame = 0;
+        var _loop_1 = function (i) {
+            var nextFrame = frame;
+            var advanceFrameBy = function (count) {
+                nextFrame += count * _this.frameTimeFactor;
+            };
+            var c = marbles[i];
+            switch (c) {
+                case ' ':
+                    if (!runMode) {
+                        advanceFrameBy(1);
+                    }
+                    break;
+                case '-':
+                    advanceFrameBy(1);
+                    break;
+                case '(':
+                    groupStart = frame;
+                    advanceFrameBy(1);
+                    break;
+                case ')':
+                    groupStart = -1;
+                    advanceFrameBy(1);
+                    break;
+                case '^':
+                    if (subscriptionFrame !== Number.POSITIVE_INFINITY) {
+                        throw new Error('found a second subscription point \'^\' in a ' +
+                            'subscription marble diagram. There can only be one.');
+                    }
+                    subscriptionFrame = groupStart > -1 ? groupStart : frame;
+                    advanceFrameBy(1);
+                    break;
+                case '!':
+                    if (unsubscriptionFrame !== Number.POSITIVE_INFINITY) {
+                        throw new Error('found a second subscription point \'^\' in a ' +
+                            'subscription marble diagram. There can only be one.');
+                    }
+                    unsubscriptionFrame = groupStart > -1 ? groupStart : frame;
+                    break;
+                default:
+                    if (runMode && c.match(/^[0-9]$/)) {
+                        if (i === 0 || marbles[i - 1] === ' ') {
+                            var buffer = marbles.slice(i);
+                            var match = buffer.match(/^([0-9]+(?:\.[0-9]+)?)(ms|s|m) /);
+                            if (match) {
+                                i += match[0].length - 1;
+                                var duration = parseFloat(match[1]);
+                                var unit = match[2];
+                                var durationInMs = void 0;
+                                switch (unit) {
+                                    case 'ms':
+                                        durationInMs = duration;
+                                        break;
+                                    case 's':
+                                        durationInMs = duration * 1000;
+                                        break;
+                                    case 'm':
+                                        durationInMs = duration * 1000 * 60;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                advanceFrameBy(durationInMs / this_1.frameTimeFactor);
+                                break;
+                            }
+                        }
+                    }
+                    throw new Error('there can only be \'^\' and \'!\' markers in a ' +
+                        'subscription marble diagram. Found instead \'' + c + '\'.');
+            }
+            frame = nextFrame;
+            out_i_1 = i;
+        };
+        var this_1 = this, out_i_1;
+        for (var i = 0; i < len; i++) {
+            _loop_1(i);
+            i = out_i_1;
+        }
+        if (unsubscriptionFrame < 0) {
+            return new _SubscriptionLog__WEBPACK_IMPORTED_MODULE_5__["SubscriptionLog"](subscriptionFrame);
+        }
+        else {
+            return new _SubscriptionLog__WEBPACK_IMPORTED_MODULE_5__["SubscriptionLog"](subscriptionFrame, unsubscriptionFrame);
+        }
+    };
+    TestScheduler.parseMarbles = function (marbles, values, errorValue, materializeInnerObservables, runMode) {
+        var _this = this;
+        if (materializeInnerObservables === void 0) {
+            materializeInnerObservables = false;
+        }
+        if (runMode === void 0) {
+            runMode = false;
+        }
+        if (marbles.indexOf('!') !== -1) {
+            throw new Error('conventional marble diagrams cannot have the ' +
+                'unsubscription marker "!"');
+        }
+        var len = marbles.length;
+        var testMessages = [];
+        var subIndex = runMode ? marbles.replace(/^[ ]+/, '').indexOf('^') : marbles.indexOf('^');
+        var frame = subIndex === -1 ? 0 : (subIndex * -this.frameTimeFactor);
+        var getValue = typeof values !== 'object' ?
+            function (x) { return x; } :
+            function (x) {
+                if (materializeInnerObservables && values[x] instanceof _ColdObservable__WEBPACK_IMPORTED_MODULE_3__["ColdObservable"]) {
+                    return values[x].messages;
+                }
+                return values[x];
+            };
+        var groupStart = -1;
+        var _loop_2 = function (i) {
+            var nextFrame = frame;
+            var advanceFrameBy = function (count) {
+                nextFrame += count * _this.frameTimeFactor;
+            };
+            var notification = void 0;
+            var c = marbles[i];
+            switch (c) {
+                case ' ':
+                    if (!runMode) {
+                        advanceFrameBy(1);
+                    }
+                    break;
+                case '-':
+                    advanceFrameBy(1);
+                    break;
+                case '(':
+                    groupStart = frame;
+                    advanceFrameBy(1);
+                    break;
+                case ')':
+                    groupStart = -1;
+                    advanceFrameBy(1);
+                    break;
+                case '|':
+                    notification = _Notification__WEBPACK_IMPORTED_MODULE_2__["Notification"].createComplete();
+                    advanceFrameBy(1);
+                    break;
+                case '^':
+                    advanceFrameBy(1);
+                    break;
+                case '#':
+                    notification = _Notification__WEBPACK_IMPORTED_MODULE_2__["Notification"].createError(errorValue || 'error');
+                    advanceFrameBy(1);
+                    break;
+                default:
+                    if (runMode && c.match(/^[0-9]$/)) {
+                        if (i === 0 || marbles[i - 1] === ' ') {
+                            var buffer = marbles.slice(i);
+                            var match = buffer.match(/^([0-9]+(?:\.[0-9]+)?)(ms|s|m) /);
+                            if (match) {
+                                i += match[0].length - 1;
+                                var duration = parseFloat(match[1]);
+                                var unit = match[2];
+                                var durationInMs = void 0;
+                                switch (unit) {
+                                    case 'ms':
+                                        durationInMs = duration;
+                                        break;
+                                    case 's':
+                                        durationInMs = duration * 1000;
+                                        break;
+                                    case 'm':
+                                        durationInMs = duration * 1000 * 60;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                advanceFrameBy(durationInMs / this_2.frameTimeFactor);
+                                break;
+                            }
+                        }
+                    }
+                    notification = _Notification__WEBPACK_IMPORTED_MODULE_2__["Notification"].createNext(getValue(c));
+                    advanceFrameBy(1);
+                    break;
+            }
+            if (notification) {
+                testMessages.push({ frame: groupStart > -1 ? groupStart : frame, notification: notification });
+            }
+            frame = nextFrame;
+            out_i_2 = i;
+        };
+        var this_2 = this, out_i_2;
+        for (var i = 0; i < len; i++) {
+            _loop_2(i);
+            i = out_i_2;
+        }
+        return testMessages;
+    };
+    TestScheduler.prototype.run = function (callback) {
+        var prevFrameTimeFactor = TestScheduler.frameTimeFactor;
+        var prevMaxFrames = this.maxFrames;
+        TestScheduler.frameTimeFactor = 1;
+        this.maxFrames = Number.POSITIVE_INFINITY;
+        this.runMode = true;
+        _scheduler_AsyncScheduler__WEBPACK_IMPORTED_MODULE_7__["AsyncScheduler"].delegate = this;
+        var helpers = {
+            cold: this.createColdObservable.bind(this),
+            hot: this.createHotObservable.bind(this),
+            flush: this.flush.bind(this),
+            expectObservable: this.expectObservable.bind(this),
+            expectSubscriptions: this.expectSubscriptions.bind(this),
+        };
+        try {
+            var ret = callback(helpers);
+            this.flush();
+            return ret;
+        }
+        finally {
+            TestScheduler.frameTimeFactor = prevFrameTimeFactor;
+            this.maxFrames = prevMaxFrames;
+            this.runMode = false;
+            _scheduler_AsyncScheduler__WEBPACK_IMPORTED_MODULE_7__["AsyncScheduler"].delegate = undefined;
+        }
+    };
+    return TestScheduler;
+}(_scheduler_VirtualTimeScheduler__WEBPACK_IMPORTED_MODULE_6__["VirtualTimeScheduler"]));
+
+//# sourceMappingURL=TestScheduler.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/rxjs/_esm5/internal/util/applyMixins.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs/_esm5/internal/util/applyMixins.js ***!
+  \**************************************************************/
+/*! exports provided: applyMixins */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "applyMixins", function() { return applyMixins; });
+/** PURE_IMPORTS_START  PURE_IMPORTS_END */
+function applyMixins(derivedCtor, baseCtors) {
+    for (var i = 0, len = baseCtors.length; i < len; i++) {
+        var baseCtor = baseCtors[i];
+        var propertyKeys = Object.getOwnPropertyNames(baseCtor.prototype);
+        for (var j = 0, len2 = propertyKeys.length; j < len2; j++) {
+            var name_1 = propertyKeys[j];
+            derivedCtor.prototype[name_1] = baseCtor.prototype[name_1];
+        }
+    }
+}
+//# sourceMappingURL=applyMixins.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/rxjs/_esm5/internal/util/root.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/rxjs/_esm5/internal/util/root.js ***!
+  \*******************************************************/
+/*! exports provided: root */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "root", function() { return _root; });
+/** PURE_IMPORTS_START  PURE_IMPORTS_END */
+var __window = typeof window !== 'undefined' && window;
+var __self = typeof self !== 'undefined' && typeof WorkerGlobalScope !== 'undefined' &&
+    self instanceof WorkerGlobalScope && self;
+var __global = typeof global !== 'undefined' && global;
+var _root = __window || __global || __self;
+/*@__PURE__*/ (function () {
+    if (!_root) {
+        throw /*@__PURE__*/ new Error('RxJS could not find any global context (window, self, global)');
+    }
+})();
+
+//# sourceMappingURL=root.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/rxjs/_esm5/testing/index.js":
+/*!**************************************************!*\
+  !*** ./node_modules/rxjs/_esm5/testing/index.js ***!
+  \**************************************************/
+/*! exports provided: TestScheduler */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_testing_TestScheduler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../internal/testing/TestScheduler */ "./node_modules/rxjs/_esm5/internal/testing/TestScheduler.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TestScheduler", function() { return _internal_testing_TestScheduler__WEBPACK_IMPORTED_MODULE_0__["TestScheduler"]; });
+
+/** PURE_IMPORTS_START  PURE_IMPORTS_END */
+
+//# sourceMappingURL=index.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/rxjs/_esm5/webSocket/index.js":
+/*!****************************************************!*\
+  !*** ./node_modules/rxjs/_esm5/webSocket/index.js ***!
+  \****************************************************/
+/*! exports provided: webSocket, WebSocketSubject */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_observable_dom_webSocket__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../internal/observable/dom/webSocket */ "./node_modules/rxjs/_esm5/internal/observable/dom/webSocket.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "webSocket", function() { return _internal_observable_dom_webSocket__WEBPACK_IMPORTED_MODULE_0__["webSocket"]; });
+
+/* harmony import */ var _internal_observable_dom_WebSocketSubject__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../internal/observable/dom/WebSocketSubject */ "./node_modules/rxjs/_esm5/internal/observable/dom/WebSocketSubject.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WebSocketSubject", function() { return _internal_observable_dom_WebSocketSubject__WEBPACK_IMPORTED_MODULE_1__["WebSocketSubject"]; });
+
+/** PURE_IMPORTS_START  PURE_IMPORTS_END */
+
+
+//# sourceMappingURL=index.js.map
+
+
+/***/ }),
+
 /***/ "./src/app/content/pages/auth/register/register.component.html":
 /*!*********************************************************************!*\
   !*** ./src/app/content/pages/auth/register/register.component.html ***!
@@ -1160,7 +7689,7 @@ var AngularEditorModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"modal fade\" id=\"m_modal_6\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalCenterTitle\" aria-hidden=\"true\">\r\n  <div class=\"modal-dialog modal-dialog-centered\" role=\"document\">\r\n    <div class=\"modal-content\">\r\n      <div class=\"modal-header\">\r\n        <h5 class=\"modal-title\" id=\"exampleModalLongTitle\">Modal title</h5>\r\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\r\n          <span aria-hidden=\"true\">&times;</span>\r\n        </button>\r\n      </div>\r\n      <div class=\"modal-body\">\r\n        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\r\n      </div>\r\n      <div class=\"modal-footer\">\r\n        <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\r\n        <button type=\"button\" class=\"btn btn-primary\">Save changes</button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>  \r\n\r\n\r\n\r\n    <ng-template #content let-c=\"close\" let-d=\"dismiss\" style='width: 600px !important'>\r\n      <div class=\"modal-header\">\r\n        <h4 class=\"modal-title\" style=\"    font-size: 25px;\r\n    line-height: 34px;\r\n    font-weight: 300;\">Agrega Miembro del Staff</h4>\r\n        <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\r\n          <span aria-hidden=\"true\">&times;</span>\r\n        </button>\r\n      </div>\r\n      <div class=\"modal-body\" style=\"padding: 19px 40px !important;\">\r\n<div class=\"row \">\r\n<!-- <div class=\"col-xl-3\" style=\"    margin-bottom: 22px;text-align: center;padding-right: 0px !important;\">\r\n  <img style=\"    width: 64px;\r\n    border-radius: 100%;\r\n    height: 64px;\r\n    margin-top: 14px;\" src=\"assets/app/media/img/userB.png\">\r\n</div> -->\r\n<div class=\"col-xl-12\" >\r\n    <form [formGroup]=\"addFormGroup\" #f=\"ngForm\">\r\n     \r\n\r\n     <mat-form-field  color=\"primary\" style='width: 100% !important;font-size: 16px !important;'>\r\n        <input style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"Nombre del staff\" formControlName=\"nombreStaff\" autocomplete=\"off\" required>\r\n\r\n         <span *ngIf='fs.nombreStaff.errors' matSuffix style=\"font-size: 13px !important;color: lightcoral;\">campo requerido</span> \r\n\r\n\r\n         <mat-label><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>person</mat-icon>Cual es el nombre del Staff?</mat-label>\r\n      </mat-form-field>\r\n\r\n\r\n\r\n      <mat-form-field style=' width: 100% !important;     font-size: 16px !important;\r\n    '>\r\n        <input style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"Puesto del empleado\" formControlName=\"puestoStaff\" autocomplete=\"off\" required>\r\n\r\n        <span *ngIf='fs.puestoStaff.errors' matSuffix style=\"font-size: 13px !important;color: lightcoral;\">campo requerido</span> \r\n\r\n\r\n         <mat-label><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>list_alt</mat-icon>¿Cuál es el puesto del Staff?</mat-label>\r\n      </mat-form-field>\r\n\r\n      <mat-form-field style='  width: 100% !important;    font-size: 16px !important;\r\n    '>\r\n        <input style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"Numero de telefono\" formControlName=\"telefonoStaff\" autocomplete=\"off\"  required>\r\n\r\n          <span *ngIf='fs.telefonoStaff.errors && fs.telefonoStaff.value' matSuffix style=\"font-size: 13px !important;color: lightcoral;\">Número incorrecto</span> \r\n\r\n            <span *ngIf='fs.telefonoStaff.errors  && !fs.telefonoStaff.value' matSuffix style=\"font-size: 13px !important;color: lightcoral;\">campo requerido</span> \r\n\r\n\r\n         <mat-label><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>phone</mat-icon>Telefono</mat-label>\r\n      </mat-form-field>\r\n\r\n      <mat-form-field style=' width: 100% !important;     font-size: 16px !important;\r\n    '>\r\n        <input style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"Correo Electronico\" formControlName=\"correoStaff\" type='email' autocomplete=\"off\" email required>\r\n\r\n           <span *ngIf='fs.correoStaff.errors' matSuffix style=\"font-size: 13px !important;color: lightcoral;\">campo requerido</span> \r\n\r\n\r\n         <mat-label ><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>email</mat-icon>Correo electronico</mat-label>\r\n      </mat-form-field>\r\n\r\n\r\n\r\n\r\n\r\n\r\n    </form>\r\n\r\n    <div style=\"    padding: 0px 0px 2px 0px;\r\n    font-size: 13px;color: rgb(232,84,126);font-weight: 400;\">\r\n      El nuevo miembro de su staff recibirá los detalles de acceso vía email\r\n<!--     <mat-slide-toggle [(ngModel)]=\"isHuman2\" (change)=\"onChange2($event)\" name=\"human2\">I am not a robot</mat-slide-toggle> -->\r\n\r\n<!--     <mat-slide-toggle name=\"human2\">Invitar a YourBeauty y crear cuenta</mat-slide-toggle>\r\n -->\r\n\r\n    </div>\r\n\r\n\r\n\r\n  </div>\r\n</div>\r\n\r\n      </div>\r\n\r\n\r\n      <div class=\"modal-footer\" *ngIf='!editarStaff'>\r\n        <button [disabled]='!f.form.valid'  type=\"button\" class=\"btn\" (click)='addStaff(1)' mat-raised-button color=\"primary\">Guardar</button>\r\n        <button [disabled]='!f.form.valid' type=\"button\" class=\"btn\" mat-raised-button color=\"primary\" (click)='addStaff(2)'>Guardar & Agregar otro</button>\r\n      </div>\r\n\r\n      <div class=\"modal-footer\" *ngIf='editarStaff'>\r\n        <button [disabled]='!f.form.valid'  type=\"button\" class=\"btn\" (click)='editStaffDo()' mat-raised-button color=\"primary\">Editar Staff</button>\r\n      </div>\r\n\r\n\r\n    </ng-template>\r\n\r\n\r\n\r\n\r\n\r\n    <ng-template #content2 let-c=\"close\" let-d=\"dismiss\">\r\n      <div class=\"modal-header\">\r\n        <h4 class=\"modal-title\" style=\"    font-size: 25px;\r\n    line-height: 34px;\r\n    font-weight: 300;\">Agregando Horario</h4>\r\n        <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\r\n          <span aria-hidden=\"true\">&times;</span>\r\n        </button>\r\n      </div>\r\n      <div class=\"modal-body\" style=\"padding: 0px !important\">\r\n          <div class=\"col-xl-12\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n        <div style='padding: 30px 45px;'>\r\n            <div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" *ngFor=\"let item of [{nombre:'Domingo'},{nombre:'Lunes'},{nombre:'Martes'}\r\n            ,{nombre:'Miercoles'},{nombre:'Jueves'},{nombre:'Viernes'},{nombre:'Sabado'}];  let i = index\">\r\n            <mat-checkbox >\r\n              <span class='labelBy' style='margin-bottom: 0px !important;'>{{item.nombre}}</span>\r\n                </mat-checkbox>\r\n              <div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n              \r\n              <div style=\"display: flex\">\r\n\r\n              <mat-select class='inputBy w50'>\r\n    \r\n              <mat-option value=\"option1\">12:00 AM</mat-option>\r\n              <mat-option value=\"option1\">12:05 AM</mat-option>\r\n              <mat-option value=\"option1\">12:10 AM</mat-option>\r\n              <mat-option value=\"option1\">12:15 AM</mat-option>\r\n              <mat-option value=\"option1\">12:20 AM</mat-option>\r\n              <mat-option value=\"option1\">12:25 AM</mat-option>\r\n              <mat-option value=\"option1\">12:30 AM</mat-option>\r\n              <mat-option value=\"option1\">12:35 AM</mat-option>\r\n              <mat-option value=\"option1\">12:40 AM</mat-option>\r\n              <mat-option value=\"option1\">12:45 AM</mat-option>\r\n              <mat-option value=\"option1\">12:50 AM</mat-option>\r\n              <mat-option value=\"option1\">12:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">01:00 AM</mat-option>\r\n              <mat-option value=\"option1\">01:05 AM</mat-option>\r\n              <mat-option value=\"option1\">01:10 AM</mat-option>\r\n              <mat-option value=\"option1\">01:15 AM</mat-option>\r\n              <mat-option value=\"option1\">01:20 AM</mat-option>\r\n              <mat-option value=\"option1\">01:25 AM</mat-option>\r\n              <mat-option value=\"option1\">01:30 AM</mat-option>\r\n              <mat-option value=\"option1\">01:35 AM</mat-option>\r\n              <mat-option value=\"option1\">01:40 AM</mat-option>\r\n              <mat-option value=\"option1\">01:45 AM</mat-option>\r\n              <mat-option value=\"option1\">01:50 AM</mat-option>\r\n              <mat-option value=\"option1\">01:55 AM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">02:00 AM</mat-option>\r\n              <mat-option value=\"option1\">02:05 AM</mat-option>\r\n              <mat-option value=\"option1\">02:10 AM</mat-option>\r\n              <mat-option value=\"option1\">02:15 AM</mat-option>\r\n              <mat-option value=\"option1\">02:20 AM</mat-option>\r\n              <mat-option value=\"option1\">02:25 AM</mat-option>\r\n              <mat-option value=\"option1\">02:30 AM</mat-option>\r\n              <mat-option value=\"option1\">02:35 AM</mat-option>\r\n              <mat-option value=\"option1\">02:40 AM</mat-option>\r\n              <mat-option value=\"option1\">02:45 AM</mat-option>\r\n              <mat-option value=\"option1\">02:50 AM</mat-option>\r\n              <mat-option value=\"option1\">02:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">03:00 AM</mat-option>\r\n              <mat-option value=\"option1\">03:05 AM</mat-option>\r\n              <mat-option value=\"option1\">03:10 AM</mat-option>\r\n              <mat-option value=\"option1\">03:15 AM</mat-option>\r\n              <mat-option value=\"option1\">03:20 AM</mat-option>\r\n              <mat-option value=\"option1\">03:25 AM</mat-option>\r\n              <mat-option value=\"option1\">03:30 AM</mat-option>\r\n              <mat-option value=\"option1\">03:35 AM</mat-option>\r\n              <mat-option value=\"option1\">03:40 AM</mat-option>\r\n              <mat-option value=\"option1\">03:45 AM</mat-option>\r\n              <mat-option value=\"option1\">03:50 AM</mat-option>\r\n              <mat-option value=\"option1\">03:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">04:00 AM</mat-option>\r\n              <mat-option value=\"option1\">04:05 AM</mat-option>\r\n              <mat-option value=\"option1\">04:10 AM</mat-option>\r\n              <mat-option value=\"option1\">04:15 AM</mat-option>\r\n              <mat-option value=\"option1\">04:20 AM</mat-option>\r\n              <mat-option value=\"option1\">04:25 AM</mat-option>\r\n              <mat-option value=\"option1\">04:30 AM</mat-option>\r\n              <mat-option value=\"option1\">04:35 AM</mat-option>\r\n              <mat-option value=\"option1\">04:40 AM</mat-option>\r\n              <mat-option value=\"option1\">04:45 AM</mat-option>\r\n              <mat-option value=\"option1\">04:50 AM</mat-option>\r\n              <mat-option value=\"option1\">04:55 AM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">05:00 AM</mat-option>\r\n              <mat-option value=\"option1\">05:05 AM</mat-option>\r\n              <mat-option value=\"option1\">05:10 AM</mat-option>\r\n              <mat-option value=\"option1\">05:15 AM</mat-option>\r\n              <mat-option value=\"option1\">05:20 AM</mat-option>\r\n              <mat-option value=\"option1\">05:25 AM</mat-option>\r\n              <mat-option value=\"option1\">05:30 AM</mat-option>\r\n              <mat-option value=\"option1\">05:35 AM</mat-option>\r\n              <mat-option value=\"option1\">05:40 AM</mat-option>\r\n              <mat-option value=\"option1\">05:45 AM</mat-option>\r\n              <mat-option value=\"option1\">05:50 AM</mat-option>\r\n              <mat-option value=\"option1\">05:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">06:00 AM</mat-option>\r\n              <mat-option value=\"option1\">06:05 AM</mat-option>\r\n              <mat-option value=\"option1\">06:10 AM</mat-option>\r\n              <mat-option value=\"option1\">06:15 AM</mat-option>\r\n              <mat-option value=\"option1\">06:20 AM</mat-option>\r\n              <mat-option value=\"option1\">06:25 AM</mat-option>\r\n              <mat-option value=\"option1\">06:30 AM</mat-option>\r\n              <mat-option value=\"option1\">06:35 AM</mat-option>\r\n              <mat-option value=\"option1\">06:40 AM</mat-option>\r\n              <mat-option value=\"option1\">06:45 AM</mat-option>\r\n              <mat-option value=\"option1\">06:50 AM</mat-option>\r\n              <mat-option value=\"option1\">06:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">07:00 AM</mat-option>\r\n              <mat-option value=\"option1\">07:05 AM</mat-option>\r\n              <mat-option value=\"option1\">07:10 AM</mat-option>\r\n              <mat-option value=\"option1\">07:15 AM</mat-option>\r\n              <mat-option value=\"option1\">07:20 AM</mat-option>\r\n              <mat-option value=\"option1\">07:25 AM</mat-option>\r\n              <mat-option value=\"option1\">07:30 AM</mat-option>\r\n              <mat-option value=\"option1\">07:35 AM</mat-option>\r\n              <mat-option value=\"option1\">07:40 AM</mat-option>\r\n              <mat-option value=\"option1\">07:45 AM</mat-option>\r\n              <mat-option value=\"option1\">07:50 AM</mat-option>\r\n              <mat-option value=\"option1\">07:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">08:00 AM</mat-option>\r\n              <mat-option value=\"option1\">08:05 AM</mat-option>\r\n              <mat-option value=\"option1\">08:10 AM</mat-option>\r\n              <mat-option value=\"option1\">08:15 AM</mat-option>\r\n              <mat-option value=\"option1\">08:20 AM</mat-option>\r\n              <mat-option value=\"option1\">08:25 AM</mat-option>\r\n              <mat-option value=\"option1\">08:30 AM</mat-option>\r\n              <mat-option value=\"option1\">08:35 AM</mat-option>\r\n              <mat-option value=\"option1\">08:40 AM</mat-option>\r\n              <mat-option value=\"option1\">08:45 AM</mat-option>\r\n              <mat-option value=\"option1\">08:50 AM</mat-option>\r\n              <mat-option value=\"option1\">08:55 AM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">09:00 AM</mat-option>\r\n              <mat-option value=\"option1\">09:05 AM</mat-option>\r\n              <mat-option value=\"option1\">09:10 AM</mat-option>\r\n              <mat-option value=\"option1\">09:15 AM</mat-option>\r\n              <mat-option value=\"option1\">09:20 AM</mat-option>\r\n              <mat-option value=\"option1\">09:25 AM</mat-option>\r\n              <mat-option value=\"option1\">09:30 AM</mat-option>\r\n              <mat-option value=\"option1\">09:35 AM</mat-option>\r\n              <mat-option value=\"option1\">09:40 AM</mat-option>\r\n              <mat-option value=\"option1\">09:45 AM</mat-option>\r\n              <mat-option value=\"option1\">09:50 AM</mat-option>\r\n              <mat-option value=\"option1\">09:55 AM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">10:00 AM</mat-option>\r\n              <mat-option value=\"option1\">10:05 AM</mat-option>\r\n              <mat-option value=\"option1\">10:10 AM</mat-option>\r\n              <mat-option value=\"option1\">10:15 AM</mat-option>\r\n              <mat-option value=\"option1\">10:20 AM</mat-option>\r\n              <mat-option value=\"option1\">10:25 AM</mat-option>\r\n              <mat-option value=\"option1\">10:30 AM</mat-option>\r\n              <mat-option value=\"option1\">10:35 AM</mat-option>\r\n              <mat-option value=\"option1\">10:40 AM</mat-option>\r\n              <mat-option value=\"option1\">10:45 AM</mat-option>\r\n              <mat-option value=\"option1\">10:50 AM</mat-option>\r\n              <mat-option value=\"option1\">10:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">11:00 AM</mat-option>\r\n              <mat-option value=\"option1\">11:05 AM</mat-option>\r\n              <mat-option value=\"option1\">11:10 AM</mat-option>\r\n              <mat-option value=\"option1\">11:15 AM</mat-option>\r\n              <mat-option value=\"option1\">11:20 AM</mat-option>\r\n              <mat-option value=\"option1\">11:25 AM</mat-option>\r\n              <mat-option value=\"option1\">11:30 AM</mat-option>\r\n              <mat-option value=\"option1\">11:35 AM</mat-option>\r\n              <mat-option value=\"option1\">11:40 AM</mat-option>\r\n              <mat-option value=\"option1\">11:45 AM</mat-option>\r\n              <mat-option value=\"option1\">11:50 AM</mat-option>\r\n              <mat-option value=\"option1\">11:55 AM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">12:00 PM</mat-option>\r\n              <mat-option value=\"option1\">12:05 PM</mat-option>\r\n              <mat-option value=\"option1\">12:10 PM</mat-option>\r\n              <mat-option value=\"option1\">12:15 PM</mat-option>\r\n              <mat-option value=\"option1\">12:20 PM</mat-option>\r\n              <mat-option value=\"option1\">12:25 PM</mat-option>\r\n              <mat-option value=\"option1\">12:30 PM</mat-option>\r\n              <mat-option value=\"option1\">12:35 PM</mat-option>\r\n              <mat-option value=\"option1\">12:40 PM</mat-option>\r\n              <mat-option value=\"option1\">12:45 PM</mat-option>\r\n              <mat-option value=\"option1\">12:50 PM</mat-option>\r\n              <mat-option value=\"option1\">12:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">01:00 PM</mat-option>\r\n              <mat-option value=\"option1\">01:05 PM</mat-option>\r\n              <mat-option value=\"option1\">01:10 PM</mat-option>\r\n              <mat-option value=\"option1\">01:15 PM</mat-option>\r\n              <mat-option value=\"option1\">01:20 PM</mat-option>\r\n              <mat-option value=\"option1\">01:25 PM</mat-option>\r\n              <mat-option value=\"option1\">01:30 PM</mat-option>\r\n              <mat-option value=\"option1\">01:35 PM</mat-option>\r\n              <mat-option value=\"option1\">01:40 PM</mat-option>\r\n              <mat-option value=\"option1\">01:45 PM</mat-option>\r\n              <mat-option value=\"option1\">01:50 PM</mat-option>\r\n              <mat-option value=\"option1\">01:55 PM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">02:00 PM</mat-option>\r\n              <mat-option value=\"option1\">02:05 PM</mat-option>\r\n              <mat-option value=\"option1\">02:10 PM</mat-option>\r\n              <mat-option value=\"option1\">02:15 PM</mat-option>\r\n              <mat-option value=\"option1\">02:20 PM</mat-option>\r\n              <mat-option value=\"option1\">02:25 PM</mat-option>\r\n              <mat-option value=\"option1\">02:30 PM</mat-option>\r\n              <mat-option value=\"option1\">02:35 PM</mat-option>\r\n              <mat-option value=\"option1\">02:40 PM</mat-option>\r\n              <mat-option value=\"option1\">02:45 PM</mat-option>\r\n              <mat-option value=\"option1\">02:50 PM</mat-option>\r\n              <mat-option value=\"option1\">02:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">03:00 PM</mat-option>\r\n              <mat-option value=\"option1\">03:05 PM</mat-option>\r\n              <mat-option value=\"option1\">03:10 PM</mat-option>\r\n              <mat-option value=\"option1\">03:15 PM</mat-option>\r\n              <mat-option value=\"option1\">03:20 PM</mat-option>\r\n              <mat-option value=\"option1\">03:25 PM</mat-option>\r\n              <mat-option value=\"option1\">03:30 PM</mat-option>\r\n              <mat-option value=\"option1\">03:35 PM</mat-option>\r\n              <mat-option value=\"option1\">03:40 PM</mat-option>\r\n              <mat-option value=\"option1\">03:45 PM</mat-option>\r\n              <mat-option value=\"option1\">03:50 PM</mat-option>\r\n              <mat-option value=\"option1\">03:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">04:00 PM</mat-option>\r\n              <mat-option value=\"option1\">04:05 PM</mat-option>\r\n              <mat-option value=\"option1\">04:10 PM</mat-option>\r\n              <mat-option value=\"option1\">04:15 PM</mat-option>\r\n              <mat-option value=\"option1\">04:20 PM</mat-option>\r\n              <mat-option value=\"option1\">04:25 PM</mat-option>\r\n              <mat-option value=\"option1\">04:30 PM</mat-option>\r\n              <mat-option value=\"option1\">04:35 PM</mat-option>\r\n              <mat-option value=\"option1\">04:40 PM</mat-option>\r\n              <mat-option value=\"option1\">04:45 PM</mat-option>\r\n              <mat-option value=\"option1\">04:50 PM</mat-option>\r\n              <mat-option value=\"option1\">04:55 PM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">05:00 PM</mat-option>\r\n              <mat-option value=\"option1\">05:05 PM</mat-option>\r\n              <mat-option value=\"option1\">05:10 PM</mat-option>\r\n              <mat-option value=\"option1\">05:15 PM</mat-option>\r\n              <mat-option value=\"option1\">05:20 PM</mat-option>\r\n              <mat-option value=\"option1\">05:25 PM</mat-option>\r\n              <mat-option value=\"option1\">05:30 PM</mat-option>\r\n              <mat-option value=\"option1\">05:35 PM</mat-option>\r\n              <mat-option value=\"option1\">05:40 PM</mat-option>\r\n              <mat-option value=\"option1\">05:45 PM</mat-option>\r\n              <mat-option value=\"option1\">05:50 PM</mat-option>\r\n              <mat-option value=\"option1\">05:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">06:00 PM</mat-option>\r\n              <mat-option value=\"option1\">06:05 PM</mat-option>\r\n              <mat-option value=\"option1\">06:10 PM</mat-option>\r\n              <mat-option value=\"option1\">06:15 PM</mat-option>\r\n              <mat-option value=\"option1\">06:20 PM</mat-option>\r\n              <mat-option value=\"option1\">06:25 PM</mat-option>\r\n              <mat-option value=\"option1\">06:30 PM</mat-option>\r\n              <mat-option value=\"option1\">06:35 PM</mat-option>\r\n              <mat-option value=\"option1\">06:40 PM</mat-option>\r\n              <mat-option value=\"option1\">06:45 PM</mat-option>\r\n              <mat-option value=\"option1\">06:50 PM</mat-option>\r\n              <mat-option value=\"option1\">06:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">07:00 PM</mat-option>\r\n              <mat-option value=\"option1\">07:05 PM</mat-option>\r\n              <mat-option value=\"option1\">07:10 PM</mat-option>\r\n              <mat-option value=\"option1\">07:15 PM</mat-option>\r\n              <mat-option value=\"option1\">07:20 PM</mat-option>\r\n              <mat-option value=\"option1\">07:25 PM</mat-option>\r\n              <mat-option value=\"option1\">07:30 PM</mat-option>\r\n              <mat-option value=\"option1\">07:35 PM</mat-option>\r\n              <mat-option value=\"option1\">07:40 PM</mat-option>\r\n              <mat-option value=\"option1\">07:45 PM</mat-option>\r\n              <mat-option value=\"option1\">07:50 PM</mat-option>\r\n              <mat-option value=\"option1\">07:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">08:00 PM</mat-option>\r\n              <mat-option value=\"option1\">08:05 PM</mat-option>\r\n              <mat-option value=\"option1\">08:10 PM</mat-option>\r\n              <mat-option value=\"option1\">08:15 PM</mat-option>\r\n              <mat-option value=\"option1\">08:20 PM</mat-option>\r\n              <mat-option value=\"option1\">08:25 PM</mat-option>\r\n              <mat-option value=\"option1\">08:30 PM</mat-option>\r\n              <mat-option value=\"option1\">08:35 PM</mat-option>\r\n              <mat-option value=\"option1\">08:40 PM</mat-option>\r\n              <mat-option value=\"option1\">08:45 PM</mat-option>\r\n              <mat-option value=\"option1\">08:50 PM</mat-option>\r\n              <mat-option value=\"option1\">08:55 PM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">09:00 PM</mat-option>\r\n              <mat-option value=\"option1\">09:05 PM</mat-option>\r\n              <mat-option value=\"option1\">09:10 PM</mat-option>\r\n              <mat-option value=\"option1\">09:15 PM</mat-option>\r\n              <mat-option value=\"option1\">09:20 PM</mat-option>\r\n              <mat-option value=\"option1\">09:25 PM</mat-option>\r\n              <mat-option value=\"option1\">09:30 PM</mat-option>\r\n              <mat-option value=\"option1\">09:35 PM</mat-option>\r\n              <mat-option value=\"option1\">09:40 PM</mat-option>\r\n              <mat-option value=\"option1\">09:45 PM</mat-option>\r\n              <mat-option value=\"option1\">09:50 PM</mat-option>\r\n              <mat-option value=\"option1\">09:55 PM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">10:00 PM</mat-option>\r\n              <mat-option value=\"option1\">10:05 PM</mat-option>\r\n              <mat-option value=\"option1\">10:10 PM</mat-option>\r\n              <mat-option value=\"option1\">10:15 PM</mat-option>\r\n              <mat-option value=\"option1\">10:20 PM</mat-option>\r\n              <mat-option value=\"option1\">10:25 PM</mat-option>\r\n              <mat-option value=\"option1\">10:30 PM</mat-option>\r\n              <mat-option value=\"option1\">10:35 PM</mat-option>\r\n              <mat-option value=\"option1\">10:40 PM</mat-option>\r\n              <mat-option value=\"option1\">10:45 PM</mat-option>\r\n              <mat-option value=\"option1\">10:50 PM</mat-option>\r\n              <mat-option value=\"option1\">10:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">11:00 PM</mat-option>\r\n              <mat-option value=\"option1\">11:05 PM</mat-option>\r\n              <mat-option value=\"option1\">11:10 PM</mat-option>\r\n              <mat-option value=\"option1\">11:15 PM</mat-option>\r\n              <mat-option value=\"option1\">11:20 PM</mat-option>\r\n              <mat-option value=\"option1\">11:25 PM</mat-option>\r\n              <mat-option value=\"option1\">11:30 PM</mat-option>\r\n              <mat-option value=\"option1\">11:35 PM</mat-option>\r\n              <mat-option value=\"option1\">11:40 PM</mat-option>\r\n              <mat-option value=\"option1\">11:45 PM</mat-option>\r\n              <mat-option value=\"option1\">11:50 PM</mat-option>\r\n              <mat-option value=\"option1\">11:55 PM</mat-option>\r\n\r\n\r\n\r\n              </mat-select>\r\n\r\n              <mat-select class='inputBy w50'>\r\n              \r\n              <mat-option value=\"option1\">12:00 AM</mat-option>\r\n              <mat-option value=\"option1\">12:05 AM</mat-option>\r\n              <mat-option value=\"option1\">12:10 AM</mat-option>\r\n              <mat-option value=\"option1\">12:15 AM</mat-option>\r\n              <mat-option value=\"option1\">12:20 AM</mat-option>\r\n              <mat-option value=\"option1\">12:25 AM</mat-option>\r\n              <mat-option value=\"option1\">12:30 AM</mat-option>\r\n              <mat-option value=\"option1\">12:35 AM</mat-option>\r\n              <mat-option value=\"option1\">12:40 AM</mat-option>\r\n              <mat-option value=\"option1\">12:45 AM</mat-option>\r\n              <mat-option value=\"option1\">12:50 AM</mat-option>\r\n              <mat-option value=\"option1\">12:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">01:00 AM</mat-option>\r\n              <mat-option value=\"option1\">01:05 AM</mat-option>\r\n              <mat-option value=\"option1\">01:10 AM</mat-option>\r\n              <mat-option value=\"option1\">01:15 AM</mat-option>\r\n              <mat-option value=\"option1\">01:20 AM</mat-option>\r\n              <mat-option value=\"option1\">01:25 AM</mat-option>\r\n              <mat-option value=\"option1\">01:30 AM</mat-option>\r\n              <mat-option value=\"option1\">01:35 AM</mat-option>\r\n              <mat-option value=\"option1\">01:40 AM</mat-option>\r\n              <mat-option value=\"option1\">01:45 AM</mat-option>\r\n              <mat-option value=\"option1\">01:50 AM</mat-option>\r\n              <mat-option value=\"option1\">01:55 AM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">02:00 AM</mat-option>\r\n              <mat-option value=\"option1\">02:05 AM</mat-option>\r\n              <mat-option value=\"option1\">02:10 AM</mat-option>\r\n              <mat-option value=\"option1\">02:15 AM</mat-option>\r\n              <mat-option value=\"option1\">02:20 AM</mat-option>\r\n              <mat-option value=\"option1\">02:25 AM</mat-option>\r\n              <mat-option value=\"option1\">02:30 AM</mat-option>\r\n              <mat-option value=\"option1\">02:35 AM</mat-option>\r\n              <mat-option value=\"option1\">02:40 AM</mat-option>\r\n              <mat-option value=\"option1\">02:45 AM</mat-option>\r\n              <mat-option value=\"option1\">02:50 AM</mat-option>\r\n              <mat-option value=\"option1\">02:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">03:00 AM</mat-option>\r\n              <mat-option value=\"option1\">03:05 AM</mat-option>\r\n              <mat-option value=\"option1\">03:10 AM</mat-option>\r\n              <mat-option value=\"option1\">03:15 AM</mat-option>\r\n              <mat-option value=\"option1\">03:20 AM</mat-option>\r\n              <mat-option value=\"option1\">03:25 AM</mat-option>\r\n              <mat-option value=\"option1\">03:30 AM</mat-option>\r\n              <mat-option value=\"option1\">03:35 AM</mat-option>\r\n              <mat-option value=\"option1\">03:40 AM</mat-option>\r\n              <mat-option value=\"option1\">03:45 AM</mat-option>\r\n              <mat-option value=\"option1\">03:50 AM</mat-option>\r\n              <mat-option value=\"option1\">03:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">04:00 AM</mat-option>\r\n              <mat-option value=\"option1\">04:05 AM</mat-option>\r\n              <mat-option value=\"option1\">04:10 AM</mat-option>\r\n              <mat-option value=\"option1\">04:15 AM</mat-option>\r\n              <mat-option value=\"option1\">04:20 AM</mat-option>\r\n              <mat-option value=\"option1\">04:25 AM</mat-option>\r\n              <mat-option value=\"option1\">04:30 AM</mat-option>\r\n              <mat-option value=\"option1\">04:35 AM</mat-option>\r\n              <mat-option value=\"option1\">04:40 AM</mat-option>\r\n              <mat-option value=\"option1\">04:45 AM</mat-option>\r\n              <mat-option value=\"option1\">04:50 AM</mat-option>\r\n              <mat-option value=\"option1\">04:55 AM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">05:00 AM</mat-option>\r\n              <mat-option value=\"option1\">05:05 AM</mat-option>\r\n              <mat-option value=\"option1\">05:10 AM</mat-option>\r\n              <mat-option value=\"option1\">05:15 AM</mat-option>\r\n              <mat-option value=\"option1\">05:20 AM</mat-option>\r\n              <mat-option value=\"option1\">05:25 AM</mat-option>\r\n              <mat-option value=\"option1\">05:30 AM</mat-option>\r\n              <mat-option value=\"option1\">05:35 AM</mat-option>\r\n              <mat-option value=\"option1\">05:40 AM</mat-option>\r\n              <mat-option value=\"option1\">05:45 AM</mat-option>\r\n              <mat-option value=\"option1\">05:50 AM</mat-option>\r\n              <mat-option value=\"option1\">05:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">06:00 AM</mat-option>\r\n              <mat-option value=\"option1\">06:05 AM</mat-option>\r\n              <mat-option value=\"option1\">06:10 AM</mat-option>\r\n              <mat-option value=\"option1\">06:15 AM</mat-option>\r\n              <mat-option value=\"option1\">06:20 AM</mat-option>\r\n              <mat-option value=\"option1\">06:25 AM</mat-option>\r\n              <mat-option value=\"option1\">06:30 AM</mat-option>\r\n              <mat-option value=\"option1\">06:35 AM</mat-option>\r\n              <mat-option value=\"option1\">06:40 AM</mat-option>\r\n              <mat-option value=\"option1\">06:45 AM</mat-option>\r\n              <mat-option value=\"option1\">06:50 AM</mat-option>\r\n              <mat-option value=\"option1\">06:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">07:00 AM</mat-option>\r\n              <mat-option value=\"option1\">07:05 AM</mat-option>\r\n              <mat-option value=\"option1\">07:10 AM</mat-option>\r\n              <mat-option value=\"option1\">07:15 AM</mat-option>\r\n              <mat-option value=\"option1\">07:20 AM</mat-option>\r\n              <mat-option value=\"option1\">07:25 AM</mat-option>\r\n              <mat-option value=\"option1\">07:30 AM</mat-option>\r\n              <mat-option value=\"option1\">07:35 AM</mat-option>\r\n              <mat-option value=\"option1\">07:40 AM</mat-option>\r\n              <mat-option value=\"option1\">07:45 AM</mat-option>\r\n              <mat-option value=\"option1\">07:50 AM</mat-option>\r\n              <mat-option value=\"option1\">07:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">08:00 AM</mat-option>\r\n              <mat-option value=\"option1\">08:05 AM</mat-option>\r\n              <mat-option value=\"option1\">08:10 AM</mat-option>\r\n              <mat-option value=\"option1\">08:15 AM</mat-option>\r\n              <mat-option value=\"option1\">08:20 AM</mat-option>\r\n              <mat-option value=\"option1\">08:25 AM</mat-option>\r\n              <mat-option value=\"option1\">08:30 AM</mat-option>\r\n              <mat-option value=\"option1\">08:35 AM</mat-option>\r\n              <mat-option value=\"option1\">08:40 AM</mat-option>\r\n              <mat-option value=\"option1\">08:45 AM</mat-option>\r\n              <mat-option value=\"option1\">08:50 AM</mat-option>\r\n              <mat-option value=\"option1\">08:55 AM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">09:00 AM</mat-option>\r\n              <mat-option value=\"option1\">09:05 AM</mat-option>\r\n              <mat-option value=\"option1\">09:10 AM</mat-option>\r\n              <mat-option value=\"option1\">09:15 AM</mat-option>\r\n              <mat-option value=\"option1\">09:20 AM</mat-option>\r\n              <mat-option value=\"option1\">09:25 AM</mat-option>\r\n              <mat-option value=\"option1\">09:30 AM</mat-option>\r\n              <mat-option value=\"option1\">09:35 AM</mat-option>\r\n              <mat-option value=\"option1\">09:40 AM</mat-option>\r\n              <mat-option value=\"option1\">09:45 AM</mat-option>\r\n              <mat-option value=\"option1\">09:50 AM</mat-option>\r\n              <mat-option value=\"option1\">09:55 AM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">10:00 AM</mat-option>\r\n              <mat-option value=\"option1\">10:05 AM</mat-option>\r\n              <mat-option value=\"option1\">10:10 AM</mat-option>\r\n              <mat-option value=\"option1\">10:15 AM</mat-option>\r\n              <mat-option value=\"option1\">10:20 AM</mat-option>\r\n              <mat-option value=\"option1\">10:25 AM</mat-option>\r\n              <mat-option value=\"option1\">10:30 AM</mat-option>\r\n              <mat-option value=\"option1\">10:35 AM</mat-option>\r\n              <mat-option value=\"option1\">10:40 AM</mat-option>\r\n              <mat-option value=\"option1\">10:45 AM</mat-option>\r\n              <mat-option value=\"option1\">10:50 AM</mat-option>\r\n              <mat-option value=\"option1\">10:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">11:00 AM</mat-option>\r\n              <mat-option value=\"option1\">11:05 AM</mat-option>\r\n              <mat-option value=\"option1\">11:10 AM</mat-option>\r\n              <mat-option value=\"option1\">11:15 AM</mat-option>\r\n              <mat-option value=\"option1\">11:20 AM</mat-option>\r\n              <mat-option value=\"option1\">11:25 AM</mat-option>\r\n              <mat-option value=\"option1\">11:30 AM</mat-option>\r\n              <mat-option value=\"option1\">11:35 AM</mat-option>\r\n              <mat-option value=\"option1\">11:40 AM</mat-option>\r\n              <mat-option value=\"option1\">11:45 AM</mat-option>\r\n              <mat-option value=\"option1\">11:50 AM</mat-option>\r\n              <mat-option value=\"option1\">11:55 AM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">12:00 PM</mat-option>\r\n              <mat-option value=\"option1\">12:05 PM</mat-option>\r\n              <mat-option value=\"option1\">12:10 PM</mat-option>\r\n              <mat-option value=\"option1\">12:15 PM</mat-option>\r\n              <mat-option value=\"option1\">12:20 PM</mat-option>\r\n              <mat-option value=\"option1\">12:25 PM</mat-option>\r\n              <mat-option value=\"option1\">12:30 PM</mat-option>\r\n              <mat-option value=\"option1\">12:35 PM</mat-option>\r\n              <mat-option value=\"option1\">12:40 PM</mat-option>\r\n              <mat-option value=\"option1\">12:45 PM</mat-option>\r\n              <mat-option value=\"option1\">12:50 PM</mat-option>\r\n              <mat-option value=\"option1\">12:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">01:00 PM</mat-option>\r\n              <mat-option value=\"option1\">01:05 PM</mat-option>\r\n              <mat-option value=\"option1\">01:10 PM</mat-option>\r\n              <mat-option value=\"option1\">01:15 PM</mat-option>\r\n              <mat-option value=\"option1\">01:20 PM</mat-option>\r\n              <mat-option value=\"option1\">01:25 PM</mat-option>\r\n              <mat-option value=\"option1\">01:30 PM</mat-option>\r\n              <mat-option value=\"option1\">01:35 PM</mat-option>\r\n              <mat-option value=\"option1\">01:40 PM</mat-option>\r\n              <mat-option value=\"option1\">01:45 PM</mat-option>\r\n              <mat-option value=\"option1\">01:50 PM</mat-option>\r\n              <mat-option value=\"option1\">01:55 PM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">02:00 PM</mat-option>\r\n              <mat-option value=\"option1\">02:05 PM</mat-option>\r\n              <mat-option value=\"option1\">02:10 PM</mat-option>\r\n              <mat-option value=\"option1\">02:15 PM</mat-option>\r\n              <mat-option value=\"option1\">02:20 PM</mat-option>\r\n              <mat-option value=\"option1\">02:25 PM</mat-option>\r\n              <mat-option value=\"option1\">02:30 PM</mat-option>\r\n              <mat-option value=\"option1\">02:35 PM</mat-option>\r\n              <mat-option value=\"option1\">02:40 PM</mat-option>\r\n              <mat-option value=\"option1\">02:45 PM</mat-option>\r\n              <mat-option value=\"option1\">02:50 PM</mat-option>\r\n              <mat-option value=\"option1\">02:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">03:00 PM</mat-option>\r\n              <mat-option value=\"option1\">03:05 PM</mat-option>\r\n              <mat-option value=\"option1\">03:10 PM</mat-option>\r\n              <mat-option value=\"option1\">03:15 PM</mat-option>\r\n              <mat-option value=\"option1\">03:20 PM</mat-option>\r\n              <mat-option value=\"option1\">03:25 PM</mat-option>\r\n              <mat-option value=\"option1\">03:30 PM</mat-option>\r\n              <mat-option value=\"option1\">03:35 PM</mat-option>\r\n              <mat-option value=\"option1\">03:40 PM</mat-option>\r\n              <mat-option value=\"option1\">03:45 PM</mat-option>\r\n              <mat-option value=\"option1\">03:50 PM</mat-option>\r\n              <mat-option value=\"option1\">03:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">04:00 PM</mat-option>\r\n              <mat-option value=\"option1\">04:05 PM</mat-option>\r\n              <mat-option value=\"option1\">04:10 PM</mat-option>\r\n              <mat-option value=\"option1\">04:15 PM</mat-option>\r\n              <mat-option value=\"option1\">04:20 PM</mat-option>\r\n              <mat-option value=\"option1\">04:25 PM</mat-option>\r\n              <mat-option value=\"option1\">04:30 PM</mat-option>\r\n              <mat-option value=\"option1\">04:35 PM</mat-option>\r\n              <mat-option value=\"option1\">04:40 PM</mat-option>\r\n              <mat-option value=\"option1\">04:45 PM</mat-option>\r\n              <mat-option value=\"option1\">04:50 PM</mat-option>\r\n              <mat-option value=\"option1\">04:55 PM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">05:00 PM</mat-option>\r\n              <mat-option value=\"option1\">05:05 PM</mat-option>\r\n              <mat-option value=\"option1\">05:10 PM</mat-option>\r\n              <mat-option value=\"option1\">05:15 PM</mat-option>\r\n              <mat-option value=\"option1\">05:20 PM</mat-option>\r\n              <mat-option value=\"option1\">05:25 PM</mat-option>\r\n              <mat-option value=\"option1\">05:30 PM</mat-option>\r\n              <mat-option value=\"option1\">05:35 PM</mat-option>\r\n              <mat-option value=\"option1\">05:40 PM</mat-option>\r\n              <mat-option value=\"option1\">05:45 PM</mat-option>\r\n              <mat-option value=\"option1\">05:50 PM</mat-option>\r\n              <mat-option value=\"option1\">05:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">06:00 PM</mat-option>\r\n              <mat-option value=\"option1\">06:05 PM</mat-option>\r\n              <mat-option value=\"option1\">06:10 PM</mat-option>\r\n              <mat-option value=\"option1\">06:15 PM</mat-option>\r\n              <mat-option value=\"option1\">06:20 PM</mat-option>\r\n              <mat-option value=\"option1\">06:25 PM</mat-option>\r\n              <mat-option value=\"option1\">06:30 PM</mat-option>\r\n              <mat-option value=\"option1\">06:35 PM</mat-option>\r\n              <mat-option value=\"option1\">06:40 PM</mat-option>\r\n              <mat-option value=\"option1\">06:45 PM</mat-option>\r\n              <mat-option value=\"option1\">06:50 PM</mat-option>\r\n              <mat-option value=\"option1\">06:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">07:00 PM</mat-option>\r\n              <mat-option value=\"option1\">07:05 PM</mat-option>\r\n              <mat-option value=\"option1\">07:10 PM</mat-option>\r\n              <mat-option value=\"option1\">07:15 PM</mat-option>\r\n              <mat-option value=\"option1\">07:20 PM</mat-option>\r\n              <mat-option value=\"option1\">07:25 PM</mat-option>\r\n              <mat-option value=\"option1\">07:30 PM</mat-option>\r\n              <mat-option value=\"option1\">07:35 PM</mat-option>\r\n              <mat-option value=\"option1\">07:40 PM</mat-option>\r\n              <mat-option value=\"option1\">07:45 PM</mat-option>\r\n              <mat-option value=\"option1\">07:50 PM</mat-option>\r\n              <mat-option value=\"option1\">07:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">08:00 PM</mat-option>\r\n              <mat-option value=\"option1\">08:05 PM</mat-option>\r\n              <mat-option value=\"option1\">08:10 PM</mat-option>\r\n              <mat-option value=\"option1\">08:15 PM</mat-option>\r\n              <mat-option value=\"option1\">08:20 PM</mat-option>\r\n              <mat-option value=\"option1\">08:25 PM</mat-option>\r\n              <mat-option value=\"option1\">08:30 PM</mat-option>\r\n              <mat-option value=\"option1\">08:35 PM</mat-option>\r\n              <mat-option value=\"option1\">08:40 PM</mat-option>\r\n              <mat-option value=\"option1\">08:45 PM</mat-option>\r\n              <mat-option value=\"option1\">08:50 PM</mat-option>\r\n              <mat-option value=\"option1\">08:55 PM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">09:00 PM</mat-option>\r\n              <mat-option value=\"option1\">09:05 PM</mat-option>\r\n              <mat-option value=\"option1\">09:10 PM</mat-option>\r\n              <mat-option value=\"option1\">09:15 PM</mat-option>\r\n              <mat-option value=\"option1\">09:20 PM</mat-option>\r\n              <mat-option value=\"option1\">09:25 PM</mat-option>\r\n              <mat-option value=\"option1\">09:30 PM</mat-option>\r\n              <mat-option value=\"option1\">09:35 PM</mat-option>\r\n              <mat-option value=\"option1\">09:40 PM</mat-option>\r\n              <mat-option value=\"option1\">09:45 PM</mat-option>\r\n              <mat-option value=\"option1\">09:50 PM</mat-option>\r\n              <mat-option value=\"option1\">09:55 PM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">10:00 PM</mat-option>\r\n              <mat-option value=\"option1\">10:05 PM</mat-option>\r\n              <mat-option value=\"option1\">10:10 PM</mat-option>\r\n              <mat-option value=\"option1\">10:15 PM</mat-option>\r\n              <mat-option value=\"option1\">10:20 PM</mat-option>\r\n              <mat-option value=\"option1\">10:25 PM</mat-option>\r\n              <mat-option value=\"option1\">10:30 PM</mat-option>\r\n              <mat-option value=\"option1\">10:35 PM</mat-option>\r\n              <mat-option value=\"option1\">10:40 PM</mat-option>\r\n              <mat-option value=\"option1\">10:45 PM</mat-option>\r\n              <mat-option value=\"option1\">10:50 PM</mat-option>\r\n              <mat-option value=\"option1\">10:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">11:00 PM</mat-option>\r\n              <mat-option value=\"option1\">11:05 PM</mat-option>\r\n              <mat-option value=\"option1\">11:10 PM</mat-option>\r\n              <mat-option value=\"option1\">11:15 PM</mat-option>\r\n              <mat-option value=\"option1\">11:20 PM</mat-option>\r\n              <mat-option value=\"option1\">11:25 PM</mat-option>\r\n              <mat-option value=\"option1\">11:30 PM</mat-option>\r\n              <mat-option value=\"option1\">11:35 PM</mat-option>\r\n              <mat-option value=\"option1\">11:40 PM</mat-option>\r\n              <mat-option value=\"option1\">11:45 PM</mat-option>\r\n              <mat-option value=\"option1\">11:50 PM</mat-option>\r\n              <mat-option value=\"option1\">11:55 PM</mat-option>\r\n              </mat-select>\r\n              </div>\r\n</div>\r\n              </div>  \r\n          \r\n            </div>\r\n          </div>\r\n  \r\n      </div>\r\n      <div class=\"modal-footer\">\r\n        <button type=\"button\" class=\"btn btn-secondary\">Guardar</button>\r\n\r\n      </div>\r\n    </ng-template>\r\n\r\n\r\n<!--\r\n<div class=\"m-login__signin\">\r\n\t<div class=\"m-login__title\">\r\n\t\t<h3 class=\"m-login__title\">Sign Up</h3>\r\n\t\t<div class=\"m-login__desc\">Enter your details to create your account:</div>\r\n\t</div>\r\n\r\n\t<m-auth-notice></m-auth-notice>\r\n\r\n\r\n\t<form class=\"m-login__form m-form\" name=\"form\" (ngSubmit)=\"f.form.valid && submit()\" #f=\"ngForm\" novalidate>\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<mat-form-field>\r\n\t\t\t\t<mat-label>Fullname</mat-label>\r\n\t\t\t\t<input matInput type=\"text\" name=\"fullname\" placeholder=\"Fullname\" autocomplete=\"off\" [(ngModel)]=\"model.fullname\" #fullname=\"ngModel\" required>\r\n\t\t\t</mat-form-field>\r\n\t\t</div>\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<mat-form-field>\r\n\t\t\t\t<mat-label>Email</mat-label>\r\n\t\t\t\t<input matInput type=\"email\" name=\"email\" placeholder=\"Email address\" autocomplete=\"off\" [(ngModel)]=\"model.email\" #email=\"ngModel\" email=\"true\" required>\r\n\t\t\t</mat-form-field>\r\n\t\t</div>\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<mat-form-field>\r\n\t\t\t\t<mat-label>Password</mat-label>\r\n\t\t\t\t<input matInput minlength=\"4\" type=\"password\" name=\"password\" placeholder=\"Password\" autocomplete=\"off\" [(ngModel)]=\"model.password\" #password=\"ngModel\" required>\r\n\t\t\t</mat-form-field>\r\n\t\t</div>\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<mat-form-field>\r\n\t\t\t\t<mat-label>Confirm Password</mat-label>\r\n\t\t\t\t<input matInput minlength=\"4\" type=\"password\" name=\"rpassword\" placeholder=\"Confirm password\" autocomplete=\"off\" [(ngModel)]=\"model.rpassword\" #rpassword=\"ngModel\" required>\r\n\t\t\t</mat-form-field>\r\n\t\t</div>\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<mat-checkbox name=\"agree\" required=\"true\" [(ngModel)]=\"model.agree\" #agree=\"ngModel\">I agree the\r\n\t\t\t\t<a href=\"javascript:;\">terms & conditions</a>\r\n\t\t\t</mat-checkbox>\r\n\t\t</div>\r\n\t</form>\r\n\r\n\t<div class=\"m-login__action m-login__action--fit\">\r\n\t\t<button mat-button (click)=\"loginPage($event)\" [disabled]=\"loading\" translate=\"AUTH.GENERAL.BACK_BUTTON\">Back</button>\r\n\t\t<m-spinner-button [options]=\"spinner\" (click)=\"submit()\">{{'AUTH.GENERAL.SIGNUP_BUTTON' | translate}}</m-spinner-button>\r\n\t</div>\r\n\r\n</div>\r\n-->\r\n\r\n<div >\r\n\t\r\n\r\n\t<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;margin: 0px !important;\r\n    border-bottom: solid 1px lightgray;\r\n    text-align: center !important;\r\n    width: 100%;\r\n    display: block;\">\r\n\t\r\n<!--\r\n \t<i [routerLink]=\"['/login']\" style=\"font-size: 25px;\r\n    color: lightgray;    position: absolute;\r\n    left: 0px;\r\n    top: 40px;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i> \r\n \t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 15px;\">Editar Staff</div> -->\r\n\r\n<div style=\"display: inline-block;\">\r\n   <img style='height: 65px;vertical-align: super;' src=\"assets/app/media/img/yb-icon.png\">\r\n</div>\r\n\t\t\t<div style=\"    width: 20%;\r\n    text-align: center;\r\n    display: inline-block;\r\n    float: none!important;\">\r\n \r\n\r\n\t\t\t\t\t<span style=\"    color: #8c8b88;\r\n    font-size: 14px;\r\n    text-transform: uppercase;\r\n    margin-bottom: 9px;\r\n    display: inline-block;\">APERTURA DE CUENTA EN YOURBEAUTY</span>\r\n<!-- \r\n\r\n\t\t\t\t\t<div style=\"    background: #e1e1e1;\r\n    height: 4px;\r\n    width: 100%;\"></div> -->\r\n\r\n      <ngb-progressbar  style='background-color: #e91e63 !important' [value]=\"avanceSteper\">\r\n\r\n    </ngb-progressbar>\r\n\r\n    <div style=\"    color: #8c8b88;\r\n    font-size: 14px;\r\n    margin-top: 2px;\">{{avanceSteper}}%</div>\r\n\r\n\t\t\t</div>\r\n\r\n</div>\r\n\r\n<div class=\"row\">\r\n\t\r\n     <ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n<!-- <button mat-raised-button (click)=\"isLinear = !isLinear\" id=\"toggle-linear\">\r\n  {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}\r\n</button> -->\r\n<mat-horizontal-stepper  color=\"warn\" [linear]=\"false\" #stepper style='width: 80%;\r\n    margin-left: 10%; margin-top: 40px'>\r\n\r\n\r\n\r\n\r\n  <mat-step [stepControl]=\"firstFormGroup\" >\r\n\r\n\r\n  \t<div style='max-width: 600px;\r\n    margin: auto;'>\r\n\r\n\r\n    <div style=\"text-align: center;  padding: 40px;padding-top: 50px !important\">\r\n    \t<span style=\"color: #383734;    font-size: 24px;\r\n    font-weight: 300;\r\n    line-height: 34px;\r\n    margin-bottom: 10px;\">Empieza tu prueba gratuita ahora\r\n\r\n</span><br>\r\n<span style=\"color: #605f5d;font-size: 16px\">\r\nSin tarjeta de crédito o compromisos. Solo toma 2 minutos\r\n</span>\r\n\r\n    </div>\r\n\r\n\r\n\r\n    <form [formGroup]=\"firstFormGroup\"    #fs2=\"ngForm\">\r\n     \r\n\r\n\r\n     <mat-form-field  color=\"primary\" style='font-size: 16px !important;'>\r\n        <input style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"Nombre del negocio\" formControlName=\"nombreNegocio\" autocomplete=\"off\" required>\r\n\r\n         <span *ngIf='ffg.nombreNegocio.errors' matSuffix style=\"font-size: 13px !important;color: lightcoral;\">campo requerido</span> \r\n\r\n\r\n         <mat-label><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>store</mat-icon>Cual es el nombre de tu negocio?</mat-label>\r\n      </mat-form-field>\r\n\r\n\r\n\r\n      <mat-form-field style='      font-size: 16px !important;\r\n    '>\r\n        <input style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"Nombre y Apellidos\" formControlName=\"nombreUsuario\"  autocomplete=\"off\" required>\r\n        <span *ngIf='ffg.nombreUsuario.errors' matSuffix style=\"font-size: 13px !important;color: lightcoral;\">campo requerido</span> \r\n\r\n         <mat-label><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>person</mat-icon>¿Cuál es tu nombre?</mat-label>\r\n      </mat-form-field>\r\n\r\n\r\n\r\n      <mat-form-field style='      font-size: 16px !important;\r\n    '>\r\n\r\n<!--     <span matSuffix style=\"color: lightgray;vertical-align: super;\"\r\n     [hidden]='!loaderValidator' ><mat-spinner color='accent' diameter='25' style='color: lightgray !important; vertical-align: top;'></mat-spinner></span> -->\r\n\r\n     <span matSuffix style=\"color: lightgray;vertical-align: super;\"\r\n     [hidden]=\" firstFormGroup.controls['correoElectronico'].hasError('email') || firstFormGroup.controls['correoElectronico'].hasError('required')\"  *ngIf='!emailTaken' ><mat-icon style='color: #fbb7b7 !important; vertical-align: top;'>cancel</mat-icon>\r\n     ya existe esta cuenta</span>\r\n    <span matSuffix style=\"color: lightgray;vertical-align: super;\" *ngIf='emailTaken' \r\n    [hidden]=\"firstFormGroup.controls['correoElectronico'].hasError('email') || firstFormGroup.controls['correoElectronico'].hasError('required')\"  >\r\n      <mat-icon style='color: #6bbf6f !important;vertical-align: top;'>check_circle</mat-icon></span>\r\n\r\n        <input  (focusout)=\"quitarSpinner()\" style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"Correo Electronico\" autocomplete=\"off\" formControlName=\"correoElectronico\" type='email' email=\"true\" required> \r\n\r\n        <span *ngIf='ffg.correoElectronico.errors' matSuffix style=\"font-size: 13px !important;color: lightcoral;\">campo requerido</span> \r\n\r\n\r\n         <mat-label><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>email</mat-icon>¿Cúal es tu correo electrónico?</mat-label>\r\n      </mat-form-field>\r\n\r\n <!--    <mat-form-field style='      font-size: 16px !important;'>\r\n         \r\n\r\n\r\n     \r\n      \r\n        <span matSuffix style=\"color: darkgray;\">.yourbeauty.com.pa</span> \r\n               <mat-icon style='    vertical-align: middle;\r\n    font-size: 25px !important;\r\n    position: absolute;\r\n    width: 150px;\r\n    right: 0;\r\n    top: -40px;\r\n    margin-right: 0px;\r\n    text-align: right;' matSuffix  \r\n          placement=\"top\" ngbTooltip=\"Un enlace corto para que pueda recordar como ingresar a su panel de negocios\" ngbTooltipClass=\"m-tooltip\">help_outline</mat-icon>\r\n\r\n\r\n\r\n        <input style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"Enlace a su panel de negocios\" formControlName=\"accesoweb\" autocomplete=\"off\" type='text'  required>\r\n\r\n         <mat-label ><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>public</mat-icon>Enlace a su panel de negocios</mat-label>\r\n      </mat-form-field> -->\r\n\r\n      <div style=\"    font-size: 16px;\r\n    padding: 27px 0px;\">\r\n\r\n               <mat-icon style='    vertical-align: middle;\r\n    font-size: 25px !important;\r\n    float: right;\r\n    width: 150px;\r\n    right: 0;\r\n    top: -40px;\r\n    margin-right: 0px;\r\n    text-align: right;' matSuffix  \r\n          placement=\"top\" ngbTooltip=\"Un enlace corto para que pueda recordar como ingresar a su panel de negocios\" ngbTooltipClass=\"m-tooltip\">help_outline</mat-icon>\r\n          \r\n        \r\n         <mat-label ><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>public</mat-icon>Enlace a su panel de negocios</mat-label>\r\n          <span style=\"    display: block;\r\n    border-bottom: solid 1px lightgray;\r\n    padding: 10px 10px 0px 10px !important;\r\n    color: #383734 !important;\r\n    font-weight: 400;\">{{getVal22(firstFormGroup.controls['nombreNegocio'].value)}}.yourbeauty.com.pa</span>\r\n      </div>\r\n\r\n\r\n      <mat-form-field style='      font-size: 16px !important;\r\n    '>\r\n\r\n        <input autocomplete=\"off\" style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"Contraseña\" formControlName=\"password\" required>\r\n\r\n       <span *ngIf='ffg.password.errors' matSuffix style=\"font-size: 13px !important;color: lightcoral;\">campo requerido</span> \r\n\r\n\r\n         <mat-label><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>vpn_key</mat-icon>Indica la contraseña de tu cuenta</mat-label>\r\n      </mat-form-field>\r\n      <div style=\"text-align: center;\r\n    color: #555;\r\n    padding: 13px;\">\r\n   <mat-slide-toggle color='primary' formControlName=\"terminos\" [(ngModel)]='terminosycondiciones' required >Acepto los <a target=\"_blank\" href='http://www.google.com'>terminos y condiciones</a> del servicio</mat-slide-toggle>\r\n </div>\r\n\r\n      <div style=\"  margin-top: 40px;  text-align: center;\">\r\n\r\n        <button \r\n        [disabled]='!fs2.form.valid || !terminosycondiciones' style='    width: 80%;    height: 40px;' class='btn btn-success'  mat-raised-button color=\"primary\"(click)=\"goForward(stepper)\" >Crear cuenta YourBeauty</button>\r\n\r\n\r\n      </div>\r\n    </form>\r\n</div>\r\n  </mat-step>\r\n\r\n\r\n\r\n\r\n\r\n  <mat-step >\r\n  \t\r\n\r\n  \t<div style='max-width: 600px;\r\n    margin: auto;'>\r\n\r\n\r\n    <div style=\"text-align: center;  padding: 40px;padding-top: 50px !important\">\r\n    \t<span style=\"color: #383734;    font-size: 24px;\r\n    font-weight: 300;\r\n    line-height: 34px;\r\n    margin-bottom: 10px;\">Bien Hecho!\r\n\r\n</span><br>\r\n\r\n<span style=\"color: black;\r\n    font-size: 16px;\r\n    display: block;\r\n    margin-bottom: 15px;\">Los detalles de su cuenta han sido enviados a su email {{cred.email}}</span>\r\n\r\n<span style=\"color: #605f5d; font-size: 16px\">\r\nAgrega unos detalles más para que empieces a agendar citas.\r\n</span>\r\n\r\n    </div>\r\n\r\n<div class=\"containerStaff\"> \r\n\t\r\n\t<span>Agrega Staff a tu cuenta</span>\r\n\t<hr style=\"    margin-bottom: 20px;\">\r\n\r\n  <div style=\"    margin-bottom: 20px;\" *ngFor=\"let s of empleadosAgregados; let i = index\">\r\n    \r\n    <mat-card style='    padding: 0px !important;box-shadow: none !important;border-bottom: solid 1px #e1e1e1;' class=\"example-card\">\r\n  <mat-card-header>\r\n    <div mat-card-avatar style=\"    background-size: cover;background-image: url('assets/app/media/img/userB.png');\"></div>\r\n    <mat-card-title style='    margin-bottom: 8px !important;'>{{s.nombre}}</mat-card-title>\r\n    <mat-card-subtitle>{{s.tipo == 1 ? 'Administrador' : 'Miembro del Staff'}}</mat-card-subtitle>\r\n  </mat-card-header>\r\n     <a  style='position: absolute;right: 0;top: 9px;' (click)='editStaff(s,i,content)' class=\"botonTxt\">Editar</a>\r\n</mat-card>\r\n\r\n\r\n  </div>\r\n\r\n\r\n<!--     <div style=\"    margin-bottom: 20px;\">\r\n    \r\n    <mat-card style='    padding: 0px !important;box-shadow: none !important;border-bottom: solid 1px #e1e1e1;' class=\"example-card\">\r\n  <mat-card-header>\r\n    <div mat-card-avatar style=\"background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');\"></div>\r\n    <mat-card-title style='    margin-bottom: 8px !important;'>Shiba Inu</mat-card-title>\r\n    <mat-card-subtitle>Dog Breed</mat-card-subtitle>\r\n  </mat-card-header>\r\n     <a  style='position: absolute;right: 0;top: 9px;' class=\"botonTxt\">Editar</a>\r\n</mat-card>\r\n\r\n\r\n  </div> -->\r\n\r\n <a (click)=\"open3(content)\" class=\"botonTxt\" style=\"font-size: 16px !important\"> + Agregar miembro del Staff</a>\r\n\r\n\r\n      <div style=\"  margin-top: 40px;  text-align: center;\">\r\n\r\n        <button style='    width: 80%;    height: 40px;' class='btn '  mat-raised-button color=\"primary\"  (click)=\"goForward2(stepper)\">Continuar</button>\r\n\r\n\r\n      </div>\r\n\r\n</div>\r\n\r\n\r\n</div>\r\n  </mat-step>\r\n\r\n\r\n  <mat-step [stepControl]=\"infoFormGroup\" >\r\n    <div style='max-width: 600px;\r\n    margin: auto;'>\r\n\r\n\r\n    <div style=\"text-align: center;  padding: 40px;padding-top: 50px !important\">\r\n      <span style=\"color: #383734;    font-size: 24px;\r\n    font-weight: 300;\r\n    line-height: 34px;\r\n    margin-bottom: 10px;\">Ayuda a tus clientes a encontrarte\r\n\r\n</span><br>\r\n<span style=\"color: #605f5d;font-size: 16px\">\r\nIngresa los detalles de contacto de tu negocio\r\n</span>\r\n\r\n    </div>\r\n\r\n\r\n\r\n    <form [formGroup]=\"infoFormGroup\"  #f2=\"ngForm\" >\r\n      <ng-template matStepLabel>Informacion del Negocio</ng-template>\r\n\r\n\r\n     <mat-form-field  color=\"primary\" style='font-size: 16px !important;'>\r\n        <input autocomplete=\"off\" style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"Telefono del Negocio\" formControlName=\"telefonoNegocio\" type='number' required>\r\n\r\n\r\n          <span *ngIf='ifg.telefonoNegocio.errors && ifg.telefonoNegocio.value' matSuffix style=\"font-size: 13px !important;color: lightcoral;\">Número incorrecto</span> \r\n\r\n            <span *ngIf='ifg.telefonoNegocio.errors  && !ifg.telefonoNegocio.value' matSuffix style=\"font-size: 13px !important;color: lightcoral;\">campo requerido</span> \r\n\r\n\r\n         <mat-label><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>phone</mat-icon>¿Cuál es el teléfono de tu negocio?</mat-label>\r\n      </mat-form-field>\r\n\r\n      <mat-form-field style='      font-size: 16px !important;\r\n    '>\r\n        <input style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"descripcion\" formControlName=\"descripcion\" autocomplete=\"off\" required>\r\n\r\n       <span *ngIf='ifg.descripcion.errors' matSuffix style=\"font-size: 13px !important;color: lightcoral;\">campo requerido</span> \r\n\r\n         <mat-label><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>description</mat-icon>Describe tu negocio</mat-label>\r\n      </mat-form-field>\r\n\r\n      <mat-form-field style='      font-size: 16px !important;\r\n    '>\r\n        <input style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"www.mysite.com\" formControlName=\"webUsuario\" autocomplete=\"off\">\r\n         <mat-label><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>public</mat-icon>¿Cuál es tu sitio web? (opcional)</mat-label>\r\n      </mat-form-field>\r\n\r\n      <div (click)=\"openDialog4()\" class='itemHover'  style=\"  \r\n    border-bottom: solid 1px #e1e1e1;\r\n    \">\r\n\r\n       <!--  <mat-icon style='    float: right;\r\n    font-size: 30px !important;'>navigate_next</mat-icon> -->\r\n\r\n        <mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>location_on</mat-icon>\r\n        <span *ngIf='!direccionText'>Ingresa la ubicación de tu negocio</span>\r\n        <span *ngIf='direccionText'>{{direccionText}}</span>\r\n\r\n        <span *ngIf='ifg.latitud.errors'  style=\"    font-size: 13px !important;\r\n    color: lightcoral;\r\n    float: right;\r\n    font-weight: 400;\">ubicación requerida</span> \r\n\r\n      </div>\r\n\r\n      <div class='itemHover'  (click)=\"openDialog3()\" style=\"padding-top: 23px;\">\r\n<!--          <mat-icon style='    float: right;\r\n    font-size: 30px !important;'>navigate_next</mat-icon> -->\r\n        <mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>access_time</mat-icon>\r\n        <span>Selecciona tu Horario</span>\r\n\r\n           <span *ngIf='getLen()'  style=\"    font-size: 13px !important;\r\n    color: lightcoral;\r\n    float: right;\r\n    font-weight: 400;\">horario requerido</span> \r\n\r\n\r\n      </div>\r\n\r\n\r\n      <div style=\"  margin-top: 40px;  text-align: center;\">\r\n\r\n        <button style='    width: 80%;    height: 40px;' class='btn btn-success'  mat-raised-button color=\"primary\"  [disabled]='!f2.form.valid || getLen()' (click)=\"goForward3(stepper)\">Continuar</button>\r\n\r\n\r\n      </div>\r\n    </form>\r\n</div>\r\n  </mat-step>\r\n\r\n\r\n\r\n  <mat-step  >\r\n  \r\n    <div style='max-width: 600px;\r\n    margin: auto;'>\r\n\r\n\r\n    <div style=\"text-align: center;  padding: 40px;padding-top: 50px !important\">\r\n      <span style=\"color: #383734;    font-size: 24px;\r\n    font-weight: 300;\r\n    line-height: 34px;\r\n    margin-bottom: 10px;\">Agrega una foto de tu establecimiento\r\n\r\n</span><br>\r\n<span style=\"color: #605f5d;font-size: 16px\">\r\nCuanto más atractiva, más atraes! Elige bien!\r\n</span>\r\n\r\n    </div>\r\n\r\n\r\n\r\n    <div style=\"font-size: 15px; color:#777\">\r\n      <mat-icon style='vertical-align: text-bottom;font-size: 25px !important;'>photo</mat-icon>\r\n      <p style=\"margin-bottom: 4px;\r\n    display: inline-block;\">Foto de Portada</p>\r\n      <p>Es opcional, pero muy recomendado</p>\r\n      <p style=\"font-weight: 600\">Dimensiones recomendadas: 375×230</p>\r\n      \r\n\r\n      <div style=\"text-align: center;\">\r\n      <img style=\"border-style: dashed;height: 230px; width: 375px\"  [src]=\"urlImg\" onError=\"this.src='assets/app/media/img/banner.png'\">\r\n      <input style='margin-top: 20px;'  type=\"file\" (change)=\"onFileChanged($event)\" autocomplete=\"off\">\r\n      </div>\r\n    </div>\r\n\r\n\r\n      <div style=\"  margin-top: 40px;  text-align: center;\">\r\n\r\n        <button style='    width: 80%;    height: 40px;' class='btn btn-success'  mat-raised-button color=\"primary\"  (click)=\"goForward4(stepper)\">Continuar</button>\r\n\r\n\r\n      </div>\r\n\r\n\r\n\r\n</div>\r\n  </mat-step>\r\n\r\n\r\n  <mat-step  >\r\n  \r\n    <div style='max-width: 600px;\r\n    margin: auto;'>\r\n\r\n\r\n    <div style=\"text-align: center;  padding: 40px;padding-top: 50px !important\">\r\n      <span style=\"color: #383734;    font-size: 24px;\r\n    font-weight: 300;\r\n    line-height: 34px;\r\n    margin-bottom: 10px;\">Escoge tu foto de perfil\r\n\r\n</span><br>\r\n<span style=\"color: #605f5d;font-size: 16px\">\r\nCuanto más atractiva, más atraes! Elige bien!\r\n\r\n</span>\r\n\r\n    </div>\r\n\r\n\r\n\r\n    <div style=\"font-size: 15px; color:#777\">\r\n      <mat-icon style='vertical-align: text-bottom;font-size: 25px !important;'>photo</mat-icon>\r\n      <p style=\"margin-bottom: 4px;\r\n    display: inline-block;\">Foto de Perfil</p>\r\n      <p>Es opcional, pero muy recomendado</p>\r\n      <p style=\"font-weight: 600\">Dimensiones recomendadas: 80×80</p>\r\n      \r\n\r\n      <div style=\"text-align: center;    margin-top: 60px;\">\r\n      <img style=\"border-style: dashed;height: 80px; width: 80px\"  [src]=\"urlImg2\" onError=\"this.src='assets/app/media/img/fotoComercio.png'\"><br>\r\n      <input style='margin-top: 20px;'  type=\"file\" (change)=\"onFileChanged2($event)\" autocomplete=\"off\">\r\n      </div>\r\n    </div>\r\n\r\n\r\n      <div style=\"  margin-top: 40px;  text-align: center;\">\r\n\r\n        <button style='    width: 80%;    height: 40px;' class='btn btn-success'  mat-raised-button color=\"primary\"  (click)=\"goForward42(stepper)\">Continuar</button>\r\n\r\n\r\n      </div>\r\n\r\n\r\n\r\n</div>\r\n  </mat-step>\r\n\r\n\r\n\r\n  <mat-step >\r\n\r\n\r\n    <div style='max-width: 600px;\r\n    margin: auto;'>\r\n\r\n\r\n    <div style=\"text-align: center;  padding: 40px;padding-top: 50px !important\">\r\n      <span style=\"color: #383734;    font-size: 24px;\r\n    font-weight: 300;\r\n    line-height: 34px;\r\n    margin-bottom: 10px;\">Agrega tus servicios y precios.\r\n\r\n</span><br>\r\n<span style=\"color: #605f5d;font-size: 16px\">\r\nNecesitas al menos un servicio activo y un staff asignado para que los clientes puedan realizar una cita en tu establecimiento.\r\n</span>\r\n\r\n    </div>\r\n\r\n\r\n<!-- \r\n    <div style=\"font-size: 16px\">\r\n\r\n          <div style=\"text-align: center;color: darkgray;margin-bottom: 12px;\"> Servicio ejemplo</div>\r\n          <div class=\"itemServicios\" style=\"opacity: 0.5;\">\r\n          <div class=\"boxItem\">\r\n            <i class=\"la  la-angle-right iconR\"></i>\r\n            <div class=\"txtItemServ\">\r\n              <h3 style=\"     margin-bottom: 0px;font-size: 16px !important;   color: #5f5d5b;\">Corte y Estilo</h3>\r\n              <p style=\"    margin-bottom: 0px;color: #989794;font-size: 12px;\">\r\n                Peluqueria / Cortes de Mujer\r\n              </p>\r\n            </div>\r\n            <div class=\"txtItemServP\">30min</div>\r\n            <div class=\"txtItemServP\">$45.00</div>\r\n          </div>\r\n        </div>\r\n\r\n    </div> -->\r\n    <div style=\"text-align: center;\r\n    padding: 18px;\">\r\n       <a (click)='openDialogService()'  class=\"botonTxt\" style=\"font-size: 16px !important\"> + Agregar Servicio</a>\r\n    </div>\r\n\r\n\r\n          <div  class=\"itemServicios\"  *ngFor=\"let s of serviciosAgregados; let i = index\" >\r\n\r\n          <div class=\"boxItem\">\r\n            <i (click)='eliminarS(i)' style='height: 30px;\r\n    width: 19px;' class=\"la  la-close iconR\"></i>\r\n            <div class=\"txtItemServ\">\r\n              <h3 style=\"     margin-bottom: 0px;font-size: 16px !important;   color: #5f5d5b;\">\r\n              {{s.nombreServicio}}\r\n              </h3>\r\n              <p style=\"    margin-bottom: 0px;color: #989794;font-size: 12px;\">\r\n                {{s.categoriaName}} / {{s.subcategoriaName}} \r\n              </p>\r\n            </div>\r\n            <div class=\"txtItemServP\">\r\n              <span [hidden]='!s.horaServicio' >{{s.horaServicio/60}}h</span>\r\n              <span style=\"margin-left: 10px;\" [hidden]='!s.minutoServicio'>{{s.minutoServicio}}min</span></div>\r\n            <div class=\"txtItemServP\">${{s.precioServicio}}</div>\r\n          </div>\r\n        </div>\r\n\r\n\r\n      <div style=\"  margin-top: 40px;  text-align: center;\">\r\n\r\n        <button style='    width: 80%;    height: 40px;' class='btn '  mat-raised-button color=\"primary\" (click)=\"goForward5(stepper)\" [disabled]='!serviciosAgregados || serviciosAgregados.length<1'>Continuar</button>\r\n\r\n\r\n      </div>\r\n\r\n\r\n\r\n</div>\r\n  </mat-step>\r\n\r\n\r\n\r\n\r\n\r\n\r\n  <mat-step  >\r\n        \r\n\r\n    <div style='max-width: 600px;\r\n    margin: auto;'>\r\n\r\n\r\n    <div style=\"text-align: center;  padding: 40px;padding-top: 50px !important\">\r\n      <span style=\"color: #383734;    font-size: 24px;\r\n    font-weight: 300;\r\n    line-height: 34px;\r\n    margin-bottom: 10px;\">Configuracion de Citas\r\n\r\n</span><br>\r\n<span style=\"color: #605f5d;font-size: 16px\">\r\nAjusta los valores para la configuracion de tus citas\r\n</span>\r\n\r\n    </div>\r\n\r\n\r\n\r\n \r\n    <div style=\"    padding: 0px 0px 20px 0px;\">\r\n<!--     <mat-slide-toggle [(ngModel)]=\"isHuman2\" (change)=\"onChange2($event)\" name=\"human2\">I am not a robot</mat-slide-toggle> -->\r\n\r\n    <mat-slide-toggle color='primary' name=\"human2\"  [(ngModel)]='configuracion.confirmacionAutomatica'>\r\n      <span style=\"font-size: 16px !important;\">\r\n        Las citas serán confirmadas automaticamente\r\n      </span>\r\n      </mat-slide-toggle>\r\n\r\n\r\n    </div>\r\n\r\n    <hr>\r\n\r\n    <div style=\"color: #383734;font-size: 19px;font-weight: 400; line-height: 34px;margin-bottom: 30px;\">Configuraciones de cita</div>\r\n\r\n      <p style=\"display: inline-block;font-size: 16px;\">Los clientes podrán realizar citas</p>\r\n      <mat-select placeholder=\"\" \r\n      class='inputBy selectD' style='border: solid 1px #e1e1e1;padding: 5px;' \r\n      [(ngModel)]='configuracion.parametro1'>\r\n                <mat-option value=\"1\">Hasta 1 hora antes de la hora de inicio</mat-option>\r\n                 <mat-option value=\"2\">Hasta 2 horas antes de la hora de inicio</mat-option>\r\n           <mat-option value=\"3\">Hasta 3 horas antes de la hora de inicio</mat-option>\r\n            <mat-option value=\"6\">Hasta 6 horas antes de la hora de inicio</mat-option>\r\n             <mat-option value=\"12\">Hasta 12 horas antes de la hora de inicio</mat-option>\r\n\r\n      </mat-select>\r\n\r\n\r\n\r\n      <p style=\"display: inline-block;font-size: 16px;\">Los clientes podrán realizar citas</p>\r\n      <mat-select placeholder=\"\" class='inputBy selectD' \r\n       [(ngModel)]='configuracion.parametro2'>\r\n                  <mat-option value=\"1\">Hasta 1 mes en el futuro</mat-option>\r\n                 <mat-option value=\"3\">Hasta 3 meses en el futuro</mat-option>\r\n                 <mat-option value=\"6\">Hasta 6 meses en el futuro</mat-option>\r\n                 <mat-option value=\"12\">Hasta 12 meses en el futuro</mat-option>\r\n      </mat-select>\r\n\r\n\r\n\r\n            <p style=\"display: inline-block;font-size: 16px;\">Permitir Reprogramaciones</p>\r\n      <mat-select placeholder=\"\" class='inputBy selectD' \r\n       [(ngModel)]='configuracion.parametro3'>\r\n                <mat-option value=\"12\">Hasta 12 horas antes de la cita</mat-option>\r\n                  <mat-option value=\"24\">Hasta 24 horas antes de la cita</mat-option>\r\n          \r\n\r\n      </mat-select>\r\n\r\n\r\n\r\n\r\n      <div style=\"  margin-top: 40px;  text-align: center;\">\r\n\r\n        <button [disabled]='!configuracion.parametro3 || \r\n        !configuracion.parametro2 || !configuracion.parametro1' style='    width: 80%;    height: 40px;' class='btn'  mat-raised-button color=\"primary\"  (click)=\"goForward6(stepper)\">Empezar a usar YourBeauty</button>\r\n\r\n\r\n      </div>\r\n\r\n</div>\r\n  </mat-step>\r\n\r\n\r\n\r\n\r\n</mat-horizontal-stepper>\r\n\r\n\r\n</div>\r\n\r\n</div>\r\n\r\n"
+module.exports = "<div class=\"modal fade\" id=\"m_modal_6\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalCenterTitle\" aria-hidden=\"true\">\r\n  <div class=\"modal-dialog modal-dialog-centered\" role=\"document\">\r\n    <div class=\"modal-content\">\r\n      <div class=\"modal-header\">\r\n        <h5 class=\"modal-title\" id=\"exampleModalLongTitle\">Modal title</h5>\r\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\r\n          <span aria-hidden=\"true\">&times;</span>\r\n        </button>\r\n      </div>\r\n      <div class=\"modal-body\">\r\n        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\r\n      </div>\r\n      <div class=\"modal-footer\">\r\n        <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\r\n        <button type=\"button\" class=\"btn btn-primary\">Save changes</button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>  \r\n\r\n\r\n\r\n    <ng-template #content let-c=\"close\" let-d=\"dismiss\" style='width: 600px !important'>\r\n      <div class=\"modal-header\">\r\n        <h4 class=\"modal-title\" style=\"    font-size: 25px;\r\n    line-height: 34px;\r\n    font-weight: 300;\">Agrega Miembro del Staff</h4>\r\n        <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\r\n          <span aria-hidden=\"true\">&times;</span>\r\n        </button>\r\n      </div>\r\n      <div class=\"modal-body\" style=\"padding: 19px 40px !important;\">\r\n<div class=\"row \">\r\n<!-- <div class=\"col-xl-3\" style=\"    margin-bottom: 22px;text-align: center;padding-right: 0px !important;\">\r\n  <img style=\"    width: 64px;\r\n    border-radius: 100%;\r\n    height: 64px;\r\n    margin-top: 14px;\" src=\"assets/app/media/img/userB.png\">\r\n</div> -->\r\n<div class=\"col-xl-12\" >\r\n    <form [formGroup]=\"addFormGroup\" #f=\"ngForm\">\r\n     \r\n\r\n     <mat-form-field  color=\"primary\" style='width: 100% !important;font-size: 16px !important;'>\r\n        <input style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"Nombre del staff\" formControlName=\"nombreStaff\" autocomplete=\"off\" required>\r\n\r\n         <span *ngIf='fs.nombreStaff.errors' matSuffix style=\"font-size: 13px !important;color: lightcoral;\">campo requerido</span> \r\n\r\n\r\n         <mat-label><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>person</mat-icon>Cual es el nombre del Staff?</mat-label>\r\n      </mat-form-field>\r\n\r\n\r\n\r\n      <mat-form-field style=' width: 100% !important;     font-size: 16px !important;\r\n    '>\r\n        <input style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"Puesto del empleado\" formControlName=\"puestoStaff\" autocomplete=\"off\" required>\r\n\r\n        <span *ngIf='fs.puestoStaff.errors' matSuffix style=\"font-size: 13px !important;color: lightcoral;\">campo requerido</span> \r\n\r\n\r\n         <mat-label><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>list_alt</mat-icon>¿Cuál es el puesto del Staff?</mat-label>\r\n      </mat-form-field>\r\n\r\n      <mat-form-field style='  width: 100% !important;    font-size: 16px !important;\r\n    '>\r\n        <input style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"Numero de telefono\" formControlName=\"telefonoStaff\" autocomplete=\"off\"  >\r\n\r\n          <span *ngIf='fs.telefonoStaff.errors && fs.telefonoStaff.value' matSuffix style=\"font-size: 13px !important;color: lightcoral;\">Número incorrecto</span> \r\n\r\n            <span *ngIf='fs.telefonoStaff.errors  && !fs.telefonoStaff.value' matSuffix style=\"font-size: 13px !important;color: lightcoral;\">campo requerido</span> \r\n\r\n\r\n         <mat-label><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>phone</mat-icon>Telefono</mat-label>\r\n      </mat-form-field>\r\n\r\n      <mat-form-field style=' width: 100% !important;     font-size: 16px !important;\r\n    '>\r\n\r\n    <span matSuffix style=\"color: lightgray;vertical-align: super;\"\r\n     [hidden]=\" addFormGroup.controls['correoStaff'].hasError('email') || addFormGroup.controls['correoStaff'].hasError('required')\"  *ngIf='!emailTaken2' ><mat-icon style='color: #fbb7b7 !important; vertical-align: top;'>cancel</mat-icon>\r\n     ya existe esta cuenta</span>\r\n    <span matSuffix style=\"color: lightgray;vertical-align: super;\" *ngIf='emailTaken2' \r\n    [hidden]=\"addFormGroup.controls['correoStaff'].hasError('email') || addFormGroup.controls['correoStaff'].hasError('required')\"  >\r\n      <mat-icon style='color: #6bbf6f !important;vertical-align: top;'>check_circle</mat-icon></span>\r\n\r\n        <input style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"Correo Electronico\" formControlName=\"correoStaff\" type='email' autocomplete=\"off\" email required>\r\n\r\n           <span  *ngIf=\"addFormGroup.controls['correoStaff'].hasError('required')\"  matSuffix style=\"font-size: 13px !important;color: lightcoral;\">campo requerido</span> \r\n\r\n\r\n         <mat-label ><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>email</mat-icon>Correo electronico</mat-label>\r\n      </mat-form-field>\r\n\r\n\r\n\r\n\r\n\r\n\r\n    </form>\r\n\r\n    <div style=\"    padding: 0px 0px 2px 0px;\r\n    font-size: 13px;color: rgb(232,84,126);font-weight: 400;\">\r\n      Se enviará por e-mail el link para descargar el App del Staff y los credenciales de acceso\r\n<!--     <mat-slide-toggle [(ngModel)]=\"isHuman2\" (change)=\"onChange2($event)\" name=\"human2\">I am not a robot</mat-slide-toggle> -->\r\n\r\n<!--     <mat-slide-toggle name=\"human2\">Invitar a YourBeauty y crear cuenta</mat-slide-toggle>\r\n -->\r\n\r\n    </div>\r\n\r\n\r\n\r\n  </div>\r\n</div>\r\n\r\n      </div>\r\n\r\n\r\n      <div class=\"modal-footer\" *ngIf='!editarStaff'>\r\n        <button [disabled]='!f.form.valid'  type=\"button\" class=\"btn\" (click)='addStaff(1)' mat-raised-button color=\"primary\">Guardar</button>\r\n        <button [disabled]='!f.form.valid' type=\"button\" class=\"btn\" mat-raised-button color=\"primary\" (click)='addStaff(2)'>Guardar & Agregar otro</button>\r\n      </div>\r\n\r\n      <div class=\"modal-footer\" *ngIf='editarStaff'>\r\n        <button [disabled]='!f.form.valid'  type=\"button\" class=\"btn\" (click)='editStaffDo()' mat-raised-button color=\"primary\">Editar Staff</button>\r\n      </div>\r\n\r\n\r\n    </ng-template>\r\n\r\n\r\n\r\n\r\n\r\n    <ng-template #content2 let-c=\"close\" let-d=\"dismiss\">\r\n      <div class=\"modal-header\">\r\n        <h4 class=\"modal-title\" style=\"    font-size: 25px;\r\n    line-height: 34px;\r\n    font-weight: 300;\">Agregando Horario</h4>\r\n        <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\r\n          <span aria-hidden=\"true\">&times;</span>\r\n        </button>\r\n      </div>\r\n      <div class=\"modal-body\" style=\"padding: 0px !important\">\r\n          <div class=\"col-xl-12\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n        <div style='padding: 30px 45px;'>\r\n            <div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" *ngFor=\"let item of [{nombre:'Domingo'},{nombre:'Lunes'},{nombre:'Martes'}\r\n            ,{nombre:'Miercoles'},{nombre:'Jueves'},{nombre:'Viernes'},{nombre:'Sabado'}];  let i = index\">\r\n            <mat-checkbox >\r\n              <span class='labelBy' style='margin-bottom: 0px !important;'>{{item.nombre}}</span>\r\n                </mat-checkbox>\r\n              <div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n              \r\n              <div style=\"display: flex\">\r\n\r\n              <mat-select class='inputBy w50'>\r\n    \r\n              <mat-option value=\"option1\">12:00 AM</mat-option>\r\n              <mat-option value=\"option1\">12:05 AM</mat-option>\r\n              <mat-option value=\"option1\">12:10 AM</mat-option>\r\n              <mat-option value=\"option1\">12:15 AM</mat-option>\r\n              <mat-option value=\"option1\">12:20 AM</mat-option>\r\n              <mat-option value=\"option1\">12:25 AM</mat-option>\r\n              <mat-option value=\"option1\">12:30 AM</mat-option>\r\n              <mat-option value=\"option1\">12:35 AM</mat-option>\r\n              <mat-option value=\"option1\">12:40 AM</mat-option>\r\n              <mat-option value=\"option1\">12:45 AM</mat-option>\r\n              <mat-option value=\"option1\">12:50 AM</mat-option>\r\n              <mat-option value=\"option1\">12:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">01:00 AM</mat-option>\r\n              <mat-option value=\"option1\">01:05 AM</mat-option>\r\n              <mat-option value=\"option1\">01:10 AM</mat-option>\r\n              <mat-option value=\"option1\">01:15 AM</mat-option>\r\n              <mat-option value=\"option1\">01:20 AM</mat-option>\r\n              <mat-option value=\"option1\">01:25 AM</mat-option>\r\n              <mat-option value=\"option1\">01:30 AM</mat-option>\r\n              <mat-option value=\"option1\">01:35 AM</mat-option>\r\n              <mat-option value=\"option1\">01:40 AM</mat-option>\r\n              <mat-option value=\"option1\">01:45 AM</mat-option>\r\n              <mat-option value=\"option1\">01:50 AM</mat-option>\r\n              <mat-option value=\"option1\">01:55 AM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">02:00 AM</mat-option>\r\n              <mat-option value=\"option1\">02:05 AM</mat-option>\r\n              <mat-option value=\"option1\">02:10 AM</mat-option>\r\n              <mat-option value=\"option1\">02:15 AM</mat-option>\r\n              <mat-option value=\"option1\">02:20 AM</mat-option>\r\n              <mat-option value=\"option1\">02:25 AM</mat-option>\r\n              <mat-option value=\"option1\">02:30 AM</mat-option>\r\n              <mat-option value=\"option1\">02:35 AM</mat-option>\r\n              <mat-option value=\"option1\">02:40 AM</mat-option>\r\n              <mat-option value=\"option1\">02:45 AM</mat-option>\r\n              <mat-option value=\"option1\">02:50 AM</mat-option>\r\n              <mat-option value=\"option1\">02:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">03:00 AM</mat-option>\r\n              <mat-option value=\"option1\">03:05 AM</mat-option>\r\n              <mat-option value=\"option1\">03:10 AM</mat-option>\r\n              <mat-option value=\"option1\">03:15 AM</mat-option>\r\n              <mat-option value=\"option1\">03:20 AM</mat-option>\r\n              <mat-option value=\"option1\">03:25 AM</mat-option>\r\n              <mat-option value=\"option1\">03:30 AM</mat-option>\r\n              <mat-option value=\"option1\">03:35 AM</mat-option>\r\n              <mat-option value=\"option1\">03:40 AM</mat-option>\r\n              <mat-option value=\"option1\">03:45 AM</mat-option>\r\n              <mat-option value=\"option1\">03:50 AM</mat-option>\r\n              <mat-option value=\"option1\">03:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">04:00 AM</mat-option>\r\n              <mat-option value=\"option1\">04:05 AM</mat-option>\r\n              <mat-option value=\"option1\">04:10 AM</mat-option>\r\n              <mat-option value=\"option1\">04:15 AM</mat-option>\r\n              <mat-option value=\"option1\">04:20 AM</mat-option>\r\n              <mat-option value=\"option1\">04:25 AM</mat-option>\r\n              <mat-option value=\"option1\">04:30 AM</mat-option>\r\n              <mat-option value=\"option1\">04:35 AM</mat-option>\r\n              <mat-option value=\"option1\">04:40 AM</mat-option>\r\n              <mat-option value=\"option1\">04:45 AM</mat-option>\r\n              <mat-option value=\"option1\">04:50 AM</mat-option>\r\n              <mat-option value=\"option1\">04:55 AM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">05:00 AM</mat-option>\r\n              <mat-option value=\"option1\">05:05 AM</mat-option>\r\n              <mat-option value=\"option1\">05:10 AM</mat-option>\r\n              <mat-option value=\"option1\">05:15 AM</mat-option>\r\n              <mat-option value=\"option1\">05:20 AM</mat-option>\r\n              <mat-option value=\"option1\">05:25 AM</mat-option>\r\n              <mat-option value=\"option1\">05:30 AM</mat-option>\r\n              <mat-option value=\"option1\">05:35 AM</mat-option>\r\n              <mat-option value=\"option1\">05:40 AM</mat-option>\r\n              <mat-option value=\"option1\">05:45 AM</mat-option>\r\n              <mat-option value=\"option1\">05:50 AM</mat-option>\r\n              <mat-option value=\"option1\">05:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">06:00 AM</mat-option>\r\n              <mat-option value=\"option1\">06:05 AM</mat-option>\r\n              <mat-option value=\"option1\">06:10 AM</mat-option>\r\n              <mat-option value=\"option1\">06:15 AM</mat-option>\r\n              <mat-option value=\"option1\">06:20 AM</mat-option>\r\n              <mat-option value=\"option1\">06:25 AM</mat-option>\r\n              <mat-option value=\"option1\">06:30 AM</mat-option>\r\n              <mat-option value=\"option1\">06:35 AM</mat-option>\r\n              <mat-option value=\"option1\">06:40 AM</mat-option>\r\n              <mat-option value=\"option1\">06:45 AM</mat-option>\r\n              <mat-option value=\"option1\">06:50 AM</mat-option>\r\n              <mat-option value=\"option1\">06:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">07:00 AM</mat-option>\r\n              <mat-option value=\"option1\">07:05 AM</mat-option>\r\n              <mat-option value=\"option1\">07:10 AM</mat-option>\r\n              <mat-option value=\"option1\">07:15 AM</mat-option>\r\n              <mat-option value=\"option1\">07:20 AM</mat-option>\r\n              <mat-option value=\"option1\">07:25 AM</mat-option>\r\n              <mat-option value=\"option1\">07:30 AM</mat-option>\r\n              <mat-option value=\"option1\">07:35 AM</mat-option>\r\n              <mat-option value=\"option1\">07:40 AM</mat-option>\r\n              <mat-option value=\"option1\">07:45 AM</mat-option>\r\n              <mat-option value=\"option1\">07:50 AM</mat-option>\r\n              <mat-option value=\"option1\">07:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">08:00 AM</mat-option>\r\n              <mat-option value=\"option1\">08:05 AM</mat-option>\r\n              <mat-option value=\"option1\">08:10 AM</mat-option>\r\n              <mat-option value=\"option1\">08:15 AM</mat-option>\r\n              <mat-option value=\"option1\">08:20 AM</mat-option>\r\n              <mat-option value=\"option1\">08:25 AM</mat-option>\r\n              <mat-option value=\"option1\">08:30 AM</mat-option>\r\n              <mat-option value=\"option1\">08:35 AM</mat-option>\r\n              <mat-option value=\"option1\">08:40 AM</mat-option>\r\n              <mat-option value=\"option1\">08:45 AM</mat-option>\r\n              <mat-option value=\"option1\">08:50 AM</mat-option>\r\n              <mat-option value=\"option1\">08:55 AM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">09:00 AM</mat-option>\r\n              <mat-option value=\"option1\">09:05 AM</mat-option>\r\n              <mat-option value=\"option1\">09:10 AM</mat-option>\r\n              <mat-option value=\"option1\">09:15 AM</mat-option>\r\n              <mat-option value=\"option1\">09:20 AM</mat-option>\r\n              <mat-option value=\"option1\">09:25 AM</mat-option>\r\n              <mat-option value=\"option1\">09:30 AM</mat-option>\r\n              <mat-option value=\"option1\">09:35 AM</mat-option>\r\n              <mat-option value=\"option1\">09:40 AM</mat-option>\r\n              <mat-option value=\"option1\">09:45 AM</mat-option>\r\n              <mat-option value=\"option1\">09:50 AM</mat-option>\r\n              <mat-option value=\"option1\">09:55 AM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">10:00 AM</mat-option>\r\n              <mat-option value=\"option1\">10:05 AM</mat-option>\r\n              <mat-option value=\"option1\">10:10 AM</mat-option>\r\n              <mat-option value=\"option1\">10:15 AM</mat-option>\r\n              <mat-option value=\"option1\">10:20 AM</mat-option>\r\n              <mat-option value=\"option1\">10:25 AM</mat-option>\r\n              <mat-option value=\"option1\">10:30 AM</mat-option>\r\n              <mat-option value=\"option1\">10:35 AM</mat-option>\r\n              <mat-option value=\"option1\">10:40 AM</mat-option>\r\n              <mat-option value=\"option1\">10:45 AM</mat-option>\r\n              <mat-option value=\"option1\">10:50 AM</mat-option>\r\n              <mat-option value=\"option1\">10:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">11:00 AM</mat-option>\r\n              <mat-option value=\"option1\">11:05 AM</mat-option>\r\n              <mat-option value=\"option1\">11:10 AM</mat-option>\r\n              <mat-option value=\"option1\">11:15 AM</mat-option>\r\n              <mat-option value=\"option1\">11:20 AM</mat-option>\r\n              <mat-option value=\"option1\">11:25 AM</mat-option>\r\n              <mat-option value=\"option1\">11:30 AM</mat-option>\r\n              <mat-option value=\"option1\">11:35 AM</mat-option>\r\n              <mat-option value=\"option1\">11:40 AM</mat-option>\r\n              <mat-option value=\"option1\">11:45 AM</mat-option>\r\n              <mat-option value=\"option1\">11:50 AM</mat-option>\r\n              <mat-option value=\"option1\">11:55 AM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">12:00 PM</mat-option>\r\n              <mat-option value=\"option1\">12:05 PM</mat-option>\r\n              <mat-option value=\"option1\">12:10 PM</mat-option>\r\n              <mat-option value=\"option1\">12:15 PM</mat-option>\r\n              <mat-option value=\"option1\">12:20 PM</mat-option>\r\n              <mat-option value=\"option1\">12:25 PM</mat-option>\r\n              <mat-option value=\"option1\">12:30 PM</mat-option>\r\n              <mat-option value=\"option1\">12:35 PM</mat-option>\r\n              <mat-option value=\"option1\">12:40 PM</mat-option>\r\n              <mat-option value=\"option1\">12:45 PM</mat-option>\r\n              <mat-option value=\"option1\">12:50 PM</mat-option>\r\n              <mat-option value=\"option1\">12:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">01:00 PM</mat-option>\r\n              <mat-option value=\"option1\">01:05 PM</mat-option>\r\n              <mat-option value=\"option1\">01:10 PM</mat-option>\r\n              <mat-option value=\"option1\">01:15 PM</mat-option>\r\n              <mat-option value=\"option1\">01:20 PM</mat-option>\r\n              <mat-option value=\"option1\">01:25 PM</mat-option>\r\n              <mat-option value=\"option1\">01:30 PM</mat-option>\r\n              <mat-option value=\"option1\">01:35 PM</mat-option>\r\n              <mat-option value=\"option1\">01:40 PM</mat-option>\r\n              <mat-option value=\"option1\">01:45 PM</mat-option>\r\n              <mat-option value=\"option1\">01:50 PM</mat-option>\r\n              <mat-option value=\"option1\">01:55 PM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">02:00 PM</mat-option>\r\n              <mat-option value=\"option1\">02:05 PM</mat-option>\r\n              <mat-option value=\"option1\">02:10 PM</mat-option>\r\n              <mat-option value=\"option1\">02:15 PM</mat-option>\r\n              <mat-option value=\"option1\">02:20 PM</mat-option>\r\n              <mat-option value=\"option1\">02:25 PM</mat-option>\r\n              <mat-option value=\"option1\">02:30 PM</mat-option>\r\n              <mat-option value=\"option1\">02:35 PM</mat-option>\r\n              <mat-option value=\"option1\">02:40 PM</mat-option>\r\n              <mat-option value=\"option1\">02:45 PM</mat-option>\r\n              <mat-option value=\"option1\">02:50 PM</mat-option>\r\n              <mat-option value=\"option1\">02:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">03:00 PM</mat-option>\r\n              <mat-option value=\"option1\">03:05 PM</mat-option>\r\n              <mat-option value=\"option1\">03:10 PM</mat-option>\r\n              <mat-option value=\"option1\">03:15 PM</mat-option>\r\n              <mat-option value=\"option1\">03:20 PM</mat-option>\r\n              <mat-option value=\"option1\">03:25 PM</mat-option>\r\n              <mat-option value=\"option1\">03:30 PM</mat-option>\r\n              <mat-option value=\"option1\">03:35 PM</mat-option>\r\n              <mat-option value=\"option1\">03:40 PM</mat-option>\r\n              <mat-option value=\"option1\">03:45 PM</mat-option>\r\n              <mat-option value=\"option1\">03:50 PM</mat-option>\r\n              <mat-option value=\"option1\">03:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">04:00 PM</mat-option>\r\n              <mat-option value=\"option1\">04:05 PM</mat-option>\r\n              <mat-option value=\"option1\">04:10 PM</mat-option>\r\n              <mat-option value=\"option1\">04:15 PM</mat-option>\r\n              <mat-option value=\"option1\">04:20 PM</mat-option>\r\n              <mat-option value=\"option1\">04:25 PM</mat-option>\r\n              <mat-option value=\"option1\">04:30 PM</mat-option>\r\n              <mat-option value=\"option1\">04:35 PM</mat-option>\r\n              <mat-option value=\"option1\">04:40 PM</mat-option>\r\n              <mat-option value=\"option1\">04:45 PM</mat-option>\r\n              <mat-option value=\"option1\">04:50 PM</mat-option>\r\n              <mat-option value=\"option1\">04:55 PM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">05:00 PM</mat-option>\r\n              <mat-option value=\"option1\">05:05 PM</mat-option>\r\n              <mat-option value=\"option1\">05:10 PM</mat-option>\r\n              <mat-option value=\"option1\">05:15 PM</mat-option>\r\n              <mat-option value=\"option1\">05:20 PM</mat-option>\r\n              <mat-option value=\"option1\">05:25 PM</mat-option>\r\n              <mat-option value=\"option1\">05:30 PM</mat-option>\r\n              <mat-option value=\"option1\">05:35 PM</mat-option>\r\n              <mat-option value=\"option1\">05:40 PM</mat-option>\r\n              <mat-option value=\"option1\">05:45 PM</mat-option>\r\n              <mat-option value=\"option1\">05:50 PM</mat-option>\r\n              <mat-option value=\"option1\">05:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">06:00 PM</mat-option>\r\n              <mat-option value=\"option1\">06:05 PM</mat-option>\r\n              <mat-option value=\"option1\">06:10 PM</mat-option>\r\n              <mat-option value=\"option1\">06:15 PM</mat-option>\r\n              <mat-option value=\"option1\">06:20 PM</mat-option>\r\n              <mat-option value=\"option1\">06:25 PM</mat-option>\r\n              <mat-option value=\"option1\">06:30 PM</mat-option>\r\n              <mat-option value=\"option1\">06:35 PM</mat-option>\r\n              <mat-option value=\"option1\">06:40 PM</mat-option>\r\n              <mat-option value=\"option1\">06:45 PM</mat-option>\r\n              <mat-option value=\"option1\">06:50 PM</mat-option>\r\n              <mat-option value=\"option1\">06:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">07:00 PM</mat-option>\r\n              <mat-option value=\"option1\">07:05 PM</mat-option>\r\n              <mat-option value=\"option1\">07:10 PM</mat-option>\r\n              <mat-option value=\"option1\">07:15 PM</mat-option>\r\n              <mat-option value=\"option1\">07:20 PM</mat-option>\r\n              <mat-option value=\"option1\">07:25 PM</mat-option>\r\n              <mat-option value=\"option1\">07:30 PM</mat-option>\r\n              <mat-option value=\"option1\">07:35 PM</mat-option>\r\n              <mat-option value=\"option1\">07:40 PM</mat-option>\r\n              <mat-option value=\"option1\">07:45 PM</mat-option>\r\n              <mat-option value=\"option1\">07:50 PM</mat-option>\r\n              <mat-option value=\"option1\">07:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">08:00 PM</mat-option>\r\n              <mat-option value=\"option1\">08:05 PM</mat-option>\r\n              <mat-option value=\"option1\">08:10 PM</mat-option>\r\n              <mat-option value=\"option1\">08:15 PM</mat-option>\r\n              <mat-option value=\"option1\">08:20 PM</mat-option>\r\n              <mat-option value=\"option1\">08:25 PM</mat-option>\r\n              <mat-option value=\"option1\">08:30 PM</mat-option>\r\n              <mat-option value=\"option1\">08:35 PM</mat-option>\r\n              <mat-option value=\"option1\">08:40 PM</mat-option>\r\n              <mat-option value=\"option1\">08:45 PM</mat-option>\r\n              <mat-option value=\"option1\">08:50 PM</mat-option>\r\n              <mat-option value=\"option1\">08:55 PM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">09:00 PM</mat-option>\r\n              <mat-option value=\"option1\">09:05 PM</mat-option>\r\n              <mat-option value=\"option1\">09:10 PM</mat-option>\r\n              <mat-option value=\"option1\">09:15 PM</mat-option>\r\n              <mat-option value=\"option1\">09:20 PM</mat-option>\r\n              <mat-option value=\"option1\">09:25 PM</mat-option>\r\n              <mat-option value=\"option1\">09:30 PM</mat-option>\r\n              <mat-option value=\"option1\">09:35 PM</mat-option>\r\n              <mat-option value=\"option1\">09:40 PM</mat-option>\r\n              <mat-option value=\"option1\">09:45 PM</mat-option>\r\n              <mat-option value=\"option1\">09:50 PM</mat-option>\r\n              <mat-option value=\"option1\">09:55 PM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">10:00 PM</mat-option>\r\n              <mat-option value=\"option1\">10:05 PM</mat-option>\r\n              <mat-option value=\"option1\">10:10 PM</mat-option>\r\n              <mat-option value=\"option1\">10:15 PM</mat-option>\r\n              <mat-option value=\"option1\">10:20 PM</mat-option>\r\n              <mat-option value=\"option1\">10:25 PM</mat-option>\r\n              <mat-option value=\"option1\">10:30 PM</mat-option>\r\n              <mat-option value=\"option1\">10:35 PM</mat-option>\r\n              <mat-option value=\"option1\">10:40 PM</mat-option>\r\n              <mat-option value=\"option1\">10:45 PM</mat-option>\r\n              <mat-option value=\"option1\">10:50 PM</mat-option>\r\n              <mat-option value=\"option1\">10:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">11:00 PM</mat-option>\r\n              <mat-option value=\"option1\">11:05 PM</mat-option>\r\n              <mat-option value=\"option1\">11:10 PM</mat-option>\r\n              <mat-option value=\"option1\">11:15 PM</mat-option>\r\n              <mat-option value=\"option1\">11:20 PM</mat-option>\r\n              <mat-option value=\"option1\">11:25 PM</mat-option>\r\n              <mat-option value=\"option1\">11:30 PM</mat-option>\r\n              <mat-option value=\"option1\">11:35 PM</mat-option>\r\n              <mat-option value=\"option1\">11:40 PM</mat-option>\r\n              <mat-option value=\"option1\">11:45 PM</mat-option>\r\n              <mat-option value=\"option1\">11:50 PM</mat-option>\r\n              <mat-option value=\"option1\">11:55 PM</mat-option>\r\n\r\n\r\n\r\n              </mat-select>\r\n\r\n              <mat-select class='inputBy w50'>\r\n              \r\n              <mat-option value=\"option1\">12:00 AM</mat-option>\r\n              <mat-option value=\"option1\">12:05 AM</mat-option>\r\n              <mat-option value=\"option1\">12:10 AM</mat-option>\r\n              <mat-option value=\"option1\">12:15 AM</mat-option>\r\n              <mat-option value=\"option1\">12:20 AM</mat-option>\r\n              <mat-option value=\"option1\">12:25 AM</mat-option>\r\n              <mat-option value=\"option1\">12:30 AM</mat-option>\r\n              <mat-option value=\"option1\">12:35 AM</mat-option>\r\n              <mat-option value=\"option1\">12:40 AM</mat-option>\r\n              <mat-option value=\"option1\">12:45 AM</mat-option>\r\n              <mat-option value=\"option1\">12:50 AM</mat-option>\r\n              <mat-option value=\"option1\">12:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">01:00 AM</mat-option>\r\n              <mat-option value=\"option1\">01:05 AM</mat-option>\r\n              <mat-option value=\"option1\">01:10 AM</mat-option>\r\n              <mat-option value=\"option1\">01:15 AM</mat-option>\r\n              <mat-option value=\"option1\">01:20 AM</mat-option>\r\n              <mat-option value=\"option1\">01:25 AM</mat-option>\r\n              <mat-option value=\"option1\">01:30 AM</mat-option>\r\n              <mat-option value=\"option1\">01:35 AM</mat-option>\r\n              <mat-option value=\"option1\">01:40 AM</mat-option>\r\n              <mat-option value=\"option1\">01:45 AM</mat-option>\r\n              <mat-option value=\"option1\">01:50 AM</mat-option>\r\n              <mat-option value=\"option1\">01:55 AM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">02:00 AM</mat-option>\r\n              <mat-option value=\"option1\">02:05 AM</mat-option>\r\n              <mat-option value=\"option1\">02:10 AM</mat-option>\r\n              <mat-option value=\"option1\">02:15 AM</mat-option>\r\n              <mat-option value=\"option1\">02:20 AM</mat-option>\r\n              <mat-option value=\"option1\">02:25 AM</mat-option>\r\n              <mat-option value=\"option1\">02:30 AM</mat-option>\r\n              <mat-option value=\"option1\">02:35 AM</mat-option>\r\n              <mat-option value=\"option1\">02:40 AM</mat-option>\r\n              <mat-option value=\"option1\">02:45 AM</mat-option>\r\n              <mat-option value=\"option1\">02:50 AM</mat-option>\r\n              <mat-option value=\"option1\">02:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">03:00 AM</mat-option>\r\n              <mat-option value=\"option1\">03:05 AM</mat-option>\r\n              <mat-option value=\"option1\">03:10 AM</mat-option>\r\n              <mat-option value=\"option1\">03:15 AM</mat-option>\r\n              <mat-option value=\"option1\">03:20 AM</mat-option>\r\n              <mat-option value=\"option1\">03:25 AM</mat-option>\r\n              <mat-option value=\"option1\">03:30 AM</mat-option>\r\n              <mat-option value=\"option1\">03:35 AM</mat-option>\r\n              <mat-option value=\"option1\">03:40 AM</mat-option>\r\n              <mat-option value=\"option1\">03:45 AM</mat-option>\r\n              <mat-option value=\"option1\">03:50 AM</mat-option>\r\n              <mat-option value=\"option1\">03:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">04:00 AM</mat-option>\r\n              <mat-option value=\"option1\">04:05 AM</mat-option>\r\n              <mat-option value=\"option1\">04:10 AM</mat-option>\r\n              <mat-option value=\"option1\">04:15 AM</mat-option>\r\n              <mat-option value=\"option1\">04:20 AM</mat-option>\r\n              <mat-option value=\"option1\">04:25 AM</mat-option>\r\n              <mat-option value=\"option1\">04:30 AM</mat-option>\r\n              <mat-option value=\"option1\">04:35 AM</mat-option>\r\n              <mat-option value=\"option1\">04:40 AM</mat-option>\r\n              <mat-option value=\"option1\">04:45 AM</mat-option>\r\n              <mat-option value=\"option1\">04:50 AM</mat-option>\r\n              <mat-option value=\"option1\">04:55 AM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">05:00 AM</mat-option>\r\n              <mat-option value=\"option1\">05:05 AM</mat-option>\r\n              <mat-option value=\"option1\">05:10 AM</mat-option>\r\n              <mat-option value=\"option1\">05:15 AM</mat-option>\r\n              <mat-option value=\"option1\">05:20 AM</mat-option>\r\n              <mat-option value=\"option1\">05:25 AM</mat-option>\r\n              <mat-option value=\"option1\">05:30 AM</mat-option>\r\n              <mat-option value=\"option1\">05:35 AM</mat-option>\r\n              <mat-option value=\"option1\">05:40 AM</mat-option>\r\n              <mat-option value=\"option1\">05:45 AM</mat-option>\r\n              <mat-option value=\"option1\">05:50 AM</mat-option>\r\n              <mat-option value=\"option1\">05:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">06:00 AM</mat-option>\r\n              <mat-option value=\"option1\">06:05 AM</mat-option>\r\n              <mat-option value=\"option1\">06:10 AM</mat-option>\r\n              <mat-option value=\"option1\">06:15 AM</mat-option>\r\n              <mat-option value=\"option1\">06:20 AM</mat-option>\r\n              <mat-option value=\"option1\">06:25 AM</mat-option>\r\n              <mat-option value=\"option1\">06:30 AM</mat-option>\r\n              <mat-option value=\"option1\">06:35 AM</mat-option>\r\n              <mat-option value=\"option1\">06:40 AM</mat-option>\r\n              <mat-option value=\"option1\">06:45 AM</mat-option>\r\n              <mat-option value=\"option1\">06:50 AM</mat-option>\r\n              <mat-option value=\"option1\">06:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">07:00 AM</mat-option>\r\n              <mat-option value=\"option1\">07:05 AM</mat-option>\r\n              <mat-option value=\"option1\">07:10 AM</mat-option>\r\n              <mat-option value=\"option1\">07:15 AM</mat-option>\r\n              <mat-option value=\"option1\">07:20 AM</mat-option>\r\n              <mat-option value=\"option1\">07:25 AM</mat-option>\r\n              <mat-option value=\"option1\">07:30 AM</mat-option>\r\n              <mat-option value=\"option1\">07:35 AM</mat-option>\r\n              <mat-option value=\"option1\">07:40 AM</mat-option>\r\n              <mat-option value=\"option1\">07:45 AM</mat-option>\r\n              <mat-option value=\"option1\">07:50 AM</mat-option>\r\n              <mat-option value=\"option1\">07:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">08:00 AM</mat-option>\r\n              <mat-option value=\"option1\">08:05 AM</mat-option>\r\n              <mat-option value=\"option1\">08:10 AM</mat-option>\r\n              <mat-option value=\"option1\">08:15 AM</mat-option>\r\n              <mat-option value=\"option1\">08:20 AM</mat-option>\r\n              <mat-option value=\"option1\">08:25 AM</mat-option>\r\n              <mat-option value=\"option1\">08:30 AM</mat-option>\r\n              <mat-option value=\"option1\">08:35 AM</mat-option>\r\n              <mat-option value=\"option1\">08:40 AM</mat-option>\r\n              <mat-option value=\"option1\">08:45 AM</mat-option>\r\n              <mat-option value=\"option1\">08:50 AM</mat-option>\r\n              <mat-option value=\"option1\">08:55 AM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">09:00 AM</mat-option>\r\n              <mat-option value=\"option1\">09:05 AM</mat-option>\r\n              <mat-option value=\"option1\">09:10 AM</mat-option>\r\n              <mat-option value=\"option1\">09:15 AM</mat-option>\r\n              <mat-option value=\"option1\">09:20 AM</mat-option>\r\n              <mat-option value=\"option1\">09:25 AM</mat-option>\r\n              <mat-option value=\"option1\">09:30 AM</mat-option>\r\n              <mat-option value=\"option1\">09:35 AM</mat-option>\r\n              <mat-option value=\"option1\">09:40 AM</mat-option>\r\n              <mat-option value=\"option1\">09:45 AM</mat-option>\r\n              <mat-option value=\"option1\">09:50 AM</mat-option>\r\n              <mat-option value=\"option1\">09:55 AM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">10:00 AM</mat-option>\r\n              <mat-option value=\"option1\">10:05 AM</mat-option>\r\n              <mat-option value=\"option1\">10:10 AM</mat-option>\r\n              <mat-option value=\"option1\">10:15 AM</mat-option>\r\n              <mat-option value=\"option1\">10:20 AM</mat-option>\r\n              <mat-option value=\"option1\">10:25 AM</mat-option>\r\n              <mat-option value=\"option1\">10:30 AM</mat-option>\r\n              <mat-option value=\"option1\">10:35 AM</mat-option>\r\n              <mat-option value=\"option1\">10:40 AM</mat-option>\r\n              <mat-option value=\"option1\">10:45 AM</mat-option>\r\n              <mat-option value=\"option1\">10:50 AM</mat-option>\r\n              <mat-option value=\"option1\">10:55 AM</mat-option>\r\n\r\n              <mat-option value=\"option1\">11:00 AM</mat-option>\r\n              <mat-option value=\"option1\">11:05 AM</mat-option>\r\n              <mat-option value=\"option1\">11:10 AM</mat-option>\r\n              <mat-option value=\"option1\">11:15 AM</mat-option>\r\n              <mat-option value=\"option1\">11:20 AM</mat-option>\r\n              <mat-option value=\"option1\">11:25 AM</mat-option>\r\n              <mat-option value=\"option1\">11:30 AM</mat-option>\r\n              <mat-option value=\"option1\">11:35 AM</mat-option>\r\n              <mat-option value=\"option1\">11:40 AM</mat-option>\r\n              <mat-option value=\"option1\">11:45 AM</mat-option>\r\n              <mat-option value=\"option1\">11:50 AM</mat-option>\r\n              <mat-option value=\"option1\">11:55 AM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">12:00 PM</mat-option>\r\n              <mat-option value=\"option1\">12:05 PM</mat-option>\r\n              <mat-option value=\"option1\">12:10 PM</mat-option>\r\n              <mat-option value=\"option1\">12:15 PM</mat-option>\r\n              <mat-option value=\"option1\">12:20 PM</mat-option>\r\n              <mat-option value=\"option1\">12:25 PM</mat-option>\r\n              <mat-option value=\"option1\">12:30 PM</mat-option>\r\n              <mat-option value=\"option1\">12:35 PM</mat-option>\r\n              <mat-option value=\"option1\">12:40 PM</mat-option>\r\n              <mat-option value=\"option1\">12:45 PM</mat-option>\r\n              <mat-option value=\"option1\">12:50 PM</mat-option>\r\n              <mat-option value=\"option1\">12:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">01:00 PM</mat-option>\r\n              <mat-option value=\"option1\">01:05 PM</mat-option>\r\n              <mat-option value=\"option1\">01:10 PM</mat-option>\r\n              <mat-option value=\"option1\">01:15 PM</mat-option>\r\n              <mat-option value=\"option1\">01:20 PM</mat-option>\r\n              <mat-option value=\"option1\">01:25 PM</mat-option>\r\n              <mat-option value=\"option1\">01:30 PM</mat-option>\r\n              <mat-option value=\"option1\">01:35 PM</mat-option>\r\n              <mat-option value=\"option1\">01:40 PM</mat-option>\r\n              <mat-option value=\"option1\">01:45 PM</mat-option>\r\n              <mat-option value=\"option1\">01:50 PM</mat-option>\r\n              <mat-option value=\"option1\">01:55 PM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">02:00 PM</mat-option>\r\n              <mat-option value=\"option1\">02:05 PM</mat-option>\r\n              <mat-option value=\"option1\">02:10 PM</mat-option>\r\n              <mat-option value=\"option1\">02:15 PM</mat-option>\r\n              <mat-option value=\"option1\">02:20 PM</mat-option>\r\n              <mat-option value=\"option1\">02:25 PM</mat-option>\r\n              <mat-option value=\"option1\">02:30 PM</mat-option>\r\n              <mat-option value=\"option1\">02:35 PM</mat-option>\r\n              <mat-option value=\"option1\">02:40 PM</mat-option>\r\n              <mat-option value=\"option1\">02:45 PM</mat-option>\r\n              <mat-option value=\"option1\">02:50 PM</mat-option>\r\n              <mat-option value=\"option1\">02:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">03:00 PM</mat-option>\r\n              <mat-option value=\"option1\">03:05 PM</mat-option>\r\n              <mat-option value=\"option1\">03:10 PM</mat-option>\r\n              <mat-option value=\"option1\">03:15 PM</mat-option>\r\n              <mat-option value=\"option1\">03:20 PM</mat-option>\r\n              <mat-option value=\"option1\">03:25 PM</mat-option>\r\n              <mat-option value=\"option1\">03:30 PM</mat-option>\r\n              <mat-option value=\"option1\">03:35 PM</mat-option>\r\n              <mat-option value=\"option1\">03:40 PM</mat-option>\r\n              <mat-option value=\"option1\">03:45 PM</mat-option>\r\n              <mat-option value=\"option1\">03:50 PM</mat-option>\r\n              <mat-option value=\"option1\">03:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">04:00 PM</mat-option>\r\n              <mat-option value=\"option1\">04:05 PM</mat-option>\r\n              <mat-option value=\"option1\">04:10 PM</mat-option>\r\n              <mat-option value=\"option1\">04:15 PM</mat-option>\r\n              <mat-option value=\"option1\">04:20 PM</mat-option>\r\n              <mat-option value=\"option1\">04:25 PM</mat-option>\r\n              <mat-option value=\"option1\">04:30 PM</mat-option>\r\n              <mat-option value=\"option1\">04:35 PM</mat-option>\r\n              <mat-option value=\"option1\">04:40 PM</mat-option>\r\n              <mat-option value=\"option1\">04:45 PM</mat-option>\r\n              <mat-option value=\"option1\">04:50 PM</mat-option>\r\n              <mat-option value=\"option1\">04:55 PM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">05:00 PM</mat-option>\r\n              <mat-option value=\"option1\">05:05 PM</mat-option>\r\n              <mat-option value=\"option1\">05:10 PM</mat-option>\r\n              <mat-option value=\"option1\">05:15 PM</mat-option>\r\n              <mat-option value=\"option1\">05:20 PM</mat-option>\r\n              <mat-option value=\"option1\">05:25 PM</mat-option>\r\n              <mat-option value=\"option1\">05:30 PM</mat-option>\r\n              <mat-option value=\"option1\">05:35 PM</mat-option>\r\n              <mat-option value=\"option1\">05:40 PM</mat-option>\r\n              <mat-option value=\"option1\">05:45 PM</mat-option>\r\n              <mat-option value=\"option1\">05:50 PM</mat-option>\r\n              <mat-option value=\"option1\">05:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">06:00 PM</mat-option>\r\n              <mat-option value=\"option1\">06:05 PM</mat-option>\r\n              <mat-option value=\"option1\">06:10 PM</mat-option>\r\n              <mat-option value=\"option1\">06:15 PM</mat-option>\r\n              <mat-option value=\"option1\">06:20 PM</mat-option>\r\n              <mat-option value=\"option1\">06:25 PM</mat-option>\r\n              <mat-option value=\"option1\">06:30 PM</mat-option>\r\n              <mat-option value=\"option1\">06:35 PM</mat-option>\r\n              <mat-option value=\"option1\">06:40 PM</mat-option>\r\n              <mat-option value=\"option1\">06:45 PM</mat-option>\r\n              <mat-option value=\"option1\">06:50 PM</mat-option>\r\n              <mat-option value=\"option1\">06:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">07:00 PM</mat-option>\r\n              <mat-option value=\"option1\">07:05 PM</mat-option>\r\n              <mat-option value=\"option1\">07:10 PM</mat-option>\r\n              <mat-option value=\"option1\">07:15 PM</mat-option>\r\n              <mat-option value=\"option1\">07:20 PM</mat-option>\r\n              <mat-option value=\"option1\">07:25 PM</mat-option>\r\n              <mat-option value=\"option1\">07:30 PM</mat-option>\r\n              <mat-option value=\"option1\">07:35 PM</mat-option>\r\n              <mat-option value=\"option1\">07:40 PM</mat-option>\r\n              <mat-option value=\"option1\">07:45 PM</mat-option>\r\n              <mat-option value=\"option1\">07:50 PM</mat-option>\r\n              <mat-option value=\"option1\">07:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">08:00 PM</mat-option>\r\n              <mat-option value=\"option1\">08:05 PM</mat-option>\r\n              <mat-option value=\"option1\">08:10 PM</mat-option>\r\n              <mat-option value=\"option1\">08:15 PM</mat-option>\r\n              <mat-option value=\"option1\">08:20 PM</mat-option>\r\n              <mat-option value=\"option1\">08:25 PM</mat-option>\r\n              <mat-option value=\"option1\">08:30 PM</mat-option>\r\n              <mat-option value=\"option1\">08:35 PM</mat-option>\r\n              <mat-option value=\"option1\">08:40 PM</mat-option>\r\n              <mat-option value=\"option1\">08:45 PM</mat-option>\r\n              <mat-option value=\"option1\">08:50 PM</mat-option>\r\n              <mat-option value=\"option1\">08:55 PM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">09:00 PM</mat-option>\r\n              <mat-option value=\"option1\">09:05 PM</mat-option>\r\n              <mat-option value=\"option1\">09:10 PM</mat-option>\r\n              <mat-option value=\"option1\">09:15 PM</mat-option>\r\n              <mat-option value=\"option1\">09:20 PM</mat-option>\r\n              <mat-option value=\"option1\">09:25 PM</mat-option>\r\n              <mat-option value=\"option1\">09:30 PM</mat-option>\r\n              <mat-option value=\"option1\">09:35 PM</mat-option>\r\n              <mat-option value=\"option1\">09:40 PM</mat-option>\r\n              <mat-option value=\"option1\">09:45 PM</mat-option>\r\n              <mat-option value=\"option1\">09:50 PM</mat-option>\r\n              <mat-option value=\"option1\">09:55 PM</mat-option>\r\n\r\n\r\n              <mat-option value=\"option1\">10:00 PM</mat-option>\r\n              <mat-option value=\"option1\">10:05 PM</mat-option>\r\n              <mat-option value=\"option1\">10:10 PM</mat-option>\r\n              <mat-option value=\"option1\">10:15 PM</mat-option>\r\n              <mat-option value=\"option1\">10:20 PM</mat-option>\r\n              <mat-option value=\"option1\">10:25 PM</mat-option>\r\n              <mat-option value=\"option1\">10:30 PM</mat-option>\r\n              <mat-option value=\"option1\">10:35 PM</mat-option>\r\n              <mat-option value=\"option1\">10:40 PM</mat-option>\r\n              <mat-option value=\"option1\">10:45 PM</mat-option>\r\n              <mat-option value=\"option1\">10:50 PM</mat-option>\r\n              <mat-option value=\"option1\">10:55 PM</mat-option>\r\n\r\n              <mat-option value=\"option1\">11:00 PM</mat-option>\r\n              <mat-option value=\"option1\">11:05 PM</mat-option>\r\n              <mat-option value=\"option1\">11:10 PM</mat-option>\r\n              <mat-option value=\"option1\">11:15 PM</mat-option>\r\n              <mat-option value=\"option1\">11:20 PM</mat-option>\r\n              <mat-option value=\"option1\">11:25 PM</mat-option>\r\n              <mat-option value=\"option1\">11:30 PM</mat-option>\r\n              <mat-option value=\"option1\">11:35 PM</mat-option>\r\n              <mat-option value=\"option1\">11:40 PM</mat-option>\r\n              <mat-option value=\"option1\">11:45 PM</mat-option>\r\n              <mat-option value=\"option1\">11:50 PM</mat-option>\r\n              <mat-option value=\"option1\">11:55 PM</mat-option>\r\n              </mat-select>\r\n              </div>\r\n</div>\r\n              </div>  \r\n          \r\n            </div>\r\n          </div>\r\n  \r\n      </div>\r\n      <div class=\"modal-footer\">\r\n        <button type=\"button\" class=\"btn btn-secondary\">Guardar</button>\r\n\r\n      </div>\r\n    </ng-template>\r\n\r\n\r\n<!--\r\n<div class=\"m-login__signin\">\r\n\t<div class=\"m-login__title\">\r\n\t\t<h3 class=\"m-login__title\">Sign Up</h3>\r\n\t\t<div class=\"m-login__desc\">Enter your details to create your account:</div>\r\n\t</div>\r\n\r\n\t<m-auth-notice></m-auth-notice>\r\n\r\n\r\n\t<form class=\"m-login__form m-form\" name=\"form\" (ngSubmit)=\"f.form.valid && submit()\" #f=\"ngForm\" novalidate>\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<mat-form-field>\r\n\t\t\t\t<mat-label>Fullname</mat-label>\r\n\t\t\t\t<input matInput type=\"text\" name=\"fullname\" placeholder=\"Fullname\" autocomplete=\"off\" [(ngModel)]=\"model.fullname\" #fullname=\"ngModel\" required>\r\n\t\t\t</mat-form-field>\r\n\t\t</div>\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<mat-form-field>\r\n\t\t\t\t<mat-label>Email</mat-label>\r\n\t\t\t\t<input matInput type=\"email\" name=\"email\" placeholder=\"Email address\" autocomplete=\"off\" [(ngModel)]=\"model.email\" #email=\"ngModel\" email=\"true\" required>\r\n\t\t\t</mat-form-field>\r\n\t\t</div>\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<mat-form-field>\r\n\t\t\t\t<mat-label>Password</mat-label>\r\n\t\t\t\t<input matInput minlength=\"4\" type=\"password\" name=\"password\" placeholder=\"Password\" autocomplete=\"off\" [(ngModel)]=\"model.password\" #password=\"ngModel\" required>\r\n\t\t\t</mat-form-field>\r\n\t\t</div>\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<mat-form-field>\r\n\t\t\t\t<mat-label>Confirm Password</mat-label>\r\n\t\t\t\t<input matInput minlength=\"4\" type=\"password\" name=\"rpassword\" placeholder=\"Confirm password\" autocomplete=\"off\" [(ngModel)]=\"model.rpassword\" #rpassword=\"ngModel\" required>\r\n\t\t\t</mat-form-field>\r\n\t\t</div>\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<mat-checkbox name=\"agree\" required=\"true\" [(ngModel)]=\"model.agree\" #agree=\"ngModel\">I agree the\r\n\t\t\t\t<a href=\"javascript:;\">terms & conditions</a>\r\n\t\t\t</mat-checkbox>\r\n\t\t</div>\r\n\t</form>\r\n\r\n\t<div class=\"m-login__action m-login__action--fit\">\r\n\t\t<button mat-button (click)=\"loginPage($event)\" [disabled]=\"loading\" translate=\"AUTH.GENERAL.BACK_BUTTON\">Back</button>\r\n\t\t<m-spinner-button [options]=\"spinner\" (click)=\"submit()\">{{'AUTH.GENERAL.SIGNUP_BUTTON' | translate}}</m-spinner-button>\r\n\t</div>\r\n\r\n</div>\r\n-->\r\n\r\n<div >\r\n\t\r\n\r\n\t<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;margin: 0px !important;\r\n    border-bottom: solid 1px lightgray;\r\n    text-align: center !important;\r\n    width: 100%;\r\n    display: block;\">\r\n\t\r\n<!--\r\n \t<i [routerLink]=\"['/login']\" style=\"font-size: 25px;\r\n    color: lightgray;    position: absolute;\r\n    left: 0px;\r\n    top: 40px;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i> \r\n \t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 15px;\">Editar Staff</div> -->\r\n\r\n<div style=\"display: inline-block;\">\r\n   <img style='height: 65px;vertical-align: super;' src=\"assets/app/media/img/yb-icon.png\">\r\n</div>\r\n\t\t\t<div style=\"    width: 20%;\r\n    text-align: center;\r\n    display: inline-block;\r\n    float: none!important;\">\r\n \r\n\r\n\t\t\t\t\t<span style=\"    color: #8c8b88;\r\n    font-size: 14px;\r\n    text-transform: uppercase;\r\n    margin-bottom: 9px;\r\n    display: inline-block;\">APERTURA DE CUENTA EN YOURBEAUTY</span>\r\n<!-- \r\n\r\n\t\t\t\t\t<div style=\"    background: #e1e1e1;\r\n    height: 4px;\r\n    width: 100%;\"></div> -->\r\n\r\n      <ngb-progressbar  style='background-color: #e91e63 !important' [value]=\"avanceSteper\">\r\n\r\n    </ngb-progressbar>\r\n\r\n    <div style=\"    color: #8c8b88;\r\n    font-size: 14px;\r\n    margin-top: 2px;\">{{avanceSteper}}%</div>\r\n\r\n\t\t\t</div>\r\n\r\n</div>\r\n\r\n<div class=\"row\">\r\n\t\r\n     <ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n<!-- <button mat-raised-button (click)=\"isLinear = !isLinear\" id=\"toggle-linear\">\r\n  {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}\r\n</button> -->\r\n<mat-horizontal-stepper  color=\"warn\" [linear]=\"false\" #stepper style='width: 80%;\r\n    margin-left: 10%; margin-top: 40px'>\r\n\r\n\r\n\r\n\r\n  <mat-step [stepControl]=\"firstFormGroup\" >\r\n\r\n\r\n  \t<div style='max-width: 600px;\r\n    margin: auto;'>\r\n\r\n\r\n    <div style=\"text-align: center;  padding: 40px;padding-top: 50px !important\">\r\n    \t<span style=\"color: #383734;    font-size: 24px;\r\n    font-weight: 300;\r\n    line-height: 34px;\r\n    margin-bottom: 10px;\">Empieza tu prueba gratuita ahora\r\n\r\n</span><br>\r\n<span style=\"color: #605f5d;font-size: 16px\">\r\nSin tarjeta de crédito o compromisos. Solo toma 2 minutos\r\n</span>\r\n\r\n    </div>\r\n\r\n\r\n\r\n    <form [formGroup]=\"firstFormGroup\"    #fs2=\"ngForm\">\r\n     \r\n\r\n\r\n     <mat-form-field  color=\"primary\" style='font-size: 16px !important;'>\r\n        <input style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"Nombre del negocio\" formControlName=\"nombreNegocio\" autocomplete=\"off\" required>\r\n\r\n         <span *ngIf='ffg.nombreNegocio.errors' matSuffix style=\"font-size: 13px !important;color: lightcoral;\">campo requerido</span> \r\n\r\n\r\n         <mat-label><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>store</mat-icon>Cual es el nombre de tu negocio?</mat-label>\r\n      </mat-form-field>\r\n\r\n\r\n\r\n      <mat-form-field style='      font-size: 16px !important;\r\n    '>\r\n        <input style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"Nombre y Apellidos\" formControlName=\"nombreUsuario\"  autocomplete=\"off\" required>\r\n        <span *ngIf='ffg.nombreUsuario.errors' matSuffix style=\"font-size: 13px !important;color: lightcoral;\">campo requerido</span> \r\n\r\n         <mat-label><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>person</mat-icon>¿Cuál es tu nombre?</mat-label>\r\n      </mat-form-field>\r\n\r\n\r\n\r\n      <mat-form-field style='      width: 48%;\r\n    display: inline-block;    font-size: 16px !important;\r\n    '>\r\n        <input style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"Nombre de factura\" formControlName=\"nombreFactura\"  autocomplete=\"off\" >\r\n<!--         <span *ngIf='ffg.nombreFactura.errors' matSuffix style=\"font-size: 13px !important;color: lightcoral;\">campo requerido</span>  -->\r\n\r\n         <mat-label><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>perm_identity</mat-icon>¿Cuál es el nombre de factura?</mat-label>\r\n      </mat-form-field>\r\n\r\n\r\n      <mat-form-field style='      width: 48%;\r\n    display: inline-block;margin-left: 3%;    font-size: 16px !important;\r\n    '>\r\n        <input style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"Registro Único de Contribuyente \" formControlName=\"ruc\"  autocomplete=\"off\">\r\n      <!--   <span *ngIf='ffg.nombreUsuario.errors' matSuffix style=\"font-size: 13px !important;color: lightcoral;\">campo requerido</span>  -->\r\n\r\n         <mat-label><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>receipt</mat-icon>R.U.C</mat-label>\r\n      </mat-form-field>\r\n\r\n\r\n\r\n\r\n      <mat-form-field style='      font-size: 16px !important;\r\n    '>\r\n\r\n<!--     <span matSuffix style=\"color: lightgray;vertical-align: super;\"\r\n     [hidden]='!loaderValidator' ><mat-spinner color='accent' diameter='25' style='color: lightgray !important; vertical-align: top;'></mat-spinner></span> -->\r\n\r\n     <span matSuffix style=\"color: lightgray;vertical-align: super;\"\r\n     [hidden]=\" firstFormGroup.controls['correoElectronico'].hasError('email') || firstFormGroup.controls['correoElectronico'].hasError('required')\"  *ngIf='!emailTaken' ><mat-icon style='color: #fbb7b7 !important; vertical-align: top;'>cancel</mat-icon>\r\n     ya existe esta cuenta</span>\r\n    <span matSuffix style=\"color: lightgray;vertical-align: super;\" *ngIf='emailTaken' \r\n    [hidden]=\"firstFormGroup.controls['correoElectronico'].hasError('email') || firstFormGroup.controls['correoElectronico'].hasError('required')\"  >\r\n      <mat-icon style='color: #6bbf6f !important;vertical-align: top;'>check_circle</mat-icon></span>\r\n\r\n        <input  (focusout)=\"quitarSpinner()\" style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"Correo Electronico\" autocomplete=\"off\" formControlName=\"correoElectronico\" type='email' email=\"true\" required> \r\n\r\n        <span *ngIf='ffg.correoElectronico.errors' matSuffix style=\"font-size: 13px !important;color: lightcoral;\">campo requerido</span> \r\n\r\n\r\n         <mat-label><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>email</mat-icon>¿Cúal es tu correo electrónico?</mat-label>\r\n      </mat-form-field>\r\n\r\n <!--    <mat-form-field style='      font-size: 16px !important;'>\r\n         \r\n\r\n\r\n     \r\n      \r\n        <span matSuffix style=\"color: darkgray;\">.yourbeauty.com.pa</span> \r\n               <mat-icon style='    vertical-align: middle;\r\n    font-size: 25px !important;\r\n    position: absolute;\r\n    width: 150px;\r\n    right: 0;\r\n    top: -40px;\r\n    margin-right: 0px;\r\n    text-align: right;' matSuffix  \r\n          placement=\"top\" ngbTooltip=\"Un enlace corto para que pueda recordar como ingresar a su panel de negocios\" ngbTooltipClass=\"m-tooltip\">help_outline</mat-icon>\r\n\r\n\r\n\r\n        <input style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"Enlace a su panel de negocios\" formControlName=\"accesoweb\" autocomplete=\"off\" type='text'  required>\r\n\r\n         <mat-label ><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>public</mat-icon>Enlace a su panel de negocios</mat-label>\r\n      </mat-form-field> -->\r\n\r\n      <div style=\"    font-size: 16px;\r\n    padding: 27px 0px;\">\r\n\r\n               <mat-icon style='    vertical-align: middle;\r\n    font-size: 25px !important;\r\n    float: right;\r\n    width: 150px;\r\n    right: 0;\r\n    top: -40px;\r\n    margin-right: 0px;\r\n    text-align: right;' matSuffix  \r\n          placement=\"top\" ngbTooltip=\"Un enlace corto para que pueda recordar como ingresar a su panel de negocios\" ngbTooltipClass=\"m-tooltip\">help_outline</mat-icon>\r\n          \r\n        \r\n         <mat-label ><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>public</mat-icon>Enlace a su panel de negocios</mat-label>\r\n          <span style=\"    display: block;\r\n    border-bottom: solid 1px lightgray;\r\n    padding: 10px 10px 0px 10px !important;\r\n    color: #383734 !important;\r\n    font-weight: 400;\">{{getVal22(firstFormGroup.controls['nombreNegocio'].value)}}.yourbeauty.com.pa</span>\r\n      </div>\r\n\r\n\r\n      <mat-form-field style='      font-size: 16px !important;\r\n    '>\r\n\r\n        <input autocomplete=\"off\" style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"Contraseña\" formControlName=\"password\" required>\r\n\r\n       <span *ngIf='ffg.password.errors' matSuffix style=\"font-size: 13px !important;color: lightcoral;\">campo requerido</span> \r\n\r\n\r\n         <mat-label><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>vpn_key</mat-icon>Indica la contraseña de tu cuenta</mat-label>\r\n      </mat-form-field>\r\n      <div style=\"text-align: center;\r\n    color: #555;\r\n    padding: 13px;\">\r\n   <mat-slide-toggle color='primary' formControlName=\"terminos\" [(ngModel)]='terminosycondiciones' required >Acepto los <a target=\"_blank\" href='http://www.google.com'>terminos y condiciones</a> del servicio</mat-slide-toggle>\r\n </div>\r\n\r\n      <div style=\"  margin-top: 40px;  text-align: center;\">\r\n\r\n        <button \r\n        [disabled]='!fs2.form.valid || !terminosycondiciones' style='    width: 80%;    height: 40px;' class='btn btn-success'  mat-raised-button color=\"primary\"(click)=\"goForward(stepper)\" >Crear cuenta YourBeauty</button>\r\n\r\n\r\n      </div>\r\n    </form>\r\n</div>\r\n  </mat-step>\r\n\r\n\r\n\r\n\r\n\r\n  <mat-step >\r\n  \t\r\n\r\n  \t<div style='max-width: 600px;\r\n    margin: auto;'>\r\n\r\n\r\n    <div style=\"text-align: center;  padding: 40px;padding-top: 50px !important\">\r\n    \t<span style=\"color: #383734;    font-size: 24px;\r\n    font-weight: 300;\r\n    line-height: 34px;\r\n    margin-bottom: 10px;\">Bien Hecho!\r\n\r\n</span><br>\r\n\r\n<span style=\"color: black;\r\n    font-size: 16px;\r\n    display: block;\r\n    margin-bottom: 15px;\">Los detalles de su cuenta han sido enviados a su email {{cred.email}}</span>\r\n\r\n<span style=\"color: #605f5d; font-size: 16px\">\r\nAgrega unos detalles más para que empieces a agendar reservas.\r\n</span>\r\n\r\n    </div>\r\n\r\n<div class=\"containerStaff\"> \r\n\t\r\n\t<span>Agrega Staff a tu cuenta</span>\r\n\t<hr style=\"    margin-bottom: 20px;\">\r\n\r\n  <div style=\"    margin-bottom: 20px;\" *ngFor=\"let s of empleadosAgregados; let i = index\">\r\n    \r\n    <mat-card style='    padding: 0px !important;box-shadow: none !important;border-bottom: solid 1px #e1e1e1;' class=\"example-card\">\r\n  <mat-card-header>\r\n    <div mat-card-avatar style=\"    background-size: cover;background-image: url('assets/app/media/img/userB.png');\"></div>\r\n    <mat-card-title style='    margin-bottom: 8px !important;'>{{s.nombre}}</mat-card-title>\r\n    <mat-card-subtitle>{{s.tipo == 1 ? 'Administrador' : 'Miembro del Staff'}}</mat-card-subtitle>\r\n  </mat-card-header>\r\n     <a  style='position: absolute;right: 0;top: 9px;' (click)='editStaff(s,i,content)' class=\"botonTxt\">Editar</a>\r\n</mat-card>\r\n\r\n\r\n  </div>\r\n\r\n\r\n<!--     <div style=\"    margin-bottom: 20px;\">\r\n    \r\n    <mat-card style='    padding: 0px !important;box-shadow: none !important;border-bottom: solid 1px #e1e1e1;' class=\"example-card\">\r\n  <mat-card-header>\r\n    <div mat-card-avatar style=\"background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');\"></div>\r\n    <mat-card-title style='    margin-bottom: 8px !important;'>Shiba Inu</mat-card-title>\r\n    <mat-card-subtitle>Dog Breed</mat-card-subtitle>\r\n  </mat-card-header>\r\n     <a  style='position: absolute;right: 0;top: 9px;' class=\"botonTxt\">Editar</a>\r\n</mat-card>\r\n\r\n\r\n  </div> -->\r\n\r\n <a (click)=\"open3(content)\" class=\"botonTxt\" style=\"font-size: 16px !important\"> + Agregar miembro del Staff</a>\r\n\r\n\r\n      <div style=\"  margin-top: 40px;  text-align: center;\">\r\n\r\n        <button style='    width: 80%;    height: 40px;' class='btn '  mat-raised-button color=\"primary\"  (click)=\"goForward2(stepper)\">Continuar</button>\r\n\r\n\r\n      </div>\r\n\r\n</div>\r\n\r\n\r\n</div>\r\n  </mat-step>\r\n\r\n\r\n  <mat-step [stepControl]=\"infoFormGroup\" >\r\n    <div style='max-width: 600px;\r\n    margin: auto;'>\r\n\r\n\r\n    <div style=\"text-align: center;  padding: 40px;padding-top: 50px !important\">\r\n      <span style=\"color: #383734;    font-size: 24px;\r\n    font-weight: 300;\r\n    line-height: 34px;\r\n    margin-bottom: 10px;\">Ayuda a tus clientes a encontrarte\r\n\r\n</span><br>\r\n<span style=\"color: #605f5d;font-size: 16px\">\r\nIngresa los detalles de contacto de tu negocio\r\n</span>\r\n\r\n    </div>\r\n\r\n\r\n\r\n    <form [formGroup]=\"infoFormGroup\"  #f2=\"ngForm\" >\r\n      <ng-template matStepLabel>Informacion del Negocio</ng-template>\r\n\r\n\r\n     <mat-form-field  color=\"primary\" style='font-size: 16px !important;'>\r\n        <input autocomplete=\"off\" style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"Telefono del Negocio\" formControlName=\"telefonoNegocio\" type='number' required>\r\n\r\n\r\n          <span *ngIf='ifg.telefonoNegocio.errors && ifg.telefonoNegocio.value' matSuffix style=\"font-size: 13px !important;color: lightcoral;\">Número incorrecto</span> \r\n\r\n            <span *ngIf='ifg.telefonoNegocio.errors  && !ifg.telefonoNegocio.value' matSuffix style=\"font-size: 13px !important;color: lightcoral;\">campo requerido</span> \r\n\r\n\r\n         <mat-label><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>phone</mat-icon>¿Cuál es el teléfono de tu negocio?</mat-label>\r\n      </mat-form-field>\r\n\r\n      <mat-form-field style='      font-size: 16px !important;\r\n    '>\r\n        <input style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"descripcion\" formControlName=\"descripcion\" autocomplete=\"off\" required>\r\n\r\n       <span *ngIf='ifg.descripcion.errors' matSuffix style=\"font-size: 13px !important;color: lightcoral;\">campo requerido</span> \r\n\r\n         <mat-label><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>description</mat-icon>Describe tu negocio</mat-label>\r\n      </mat-form-field>\r\n\r\n      <mat-form-field style='      font-size: 16px !important;\r\n    '>\r\n        <input style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"www.mysite.com\" formControlName=\"webUsuario\" autocomplete=\"off\">\r\n         <mat-label><mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>public</mat-icon>¿Cuál es tu sitio web? (opcional)</mat-label>\r\n      </mat-form-field>\r\n\r\n      <div (click)=\"openDialog4()\" class='itemHover'  style=\"  \r\n    border-bottom: solid 1px #e1e1e1;\r\n    \">\r\n\r\n       <!--  <mat-icon style='    float: right;\r\n    font-size: 30px !important;'>navigate_next</mat-icon> -->\r\n\r\n        <mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>location_on</mat-icon>\r\n        <span *ngIf='!direccionText'>Ingresa la ubicación de tu negocio</span>\r\n        <span *ngIf='direccionText'>{{direccionText}}</span>\r\n\r\n        <span *ngIf='ifg.latitud.errors'  style=\"    font-size: 13px !important;\r\n    color: lightcoral;\r\n    float: right;\r\n    font-weight: 400;\">ubicación requerida</span> \r\n\r\n      </div>\r\n\r\n      <div class='itemHover'  (click)=\"openDialog3()\" style=\"padding-top: 23px;\">\r\n<!--          <mat-icon style='    float: right;\r\n    font-size: 30px !important;'>navigate_next</mat-icon> -->\r\n        <mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>access_time</mat-icon>\r\n        <span>Selecciona tu Horario</span>\r\n\r\n           <span *ngIf='getLen()'  style=\"    font-size: 13px !important;\r\n    color: lightcoral;\r\n    float: right;\r\n    font-weight: 400;\">horario requerido</span> \r\n\r\n\r\n      </div>\r\n\r\n\r\n      <div style=\"  margin-top: 40px;  text-align: center;\">\r\n\r\n        <button style='    width: 80%;    height: 40px;' class='btn btn-success'  mat-raised-button color=\"primary\"  [disabled]='!f2.form.valid || getLen()' (click)=\"goForward3(stepper)\">Continuar</button>\r\n\r\n\r\n      </div>\r\n    </form>\r\n</div>\r\n  </mat-step>\r\n\r\n\r\n\r\n  <mat-step  >\r\n  \r\n    <div style='max-width: 600px;\r\n    margin: auto;'>\r\n\r\n\r\n    <div style=\"text-align: center;  padding: 40px;padding-top: 50px !important\">\r\n      <span style=\"color: #383734;    font-size: 24px;\r\n    font-weight: 300;\r\n    line-height: 34px;\r\n    margin-bottom: 10px;\">Agrega una foto de tu establecimiento\r\n\r\n</span><br>\r\n<span style=\"color: #605f5d;font-size: 16px\">\r\nCuanto más atractiva, más atraes! Elige bien!\r\n</span>\r\n\r\n    </div>\r\n\r\n\r\n\r\n    <div style=\"font-size: 15px; color:#777\">\r\n      <mat-icon style='vertical-align: text-bottom;font-size: 25px !important;'>photo</mat-icon>\r\n      <p style=\"margin-bottom: 4px;\r\n    display: inline-block;\">Esta imagen aparece cuando ingresan al perfil de tu negocio</p>\r\n      <p>Es opcional, pero muy recomendado</p>\r\n      <p style=\"font-weight: 600\">Dimensiones recomendadas: 375×230</p>\r\n      \r\n\r\n      <div style=\"text-align: center;\">\r\n      <img style=\"border-style: dashed;height: 230px; width: 375px\"  [src]=\"urlImg\" onError=\"this.src='assets/app/media/img/banner.png'\">\r\n      <input style='margin-top: 20px;'  type=\"file\" (change)=\"onFileChanged($event)\" autocomplete=\"off\">\r\n      </div>\r\n    </div>\r\n\r\n\r\n      <div style=\"  margin-top: 40px;  text-align: center;\">\r\n\r\n        <button style='    width: 80%;    height: 40px;' class='btn btn-success'  mat-raised-button color=\"primary\"  (click)=\"goForward4(stepper)\">Continuar</button>\r\n\r\n\r\n      </div>\r\n\r\n\r\n\r\n</div>\r\n  </mat-step>\r\n\r\n\r\n  <mat-step  >\r\n  \r\n    <div style='max-width: 600px;\r\n    margin: auto;'>\r\n\r\n\r\n    <div style=\"text-align: center;  padding: 40px;padding-top: 50px !important\">\r\n      <span style=\"color: #383734;    font-size: 24px;\r\n    font-weight: 300;\r\n    line-height: 34px;\r\n    margin-bottom: 10px;\">Escoge tu foto de perfil\r\n\r\n</span><br>\r\n<span style=\"color: #605f5d;font-size: 16px\">\r\nCuanto más atractiva, más atraes! Elige bien!\r\n\r\n</span>\r\n\r\n    </div>\r\n\r\n\r\n\r\n    <div style=\"font-size: 15px; color:#777\">\r\n      <mat-icon style='vertical-align: text-bottom;font-size: 25px !important;'>photo</mat-icon>\r\n      <p style=\"margin-bottom: 4px;\r\n    display: inline-block;\">El logo de de tu negocio aparece en listado de centros, es tu carta de presentación</p>\r\n      <p>Es opcional, pero muy recomendado</p>\r\n      <p style=\"font-weight: 600\">Dimensiones recomendadas: 80×80</p>\r\n      \r\n\r\n      <div style=\"text-align: center;    margin-top: 60px;\">\r\n      <img style=\"border-style: dashed;height: 80px; width: 80px\"  [src]=\"urlImg2\" onError=\"this.src='assets/app/media/img/fotoComercio.png'\"><br>\r\n      <input style='margin-top: 20px;'  type=\"file\" (change)=\"onFileChanged2($event)\" autocomplete=\"off\">\r\n      </div>\r\n    </div>\r\n\r\n\r\n      <div style=\"  margin-top: 40px;  text-align: center;\">\r\n\r\n        <button style='    width: 80%;    height: 40px;' class='btn btn-success'  mat-raised-button color=\"primary\"  (click)=\"goForward42(stepper)\">Continuar</button>\r\n\r\n\r\n      </div>\r\n\r\n\r\n\r\n</div>\r\n  </mat-step>\r\n\r\n\r\n\r\n  <mat-step >\r\n\r\n\r\n    <div style='max-width: 600px;\r\n    margin: auto;'>\r\n\r\n\r\n    <div style=\"text-align: center;  padding: 40px;padding-top: 50px !important\">\r\n      <span style=\"color: #383734;    font-size: 24px;\r\n    font-weight: 300;\r\n    line-height: 34px;\r\n    margin-bottom: 10px;\">Agrega tus servicios y precios.\r\n\r\n</span><br>\r\n<span style=\"color: #605f5d;font-size: 16px\">\r\nNecesitas al menos un servicio activo y un staff asignado para que los clientes puedan realizar una reserva en tu establecimiento.\r\n</span>\r\n\r\n    </div>\r\n\r\n\r\n<!-- \r\n    <div style=\"font-size: 16px\">\r\n\r\n          <div style=\"text-align: center;color: darkgray;margin-bottom: 12px;\"> Servicio ejemplo</div>\r\n          <div class=\"itemServicios\" style=\"opacity: 0.5;\">\r\n          <div class=\"boxItem\">\r\n            <i class=\"la  la-angle-right iconR\"></i>\r\n            <div class=\"txtItemServ\">\r\n              <h3 style=\"     margin-bottom: 0px;font-size: 16px !important;   color: #5f5d5b;\">Corte y Estilo</h3>\r\n              <p style=\"    margin-bottom: 0px;color: #989794;font-size: 12px;\">\r\n                Peluqueria / Cortes de Mujer\r\n              </p>\r\n            </div>\r\n            <div class=\"txtItemServP\">30min</div>\r\n            <div class=\"txtItemServP\">$45.00</div>\r\n          </div>\r\n        </div>\r\n\r\n    </div> -->\r\n    <div style=\"text-align: center;\r\n    padding: 18px;\">\r\n       <a (click)='openDialogService()'  class=\"botonTxt\" style=\"font-size: 16px !important\"> + Agregar Servicio</a>\r\n    </div>\r\n\r\n\r\n          <div  class=\"itemServicios\"  *ngFor=\"let s of serviciosAgregados; let i = index\" >\r\n\r\n          <div class=\"boxItem\">\r\n            <i (click)='eliminarS(i)' style='height: 30px;\r\n    width: 19px;' class=\"la  la-close iconR\"></i>\r\n            <div class=\"txtItemServ\">\r\n              <h3 style=\"     margin-bottom: 0px;font-size: 16px !important;   color: #5f5d5b;\">\r\n              {{s.nombreServicio}}\r\n              </h3>\r\n              <p style=\"    margin-bottom: 0px;color: #989794;font-size: 12px;\">\r\n                {{s.categoriaName}} / {{s.subcategoriaName}} \r\n              </p>\r\n            </div>\r\n            <div class=\"txtItemServP\">\r\n              <span [hidden]='!s.horaServicio' >{{s.horaServicio/60}}h</span>\r\n              <span style=\"margin-left: 10px;\" [hidden]='!s.minutoServicio'>{{s.minutoServicio}}min</span></div>\r\n            <div class=\"txtItemServP\">${{s.precioServicio}}</div>\r\n          </div>\r\n        </div>\r\n\r\n\r\n      <div style=\"  margin-top: 40px;  text-align: center;\">\r\n\r\n        <button style='    width: 80%;    height: 40px;' class='btn '  mat-raised-button color=\"primary\" (click)=\"goForward5(stepper)\" [disabled]='!serviciosAgregados || serviciosAgregados.length<1'>Continuar</button>\r\n\r\n\r\n      </div>\r\n\r\n\r\n\r\n</div>\r\n  </mat-step>\r\n\r\n\r\n\r\n\r\n\r\n\r\n  <mat-step  >\r\n        \r\n\r\n    <div style='max-width: 600px;\r\n    margin: auto;'>\r\n\r\n\r\n    <div style=\"text-align: center;  padding: 40px;padding-top: 50px !important\">\r\n      <span style=\"color: #383734;    font-size: 24px;\r\n    font-weight: 300;\r\n    line-height: 34px;\r\n    margin-bottom: 10px;\">Configuracion de Reservas\r\n\r\n</span><br>\r\n<span style=\"color: #605f5d;font-size: 16px\">\r\nAjusta los valores para la configuracion de tus reservas\r\n</span>\r\n\r\n    </div>\r\n\r\n\r\n\r\n \r\n    <div style=\"    padding: 0px 0px 20px 0px;\">\r\n<!--     <mat-slide-toggle [(ngModel)]=\"isHuman2\" (change)=\"onChange2($event)\" name=\"human2\">I am not a robot</mat-slide-toggle> -->\r\n\r\n    <mat-slide-toggle color='primary' name=\"human2\"  [(ngModel)]='configuracion.confirmacionAutomatica'>\r\n      <span style=\"font-size: 16px !important;\">\r\n        Las reservas serán confirmadas automaticamente\r\n      </span>\r\n      </mat-slide-toggle>\r\n\r\n\r\n    </div>\r\n\r\n    <hr>\r\n\r\n    <div style=\"color: #383734;font-size: 19px;font-weight: 400; line-height: 34px;margin-bottom: 30px;\">Configuraciones de reserva</div>\r\n\r\n      <p style=\"display: inline-block;font-size: 16px;\">Los clientes podrán realizar reservas</p>\r\n      <mat-select placeholder=\"\" \r\n      class='inputBy selectD' style='border: solid 1px #e1e1e1;padding: 5px;' \r\n      [(ngModel)]='configuracion.parametro1'>\r\n                <mat-option value=\"1\">Hasta 1 hora antes de la hora de inicio</mat-option>\r\n                 <mat-option value=\"2\">Hasta 2 horas antes de la hora de inicio</mat-option>\r\n           <mat-option value=\"3\">Hasta 3 horas antes de la hora de inicio</mat-option>\r\n            <mat-option value=\"6\">Hasta 6 horas antes de la hora de inicio</mat-option>\r\n             <mat-option value=\"12\">Hasta 12 horas antes de la hora de inicio</mat-option>\r\n\r\n      </mat-select>\r\n\r\n\r\n\r\n      <p style=\"display: inline-block;font-size: 16px;\">Los clientes podrán realizar reservas</p>\r\n      <mat-select placeholder=\"\" class='inputBy selectD' \r\n       [(ngModel)]='configuracion.parametro2'>\r\n                  <mat-option value=\"1\">Hasta 1 mes en el futuro</mat-option>\r\n                 <mat-option value=\"3\">Hasta 3 meses en el futuro</mat-option>\r\n                 <mat-option value=\"6\">Hasta 6 meses en el futuro</mat-option>\r\n                 <mat-option value=\"12\">Hasta 12 meses en el futuro</mat-option>\r\n      </mat-select>\r\n\r\n\r\n\r\n            <p style=\"display: inline-block;font-size: 16px;\">Permitir Reprogramaciones</p>\r\n      <mat-select placeholder=\"\" class='inputBy selectD' \r\n       [(ngModel)]='configuracion.parametro3'>\r\n                <mat-option value=\"12\">Hasta 12 horas antes de la reserva</mat-option>\r\n                  <mat-option value=\"24\">Hasta 24 horas antes de la reserva</mat-option>\r\n          \r\n\r\n      </mat-select>\r\n\r\n\r\n\r\n\r\n      <div style=\"  margin-top: 40px;  text-align: center;\">\r\n\r\n        <button [disabled]='!configuracion.parametro3 || \r\n        !configuracion.parametro2 || !configuracion.parametro1' style='    width: 80%;    height: 40px;' class='btn'  mat-raised-button color=\"primary\"  (click)=\"goForward6(stepper)\">Continuar</button>\r\n\r\n\r\n      </div>\r\n\r\n</div>\r\n  </mat-step>\r\n\r\n\r\n\r\n\r\n\r\n  <mat-step  >\r\n        \r\n\r\n    <div style='max-width: 640px;\r\n    margin: auto;'>\r\n\r\n\r\n    <div style=\"text-align: center;  padding: 40px;padding-top: 50px !important\">\r\n      <span style=\"color: #383734;    font-size: 24px;\r\n    font-weight: 300;\r\n    line-height: 34px;\r\n    margin-bottom: 10px;\">Planes Yourbeauty\r\n\r\n</span><br>\r\n<span style=\"color: #605f5d;font-size: 16px\">\r\nUna vez termine el período de prueba escoge el plan que se adapte mejor a tu negocio.\r\n\r\n</span>\r\n\r\n    </div>\r\n\r\n\r\n    <section class=\"pricing-table\">\r\n        <div class=\"container\" style=\"    padding-bottom: 30px;\r\n    padding-top: 15px;\">\r\n<!--             <div class=\"block-heading\">\r\n              <h2>Pricing Table</h2>\r\n              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo.</p>\r\n            </div> -->\r\n            <div class=\"row justify-content-md-center\">\r\n                <div class=\"col-md-5 col-lg-4\">\r\n                    <div class=\"item\">\r\n                        <div class=\"heading\">\r\n                            <h3 style=\"    color: #666;\">Mensual</h3>\r\n                        </div>\r\n<!--                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\r\n                        <div class=\"features\">\r\n                            <h4><span class=\"feature\">Full Support</span> : <span class=\"value\">No</span></h4>\r\n                            <h4><span class=\"feature\">Duration</span> : <span class=\"value\">30 Days</span></h4>\r\n                            <h4><span class=\"feature\">Storage</span> : <span class=\"value\">10GB</span></h4>\r\n                        </div> -->\r\n                        <div class=\"price\">\r\n                            <h4>$25</h4>\r\n                        </div>\r\n                        <button class=\"btn btn-block btn-outline-success\" (click)='goForward7(stepper,1)'>SELECCIONAR</button>\r\n                    </div>\r\n                </div>\r\n                <div class=\"col-md-5 col-lg-4\">\r\n                    <div class=\"item\">\r\n      <!--                   <div class=\"ribbon\">Best Value</div> -->\r\n                        <div class=\"heading\">\r\n                            <h3 style=\"    color: #666;\">Bi-anual</h3>\r\n                        </div>\r\n<!--                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\r\n                        <div class=\"features\">\r\n                            <h4><span class=\"feature\">Full Support</span> : <span class=\"value\">Yes</span></h4>\r\n                            <h4><span class=\"feature\">Duration</span> : <span class=\"value\">60 Days</span></h4>\r\n                            <h4><span class=\"feature\">Storage</span> : <span class=\"value\">50GB</span></h4>\r\n                        </div> -->\r\n                        <div class=\"price\">\r\n                            <h4>$250</h4>\r\n                        </div>\r\n                        <button class=\"btn btn-block btn-success\" (click)='goForward7(stepper,2)'>SELECCIONAR</button>\r\n                    </div>\r\n                </div>\r\n                <div class=\"col-md-5 col-lg-4\">\r\n                    <div class=\"item\">\r\n                        <div class=\"heading\">\r\n                            <h3 style=\"    color: #666;\">Anual</h3>\r\n                        </div>\r\n<!--                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\r\n                        <div class=\"features\">\r\n                            <h4><span class=\"feature\">Full Support</span> : <span class=\"value\">Yes</span></h4>\r\n                            <h4><span class=\"feature\">Duration</span> : <span class=\"value\">120 Days</span></h4>\r\n                            <h4><span class=\"feature\">Storage</span> : <span class=\"value\">150GB</span></h4>\r\n                        </div> -->\r\n                        <div class=\"price\">\r\n                            <h4>$150</h4>\r\n                        </div>\r\n                        <button class=\"btn btn-block btn-outline-success\" \r\n                        (click)='goForward7(stepper,3)'>SELECCIONAR</button>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div style=\"text-align: center;\r\n    font-size: 15px;\">Lo contáctaremos 5 dias antes que se acabe su periodo de prueba con las instrucciones para renovar su servicio</div>\r\n        </div>\r\n    </section>\r\n\r\n\r\n</div>\r\n  </mat-step>\r\n\r\n\r\n\r\n\r\n</mat-horizontal-stepper>\r\n\r\n\r\n</div>\r\n\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -1171,7 +7700,7 @@ module.exports = "<div class=\"modal fade\" id=\"m_modal_6\" tabindex=\"-1\" rol
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "::ng-deep .progress-bar {\n  background-color: #e91e63 !important; }\n\n.horarioContainer {\n  margin-bottom: 17px;\n  background: white;\n  padding: 0px;\n  font-size: 16px; }\n\n.horarioSpan {\n  margin-bottom: 0px !important;\n  width: 100px !important;\n  display: block; }\n\n.conteinInput {\n  margin-top: 5px;\n  display: inline-block;\n  width: 300px;\n  margin-left: 28px; }\n\n.ssdd {\n  border: solid 1px #e1e1e1;\n  padding: 5px; }\n\n.separatorHours {\n  display: inline-block;\n  margin: 7px 10px 0px 10px; }\n\n.itemServicios {\n  border: 1px solid #e1e1e1;\n  border-radius: 4px;\n  display: block;\n  margin-bottom: 10px; }\n\n.itemServicios:hover {\n  opacity: 0.8; }\n\n.iconR {\n  font-size: 16px;\n  position: absolute;\n  right: 5px;\n  top: 20px;\n  color: darkgray; }\n\n.boxItem {\n  position: relative;\n  background: #faf9f7 !important;\n  padding: 10px 50px 10px 40px; }\n\n.txtItemServ {\n  width: 60% !important;\n  display: inline-block;\n  min-height: 1px;\n  vertical-align: top;\n  margin: 0;\n  padding: 0; }\n\n.txtItemServP {\n  width: 20% !important;\n  text-align: right !important;\n  display: inline-block;\n  min-height: 1px;\n  vertical-align: top;\n  margin: 0;\n  padding-left: 20px;\n  font-size: 16px;\n  margin-top: 8px !important;\n  font-weight: 400; }\n\n:host .mat-form-field {\n  width: 100%; }\n\n/* Font color */\n\ninput.mat-input-element {\n  color: #383734; }\n\n.mat-form-field-appearance-legacy .mat-form-field-underline {\n  background-color: #e1e1e1 !important; }\n\n::ng-deep .mat-form-field-underline, ::ng-deep .mat-form-field-ripple {\n  background-color: #e1e1e1 !important; }\n\n.mat-form-field-appearance-legacy .mat-form-field-wrapper {\n  padding-bottom: 12px !important; }\n\n.pac-container {\n  z-index: 1051 !important; }\n\nmat-icon {\n  margin-right: 9px;\n  color: #e1e1e1 !important; }\n\n.mat-card-title {\n  font-size: 16px !important; }\n\n.mat-card-subtitle {\n  font-size: 16px !important; }\n\n.botonTxt {\n  font-size: 14px !important; }\n\n.botonTxt:hover {\n  color: red !important; }\n\n.itemHover {\n  padding-bottom: 23px;\n  font-size: 16px; }\n\n.itemHover:hover {\n  color: red; }\n\n.selectD {\n  border: solid 1px #e1e1e1;\n  padding: 5px;\n  display: block !important;\n  margin-left: 25px !important;\n  width: 75% !important;\n  margin-bottom: 20px; }\n\n.imgCheckBox {\n  height: 34px;\n  width: 34px;\n  border-radius: 20px;\n  margin: 5px 11px; }\n\n.cdk-global-overlay-wrapper, .cdk-overlay-container {\n  z-index: 99999 !important; }\n\n.mauto {\n  margin: auto !important; }\n\n.txtF {\n  color: #383734;\n  font-size: 16px; }\n\n.tituloCateg {\n  font-size: 16px;\n  margin-bottom: 10px;\n  margin-top: 15px;\n  font-weight: 400; }\n\n.md-dialog-container {\n  width: 600px !important; }\n\n.w50b {\n  width: 50% !important;\n  max-width: 200px; }\n\n.w50 {\n  display: flex;\n  width: 50%; }\n\n.w100 {\n  display: block;\n  width: 100%; }\n\n::ng-deep .mat-horizontal-stepper-header-container {\n  display: none !important; }\n"
+module.exports = "::ng-deep .progress-bar {\n  background-color: #e91e63 !important; }\n\n.horarioContainer {\n  margin-bottom: 17px;\n  background: white;\n  padding: 0px;\n  font-size: 16px; }\n\n.horarioSpan {\n  margin-bottom: 0px !important;\n  width: 100px !important;\n  display: block; }\n\n.conteinInput {\n  margin-top: 5px;\n  display: inline-block;\n  width: 300px;\n  margin-left: 28px; }\n\n.ssdd {\n  border: solid 1px #e1e1e1;\n  padding: 5px; }\n\n.separatorHours {\n  display: inline-block;\n  margin: 7px 10px 0px 10px; }\n\n.itemServicios {\n  border: 1px solid #e1e1e1;\n  border-radius: 4px;\n  display: block;\n  margin-bottom: 10px; }\n\n.itemServicios:hover {\n  opacity: 0.8; }\n\n.iconR {\n  font-size: 16px;\n  position: absolute;\n  right: 5px;\n  top: 20px;\n  color: darkgray; }\n\n.boxItem {\n  position: relative;\n  background: #faf9f7 !important;\n  padding: 10px 50px 10px 40px; }\n\n.txtItemServ {\n  width: 60% !important;\n  display: inline-block;\n  min-height: 1px;\n  vertical-align: top;\n  margin: 0;\n  padding: 0; }\n\n.txtItemServP {\n  width: 20% !important;\n  text-align: right !important;\n  display: inline-block;\n  min-height: 1px;\n  vertical-align: top;\n  margin: 0;\n  padding-left: 20px;\n  font-size: 16px;\n  margin-top: 8px !important;\n  font-weight: 400; }\n\n:host .mat-form-field {\n  width: 100%; }\n\n/* Font color */\n\ninput.mat-input-element {\n  color: #383734; }\n\n.mat-form-field-appearance-legacy .mat-form-field-underline {\n  background-color: #e1e1e1 !important; }\n\n::ng-deep .mat-form-field-underline, ::ng-deep .mat-form-field-ripple {\n  background-color: #e1e1e1 !important; }\n\n.mat-form-field-appearance-legacy .mat-form-field-wrapper {\n  padding-bottom: 12px !important; }\n\n.pac-container {\n  z-index: 1051 !important; }\n\nmat-icon {\n  margin-right: 9px;\n  color: #e1e1e1 !important; }\n\n.mat-card-title {\n  font-size: 16px !important; }\n\n.mat-card-subtitle {\n  font-size: 16px !important; }\n\n.botonTxt {\n  font-size: 14px !important; }\n\n.botonTxt:hover {\n  color: red !important; }\n\n.itemHover {\n  padding-bottom: 23px;\n  font-size: 16px; }\n\n.itemHover:hover {\n  color: red; }\n\n.selectD {\n  border: solid 1px #e1e1e1;\n  padding: 5px;\n  display: block !important;\n  margin-left: 25px !important;\n  width: 75% !important;\n  margin-bottom: 20px; }\n\n.imgCheckBox {\n  height: 34px;\n  width: 34px;\n  border-radius: 20px;\n  margin: 5px 11px; }\n\n.cdk-global-overlay-wrapper, .cdk-overlay-container {\n  z-index: 99999 !important; }\n\n.mauto {\n  margin: auto !important; }\n\n.txtF {\n  color: #383734;\n  font-size: 16px; }\n\n.tituloCateg {\n  font-size: 16px;\n  margin-bottom: 10px;\n  margin-top: 15px;\n  font-weight: 400; }\n\n.md-dialog-container {\n  width: 600px !important; }\n\n.w50b {\n  width: 50% !important;\n  max-width: 200px; }\n\n.w50 {\n  display: flex;\n  width: 50%; }\n\n.w100 {\n  display: block;\n  width: 100%; }\n\n.pricing-table {\n  font-family: Roboto, \"Helvetica Neue\", sans-serif; }\n\n.pricing-table .block-heading {\n  padding-top: 50px;\n  margin-bottom: 40px;\n  text-align: center; }\n\n.pricing-table .block-heading h2 {\n  color: #3b99e0; }\n\n.pricing-table .block-heading p {\n  text-align: center;\n  max-width: 420px;\n  margin: auto;\n  opacity: 0.7; }\n\n.pricing-table .heading {\n  text-align: center;\n  padding-bottom: 10px;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.1); }\n\n.pricing-table .item {\n  background-color: #ffffff;\n  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.075);\n  border-top: 2px solid #34bfa3;\n  padding: 30px;\n  overflow: hidden;\n  position: relative;\n  border: solid 1px lightgray; }\n\n.pricing-table .col-md-5:not(:last-child) .item {\n  margin-bottom: 30px; }\n\n.pricing-table .item button {\n  font-weight: 600; }\n\n.pricing-table .ribbon {\n  width: 160px;\n  height: 32px;\n  font-size: 12px;\n  text-align: center;\n  color: #fff;\n  font-weight: bold;\n  box-shadow: 0px 2px 3px rgba(136, 136, 136, 0.25);\n  background: #4dbe3b;\n  -webkit-transform: rotate(45deg);\n          transform: rotate(45deg);\n  position: absolute;\n  right: -42px;\n  top: 20px;\n  padding-top: 7px; }\n\n.pricing-table .item p {\n  text-align: center;\n  margin-top: 20px;\n  opacity: 0.7; }\n\n.pricing-table .features .feature {\n  font-weight: 600; }\n\n.pricing-table .features h4 {\n  text-align: center;\n  font-size: 18px;\n  padding: 5px; }\n\n.pricing-table .price h4 {\n  margin: 15px 0;\n  font-size: 45px;\n  text-align: center;\n  color: #34bfa3; }\n\n.pricing-table .buy-now button {\n  text-align: center;\n  margin: auto;\n  font-weight: 600;\n  padding: 9px 0; }\n\n::ng-deep .mat-horizontal-stepper-header-container {\n  display: none !important; }\n"
 
 /***/ }),
 
@@ -1661,6 +8190,8 @@ var RegisterComponent = /** @class */ (function () {
         this.empleadosAgregados = [];
         this.loaderValidator = false;
         this.emailTaken = false;
+        this.loaderValidator2 = false;
+        this.emailTaken2 = false;
         this.centroId = 0;
         this.nombreCentroGlobal = '';
         this.configuracion = {};
@@ -1726,11 +8257,17 @@ var RegisterComponent = /** @class */ (function () {
                 this.avanceSteper = 90;
                 this.stepper.selectedIndex = retrievedObject.pasos;
             }
+            if (retrievedObject.pasos == 7) {
+                this.avanceSteper = 99;
+                this.stepper.selectedIndex = retrievedObject.pasos;
+            }
             localStorage.setItem('tempADby2as', undefined);
         }
         this.firstFormGroup = this._formBuilder.group({
             nombreNegocio: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
             nombreUsuario: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+            ruc: [''],
+            nombreFactura: [''],
             correoElectronico: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required, this.checkUsername.bind(this)],
             password: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
             terminos: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required]
@@ -1738,8 +8275,8 @@ var RegisterComponent = /** @class */ (function () {
         this.addFormGroup = this._formBuilder.group({
             nombreStaff: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
             puestoStaff: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            telefonoStaff: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].pattern(/^\d{7}$|^\d{8}$/)]],
-            correoStaff: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required]
+            telefonoStaff: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].pattern(/^\d{7}$|^\d{8}$/)]],
+            correoStaff: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required, this.checkUsername2.bind(this)]
         });
         this.secondFormGroup = this._formBuilder.group({
             secondCtrl: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required]
@@ -1780,6 +8317,34 @@ var RegisterComponent = /** @class */ (function () {
     };
     RegisterComponent.prototype.quitarSpinner = function () {
         console.log('dd22');
+    };
+    RegisterComponent.prototype.checkUsername2 = function (control) {
+        var _this = this;
+        console.log(control.value);
+        this.loaderValidator2 = true;
+        return new Promise(function (resolve) {
+            _this.authService.verificarEmail2({ email: control.value })
+                .subscribe(function (data) {
+                if (data.length > 0) {
+                    _this.loaderValidator2 = false;
+                    _this.emailTaken2 = false;
+                    _this.cdr.detectChanges();
+                    resolve({
+                        "username taken": true
+                    });
+                }
+                else {
+                    _this.loaderValidator2 = false;
+                    _this.emailTaken2 = true;
+                    _this.cdr.detectChanges();
+                    resolve(null);
+                }
+            }, function (err) {
+                console.log(err);
+                _this.cdr.detectChanges();
+                console.log('someError');
+            });
+        });
     };
     RegisterComponent.prototype.checkUsername = function (control) {
         var _this = this;
@@ -2063,13 +8628,32 @@ var RegisterComponent = /** @class */ (function () {
         this.configuracion.idCentro = this.centroId;
         this.authService.configuracionCentroNC(this.configuracion)
             .subscribe(function (data) {
+            if (data.affectedRows > 0) {
+                _this.loadingScreen = false;
+                _this.avanceSteper += 10;
+                stepper.next();
+                _this.cdr.detectChanges();
+            }
+        }, function (err) {
+            _this.loadingScreen = false;
+            _this.cdr.detectChanges();
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+    };
+    RegisterComponent.prototype.goForward7 = function (stepper, seleccion) {
+        var _this = this;
+        this.loadingScreen = true;
+        console.log(this.cred);
+        this.authService.configuracionPrecioNC({ idCentro: this.centroId, plan: seleccion })
+            .subscribe(function (data) {
             _this.loadingScreen = false;
             _this.cdr.detectChanges();
             if (data.affectedRows > 0) {
                 _this.authService.login(_this.cred).subscribe(function (response) {
                     _this.loadingScreen = false;
                     if (typeof response !== 'undefined') {
-                        _this.router.navigate(['/calendario']);
+                        _this.router.navigate(['/calendario'], { queryParams: { p: 1 } });
                     }
                     else {
                         alert('Uuupss... ha ocurrido un error');
@@ -2494,7 +9078,7 @@ var ModalContentComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 15px;\">Agregar Staff</div>\r\n\r\n\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" [disabled]='!empleado.nombre || !empleado.email || !empleado.descripcion || !empleado.tipo' \r\n     (click)='guardarStaff()'>Guardar</button>\r\n\r\n\t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button>\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n<ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"text-align: center\">\r\n\t\t\t<img   style='    height: 70px;\r\n    width: 70px;\r\n    border-radius: 100px;\r\n    margin: 5px 11px;' src=\"assets/app/media/img/userB.png\">\r\n</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t\r\n\r\n\r\n\t\t\t\t<label class='labelBy'>Nombre*</label>\r\n\t\t\t\t<input [(ngModel)]='empleado.nombre' class='inputBy w100' placeholder=\"nombre del staff\"  autocomplete=\"off\"  type=\"text\" name=\"nombre\">\r\n\t\t\t</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Telefono</label>\r\n\t\t\t\t<input [(ngModel)]='empleado.telefono' class='inputBy w100' placeholder=\"telefono del staff\"  autocomplete=\"off\"  type=\"number\" name=\"telefono\">\r\n\t\t\t</div>\r\n\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Email*</label>\r\n\t\t\t\t<input [(ngModel)]='empleado.email' class='inputBy w100' placeholder=\"email del staff\"  autocomplete=\"off\"  type=\"email\" name=\"enail\">\r\n\t\t\t</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Descripcion*</label>\r\n\t\t\t\t<input [(ngModel)]='empleado.descripcion' class='inputBy w100' placeholder=\"descripcion del staff\"  autocomplete=\"off\"  type=\"text\" name=\"desc\">\r\n\t\t\t</div>\r\n\r\n\r\n\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"color:darkgray;font-size: 16px;font-weight: 500 !important;margin-bottom: 20px;\">Permisos</div>\r\n\t\t\t\t\t<div style=\"border: solid 1px lightgray;padding: 20px;\">\r\n\t\t\t\t\t\t\r\n<label class='labelBy'>Permisos de usuario</label>\r\n\t\t\t<mat-select [(ngModel)]='empleado.tipo' class='inputBy w100'>\r\n\t\t\t<mat-option value=\"1\">Miembro Administrador</mat-option>\r\n\t\t\t\t<mat-option value=\"2\">Miembro de Staff</mat-option>\r\n\t\t\t\t<mat-option value=\"3\">Recepcion</mat-option>\r\n\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t<div style=\"\r\n    margin-top: 40px;\">\r\n\t\t\t\t\t<p><span style=\"font-weight: 500\">Administrador:</span>\r\n\t\t\t\t\tEste usuario tendrá acceso a todas las funciones del panel.</p>\r\n\t\t\t\t\t<p><span style=\"font-weight: 500\">Staff:</span>\r\n\t\t\t\t\tDedicado a los empleados del establecimiento para que tengan acceso a la aplicación y puedan confirmar las citas.</p>\r\n\t\t\t\t\t<p><span style=\"font-weight: 500\">Recepción:</span>\r\n\t\t\t\t\tTendrá acceso a gestionar el calendario y la lista de citas.</p>\r\n\r\n\t\t\t\t</div>\r\n\r\n\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t\t\t\t\t\r\n\t\t</div>\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 26px;font-weight: 300;padding-left: 15px;\">Agregar Staff</div>\r\n\r\n\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" [disabled]='!f.form.valid'\r\n     (click)='guardarStaff()'>Guardar</button>\r\n\r\n\t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button>\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n<ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"text-align: center\">\r\n\t\t\t<img   style='    height: 70px;\r\n    width: 70px;\r\n    border-radius: 100px;\r\n    margin: 5px 11px;' src=\"assets/app/media/img/userB.png\">\r\n</div>\r\n\r\n\r\n  <form [formGroup]=\"addFormGroup\" #f=\"ngForm\">\r\n\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Nombre*</label>\r\n\t\t\t\t<input [(ngModel)]='empleado.nombre' class='inputBy w100' placeholder=\"nombre del staff\"  autocomplete=\"off\"  formControlName=\"nombreStaff\" type=\"text\" name=\"nombre\" required>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Telefono</label>\r\n\t\t\t\t<input [(ngModel)]='empleado.telefono' class='inputBy w100' placeholder=\"telefono del staff\" formControlName=\"telefonoStaff\"  autocomplete=\"off\"  type=\"number\" name=\"telefono\">\r\n\t\t\t</div>\r\n\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Email*</label>\r\n <mat-form-field style=' width: 100% !important;     font-size: 16px !important;\r\n    '>\r\n\t\t\t\t <span matSuffix style=\"color: lightgray;\r\n    vertical-align: middle;\r\n    margin-right: 7px;\"\r\n     [hidden]=\" addFormGroup.controls['correoStaff'].hasError('email') || addFormGroup.controls['correoStaff'].hasError('required')\"  *ngIf='!emailTaken' ><mat-icon style='color: lightcoral;\r\n    vertical-align: middle;'>cancel</mat-icon>\r\n     ya existe esta cuenta</span>\r\n    <span matSuffix style=\"color: lightgray;\r\n    vertical-align: middle;\r\n    margin-right: 7px;\" *ngIf='emailTaken' \r\n    [hidden]=\"addFormGroup.controls['correoStaff'].hasError('email') || addFormGroup.controls['correoStaff'].hasError('required')\"  >\r\n      <mat-icon style='color: #34bfa3;\r\n    vertical-align: top;'>check_circle</mat-icon></span>\r\n\r\n\t\t\t\t<input [(ngModel)]='empleado.email' matInput class=' w100' placeholder=\"\"  autocomplete=\"off\" formControlName=\"correoStaff\" style=\"padding: 11px !important;\"  type=\"email\" email required>\r\n\r\n\t\t\t\t \r\n      </mat-form-field>\r\n\r\n\r\n\t\t\t</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Descripcion*</label>\r\n\t\t\t\t<input [(ngModel)]='empleado.descripcion' class='inputBy w100' placeholder=\"descripcion del staff\"  formControlName=\"desc\" autocomplete=\"off\"  type=\"text\" name=\"desc\">\r\n\t\t\t</div>\r\n\r\n</form>\r\n\r\n    <div style=\"    padding: 0px 0px 2px 0px;\r\n    font-size: 13px;color: rgb(232,84,126);font-weight: 400;\">\r\n      Se enviará por e-mail el link para descargar el App del Staff y los credenciales de acceso\r\n<!--     <mat-slide-toggle [(ngModel)]=\"isHuman2\" (change)=\"onChange2($event)\" name=\"human2\">I am not a robot</mat-slide-toggle> -->\r\n\r\n<!--     <mat-slide-toggle name=\"human2\">Invitar a YourBeauty y crear cuenta</mat-slide-toggle>\r\n -->\r\n\r\n    </div>\r\n\r\n\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"color:darkgray;font-size: 16px;font-weight: 500 !important;margin-bottom: 20px;\">Permisos</div>\r\n\t\t\t\t\t<div style=\"border: solid 1px lightgray;padding: 20px;\">\r\n\t\t\t\t\t\t\r\n<label class='labelBy'>Permisos de usuario</label>\r\n\t\t\t<mat-select [(ngModel)]='empleado.tipo' class='inputBy w100'>\r\n\t\t\t<mat-option value=\"1\">Miembro Administrador</mat-option>\r\n\t\t\t\t<mat-option value=\"2\">Miembro de Staff</mat-option>\r\n\t\t\t\t<mat-option value=\"3\">Recepcion</mat-option>\r\n\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t<div style=\"\r\n    margin-top: 40px;\">\r\n\t\t\t\t\t<p><span style=\"font-weight: 500\">Administrador:</span>\r\n\t\t\t\t\tEste usuario tendrá acceso a todas las funciones del panel.</p>\r\n\t\t\t\t\t<p><span style=\"font-weight: 500\">Staff:</span>\r\n\t\t\t\t\tDedicado a los empleados del establecimiento para que tengan acceso a la aplicación y puedan confirmar las reservas.</p>\r\n\t\t\t\t\t<p><span style=\"font-weight: 500\">Recepción:</span>\r\n\t\t\t\t\tTendrá acceso a gestionar el calendario y la lista de reservas.</p>\r\n\r\n\t\t\t\t</div>\r\n\r\n\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t\t\t\t\t\r\n\t\t</div>\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -2505,7 +9089,7 @@ module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,24
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".inputBy {\n  color: #383734;\n  background: #fff;\n  border: 1px solid #e1e1e1;\n  border-radius: 4px;\n  min-height: 40px;\n  padding: 7px 10px;\n  resize: vertical;\n  -webkit-appearance: none;\n  -moz-appearance: none; }\n\n.w100 {\n  display: block;\n  width: 100%; }\n\n.imgCheckBox {\n  height: 34px;\n  width: 34px;\n  border-radius: 20px;\n  margin: 5px 11px; }\n\n.txtF {\n  color: #383734;\n  font-size: 16px; }\n\n.w50 {\n  display: flex;\n  width: 50%; }\n\n.conteinInput {\n  margin-bottom: 30px; }\n\n.labelBy {\n  display: inline-block;\n  margin-bottom: 10px;\n  font-size: 16px;\n  font-weight: 500 !important;\n  line-height: 1.5;\n  color: #383734; }\n\ninput:focus {\n  outline: none !important;\n  border: 1px solid #34bfa3; }\n"
+module.exports = "::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {\n  height: 0px !important; }\n\n::ng-deep .mat-form-field-ripple {\n  display: none !important; }\n\n::ng-deep .mat-form-field-flex {\n  border: 1px solid #e1e1e1;\n  border-radius: 5px; }\n\n::ng-deep .mat-form-field-appearance-legacy .mat-form-field-invalid {\n  height: 0px !important; }\n\n::ng-deep .mat-form-field-infix {\n  padding: 0px !important;\n  border: none  !important; }\n\n.inputBy {\n  color: #383734;\n  background: #fff;\n  border: 1px solid #e1e1e1;\n  border-radius: 4px;\n  min-height: 40px;\n  padding: 7px 10px;\n  resize: vertical;\n  -webkit-appearance: none;\n  -moz-appearance: none; }\n\n.w100 {\n  display: block;\n  width: 100%; }\n\n.imgCheckBox {\n  height: 34px;\n  width: 34px;\n  border-radius: 20px;\n  margin: 5px 11px; }\n\n.txtF {\n  color: #383734;\n  font-size: 16px; }\n\n.w50 {\n  display: flex;\n  width: 50%; }\n\n.conteinInput {\n  margin-bottom: 30px; }\n\n.labelBy {\n  display: inline-block;\n  margin-bottom: 10px;\n  font-size: 16px;\n  font-weight: 500 !important;\n  line-height: 1.5;\n  color: #383734; }\n\n/*\ninput:focus { \n outline: none !important;\n    border:1px solid #34bfa3;\n\n\n\n}\n\n*/\n"
 
 /***/ }),
 
@@ -2550,12 +9134,48 @@ var AddstaffComponent = /** @class */ (function () {
         this.authService = authService;
         this.cdr = cdr;
         this._formBuilder = _formBuilder;
+        this.loaderValidator = false;
+        this.emailTaken = false;
         this.empleado = {};
         this.loadingScreen = false;
         var retrievedObject = JSON.parse(localStorage.getItem('userADby2as'));
         this.idCentro = retrievedObject.idCentro;
     }
     AddstaffComponent.prototype.ngOnInit = function () {
+        this.addFormGroup = this._formBuilder.group({
+            nombreStaff: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+            desc: [''],
+            telefonoStaff: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].pattern(/^\d{7}$|^\d{8}$/)]],
+            correoStaff: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required, this.checkUsername2.bind(this)]
+        });
+    };
+    AddstaffComponent.prototype.checkUsername2 = function (control) {
+        var _this = this;
+        console.log(control.value);
+        this.loaderValidator = true;
+        return new Promise(function (resolve) {
+            _this.authService.verificarEmail2({ email: control.value })
+                .subscribe(function (data) {
+                if (data.length > 0) {
+                    _this.loaderValidator = false;
+                    _this.emailTaken = false;
+                    _this.cdr.detectChanges();
+                    resolve({
+                        "username taken": true
+                    });
+                }
+                else {
+                    _this.loaderValidator = false;
+                    _this.emailTaken = true;
+                    _this.cdr.detectChanges();
+                    resolve(null);
+                }
+            }, function (err) {
+                console.log(err);
+                _this.cdr.detectChanges();
+                console.log('someError');
+            });
+        });
     };
     AddstaffComponent.prototype.guardarStaff = function () {
         var _this = this;
@@ -2604,7 +9224,7 @@ var AddstaffComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 15px;\">Agregar Oferta</div>\r\n\r\n\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" [disabled]='!valorOferta || !selected2 || itemMarcado.precio<=valorOferta' (click)='openDialog()' >Guardar</button>\r\n\r\n\t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button>\r\n\r\n\r\n</div>\r\n\r\n\r\n<div class=\"row\">\r\n\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"    border: solid 2px darkgray;\r\n    border-radius: 5px;\" class=\"conteinInput\">\r\n\r\n\t\t\t\t<div style=\"font-size: 16px;\r\n    font-weight: 500;\r\n    background-color: #e91e63;\r\n    color: white;\r\n    padding: 14px;\">Contrato de Oferta</div>\r\n\r\n\t\t\t\t<p style=\"  font-size: 15px;  padding: 14px;\" class=' w100'>\r\n\t\t\t\t\tLas ofertas tienen una vigencia de 7 dias y un costo de $7 por cada servicio en oferta. Puedes tener hasta 10 ofertas activas al mismo tiempo. \r\n\t\t\t\t</p>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t<label class='labelBy'>Haz que tus servicios sean mas atractivos!</label>\r\n\t\t\t<label class='labelBy'>Los negocios con ofertas son distinguidos sobre los demás</label>\r\n\t\t\t<img src=\"assets/app/media/img/demo1.png\">\r\n\t\t\t<hr>\r\n\r\n\r\n<!-- \t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy'>Fecha de expiracion</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\r\n\t\t\t\t<span class='inputBy w50' > 01/01/2018</span>\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div> -->\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t<div style=\"color:darkgray;font-size: 16px;font-weight: 500 !important;margin-bottom: 20px;\">\r\n\t\t\tElige un servico para marcar en oferta</div>\r\n\t\t\t\t\t<div style=\"border: solid 1px lightgray;padding: 20px;\">\r\n\r\n\t\t\t\t\t\r\n\r\n\t\t\t\t\t\t\t<div *ngFor=\"let k of keys;  let m = index\">\r\n\t\t\t\t\t\t\t<div class='tituloCateg'>{{k}}</div>\r\n\r\n\t\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: rgb(250,249,247);padding: 10px 10px;\" *ngFor=\"let item of serviciosValues[m];  let i = index\">\r\n\t\t\t\t\t\t\t<mat-checkbox color='primary' name=\"{{i}}-name\" [disabled]='item.oferta' [checked]=\"(selected2 == item.idServicio || item.oferta)\" (change)=\"OnChange($event,item.idServicio, item)\">\r\n\t\t\t\t\t\t\t\t<span class=\"txtF\">\r\n\t\t\t\t\t\t\t\t\t{{item.nombre}} / \r\n\t\t\t\t\t\t\t\t\t<span  [ngClass]=\"{'underl': item.oferta}\">${{item.precio}}</span>\r\n\t\t\t\t\t\t\t\t\t<span style=\"margin-left: 10px;font-weight: 500;\" *ngIf='item.oferta' >${{item.oferta}}</span>\r\n\r\n\r\n\t\t\t\t\t\t\t\t</span></mat-checkbox>\r\n\r\n\t\t\t\t\t\t\t\t<div *ngIf='selected2 === item.idServicio' style=\"margin-top: 20px;font-size: 14px;\">\r\n\t\t\t\t\t\t\t\t\t<span style=\"font-weight: 400\">\r\n\t\t\t\t\t\t\t\t\tPrecio en Oferta \r\n\t\t\t\t\t\t\t\t\t               <mat-icon style='    vertical-align: sub;\r\n    color: darkgray;\r\n    margin-left: 19px;'   \r\n          placement=\"top\" ngbTooltip=\"El precio de oferta debe ser menor que el precio del servicio\" ngbTooltipClass=\"m-tooltip\">help_outline</mat-icon>\r\n      \t\t\t</span> \r\n\t\t\t\t\t\t\t\t\t<input   class='inputBy w50' placeholder=\"precio de Oferta\"  autocomplete=\"off\"  style='    margin-top: 15px;margin-bottom: 20px;' type=\"number\" name=\"precio\" [(ngModel)]=\"valorOferta\">\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t</div>\t\r\n\r\n\r\n\r\n\t\t\t\t\t</div>\r\n\r\n\t\t</div>\r\n\t</div>\r\n\r\n</div>\r\n\r\n"
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 26px;font-weight: 300;padding-left: 15px;\">Agregar Oferta</div>\r\n\r\n\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" [disabled]='!valorOferta || !selected2 || itemMarcado.precio<=valorOferta' (click)='openDialog()' >Guardar</button>\r\n\r\n\t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button>\r\n\r\n\r\n</div>\r\n\r\n\r\n<div class=\"row\">\r\n\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"    border: solid 2px darkgray;\r\n    border-radius: 5px;\" class=\"conteinInput\">\r\n\r\n\t\t\t\t<div style=\"font-size: 16px;\r\n    font-weight: 500;\r\n    background-color: #e91e63;\r\n    color: white;\r\n    padding: 14px;\">Contrato de Oferta</div>\r\n\r\n\t\t\t\t<p style=\"  font-size: 15px;  padding: 14px;\" class=' w100'>\r\n\t\t\t\t\tLas ofertas tienen una vigencia de 7 dias y un costo de $7 por cada servicio en oferta. Puedes tener hasta 10 ofertas activas al mismo tiempo. \r\n\t\t\t\t</p>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t<label class='labelBy'>Haz que tus servicios sean mas atractivos!</label>\r\n\t\t\t<label class='labelBy'>Los negocios con ofertas son distinguidos sobre los demás</label>\r\n\t\t\t<img src=\"assets/app/media/img/demo1.png\">\r\n\t\t\t<hr>\r\n\r\n\r\n<!-- \t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy'>Fecha de expiracion</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\r\n\t\t\t\t<span class='inputBy w50' > 01/01/2018</span>\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div> -->\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t<div style=\"color:darkgray;font-size: 16px;font-weight: 500 !important;margin-bottom: 20px;\">\r\n\t\t\tElige un servico para marcar en oferta</div>\r\n\t\t\t\t\t<div style=\"border: solid 1px lightgray;padding: 20px;\">\r\n\r\n\t\t\t\t\t\r\n\r\n\t\t\t\t\t\t\t<div *ngFor=\"let k of keys;  let m = index\">\r\n\t\t\t\t\t\t\t<div class='tituloCateg'>{{k}}</div>\r\n\r\n\t\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: rgb(250,249,247);padding: 10px 10px;\" *ngFor=\"let item of serviciosValues[m];  let i = index\">\r\n\t\t\t\t\t\t\t<mat-checkbox color='primary' name=\"{{i}}-name\" [disabled]='item.oferta' [checked]=\"(selected2 == item.idServicio || item.oferta)\" (change)=\"OnChange($event,item.idServicio, item)\">\r\n\t\t\t\t\t\t\t\t<span class=\"txtF\">\r\n\t\t\t\t\t\t\t\t\t{{item.nombre}} / \r\n\t\t\t\t\t\t\t\t\t<span  [ngClass]=\"{'underl': item.oferta}\">${{item.precio}}</span>\r\n\t\t\t\t\t\t\t\t\t<span style=\"margin-left: 10px;font-weight: 500;\" *ngIf='item.oferta' >${{item.oferta}}</span>\r\n\r\n\r\n\t\t\t\t\t\t\t\t</span></mat-checkbox>\r\n\r\n\t\t\t\t\t\t\t\t<div *ngIf='selected2 === item.idServicio' style=\"margin-top: 20px;font-size: 14px;\">\r\n\t\t\t\t\t\t\t\t\t<span style=\"font-weight: 400\">\r\n\t\t\t\t\t\t\t\t\tPrecio en Oferta \r\n\t\t\t\t\t\t\t\t\t               <mat-icon style='    vertical-align: sub;\r\n    color: darkgray;\r\n    margin-left: 19px;'   \r\n          placement=\"top\" ngbTooltip=\"El precio de oferta debe ser menor que el precio del servicio\" ngbTooltipClass=\"m-tooltip\">help_outline</mat-icon>\r\n      \t\t\t</span> \r\n\t\t\t\t\t\t\t\t\t<input   class='inputBy w50' placeholder=\"precio de Oferta\"  autocomplete=\"off\"  style='    margin-top: 15px;margin-bottom: 20px;' type=\"number\" name=\"precio\" [(ngModel)]=\"valorOferta\">\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t</div>\t\r\n\r\n\r\n\r\n\t\t\t\t\t</div>\r\n\r\n\t\t</div>\r\n\t</div>\r\n\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -2696,8 +9316,7 @@ var AgregarofertaComponent = /** @class */ (function () {
             _this.serviciosValues = Object.values(data);
             //this.serviciosC = data;
             // this.cdr.detectChanges();
-            console.log(_this.keys);
-            console.log(_this.serviciosValues);
+            _this.cdr.detectChanges();
         }, function (err) {
             console.log('someError');
             alert('Ups! Algo ha salido mal');
@@ -2788,7 +9407,7 @@ module.exports = "<!-- <h1 mat-dialog-title>Hi {{data.name}}</h1> -->\n<mat-dial
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 15px;\">Agregar Paquete</div>\r\n\r\n\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" [disabled]='!valorOferta || !duracion.nombre || itemsPaquete.length<2' (click)='openDialog()' >Guardar</button>\r\n\r\n\t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button>\r\n\r\n\r\n</div>\r\n\r\n\r\n<div class=\"row\">\r\n <ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"    border: solid 2px darkgray;\r\n    border-radius: 5px;\" class=\"conteinInput\">\r\n\r\n\t\t\t\t<div style=\"font-size: 16px;\r\n    font-weight: 500;\r\n    background-color: #e91e63;\r\n    color: white;\r\n    padding: 14px;\">Contrato de Paquete</div>\r\n\r\n\t\t\t\t<p style=\"  font-size: 15px;  padding: 14px;\" class=' w100'>\r\n\t\t\t\t\tLos paquetes tienen una vigencia de 7 dias y un costo de $7. Puedes tener hasta 10 paquetes activos al mismo tiempo. \r\n\t\t\t\t</p>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t<label class='labelBy'>Agrupa servicios y brinda un precio preferencial</label>\r\n\t\t\t<label class='labelBy'>Los paquetes tienen un sitio especial en el app</label>\r\n\t\t\t<img src=\"assets/app/media/img/demo1.png\">\r\n\t\t\t<hr>\r\n\r\n\r\n<!-- \t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy'>Fecha de expiracion</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\r\n\t\t\t\t<span class='inputBy w50' > 01/01/2018</span>\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div> -->\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\r\n\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t\t\t<div  style=\"margin-top: 20px;font-size: 14px;\">\r\n\t\t\t\t\t\t\t\t\t<span style=\"font-weight: 400;display: block\">\r\n\t\t\t\t\t\t\t\t\tNombre del paquete \r\n\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t               <mat-icon style='    vertical-align: sub;\r\n    color: darkgray;\r\n    margin-left: 19px;'   \r\n          placement=\"top\" ngbTooltip=\"Forma un paquete con varios servicios y asigna un nombre, precio y duracion especial\" ngbTooltipClass=\"m-tooltip\">help_outline</mat-icon>\r\n\r\n      \t\t\t\t\t\t\t\t</span> \r\n\t\t\t\t\t\t\t\t\t<input   class='inputBy w50' placeholder=\"nombre del paquete\"  autocomplete=\"off\"  style='      margin-bottom: 20px;  margin-top: 15px;' type=\"text\" name=\"nombre\" [(ngModel)]=\"duracion.nombre\">\r\n\r\n\t\t\t\t\t\r\n\r\n\t<span style=\"font-weight: 400;display: block\">\r\n\t\t\t\t\t\t\t\t\tPrecio del paquete \r\n\r\n      \t\t\t</span> \r\n\t\t\t\t\t\t\t\t\t<input   class='inputBy w50' placeholder=\"precio de paquete\"  autocomplete=\"off\"  style='    margin-top: 15px;' type=\"number\" name=\"precio\" [(ngModel)]=\"valorOferta\">\r\n\r\n\r\n\t\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label style=\"font-weight: 400\">Duracion del paquete</label>\r\n\r\n\t\t\t\t<div style=\"    margin-left: 10px;\">\r\n\r\n\t\t\t\t<span>{{getHoras(duracion.totalTiempo)}}h</span>\t\t \r\n\t\t\t\t<span style=\"margin-left: 6px\">{{duracion.totalTiempo % 60}}min</span>\r\n\r\n\t\t\t\t</div>\r\n\r\n<!-- \t\t\t\t<div style=\"display: flex\">\r\n\t\t\t\t\r\n\t\t\t\t<mat-select  [(ngModel)]=\"duracion.hora\"  required class='inputBy w50'>\r\n\t\t\t\t <mat-option [value]=\"0\">0 horas</mat-option>\r\n              <mat-option [value]=\"60\">1 hora</mat-option>\r\n              <mat-option [value]=\"120\">2 horas</mat-option>\r\n              <mat-option [value]=\"180\">3 horas</mat-option>\r\n              <mat-option [value]=\"240\">4 horas</mat-option>\r\n              <mat-option [value]=\"300\">5 horas</mat-option>\r\n\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t<mat-select [(ngModel)]=\"duracion.minuto\"  required class='inputBy w50'>\r\n\t\t\t\t <mat-option [value]=\"0\">0 minutos</mat-option>\r\n              <mat-option [value]=\"5\">5 minutos</mat-option>\r\n              <mat-option [value]=\"10\">10 minutos</mat-option>\r\n              <mat-option [value]=\"15\">15 minutos</mat-option>\r\n              <mat-option [value]=\"20\">20 minutos</mat-option>\r\n              <mat-option [value]=\"25\">25 minutos</mat-option>\r\n              <mat-option [value]=\"30\">30 minutos</mat-option>\r\n              <mat-option [value]=\"35\">35 minutos</mat-option>\r\n              <mat-option [value]=\"40\">40 minutos</mat-option>\r\n              <mat-option [value]=\"45\">45 minutos</mat-option>\r\n              <mat-option [value]=\"50\">50 minutos</mat-option>\r\n              <mat-option [value]=\"55\">55 minutos</mat-option>\r\n\t\t\t\t</mat-select>\r\n\t\t\t    </div>\r\n -->\r\n\t\t\t</div>\r\n\r\n\r\n\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t<div style=\"color:darkgray;font-size: 16px;font-weight: 500 !important;margin-bottom: 20px;\">\r\n\t\t\tElige los servicios que forman parte del paquete</div>\r\n\t\t\t\t\t<div style=\"border: solid 1px lightgray;padding: 20px;\">\r\n\r\n\t\t\t\t\t\r\n\r\n\t\t\t\t\t\t\t<div *ngFor=\"let k of keys;  let m = index\">\r\n\t\t\t\t\t\t\t<div class='tituloCateg'>{{k}}</div>\r\n\r\n\t\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: rgb(250,249,247);padding: 10px 10px;\" *ngFor=\"let item of serviciosValues[m];  let i = index\">\r\n\t\t\t\t\t\t\t<mat-checkbox color='primary' name=\"{{i}}-name\"  (change)=\"OnChange($event,item.idServicio, item)\">\r\n\t\t\t\t\t\t\t\t<span class=\"txtF\">\r\n\t\t\t\t\t\t\t\t\t{{item.nombre}} / \r\n\t\t\t\t\t\t\t\t\t<span  [ngClass]=\"{'underl': item.oferta}\">${{item.precio}}</span>\r\n\t\t\t\t\t\t\t\t\t<span style=\"margin-left: 10px;font-weight: 500;\" *ngIf='item.oferta' >${{item.oferta}}</span>\r\n\r\n\r\n\t\t\t\t\t\t\t\t</span></mat-checkbox>\r\n\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\r\n\r\n\t\t\t\t\t\t</div>\t\r\n\r\n\r\n\r\n\t\t\t\t\t</div>\r\n\r\n\t\t</div>\r\n\t</div>\r\n\r\n</div>\r\n\r\n"
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 26px;font-weight: 300;padding-left: 15px;\">Agregar Paquete</div>\r\n\r\n\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" [disabled]='!valorOferta || !duracion.nombre || itemsPaquete.length<2' (click)='openDialog()' >Guardar</button>\r\n\r\n\t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button>\r\n\r\n\r\n</div>\r\n\r\n\r\n<div class=\"row\">\r\n <ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"    border: solid 2px darkgray;\r\n    border-radius: 5px;\" class=\"conteinInput\">\r\n\r\n\t\t\t\t<div style=\"font-size: 16px;\r\n    font-weight: 500;\r\n    background-color: #e91e63;\r\n    color: white;\r\n    padding: 14px;\">Contrato de Paquete</div>\r\n\r\n\t\t\t\t<p style=\"  font-size: 15px;  padding: 14px;\" class=' w100'>\r\n\t\t\t\t\tLos paquetes tienen una vigencia de 7 dias y un costo de $7. Puedes tener hasta 10 paquetes activos al mismo tiempo. \r\n\t\t\t\t</p>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t<label class='labelBy'>Agrupa servicios y brinda un precio preferencial</label>\r\n\t\t\t<label class='labelBy'>Los paquetes tienen un sitio especial en el app</label>\r\n\t\t\t<img src=\"assets/app/media/img/demo1.png\">\r\n\t\t\t<hr>\r\n\r\n\r\n<!-- \t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy'>Fecha de expiracion</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\r\n\t\t\t\t<span class='inputBy w50' > 01/01/2018</span>\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div> -->\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\r\n\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t\t\t<div  style=\"margin-top: 20px;font-size: 14px;\">\r\n\t\t\t\t\t\t\t\t\t<span style=\"font-weight: 400;display: block\">\r\n\t\t\t\t\t\t\t\t\tNombre del paquete \r\n\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t               <mat-icon style='    vertical-align: sub;\r\n    color: darkgray;\r\n    margin-left: 19px;'   \r\n          placement=\"top\" ngbTooltip=\"Forma un paquete con varios servicios y asigna un nombre, precio y duracion especial\" ngbTooltipClass=\"m-tooltip\">help_outline</mat-icon>\r\n\r\n      \t\t\t\t\t\t\t\t</span> \r\n\t\t\t\t\t\t\t\t\t<input   class='inputBy w50' placeholder=\"nombre del paquete\"  autocomplete=\"off\"  style='      margin-bottom: 20px;  margin-top: 15px;' type=\"text\" name=\"nombre\" [(ngModel)]=\"duracion.nombre\">\r\n\r\n\t\t\t\t\t\r\n\r\n\t<span style=\"font-weight: 400;display: block\">\r\n\t\t\t\t\t\t\t\t\tPrecio del paquete \r\n\r\n      \t\t\t</span> \r\n\t\t\t\t\t\t\t\t\t<input   class='inputBy w50' placeholder=\"precio de paquete\"  autocomplete=\"off\"  style='    margin-top: 15px;' type=\"number\" name=\"precio\" [(ngModel)]=\"valorOferta\">\r\n\r\n\r\n\t\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label style=\"font-weight: 400\">Duracion del paquete</label>\r\n\r\n\t\t\t\t<div style=\"    margin-left: 10px;\">\r\n\r\n\t\t\t\t<span>{{getHoras(duracion.totalTiempo)}}h</span>\t\t \r\n\t\t\t\t<span style=\"margin-left: 6px\">{{duracion.totalTiempo % 60}}min</span>\r\n\r\n\t\t\t\t</div>\r\n\r\n<!-- \t\t\t\t<div style=\"display: flex\">\r\n\t\t\t\t\r\n\t\t\t\t<mat-select  [(ngModel)]=\"duracion.hora\"  required class='inputBy w50'>\r\n\t\t\t\t <mat-option [value]=\"0\">0 horas</mat-option>\r\n              <mat-option [value]=\"60\">1 hora</mat-option>\r\n              <mat-option [value]=\"120\">2 horas</mat-option>\r\n              <mat-option [value]=\"180\">3 horas</mat-option>\r\n              <mat-option [value]=\"240\">4 horas</mat-option>\r\n              <mat-option [value]=\"300\">5 horas</mat-option>\r\n\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t<mat-select [(ngModel)]=\"duracion.minuto\"  required class='inputBy w50'>\r\n\t\t\t\t <mat-option [value]=\"0\">0 minutos</mat-option>\r\n              <mat-option [value]=\"5\">5 minutos</mat-option>\r\n              <mat-option [value]=\"10\">10 minutos</mat-option>\r\n              <mat-option [value]=\"15\">15 minutos</mat-option>\r\n              <mat-option [value]=\"20\">20 minutos</mat-option>\r\n              <mat-option [value]=\"25\">25 minutos</mat-option>\r\n              <mat-option [value]=\"30\">30 minutos</mat-option>\r\n              <mat-option [value]=\"35\">35 minutos</mat-option>\r\n              <mat-option [value]=\"40\">40 minutos</mat-option>\r\n              <mat-option [value]=\"45\">45 minutos</mat-option>\r\n              <mat-option [value]=\"50\">50 minutos</mat-option>\r\n              <mat-option [value]=\"55\">55 minutos</mat-option>\r\n\t\t\t\t</mat-select>\r\n\t\t\t    </div>\r\n -->\r\n\t\t\t</div>\r\n\r\n\r\n\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t<div style=\"color:darkgray;font-size: 16px;font-weight: 500 !important;margin-bottom: 20px;\">\r\n\t\t\tElige los servicios que forman parte del paquete</div>\r\n\t\t\t\t\t<div style=\"border: solid 1px lightgray;padding: 20px;\">\r\n\r\n\t\t\t\t\t\r\n\r\n\t\t\t\t\t\t\t<div *ngFor=\"let k of keys;  let m = index\">\r\n\t\t\t\t\t\t\t<div class='tituloCateg'>{{k}}</div>\r\n\r\n\t\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: rgb(250,249,247);padding: 10px 10px;\" *ngFor=\"let item of serviciosValues[m];  let i = index\">\r\n\t\t\t\t\t\t\t<mat-checkbox color='primary' name=\"{{i}}-name\"  (change)=\"OnChange($event,item.idServicio, item)\">\r\n\t\t\t\t\t\t\t\t<span class=\"txtF\">\r\n\t\t\t\t\t\t\t\t\t{{item.nombre}} / \r\n\t\t\t\t\t\t\t\t\t<span  [ngClass]=\"{'underl': item.oferta}\">${{item.precio}}</span>\r\n\t\t\t\t\t\t\t\t\t<span style=\"margin-left: 10px;font-weight: 500;\" *ngIf='item.oferta' >${{item.oferta}}</span>\r\n\r\n\r\n\t\t\t\t\t\t\t\t</span></mat-checkbox>\r\n\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\r\n\r\n\t\t\t\t\t\t</div>\t\r\n\r\n\r\n\r\n\t\t\t\t\t</div>\r\n\r\n\t\t</div>\r\n\t</div>\r\n\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -2990,7 +9609,7 @@ module.exports = "<!-- <h1 mat-dialog-title>Hi {{data.name}}</h1> -->\n<mat-dial
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 15px;\">Agregar Servicio</div>\r\n\r\n\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='guardarServicio()'   [disabled]='!firstFormGroup.valid'>Guardar</button>\r\n\r\n\t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button>\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<form [formGroup]=\"firstFormGroup\"  #f2=\"ngForm\">\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Nombre del Servicio</label>\r\n\t\t\t\t<input formControlName=\"nombreServicio\" required class='inputBy w100' placeholder=\"Cual es el nombre del servicio\"  autocomplete=\"off\"  type=\"text\" name=\"nombre\">\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy'>Categoria y Subcategoria</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\t\t\t\t\r\n\t\t\t\t<mat-select formControlName=\"idCategoria\" required (selectionChange)=\"getSubs($event)\" class='inputBy w50'>\r\n\t\t\t\t <mat-option  *ngFor=\"let c of categorias\" [value]=\"c.idCategoria\" >\r\n              {{c.nombre}}\r\n              </mat-option>\r\n\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t<mat-select formControlName=\"idSubcategoria\"  required  class='inputBy w50'>\r\n\t\t<mat-option  *ngFor=\"let sc of subcategorias\" \r\n\t\t\t\t [value]=\"sc.idSubcategoria\" >\r\n              {{sc.nombre}}\r\n              </mat-option>\r\n\t\t\t\t</mat-select>\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t<hr>\r\n\r\n\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy'>Duracion</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\t\t\t\t\r\n\t\t\t\t<mat-select formControlName=\"duracionH\"  required class='inputBy w50'>\r\n\t\t\t\t <mat-option [value]=\"0\">0 horas</mat-option>\r\n              <mat-option [value]=\"60\">1 hora</mat-option>\r\n              <mat-option [value]=\"120\">2 horas</mat-option>\r\n              <mat-option [value]=\"180\">3 horas</mat-option>\r\n              <mat-option [value]=\"240\">4 horas</mat-option>\r\n              <mat-option [value]=\"300\">5 horas</mat-option>\r\n\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t<mat-select formControlName=\"duracionM\"  required class='inputBy w50'>\r\n\t\t\t\t <mat-option [value]=\"0\">0 minutos</mat-option>\r\n              <mat-option [value]=\"5\">5 minutos</mat-option>\r\n              <mat-option [value]=\"10\">10 minutos</mat-option>\r\n              <mat-option [value]=\"15\">15 minutos</mat-option>\r\n              <mat-option [value]=\"20\">20 minutos</mat-option>\r\n              <mat-option [value]=\"25\">25 minutos</mat-option>\r\n              <mat-option [value]=\"30\">30 minutos</mat-option>\r\n              <mat-option [value]=\"35\">35 minutos</mat-option>\r\n              <mat-option [value]=\"40\">40 minutos</mat-option>\r\n              <mat-option [value]=\"45\">45 minutos</mat-option>\r\n              <mat-option [value]=\"50\">50 minutos</mat-option>\r\n              <mat-option [value]=\"55\">55 minutos</mat-option>\r\n\t\t\t\t</mat-select>\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div>\r\n\r\n\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy'>Precio</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\t\t\t\t\r\n\t\t\t\t<input formControlName=\"precio\" required  class='inputBy w50' placeholder=\"precio del servicio\"  autocomplete=\"off\"  type=\"number\" name=\"precio\">\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div>\r\n\t\t</form>\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"color:darkgray;font-size: 16px;font-weight: 500 !important;margin-bottom: 20px;\">\r\n\t\t\tEmpleados que dan este servicio</div>\r\n\t\t\t\t\t<div style=\"border: solid 1px lightgray;padding: 20px;\">\r\n\r\n\t\t\t\t\t\t<p *ngFor=\"let e of empleados; let i = index\" >\r\n\r\n\t\t\t\t\t\t<mat-checkbox  [(ngModel)]=\"e.checke\"   name=\"{{i}}-name\">\r\n\t\t\t\t\t\t<img  class='imgCheckBox' src=\"http://50.116.17.150:3000/{{e.idFoto}}\" \r\n\t\t\t\t\t\t onError=\"this.src='assets/app/media/img/userB.png'\" >\r\n\t\t\t\t\t\t<span class=\"txtF\">{{e.nombre}}</span>\r\n\t\t\t\t\t\t</mat-checkbox></p>\r\n\r\n\r\n\t\t\t\t\t</div>\r\n\r\n\t\t</div>\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 26px;font-weight: 300;padding-left: 15px;\">Agregar Servicio</div>\r\n\r\n\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='guardarServicio()' \r\n      [disabled]='!firstFormGroup.valid || getStaffSelect()<1'>Guardar</button>\r\n\r\n\t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button>\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<form [formGroup]=\"firstFormGroup\"  #f2=\"ngForm\">\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Nombre del Servicio</label>\r\n\t\t\t\t<input formControlName=\"nombreServicio\" required class='inputBy w100' placeholder=\"Cual es el nombre del servicio\"  autocomplete=\"off\"  type=\"text\" name=\"nombre\">\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy'>Categoria y Subcategoria</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\t\t\t\t\r\n\t\t\t\t<mat-select formControlName=\"idCategoria\" required (selectionChange)=\"getSubs($event)\" class='inputBy w50'>\r\n\t\t\t\t <mat-option  *ngFor=\"let c of categorias\" [value]=\"c.idCategoria\" >\r\n              {{c.nombre}}\r\n              </mat-option>\r\n\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t<mat-select formControlName=\"idSubcategoria\"  required  class='inputBy w50'>\r\n\t\t<mat-option  *ngFor=\"let sc of subcategorias\" \r\n\t\t\t\t [value]=\"sc.idSubcategoria\" >\r\n              {{sc.nombre}}\r\n              </mat-option>\r\n\t\t\t\t</mat-select>\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t<hr>\r\n\r\n\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy'>Duracion</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\t\t\t\t\r\n\t\t\t\t<mat-select formControlName=\"duracionH\"  required class='inputBy w50'>\r\n\t\t\t\t <mat-option [value]=\"0\">0 horas</mat-option>\r\n              <mat-option [value]=\"60\">1 hora</mat-option>\r\n              <mat-option [value]=\"120\">2 horas</mat-option>\r\n              <mat-option [value]=\"180\">3 horas</mat-option>\r\n              <mat-option [value]=\"240\">4 horas</mat-option>\r\n              <mat-option [value]=\"300\">5 horas</mat-option>\r\n\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t<mat-select formControlName=\"duracionM\"  required class='inputBy w50'>\r\n\t\t\t\t <mat-option [value]=\"0\">0 minutos</mat-option>\r\n              <mat-option [value]=\"5\">5 minutos</mat-option>\r\n              <mat-option [value]=\"10\">10 minutos</mat-option>\r\n              <mat-option [value]=\"15\">15 minutos</mat-option>\r\n              <mat-option [value]=\"20\">20 minutos</mat-option>\r\n              <mat-option [value]=\"25\">25 minutos</mat-option>\r\n              <mat-option [value]=\"30\">30 minutos</mat-option>\r\n              <mat-option [value]=\"35\">35 minutos</mat-option>\r\n              <mat-option [value]=\"40\">40 minutos</mat-option>\r\n              <mat-option [value]=\"45\">45 minutos</mat-option>\r\n              <mat-option [value]=\"50\">50 minutos</mat-option>\r\n              <mat-option [value]=\"55\">55 minutos</mat-option>\r\n\t\t\t\t</mat-select>\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div>\r\n\r\n\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy'>Precio</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\t\t\t\t\r\n\t\t\t\t<input formControlName=\"precio\" required  class='inputBy w50' placeholder=\"precio del servicio\"  autocomplete=\"off\"  type=\"number\" name=\"precio\">\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div>\r\n\t\t</form>\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"color:darkgray;font-size: 16px;font-weight: 500 !important;margin-bottom: 20px;\">\r\n\t\t\tEmpleados que dan este servicio</div>\r\n\t\t\t\t\t<div style=\"border: solid 1px lightgray;padding: 20px;\">\r\n\r\n\t\t\t\t\t\t<p *ngFor=\"let e of empleados; let i = index\" >\r\n\r\n\t\t\t\t\t\t<mat-checkbox color='primary'  [(ngModel)]=\"e.checke\"   name=\"{{i}}-name\">\r\n\t\t\t\t\t\t<img  class='imgCheckBox' src=\"http://50.116.17.150:3000/{{e.idFoto}}\" \r\n\t\t\t\t\t\t onError=\"this.src='assets/app/media/img/userB.png'\" >\r\n\t\t\t\t\t\t<span class=\"txtF\">{{e.nombre}}</span>\r\n\t\t\t\t\t\t</mat-checkbox></p>\r\n\r\n\r\n\t\t\t\t\t</div>\r\n\r\n\t\t</div>\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -3065,6 +9684,7 @@ var AgregarservicioComponent = /** @class */ (function () {
         this.authService.getCategorias()
             .subscribe(function (data) {
             _this.categorias = data;
+            _this.cdr.detectChanges();
             console.log(data);
         }, function (err) {
             console.log('someError');
@@ -3073,6 +9693,7 @@ var AgregarservicioComponent = /** @class */ (function () {
         this.authService.getStaff({ idCentro: this.idCentro })
             .subscribe(function (data) {
             _this.empleados = data;
+            _this.cdr.detectChanges();
             console.log(data);
         }, function (err) {
             console.log('someError');
@@ -3096,6 +9717,9 @@ var AgregarservicioComponent = /** @class */ (function () {
             console.log('someError');
             alert('Ups! Algo ha salido mal');
         });
+    };
+    AgregarservicioComponent.prototype.getStaffSelect = function () {
+        return this.empleados.filter(function (word) { return word.checke == true; }).length;
     };
     AgregarservicioComponent.prototype.guardarServicio = function () {
         var _this = this;
@@ -3144,7 +9768,7 @@ var AgregarservicioComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n\r\n<div class=\"row \" style=\"background: rgb(250,249,247) !important;\r\n   \r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\r\n          <button  class=\"btn btn-success\" style=\"    position: absolute;right: 15px;margin-top: 15px;\" [routerLink]=\"['/nuevareserva']\" >Crear Reserva</button>\r\n\r\n\r\n\t<div *ngIf='tipoCalendario==1'  class=\"\" style=\"display: inline-block;font-size: 22px;font-weight: 300;padding-left: 30px;width: 100%;\r\n    text-align: center;\r\n    margin-bottom: 10px;\r\n    margin-top: 10px;\">\r\n\r\n\t\t<mat-icon (click)='moverFechasAA(2)' class='iconRo'>chevron_left</mat-icon>\r\n\r\n    <span>{{ diasAdelante[0] | date:'LLL dd' }} - {{ diasAdelante[4] | date:'LLL dd' }}, \r\n    {{ diasAdelante[0] | date:'yyyy' }}</span>\r\n\r\n    <mat-icon (click)='moverFechasAA(1)' class='iconRo'>chevron_right</mat-icon>\r\n\t\t\r\n\t</div>\r\n\r\n  <div *ngIf='tipoCalendario==2'  class=\"\" style=\"display: inline-block;font-size: 22px;font-weight: 300;padding-left: 30px;width: 100%;\r\n    text-align: center;\r\n    margin-bottom: 10px;\r\n    margin-top: 10px;\">\r\n\r\n    <mat-icon (click)='moverFechasAA2(2)' class='iconRo'>chevron_left</mat-icon>\r\n\r\n    <span>{{dateSelected | date:'LLL dd' }}</span>\r\n\r\n    <mat-icon (click)='moverFechasAA2(1)' class='iconRo'>chevron_right</mat-icon>\r\n    \r\n  </div>\r\n\r\n\r\n\t<div style=\"display: flex;margin-top: 20px;\">\r\n\t\t\r\n  <p style=\"    margin: auto;\">\r\n    <mat-form-field  appearance=\"legacy\">\r\n      <mat-select [(value)]=\"estadoFiltro\" \r\n      (selectionChange)=\"changeFilter($event)\"\r\n       placeholder=\"Filtrar por estado\" [multiple]=\"true\">\r\n     \r\n        <mat-option  [value]='1' >\r\n         Confirmadas\r\n        </mat-option>\r\n\r\n                <mat-option [value]='4' >\r\n         Canceladas\r\n        </mat-option>\r\n\r\n                <mat-option [value]='0' >\r\n         Por confirmar\r\n        </mat-option>\r\n\r\n\r\n                <mat-option [value]='3' >\r\n         Completadas\r\n        </mat-option>\r\n\r\n\r\n      </mat-select>\r\n    </mat-form-field>\r\n  </p>\r\n\r\n\r\n\r\n  <p style=\"    margin: auto;\">\r\n    <mat-form-field  appearance=\"legacy\">\r\n\r\n      <input style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"#ID de reserva\"  autocomplete=\"off\" [(ngModel)]=\"textFilter\" type='number'>\r\n      <mat-label><!-- <mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>list_alt</mat-icon> -->ID Reserva</mat-label>\r\n\r\n    </mat-form-field>\r\n  </p>\r\n\r\n\r\n\t\t\r\n  <p style=\"    margin: auto;\">\r\n    <mat-form-field  appearance=\"legacy\">\r\n      <mat-select [(value)]=\"estadoFiltroEmpleados\" \r\n      (selectionChange)=\"changeFilter2($event)\" placeholder=\"Filtrar Staff\" [multiple]=\"true\">\r\n     \r\n        <mat-option  *ngFor=\"let ee of empleados; let i = index\" [value]=\"ee.idEmpleado\"  style='    border-bottom: solid 1px lightgray;\r\n    height: 60px;'>\r\n         <div style=\"     padding: 0px 45px;\">\r\n\t\t\t\t\t\t\t\t<img style=' border-radius: 40px;   display: inline-block; margin: auto; height: 35px;' matListAvatar  src=\"http://50.116.17.150:3000/{{ee.idFoto}}\" \r\n    onError=\"this.src='assets/app/media/img/userB.png'\">\r\n\t\t\t\t\t\t\t\t<span style=\"  color:#383734; margin-left: 10px;font-size: 16px;font-weight: 400; display: inline-block;\">{{ee.nombre}}</span>\r\n\t\t\t\t\t\t\t\t</div> \r\n        </mat-option > \r\n\r\n        \r\n\r\n      </mat-select>\r\n    </mat-form-field>\r\n  </p>\r\n\r\n\r\n\r\n  <p style=\"    margin: auto;\">\r\n    \r\n    <button class=\"btn-sm\"  [ngClass]=\"{'selecA': tipoCalendario==1}\"\r\n     (click)='vistaSemana()'>semana</button>\r\n\r\n    <button class=\"btn-sm\" [ngClass]=\"{'selecA': tipoCalendario==2}\"  (click)='vistaDia()'>dia</button>\r\n\r\n\r\n  </p>\r\n<!--     <p style=\"    margin: auto;\">\r\n    <mat-form-field   appearance=\"legacy\"> \r\n        <mat-select placeholder=\"Buscar Cliente\" >\r\n        <ngx-mat-select-search [placeholderLabel]=\"'Buscar cliente'\" \r\n                       [noEntriesFoundLabel]=\"'no se han encontrado clientes'\" >\r\n                       \t\r\n                       </ngx-mat-select-search>\r\n       <mat-option style='    border-bottom: solid 1px lightgray;\r\n    height: 60px;' [value]=\"'Ligia Fallas'\">\r\n          \t\t\t<div style=\"     padding: 0px 45px;\">\r\n\t\t\t\t\t\t\t\t<img style='    display: inline-block; margin: auto; height: 35px;' matListAvatar src=\"assets/app/media/img/userB.png\">\r\n\t\t\t\t\t\t\t\t<span style=\"  color:#383734; margin-left: 10px;font-size: 16px;font-weight: 400; display: inline-block;\">Ligia Fallas</span>\r\n\t\t\t\t\t\t\t\t</div> \r\n        </mat-option>\r\n\r\n  <mat-option style='    border-bottom: solid 1px lightgray;\r\n    height: 60px;' [value]=\"'Jane Rilay'\">\r\n          \t\t\t<div style=\"     padding: 0px 45px;\">\r\n\t\t\t\t\t\t\t\t<img style='    display: inline-block; margin: auto; height: 35px;' matListAvatar src=\"assets/app/media/img/userB.png\">\r\n\t\t\t\t\t\t\t\t<span style=\"  color:#383734; margin-left: 10px;font-size: 16px;font-weight: 400; display: inline-block;\">Jane Rilay</span>\r\n\t\t\t\t\t\t\t\t</div> \r\n        </mat-option>\r\n\r\n         <mat-option style='    border-bottom: solid 1px lightgray;\r\n    height: 60px;' [value]=\"'Pedro Perez'\">\r\n          \t\t\t<div style=\"     padding: 0px 45px;\">\r\n\t\t\t\t\t\t\t\t<img style='    display: inline-block; margin: auto; height: 35px;' matListAvatar src=\"assets/app/media/img/userB.png\">\r\n\t\t\t\t\t\t\t\t<span style=\"  color:#383734; margin-left: 10px;font-size: 16px;font-weight: 400; display: inline-block;\">Pedro Perez</span>\r\n\t\t\t\t\t\t\t\t</div> \r\n        </mat-option>\r\n\r\n\r\n\r\n     \r\n\r\n      </mat-select>\r\n\r\n    </mat-form-field>\r\n  </p>\r\n -->\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n<div class=\"row\">\r\n\r\n\t <ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\r\n\t\r\n\t<div class=\"col-md-12 col-xl-3\" style=\"    padding-right: 0px;    border-right: solid 1px lightgray;\">\r\n\t\r\n\r\n\t<mat-calendar [selected]=\"selectedDate\" (selectedChange)=\"selectedDate = $event;changeCalen( $event)\"></mat-calendar>\r\n\r\n\r\n<div style=\"    padding: 15px 10px;\r\n    border-bottom: solid 1px lightgray;\r\n    border-top: solid 1px lightgray;\">\r\n  \r\n  <div style=\"    font-size: 16px;\r\n    color: #222;\r\n    font-weight: 400;\"> \r\n    <span *ngIf='tipoCalendario==1'>{{ diasAdelante[0] | date:'LLL dd' }} - {{ diasAdelante[4] | date:'LLL dd' }}, \r\n    {{ diasAdelante[0] | date:'yyyy' }}</span>\r\n\r\n\r\n        <span *ngIf='tipoCalendario==2'>\r\n        {{dateSelected | date:'LLL dd' }}</span>\r\n\r\n\r\n  </div>\r\n    <div style=\"    margin-top: 7px;\r\n    color: #666;\">Todas las reservas | Reservas: {{dataTotal.length}}</div>\r\n</div>\r\n\r\n\t<mat-nav-list style='    padding-top: 0px;\r\n    overflow: auto;\r\n    height: 400px; '>\r\n\r\n  <mat-list-item  *ngFor=\"let cita of dataTotal ; let i = index\" style='    height: 77px !important;\r\n    border-bottom: solid 1px lightgray;'  [routerLink]=\"['/detallecita']\" [queryParams]=\"{id: cita.idCita}\"  >\r\n\r\n  \t   <div>\r\n  \t  \r\n        <div  class=\"popOverDate\" \r\n        [ngClass]=\"{'citaE3':cita.estadoServicio == 3, 'citaE2': cita.estadoServicio == 2, 'citaE1':cita.estadoServicio == 1, 'citaE0':cita.estadoServicio == 0,\r\n        'citaE4':cita.estadoServicio == 4}\" style='background: white !important;padding: 0px !important'>\r\n\t\t\t\t\t\t\t\t<!-- <span>SEP</span>\r\n\t\t\t\t\t\t\t\t<span>25</span> -->\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 10px;\">{{ cita.fechaServicio | date:'LLL dd' }}</div>\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 10px;\">{{cita.inicioServicio}}</div>\r\n\t\t\t\t\t\t\t</div>\r\n        <div style=\"     padding-left: 6px;   display: inline-block;\"> \r\n\r\n          <div style=\"font-size: 14px;\">\r\n          \t<span>{{cita.nombreEmpleado}}</span>\r\n          \t<mat-icon style='color: #888;vertical-align: top;margin: 0px 0px;width: 15px !important;'>chevron_right</mat-icon>\r\n          \t<span>{{cita.nombreCliente}}</span>\r\n          </div>   \r\n \r\n        </div>\r\n      </div>\r\n\r\n  </mat-list-item>\r\n\r\n\r\n</mat-nav-list>\r\n\r\n\r\n\r\n\t</div>\r\n\r\n  <div *ngIf='tipoCalendario==2' class=\"col-md-12 col-xl-9\" style=\"padding-left: 0px !important\">\r\n\r\n    <table class=\"table\" >\r\n\r\n\r\n      <thead>\r\n        <tr style=\"height: 72px;\">\r\n        <th class=\"mw40\"></th>\r\n\r\n          <th  *ngFor=\"let empleado of dataCalendarioDia ; let i = index\"  style=\" border-right: solid 1px lightgray;\" [hidden]=\"!aplicarFiltros3(empleado[0].idEmpleado)\">\r\n   \r\n            <div class=\"tittleCal\">\r\n              <img style='display: block; margin: auto;     height: 45px;\r\n    border-radius: 35px;' matListAvatar src=\"http://50.116.17.150:3000/{{empleado[0].empleadoFoto}}\" \r\n    onError=\"this.src='assets/app/media/img/userB.png'\">\r\n    {{empleado[0].nombreEmpleado}}\r\n\r\n              <span style=\"display: block;font-size: 11px;color: darkgray;\">\r\n             <!--  {{getKeys(empleado.idEmpleado)}} reservas\r\n              [ngStyle]=\"{'display':aplicarFiltros3(empleado[0].idEmpleado) ? 'green' : 'red' }\" -->\r\n              {{empleado.length}} reservas\r\n             </span>\r\n            </div>\r\n       \r\n          </th>\r\n        </tr>\r\n      </thead>\r\n      <tbody>\r\n\r\n        <tr  *ngFor=\"let horas of horasCalen\">\r\n        <td class=\"mw40\">{{horas.txt}}</td>\r\n        <td class=\"mw210\" *ngFor=\"let empleado of dataCalendarioDia\" \r\n         [hidden]=\"!aplicarFiltros3(empleado[0].idEmpleado)\">\r\n         \r\n\r\n          <ng-container *ngFor='let c of empleado | callback: filterUser'>\r\n          <div  *ngIf='(aplicarFiltros(c.estadoServicio)) && ( horas.val == c.soloHoraFixed || \r\n                    ((horas.val==\"08\" &&  getIntS(c.soloHoraFixed)) || (horas.val==\"22\"  &&  getIntS2(c.soloHoraFixed))))' class=\"citaStyle\" \r\n          [ngClass]=\"{'citaE3':c.estadoServicio == 3, 'citaE4':c.estadoServicio == 4,'citaE2': c.estadoServicio == 2, 'citaE1':c.estadoServicio == 1, 'citaE0':c.estadoServicio == 0}\" \r\n          (click)='openDialogCita(c)'>\r\n              <span>{{c.inicioServicio}} - {{c.finServicio}}</span>\r\n              <span class='ml4'>{{c.clienteReferencia || c.nombreCliente}}</span>\r\n               <span style=\"display: block;font-size: 10px;\" *ngIf='c.clienteReferencia'>Reserva Manual</span>\r\n          </div> \r\n        </ng-container>\r\n\r\n    \r\n        </td>\r\n        </tr>\r\n\r\n\r\n\r\n\r\n      </tbody>\r\n\r\n\r\n    </table>\r\n  </div>\r\n\r\n\r\n\t<div *ngIf='tipoCalendario==1' class=\"col-md-12 col-xl-9\" style=\"padding-left: 0px !important\">\r\n\r\n\r\n\r\n\t\t<table class=\"table\" >\r\n\t\t\t<thead>\r\n\t\t\t\t<tr style=\"    height: 72px;\">\r\n \t\t\t\t<th class=\"mw60\"></th>\r\n\r\n          <th  *ngFor=\"let dia of diasAdelante; let i = index\"  style=\" border-right: solid 1px lightgray;\">\r\n            <div class=\"tittleCal\">{{ dia | date:'EEE' }}\r\n\r\n              <span  [ngClass]=\"{'rojoCirculo':todayDate == dia}\">\r\n                {{ dia | date:'dd' }}\r\n              </span> \r\n\r\n\r\n              <span style=\"display: block;font-size: 11px;color: darkgray;\">\r\n              {{getKeys(dia)}} reservas\r\n             </span>\r\n            </div>\r\n          </th>\r\n\r\n\t<!--\t\t\t<th style=\" border-right: solid 1px lightgray;\">\r\n\t\t\t\t\t<div class=\"tittleCal\">Lun 10\r\n\t\t\t\t\t\t<span style=\"display: block;font-size: 11px;color: darkgray;\">2 citas</span>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</th>\r\n\t\t\t\t<th style=\" border-right: solid 1px lightgray;\">\r\n\t\t\t\t\t<div class=\"tittleCal\">Mar 11 \r\n\t\t\t\t\t\t<span style=\"display: block;font-size: 11px;color: darkgray;\">2 citas</span>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</th>\r\n\t\t\t\t<th style=\" border-right: solid 1px lightgray;\">\r\n\t\t\t\t\t<div class=\"tittleCal\">Mie 12 \r\n\t\t\t\t\t\t<span style=\"display: block;font-size: 11px;color: darkgray;\">2 citas</span>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</th>\r\n\t\t\t\t<th style=\" border-right: solid 1px lightgray;\">\r\n\t\t\t\t\t<div class=\"tittleCal\">Jue 13\r\n\t\t\t\t\t\t<span style=\"display: block;font-size: 11px;color: darkgray;\">2 citas</span>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</th>\r\n\t\t\t\t<th style=\" border-right: solid 1px lightgray;\">\r\n\t\t\t\t\t<div class=\"tittleCal\">Vie 14 \r\n\t\t\t\t\t\t<span style=\"display: block;font-size: 11px;color: darkgray;\">2 citas</span>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</th>\r\n*ngIf='(aplicarFiltros(c.estadoServicio))\r\n         -->\r\n\t\t\t\t</tr>\r\n\t\t\t</thead>\r\n\r\n\t\t\t<tbody>\r\n\r\n\t\t\t<tr *ngFor=\"let e of dataCalendario; let i = index\" style=\"border-bottom: solid 1px lightgray;\">\r\n\t\t\t\t\t<ng-container *ngIf='aplicarFiltros2(e)'  >\r\n          <td class=\"mw60\" style=\" padding: 10px 3px;\">\t\r\n\t\t\t\t\t\t<div style=\"white-space: nowrap;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;text-align: center;max-width: 60px;\">\r\n\t\t\t\t\t\t<img style='display: block; margin: auto;     height: 45px;\r\n    border-radius: 35px;' matListAvatar src=\"http://50.116.17.150:3000/{{showSome2(e)}}\" \r\n    onError=\"this.src='assets/app/media/img/userB.png'\">\r\n\t\t\t\t\t\t{{showSome(e)}}\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</td>\r\n\r\n\r\n\t\t\t\t\t<td  class=\"mw210\">\r\n             <ng-container *ngFor='let c of e[diasAdelante[0]]  | callback: filterUser ; let ii = index'>\r\n            <div  *ngIf='aplicarFiltros(c.estadoServicio)'\r\n            \r\n            class=\"citaStyle\" [ngClass]=\"{'citaE3':c.estadoServicio == 3, \r\n            'citaE4':c.estadoServicio == 4, 'citaE2': c.estadoServicio == 2, 'citaE1':c.estadoServicio == 1, 'citaE0':c.estadoServicio == 0}\" (click)='openDialogCita(c)'>\r\n              <span>{{c.inicioServicio}} - {{c.finServicio}}</span>\r\n              <span class='ml4'>{{c.clienteReferencia ||  c.nombreCliente}}</span>\r\n               <span style=\"display: block;font-size: 10px;\" *ngIf='c.clienteReferencia'>Reserva Manual</span>\r\n            </div>  \r\n          </ng-container>\r\n          </td>\r\n\t\t\t\t\t<td   class=\"mw210\">\r\n            <ng-container *ngFor='let c of e[diasAdelante[1]]  | callback: filterUser ; let ii = index'>\r\n            <div  *ngIf='aplicarFiltros(c.estadoServicio)' \r\n            class=\"citaStyle\" [ngClass]=\"{'citaE3':c.estadoServicio == 3, 'citaE4':c.estadoServicio == 4,'citaE2': c.estadoServicio == 2, 'citaE1':c.estadoServicio == 1, 'citaE0':c.estadoServicio == 0}\" (click)='openDialogCita(c)' \r\n            >\r\n              <span>{{c.inicioServicio}} - {{c.finServicio}}</span>\r\n              <span class='ml4'>{{c.clienteReferencia || c.nombreCliente}}</span>\r\n               <span style=\"display: block;font-size: 10px;\" *ngIf='c.clienteReferencia'>Reserva Manual</span>\r\n            </div>\r\n            </ng-container> \r\n          </td>\r\n\t\t\t\t\t<td  class=\"mw210\">\r\n            <ng-container  *ngFor='let c of e[diasAdelante[2]] | callback: filterUser ;  let ii = index'>\r\n            <div  *ngIf='aplicarFiltros(c.estadoServicio)' class=\"citaStyle\" [ngClass]=\"{'citaE3':c.estadoServicio == 3, 'citaE4':c.estadoServicio == 4,'citaE2': c.estadoServicio == 2, 'citaE1':c.estadoServicio == 1, 'citaE0':c.estadoServicio == 0}\" (click)='openDialogCita(c)' >\r\n              <span>{{c.inicioServicio}} - {{c.finServicio}}</span>\r\n              <span class='ml4'>{{c.clienteReferencia ||  c.nombreCliente}}</span>\r\n               <span style=\"display: block;font-size: 10px;\" *ngIf='c.clienteReferencia'>Reserva Manual</span>\r\n            </div> \r\n          </ng-container>\r\n          </td>\r\n\t\t\t\t\t<td   class=\"mw210\">\r\n             <ng-container *ngFor='let c of e[diasAdelante[3]]  | callback: filterUser ; let ii = index'>\r\n              <div *ngIf='aplicarFiltros(c.estadoServicio)'\r\n               class=\"citaStyle\" [ngClass]=\"{'citaE3':c.estadoServicio == 3,'citaE4':c.estadoServicio == 4, 'citaE2': c.estadoServicio == 2, 'citaE1':c.estadoServicio == 1, 'citaE0':c.estadoServicio == 0}\" (click)='openDialogCita(c)'   >\r\n              <span>{{c.inicioServicio}} - {{c.finServicio}}</span>\r\n              <span class='ml4'>{{c.clienteReferencia ||  c.nombreCliente}}</span>\r\n               <span style=\"display: block;font-size: 10px;\" *ngIf='c.clienteReferencia'>Reserva Manual</span>\r\n            </div> \r\n          </ng-container>\r\n          </td>\r\n\t\t\t\t\t<td  class=\"mw210\">\r\n            <ng-container *ngFor='let c of e[diasAdelante[4]]  | callback: filterUser ; let ii = index'>\r\n            <div  *ngIf='aplicarFiltros(c.estadoServicio)' \r\n            class=\"citaStyle\" [ngClass]=\"{'citaE3':c.estadoServicio == 3, 'citaE4':c.estadoServicio == 4,'citaE2': c.estadoServicio == 2, 'citaE1':c.estadoServicio == 1, 'citaE0':c.estadoServicio == 0}\" (click)='openDialogCita(c)'   >\r\n              <span>{{c.inicioServicio}} - {{c.finServicio}}</span>\r\n              <span class='ml4'>{{c.clienteReferencia ||  c.nombreCliente}}</span>\r\n               <span style=\"display: block;font-size: 10px;\" *ngIf='c.clienteReferencia'>Reserva Manual</span>\r\n            </div> \r\n          </ng-container>\r\n          </td>\r\n        </ng-container>\r\n\t\t\t\t</tr>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t\t\t</tbody>\r\n\t\t</table>\r\n\r\n\t</div>\r\n\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n\r\n"
+module.exports = "  <ng-template #content let-c=\"close\" let-d=\"dismiss\">\r\n      <div class=\"modal-header\">\r\n        <h4 class=\"modal-title\" style=\"    font-weight: 500;\r\n    color: #555;\">NOTA IMPORTANTE</h4>\r\n        <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\r\n          <span aria-hidden=\"true\">&times;</span>\r\n        </button>\r\n      </div>\r\n      <div class=\"modal-body\">\r\n    <p style=\"    margin-bottom: 25px;\" >1) Agrega todos los servicios de tu negocio. <a [routerLink]=\"['/servicios']\"  style=\"color: #e91e63 !important\" (click)=\"d('Cross click')\">Ir a Servicios</a>.</p>\r\n       <p style=\"    margin-bottom: 25px;\">2) Agrega el staff de tu negocio. <a  [routerLink]=\"['/staff']\" style=\"color: #e91e63 !important\" (click)=\"d('Cross click')\">Ir a Staff</a>.</p>\r\n          <p>*Recibirán un e-mail para descargar la app “Yourbeautystaff” y así configuren su horario y creen las reservas que tienen a la fecha.</p>\r\n \r\n         <p style=\"    text-align: center;\r\n    font-weight: 500;\r\n    color: #555;\r\n    margin-top: 25px;\r\n    margin-bottom: 0px;\">¡SIEMPRE NECESITAMOS LA DISPONIBILIDAD REAL DE TU STAFF!</p>\r\n \r\n \r\n \r\n                       \r\n      </div>\r\n      <div class=\"modal-footer\">\r\n        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"c('Close click')\">Cerrar</button>\r\n<!--         <button type=\"button\" class=\"btn btn-primary\">Save changes</button> -->\r\n      </div>\r\n    </ng-template>\r\n\r\n\r\n\r\n\r\n\r\n<div class=\"row \" style=\"background: rgb(250,249,247) !important;\r\n   \r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\r\n\r\n<!-- \tNOTIS START-->\r\n \r\n\r\n\r\n\r\n<!--  NOTIS START-->\r\n\r\n \r\n\r\n\r\n\r\n\r\n  <div  class=\"\" style=\"display: inline-block;font-size: 22px;font-weight: 300;width: 100%;\r\n    text-align: center;\r\n    margin-bottom: 10px;\r\n    margin-top: 15px;position:relative\">\r\n\r\n\r\n\r\n    <div *ngIf='tipoCalendario==1' style=\"display: inline-block;\">\r\n          <mat-icon (click)='moverFechasAA(2)' class='iconRo'>chevron_left</mat-icon>\r\n\r\n    <span>{{ diasAdelante[0] | date:'LLL dd' }} - {{ diasAdelante[4] | date:'LLL dd' }}, \r\n    {{ diasAdelante[0] | date:'yyyy' }}</span>\r\n\r\n    <mat-icon (click)='moverFechasAA(1)' class='iconRo'>chevron_right</mat-icon>\r\n    \r\n\r\n    </div>\r\n    <div  *ngIf='tipoCalendario==2' style=\"display: inline-block;\"> \r\n    <mat-icon (click)='moverFechasAA2(2)' class='iconRo'>chevron_left</mat-icon>\r\n\r\n    <span>{{dateSelected | date:'LLL dd' }}</span>\r\n\r\n    <mat-icon (click)='moverFechasAA2(1)' class='iconRo'>chevron_right</mat-icon>\r\n    </div>\r\n        \r\n\r\n   <div style=\"    height: 30px;\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\">  \r\n\r\n     \r\n<!-- <a  style='float: right;margin-right: 15px' href=\"javascript:;\" class=\"\">\r\n  \r\n  <span class=\"m-nav__link-icon\" >\r\n    <span class=\"m-nav__link-icon-wrapper\">\r\n      <i class=\"flaticon-music-2\" style=\"font-size: 26px !important;\"></i>\r\n    </span>\r\n  </span>\r\n</a>  -->\r\n\r\n<div style='float: right;margin-right: 15px' class=\"dropdown\" dropdown>\r\n<!--   <h1 class=\"\" dropdownToggle>wn</h1> -->\r\n   <i dropdownToggle class=\"flaticon-music-2\" style=\"font-size: 26px !important;\"></i>\r\n   <span *ngIf='budge>0' style=\"font-size: 15px;\r\n    height: 21px;\r\n    width: 21px;\r\n    position: absolute;\r\n    top: 0;\r\n    right: 16px;\r\n    background: lightcoral;\r\n    border-radius: 30px;\r\n    color: white;\r\n    font-weight: 800;    text-align: center;\">{{budge}}</span>\r\n  <ul class=\"dropdown-menu\" dropdownMenu style=\"right: 0 !important;\r\n    max-height: 650px;\r\n    overflow-x: scroll;\">\r\n\r\n<!--     <li><a class=\"neat\" href=\"https://github.com/zurfyx/angular-custom-modal\" rel=\"noopener\" target=\"_blank\">Check it out @ GitHub</a></li>\r\n\r\n    <li><a class=\"neat\" href=\"#\">Juan Dias ha confirmado una cita</a></li> -->\r\n      <mat-list-item  *ngFor=\"let cita of notis ; let i = index\" style='    height: 77px !important;\r\n    border-bottom: solid 1px lightgray;'  [routerLink]=\"['/detallecita']\" [queryParams]=\"{id: cita.idCita}\"  >\r\n\r\n       <div style=\"    padding: 10px 0px;\r\n    border-bottom: solid 1px lightgray;\">\r\n      \r\n        <div  class=\"popOverDate\" \r\n        [ngClass]=\"{'citaE3':cita.estadoServicio == 3, 'citaE2': cita.estadoServicio == 2, 'citaE1':cita.estadoServicio == 1, 'citaE0':cita.estadoServicio == 0,\r\n        'citaE4':cita.estadoServicio == 4}\" style='   min-width: 52px !important; background: white !important;padding: 0px !important'>\r\n                <!-- <span>SEP</span>\r\n                <span>25</span> -->\r\n                <div style=\"    font-size: 12px;\">{{ cita.fechaServicio | date:'LLL' }}</div>\r\n                 <div style=\"    font-size: 14px;\">{{ cita.fechaServicio | date:'dd' }}</div>\r\n                <div style=\"    font-size: 11px;\">{{cita.inicioServicio}}</div>\r\n              </div>\r\n        <div style=\"     padding-left: 6px;   display: inline-block;\"> \r\n\r\n          <div style=\"font-size: 14px;\">\r\n            <span>{{cita.nombreEmpleado}}</span>\r\n            <mat-icon style='color: #888;vertical-align: top;margin: 0px 0px;width: 15px !important;'>chevron_right</mat-icon>\r\n            <span>{{cita.nombreCliente}}</span>\r\n          </div>  \r\n\r\n          <div style=\"margin-top: -7px\">\r\n            {{cita.nombreServicio}}\r\n          </div> \r\n\r\n          <div style=\"    font-size: 11px;\">\r\n        <span class=\"tagStaff3 \" [ngClass]=\"{'citaE3sb3':cita.estadoServicio == 3,'citaE4sb3':cita.estadoServicio == 4, 'citaE2sb3': cita.estadoServicio == 2, 'citaE1sb3':cita.estadoServicio == 1, 'citaE0sb3':cita.estadoServicio == 0}\">\r\n          {{cita.estadoServicio == 0 ? 'POR CONFIRMAR' : \r\n            cita.estadoServicio == 1 ? 'CONFIRMADA' : \r\n            cita.estadoServicio == 2 ? 'CONFIRMAR CLIENTE' : \r\n            cita.estadoServicio == 3 ? 'COMPLETADA' :\r\n          cita.estadoServicio == 4 ? 'CANCELADA' : 'INVALIDA'}}\r\n\r\n         </span>{{cita.timeAgo}}\r\n \r\n          </div> \r\n\r\n \r\n        </div>\r\n      </div>\r\n\r\n  </mat-list-item>\r\n\r\n  </ul>\r\n</div>\r\n\r\n    <button  class=\"btn btn-success\" style=\"       margin-top: 0px; margin-right: 15px;float: right;\" [routerLink]=\"['/nuevareserva']\" >Crear Reserva</button>\r\n\r\n   </div>\r\n  </div>\r\n\r\n\r\n\r\n\t<div style=\"display: flex;margin-top: 20px;\">\r\n\t\t\r\n  <p style=\"    margin: auto;\">\r\n    <mat-form-field  appearance=\"legacy\">\r\n      <mat-select [(value)]=\"estadoFiltro\" \r\n      (selectionChange)=\"changeFilter($event)\"\r\n       placeholder=\"Filtrar por estado\" [multiple]=\"true\">\r\n     \r\n        <mat-option  [value]='1' >\r\n         Confirmadas\r\n        </mat-option>\r\n\r\n                <mat-option [value]='4' >\r\n         Canceladas\r\n        </mat-option>\r\n\r\n                <mat-option [value]='0' >\r\n         Por confirmar\r\n        </mat-option>\r\n\r\n\r\n                <mat-option [value]='3' >\r\n         Completadas\r\n        </mat-option>\r\n\r\n\r\n      </mat-select>\r\n    </mat-form-field>\r\n  </p>\r\n\r\n\r\n\r\n  <p style=\"    margin: auto;\">\r\n    <mat-form-field  appearance=\"legacy\">\r\n\r\n      <input style='  padding: 10px 10px 0px 10px !important;' matInput placeholder=\"#ID de reserva\"  autocomplete=\"off\" [(ngModel)]=\"textFilter2\" type='number'  (keyup.enter)=\"buscarR()\">\r\n      <mat-label><!-- <mat-icon style='  vertical-align: middle;  font-size: 25px !important;'>list_alt</mat-icon> -->ID Reserva</mat-label>\r\n\r\n    </mat-form-field>\r\n  </p>\r\n\r\n\r\n\t\t\r\n  <p style=\"    margin: auto;\">\r\n    <mat-form-field  appearance=\"legacy\">\r\n      <mat-select [(value)]=\"estadoFiltroEmpleados\" \r\n      (selectionChange)=\"changeFilter2($event)\" placeholder=\"Filtrar Staff\" [multiple]=\"true\">\r\n     \r\n        <mat-option  *ngFor=\"let ee of empleados; let i = index\" [value]=\"ee.idEmpleado\"  style='    border-bottom: solid 1px lightgray;\r\n    height: 60px;'>\r\n         <div style=\"     padding: 0px 45px;\">\r\n\t\t\t\t\t\t\t\t<img style=' border-radius: 40px;   display: inline-block; margin: auto;    width: 35px; height: 35px;' matListAvatar  src=\"http://50.116.17.150:3000/{{ee.idFoto}}\" \r\n    onError=\"this.src='assets/app/media/img/userB.png'\">\r\n\t\t\t\t\t\t\t\t<span style=\"  color:#383734; margin-left: 10px;font-size: 16px;font-weight: 400; display: inline-block;\">{{ee.nombre}}</span>\r\n\t\t\t\t\t\t\t\t</div> \r\n        </mat-option > \r\n\r\n        \r\n\r\n      </mat-select>\r\n    </mat-form-field>\r\n  </p>\r\n\r\n\r\n\r\n  <p style=\"    margin: auto;\">\r\n    \r\n    <button class=\"btn-sm\"  [ngClass]=\"{'selecA': tipoCalendario==1}\"\r\n     (click)='vistaSemana()'>semana</button>\r\n\r\n    <button class=\"btn-sm\" [ngClass]=\"{'selecA': tipoCalendario==2}\"  (click)='vistaDia()'>dia</button>\r\n\r\n\r\n  </p>\r\n<!--     <p style=\"    margin: auto;\">\r\n    <mat-form-field   appearance=\"legacy\"> \r\n        <mat-select placeholder=\"Buscar Cliente\" >\r\n        <ngx-mat-select-search [placeholderLabel]=\"'Buscar cliente'\" \r\n                       [noEntriesFoundLabel]=\"'no se han encontrado clientes'\" >\r\n                       \t\r\n                       </ngx-mat-select-search>\r\n       <mat-option style='    border-bottom: solid 1px lightgray;\r\n    height: 60px;' [value]=\"'Ligia Fallas'\">\r\n          \t\t\t<div style=\"     padding: 0px 45px;\">\r\n\t\t\t\t\t\t\t\t<img style='    display: inline-block; margin: auto; height: 35px;    width: 35px;' matListAvatar src=\"assets/app/media/img/userB.png\">\r\n\t\t\t\t\t\t\t\t<span style=\"  color:#383734; margin-left: 10px;font-size: 16px;font-weight: 400; display: inline-block;\">Ligia Fallas</span>\r\n\t\t\t\t\t\t\t\t</div> \r\n        </mat-option>\r\n\r\n  <mat-option style='    border-bottom: solid 1px lightgray;\r\n    height: 60px;' [value]=\"'Jane Rilay'\">\r\n          \t\t\t<div style=\"     padding: 0px 45px;\">\r\n\t\t\t\t\t\t\t\t<img style='    display: inline-block; margin: auto; height: 35px;    width: 35px;' matListAvatar src=\"assets/app/media/img/userB.png\">\r\n\t\t\t\t\t\t\t\t<span style=\"  color:#383734; margin-left: 10px;font-size: 16px;font-weight: 400; display: inline-block;\">Jane Rilay</span>\r\n\t\t\t\t\t\t\t\t</div> \r\n        </mat-option>\r\n\r\n         <mat-option style='    border-bottom: solid 1px lightgray;\r\n    height: 60px;' [value]=\"'Pedro Perez'\">\r\n          \t\t\t<div style=\"     padding: 0px 45px;\">\r\n\t\t\t\t\t\t\t\t<img style='    display: inline-block; margin: auto; height: 35px;' matListAvatar src=\"assets/app/media/img/userB.png\">\r\n\t\t\t\t\t\t\t\t<span style=\"  color:#383734; margin-left: 10px;font-size: 16px;font-weight: 400; display: inline-block;\">Pedro Perez</span>\r\n\t\t\t\t\t\t\t\t</div> \r\n        </mat-option>\r\n\r\n\r\n\r\n     \r\n\r\n      </mat-select>\r\n\r\n    </mat-form-field>\r\n  </p>\r\n -->\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n<div class=\"row\">\r\n\r\n\t <ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\r\n\t\r\n\t<div class=\"col-md-12 col-xl-3\" style=\"  padding-left: 0px !important;   padding-right: 0px !important;    border-right: solid 1px lightgray;\">\r\n\t\r\n\r\n\t<mat-calendar [selected]=\"selectedDate\" (selectedChange)=\"selectedDate = $event;changeCalen( $event)\"></mat-calendar>\r\n\r\n\r\n<div style=\"    padding: 15px 10px;\r\n    border-bottom: solid 1px lightgray;\r\n    border-top: solid 1px lightgray;\">\r\n  \r\n  <div style=\"    font-size: 16px;\r\n    color: #222;\r\n    font-weight: 400;\"> \r\n    <span *ngIf='tipoCalendario==1'>{{ diasAdelante[0] | date:'LLL dd' }} - {{ diasAdelante[4] | date:'LLL dd' }}, \r\n    {{ diasAdelante[0] | date:'yyyy' }}</span>\r\n\r\n\r\n        <span *ngIf='tipoCalendario==2'>\r\n        {{dateSelected | date:'LLL dd' }}</span>\r\n\r\n\r\n  </div>\r\n    <div style=\"       margin-top: 7px;\r\n    color: #222;\r\n    font-weight: 500;\r\n    font-size: 14px;\">Todas las reservas | Reservas: {{dataTotal.length}}</div>\r\n</div>\r\n\r\n\t<mat-nav-list style='    padding-top: 0px;\r\n    overflow: auto;\r\n    height: 400px; '>\r\n\r\n  <mat-list-item  *ngFor=\"let cita of dataTotal ; let i = index\" style='    height: 77px !important;\r\n    border-bottom: solid 1px lightgray;'  [routerLink]=\"['/detallecita']\" [queryParams]=\"{id: cita.idCita}\"  >\r\n\r\n  \t   <div>\r\n  \t  \r\n        <div  class=\"popOverDate\" \r\n        [ngClass]=\"{'citaE3':cita.estadoServicio == 3, 'citaE2': cita.estadoServicio == 2, 'citaE1':cita.estadoServicio == 1, 'citaE0':cita.estadoServicio == 0,\r\n        'citaE4':cita.estadoServicio == 4}\" style='background: white !important;padding: 0px !important'>\r\n\t\t\t\t\t\t\t\t<!-- <span>SEP</span>\r\n\t\t\t\t\t\t\t\t<span>25</span> -->\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 10px;\">{{ cita.fechaServicio | date:'LLL dd' }}</div>\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 10px;\">{{cita.inicioServicio}}</div>\r\n\t\t\t\t\t\t\t</div>\r\n        <div style=\"     padding-left: 6px;   display: inline-block;\"> \r\n\r\n          <div style=\"font-size: 14px;\">\r\n          \t<span>{{cita.nombreEmpleado}}</span>\r\n          \t<mat-icon style='color: #888;vertical-align: top;margin: 0px 0px;width: 15px !important;'>chevron_right</mat-icon>\r\n          \t<span>{{cita.nombreCliente}}</span>\r\n          </div>   \r\n \r\n        </div>\r\n      </div>\r\n\r\n  </mat-list-item>\r\n\r\n\r\n</mat-nav-list>\r\n\r\n\r\n\r\n\t</div>\r\n\r\n  <div *ngIf='tipoCalendario==2' class=\"col-md-12 col-xl-9\" style=\"    overflow-y: scroll !important; padding-left: 0px !important;   padding-right: 0px !important;  \">\r\n\r\n    <table class=\"table\" >\r\n\r\n\r\n      <thead>\r\n        <tr style=\"height: 72px;\">\r\n        <th class=\"mw40\"></th>\r\n\r\n          <th  *ngFor=\"let empleado of dataCalendarioDia ; let i = index\"  style=\" border-right: solid 1px lightgray;\" [hidden]=\"!aplicarFiltros3(empleado[0].idEmpleado)\">\r\n   \r\n            <div class=\"tittleCal\">\r\n              <img style='display: block; margin: auto;       width: 45px;  height: 45px;\r\n    border-radius: 35px;' matListAvatar src=\"http://50.116.17.150:3000/{{empleado[0].empleadoFoto}}\" \r\n    onError=\"this.src='assets/app/media/img/userB.png'\">\r\n    {{empleado[0].nombreEmpleado}}\r\n\r\n              <span style=\"display: block;font-size: 11px;color: darkgray;\">\r\n             <!--  {{getKeys(empleado.idEmpleado)}} reservas\r\n              [ngStyle]=\"{'display':aplicarFiltros3(empleado[0].idEmpleado) ? 'green' : 'red' }\" -->\r\n              {{empleado.length}} reservas\r\n             </span>\r\n            </div>\r\n       \r\n          </th>\r\n        </tr>\r\n      </thead>\r\n      <tbody>\r\n\r\n        <tr  *ngFor=\"let horas of horasCalen\">\r\n        <td class=\"mw40\">{{horas.txt}}</td>\r\n        <td class=\"mw210\" *ngFor=\"let empleado of dataCalendarioDia\" \r\n         [hidden]=\"!aplicarFiltros3(empleado[0].idEmpleado)\">\r\n         \r\n\r\n          <ng-container *ngFor='let c of empleado | callback: filterUser'>\r\n          <div  *ngIf='(aplicarFiltros(c.estadoServicio)) && ( horas.val == c.soloHoraFixed || \r\n                    ((horas.val==\"08\" &&  getIntS(c.soloHoraFixed)) || (horas.val==\"22\"  &&  getIntS2(c.soloHoraFixed))))' class=\"citaStyle\" \r\n          [ngClass]=\"{'citaE3':c.estadoServicio == 3, 'citaE4':c.estadoServicio == 4,'citaE2': c.estadoServicio == 2, 'citaE1':c.estadoServicio == 1, 'citaE0':c.estadoServicio == 0}\" \r\n          (click)='openDialogCita(c)'>\r\n              <span>{{c.inicioServicio}} - {{c.finServicio}}</span>\r\n              <span class='ml4'>{{c.clienteReferencia || c.nombreCliente}}</span>\r\n               <span style=\"display: block;font-size: 10px;\" *ngIf='c.clienteReferencia'>Reserva Manual</span>\r\n          </div> \r\n        </ng-container>\r\n\r\n    \r\n        </td>\r\n        </tr>\r\n\r\n\r\n\r\n\r\n      </tbody>\r\n\r\n\r\n    </table>\r\n  </div>\r\n\r\n\r\n\t<div *ngIf='tipoCalendario==1' class=\"col-md-12 col-xl-9\" style=\"overflow-y: scroll !important;padding-left: 0px !important;   padding-right: 0px !important;\">\r\n\r\n\r\n\r\n\t\t<table class=\"table\" >\r\n\t\t\t<thead>\r\n\t\t\t\t<tr style=\"    height: 72px;\">\r\n \t\t\t\t<th class=\"mw60\"></th>\r\n\r\n          <th  *ngFor=\"let dia of diasAdelante; let i = index\"  style=\" border-right: solid 1px lightgray;\">\r\n            <div class=\"tittleCal\">{{ dia | date:'EEE' }}\r\n\r\n              <span  [ngClass]=\"{'rojoCirculo':todayDate == dia}\">\r\n                {{ dia | date:'dd' }}\r\n              </span> \r\n\r\n\r\n              <span style=\"display: block;font-size: 11px;color: darkgray;\">\r\n              {{getKeys(dia)}} reservas\r\n             </span>\r\n            </div>\r\n          </th>\r\n\r\n\t<!--\t\t\t<th style=\" border-right: solid 1px lightgray;\">\r\n\t\t\t\t\t<div class=\"tittleCal\">Lun 10\r\n\t\t\t\t\t\t<span style=\"display: block;font-size: 11px;color: darkgray;\">2 citas</span>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</th>\r\n\t\t\t\t<th style=\" border-right: solid 1px lightgray;\">\r\n\t\t\t\t\t<div class=\"tittleCal\">Mar 11 \r\n\t\t\t\t\t\t<span style=\"display: block;font-size: 11px;color: darkgray;\">2 citas</span>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</th>\r\n\t\t\t\t<th style=\" border-right: solid 1px lightgray;\">\r\n\t\t\t\t\t<div class=\"tittleCal\">Mie 12 \r\n\t\t\t\t\t\t<span style=\"display: block;font-size: 11px;color: darkgray;\">2 citas</span>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</th>\r\n\t\t\t\t<th style=\" border-right: solid 1px lightgray;\">\r\n\t\t\t\t\t<div class=\"tittleCal\">Jue 13\r\n\t\t\t\t\t\t<span style=\"display: block;font-size: 11px;color: darkgray;\">2 citas</span>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</th>\r\n\t\t\t\t<th style=\" border-right: solid 1px lightgray;\">\r\n\t\t\t\t\t<div class=\"tittleCal\">Vie 14 \r\n\t\t\t\t\t\t<span style=\"display: block;font-size: 11px;color: darkgray;\">2 citas</span>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</th>\r\n*ngIf='(aplicarFiltros(c.estadoServicio))\r\n         -->\r\n\t\t\t\t</tr>\r\n\t\t\t</thead>\r\n\r\n\t\t\t<tbody>\r\n\r\n\t\t\t<tr *ngFor=\"let e of dataCalendario; let i = index\" style=\"border-bottom: solid 1px lightgray;\">\r\n\t\t\t\t\t<ng-container *ngIf='aplicarFiltros2(e)'  >\r\n          <td class=\"mw60\" style=\" padding: 10px 3px;\">\t\r\n\t\t\t\t\t\t<div style=\"white-space: nowrap;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;text-align: center;max-width: 60px;\">\r\n\t\t\t\t\t\t<img style='display: block; margin: auto;       width: 45px;  height: 45px;\r\n    border-radius: 35px;' matListAvatar src=\"http://50.116.17.150:3000/{{showSome2(e)}}\" \r\n    onError=\"this.src='assets/app/media/img/userB.png'\">\r\n\t\t\t\t\t\t{{showSome(e)}}\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</td>\r\n\r\n\r\n\t\t\t\t\t<td  class=\"mw210\">\r\n             <ng-container *ngFor='let c of e[diasAdelante[0]]  | callback: filterUser ; let ii = index'>\r\n            <div  *ngIf='aplicarFiltros(c.estadoServicio)'\r\n            \r\n            class=\"citaStyle\" [ngClass]=\"{'citaE3':c.estadoServicio == 3, \r\n            'citaE4':c.estadoServicio == 4, 'citaE2': c.estadoServicio == 2, 'citaE1':c.estadoServicio == 1, 'citaE0':c.estadoServicio == 0}\" (click)='openDialogCita(c)'>\r\n              <span>{{c.inicioServicio}} - {{c.finServicio}}</span>\r\n              <span class='ml4'>{{c.clienteReferencia ||  c.nombreCliente}}</span>\r\n               <span style=\"display: block;font-size: 10px;\" *ngIf='c.clienteReferencia'>Reserva Manual</span>\r\n            </div>  \r\n          </ng-container>\r\n          </td>\r\n\t\t\t\t\t<td   class=\"mw210\">\r\n            <ng-container *ngFor='let c of e[diasAdelante[1]]  | callback: filterUser ; let ii = index'>\r\n            <div  *ngIf='aplicarFiltros(c.estadoServicio)' \r\n            class=\"citaStyle\" [ngClass]=\"{'citaE3':c.estadoServicio == 3, 'citaE4':c.estadoServicio == 4,'citaE2': c.estadoServicio == 2, 'citaE1':c.estadoServicio == 1, 'citaE0':c.estadoServicio == 0}\" (click)='openDialogCita(c)' \r\n            >\r\n              <span>{{c.inicioServicio}} - {{c.finServicio}}</span>\r\n              <span class='ml4'>{{c.clienteReferencia || c.nombreCliente}}</span>\r\n               <span style=\"display: block;font-size: 10px;\" *ngIf='c.clienteReferencia'>Reserva Manual</span>\r\n            </div>\r\n            </ng-container> \r\n          </td>\r\n\t\t\t\t\t<td  class=\"mw210\">\r\n            <ng-container  *ngFor='let c of e[diasAdelante[2]] | callback: filterUser ;  let ii = index'>\r\n            <div  *ngIf='aplicarFiltros(c.estadoServicio)' class=\"citaStyle\" [ngClass]=\"{'citaE3':c.estadoServicio == 3, 'citaE4':c.estadoServicio == 4,'citaE2': c.estadoServicio == 2, 'citaE1':c.estadoServicio == 1, 'citaE0':c.estadoServicio == 0}\" (click)='openDialogCita(c)' >\r\n              <span>{{c.inicioServicio}} - {{c.finServicio}}</span>\r\n              <span class='ml4'>{{c.clienteReferencia ||  c.nombreCliente}}</span>\r\n               <span style=\"display: block;font-size: 10px;\" *ngIf='c.clienteReferencia'>Reserva Manual</span>\r\n            </div> \r\n          </ng-container>\r\n          </td>\r\n\t\t\t\t\t<td   class=\"mw210\">\r\n             <ng-container *ngFor='let c of e[diasAdelante[3]]  | callback: filterUser ; let ii = index'>\r\n              <div *ngIf='aplicarFiltros(c.estadoServicio)'\r\n               class=\"citaStyle\" [ngClass]=\"{'citaE3':c.estadoServicio == 3,'citaE4':c.estadoServicio == 4, 'citaE2': c.estadoServicio == 2, 'citaE1':c.estadoServicio == 1, 'citaE0':c.estadoServicio == 0}\" (click)='openDialogCita(c)'   >\r\n              <span>{{c.inicioServicio}} - {{c.finServicio}}</span>\r\n              <span class='ml4'>{{c.clienteReferencia ||  c.nombreCliente}}</span>\r\n               <span style=\"display: block;font-size: 10px;\" *ngIf='c.clienteReferencia'>Reserva Manual</span>\r\n            </div> \r\n          </ng-container>\r\n          </td>\r\n\t\t\t\t\t<td  class=\"mw210\">\r\n            <ng-container *ngFor='let c of e[diasAdelante[4]]  | callback: filterUser ; let ii = index'>\r\n            <div  *ngIf='aplicarFiltros(c.estadoServicio)' \r\n            class=\"citaStyle\" [ngClass]=\"{'citaE3':c.estadoServicio == 3, 'citaE4':c.estadoServicio == 4,'citaE2': c.estadoServicio == 2, 'citaE1':c.estadoServicio == 1, 'citaE0':c.estadoServicio == 0}\" (click)='openDialogCita(c)'   >\r\n              <span>{{c.inicioServicio}} - {{c.finServicio}}</span>\r\n              <span class='ml4'>{{c.clienteReferencia ||  c.nombreCliente}}</span>\r\n               <span style=\"display: block;font-size: 10px;\" *ngIf='c.clienteReferencia'>Reserva Manual</span>\r\n            </div> \r\n          </ng-container>\r\n          </td>\r\n        </ng-container>\r\n\t\t\t\t</tr>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t\t\t</tbody>\r\n\t\t</table>\r\n\r\n\t</div>\r\n\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -3155,7 +9779,7 @@ module.exports = "\r\n\r\n<div class=\"row \" style=\"background: rgb(250,249,24
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".b-r-default {\n  border-right: 1px solid #bdc3c7; }\n\n::ng-deep mat-dialog-container {\n  padding: 0px !important;\n  border-radius: 5px !important; }\n\n.selecA {\n  color: #34bfa3;\n  border-color: #34bfa3; }\n\n::ng-deep .mat-list-item-content {\n  padding: 0px 7px !important; }\n\nh5 {\n  margin-bottom: 0;\n  color: #757575;\n  font-size: 16px;\n  font-weight: 600;\n  text-transform: uppercase;\n  display: inline-block;\n  margin-right: 10px; }\n\n.btn:focus {\n  outline: none !important; }\n\n.rojoCirculo {\n  background-color: #ff4949;\n  border-radius: 20px;\n  color: white;\n  padding: 5px; }\n\nh2 {\n  font-weight: 600; }\n\n.card-block-big {\n  padding: 25px; }\n\n.card-block {\n  padding: 20px; }\n\n.mw60 {\n  max-width: 60px !important;\n  width: 60px !important;\n  border-bottom: solid 1px lightgray;\n  border-right: solid 1px lightgray; }\n\n.mw40 {\n  max-width: 25px !important;\n  width: 25px !important;\n  border-bottom: solid 1px lightgray;\n  border-right: solid 1px lightgray;\n  padding: 5px !important;\n  text-align: left; }\n\n.mw210 {\n  padding: 0px;\n  max-width: 210px !important;\n  min-width: 210px !important;\n  width: 210px !important;\n  border-right: solid 1px lightgray;\n  border-bottom: solid 1px lightgray; }\n\n.ml4 {\n  margin-left: 4px; }\n\n.citaStyle {\n  width: 100%;\n  height: 38px;\n  padding: 4px;\n  font-weight: 500;\n  font-size: 12px;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap; }\n\n.citaE0 {\n  background: #fffbc0 !important;\n  border-left: solid 3px #f1e42e !important; }\n\n.citaE1 {\n  background: #b5dbff !important;\n  border-left: solid 3px #3ca1ff !important; }\n\n.citaE2 {\n  background: #ffd3a2 !important;\n  border-left: solid 3px #ffb34c !important; }\n\n.citaE3 {\n  background: #ccffcc !important;\n  border-left: solid 3px #77dd77 !important; }\n\n.citaE4 {\n  background: #ffaeae !important;\n  border-left: solid 3px #ff1e1e !important; }\n\n.citaE4sb3 {\n  background: #ffaeae !important;\n  border-left: solid 3px #ff1e1e !important;\n  color: #444 !important; }\n\n.citaE0sb3 {\n  background: #fffbc0 !important;\n  border-left: solid 3px #f1e42e !important;\n  color: #444 !important; }\n\n.citaE1sb3 {\n  background: #b5dbff !important;\n  border-left: solid 3px #3ca1ff !important;\n  color: #444 !important; }\n\n.citaE2sb3 {\n  background: #ffd3a2 !important;\n  border-left: solid 3px #ffb34c !important;\n  color: #444 !important; }\n\n.citaE3sb3 {\n  background: #ccffcc !important;\n  border-left: solid 3px #77dd77 !important;\n  color: #444 !important; }\n\ncitaE4sb {\n  border-left: solid 3px #ff1e1e !important;\n  color: #f1e42e !important; }\n\n.citaE0sb {\n  border-left: solid 3px #f1e42e !important;\n  color: #f1e42e !important; }\n\n.citaE1sb {\n  border-left: solid 3px #3ca1ff !important;\n  color: #3ca1ff !important; }\n\n.citaE2sb {\n  border-left: solid 3px #ffb34c !important;\n  color: #ffb34c !important; }\n\n.citaE3sb {\n  border-left: solid 3px #77dd77 !important;\n  color: #77dd77 !important; }\n\n.iconRo {\n  font-size: 27px !important;\n  vertical-align: sub; }\n\n.iconRo:hover {\n  color: #34bfa3 !important; }\n\n.citaStyleA {\n  border-left: solid 3px #ffe716;\n  width: 100%;\n  height: 40px;\n  padding: 4px;\n  font-weight: 500;\n  font-size: 12px;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap; }\n\n.citaStyleN {\n  border-left: solid 3px #ff940e;\n  width: 100%;\n  height: 38px;\n  padding: 4px;\n  font-weight: 500;\n  font-size: 12px;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap; }\n\n.tittleCal {\n  font-size: 16px;\n  line-height: 20px;\n  text-align: center;\n  padding: 0 10px;\n  width: 100%;\n  -webkit-transform: translateY(0%);\n          transform: translateY(0%);\n  z-index: 100; }\n\n.popOverDate {\n  display: inline-block;\n  text-align: center;\n  min-width: 70px;\n  padding: 5px;\n  border-bottom: 1px solid #c3c1bc !important;\n  border-right: 1px solid #c3c1bc !important;\n  border-top: 1px solid #c3c1bc !important;\n  border-radius: 5px;\n  vertical-align: top; }\n\n.popOverDate span:nth-child(1) {\n  display: block;\n  color: #605f5d;\n  font-size: 14px;\n  line-height: 18px;\n  text-transform: uppercase; }\n\n.popOverDate span:nth-child(2) {\n  display: block;\n  font-size: 30px;\n  line-height: 36px;\n  color: #383734;\n  margin-bottom: 4px; }\n\n.popOverDate span:nth-child(3) {\n  display: block;\n  color: #605f5d;\n  font-size: 11px;\n  line-height: 18px;\n  text-transform: uppercase; }\n\n.tagStaff {\n  color: #00beb7;\n  background: #e5f8f7;\n  font-size: 16px;\n  font-weight: 500;\n  line-height: 13px;\n  text-align: center;\n  text-transform: uppercase;\n  border-radius: 4px;\n  display: block;\n  padding: 7px 22px;\n  min-width: 100px; }\n\n.tagStaff2 {\n  font-size: 16px;\n  font-weight: 500;\n  line-height: 13px;\n  text-align: center;\n  text-transform: uppercase;\n  border-radius: 4px;\n  display: block;\n  padding: 7px 22px;\n  min-width: 100px; }\n"
+module.exports = ":host /deep/.mat-tab-label,\n:host /deep/.mat-tab-label-active {\n  min-width: 0 !important;\n  padding: 0 10px !important;\n  margin: 0 10px !important; }\n\n.dropdown {\n  position: relative; }\n\n.dropdown-menu {\n  right: 0 !important;\n  left: auto !important;\n  position: absolute;\n  display: block;\n  -ms-grid-row-align: center;\n      align-self: center;\n  width: 320px;\n  opacity: 0;\n  z-index: -111;\n  margin: -.25rem 0 0 10%;\n  padding: 0.25rem;\n  list-style-type: none;\n  background-color: #fff;\n  border-radius: 4px;\n  transition: .2s all ease-in; }\n\n.dropdown-menu li {\n  padding: .5rem .5rem; }\n\n.dropdown-menu li + li {\n  border-top: 1px solid #e1e1e1;\n  padding-top: .5rem; }\n\n.dropdown-menu li > a {\n  display: block;\n  border-radius: 4px;\n  padding: 1rem 1.5rem;\n  transition: .2s background-color ease-in; }\n\n.dropdown-menu li > a:hover {\n  background-color: #e9e9e9; }\n\n.dropdown.open .dropdown-menu {\n  opacity: 1;\n  z-index: 1000;\n  margin-top: 0; }\n\na.neat {\n  color: inherit;\n  text-decoration: none; }\n\n.b-r-default {\n  border-right: 1px solid #bdc3c7; }\n\n::ng-deep mat-dialog-container {\n  padding: 0px !important;\n  border-radius: 5px !important; }\n\n.selecA {\n  color: #34bfa3;\n  border-color: #34bfa3; }\n\n::ng-deep .mat-list-item-content {\n  padding: 0px 7px !important; }\n\nh5 {\n  margin-bottom: 0;\n  color: #757575;\n  font-size: 16px;\n  font-weight: 600;\n  text-transform: uppercase;\n  display: inline-block;\n  margin-right: 10px; }\n\n.btn:focus {\n  outline: none !important; }\n\n.rojoCirculo {\n  background-color: #ff4949;\n  border-radius: 20px;\n  color: white;\n  padding: 5px; }\n\nh2 {\n  font-weight: 600; }\n\n.card-block-big {\n  padding: 25px; }\n\n.card-block {\n  padding: 20px; }\n\n.mw60 {\n  max-width: 60px !important;\n  width: 60px !important;\n  border-bottom: solid 1px lightgray;\n  border-right: solid 1px lightgray; }\n\n.mw40 {\n  max-width: 25px !important;\n  width: 25px !important;\n  border-bottom: solid 1px lightgray;\n  border-right: solid 1px lightgray;\n  padding: 5px !important;\n  text-align: left; }\n\n.mw210 {\n  padding: 0px;\n  max-width: 210px !important;\n  min-width: 210px !important;\n  width: 210px !important;\n  border-right: solid 1px lightgray;\n  border-bottom: solid 1px lightgray; }\n\n.ml4 {\n  margin-left: 4px; }\n\n.citaStyle {\n  width: 100%;\n  height: 38px;\n  padding: 4px;\n  font-weight: 500;\n  font-size: 12px;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap; }\n\n.citaE0 {\n  background: #fffbc0 !important;\n  border-left: solid 3px #f1e42e !important; }\n\n.citaE1 {\n  background: #b5dbff !important;\n  border-left: solid 3px #3ca1ff !important; }\n\n.citaE2 {\n  background: #ffd3a2 !important;\n  border-left: solid 3px #ffb34c !important; }\n\n.citaE3 {\n  background: #ccffcc !important;\n  border-left: solid 3px #77dd77 !important; }\n\n.citaE4 {\n  background: #ffaeae !important;\n  border-left: solid 3px #ff1e1e !important; }\n\n.citaE4sb3 {\n  background: #ffaeae !important;\n  border-left: solid 3px #ff1e1e !important;\n  color: #444 !important; }\n\n.citaE0sb3 {\n  background: #fffbc0 !important;\n  border-left: solid 3px #f1e42e !important;\n  color: #444 !important; }\n\n.citaE1sb3 {\n  background: #b5dbff !important;\n  border-left: solid 3px #3ca1ff !important;\n  color: #444 !important; }\n\n.citaE2sb3 {\n  background: #ffd3a2 !important;\n  border-left: solid 3px #ffb34c !important;\n  color: #444 !important; }\n\n.citaE3sb3 {\n  background: #ccffcc !important;\n  border-left: solid 3px #77dd77 !important;\n  color: #444 !important; }\n\ncitaE4sb {\n  border-left: solid 3px #ff1e1e !important;\n  color: #f1e42e !important; }\n\n.citaE0sb {\n  border-left: solid 3px #f1e42e !important;\n  color: #f1e42e !important; }\n\n.citaE1sb {\n  border-left: solid 3px #3ca1ff !important;\n  color: #3ca1ff !important; }\n\n.citaE2sb {\n  border-left: solid 3px #ffb34c !important;\n  color: #ffb34c !important; }\n\n.citaE3sb {\n  border-left: solid 3px #77dd77 !important;\n  color: #77dd77 !important; }\n\n.iconRo {\n  font-size: 27px !important;\n  vertical-align: sub; }\n\n.iconRo:hover {\n  color: #34bfa3 !important; }\n\n.citaStyleA {\n  border-left: solid 3px #ffe716;\n  width: 100%;\n  height: 40px;\n  padding: 4px;\n  font-weight: 500;\n  font-size: 12px;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap; }\n\n.citaStyleN {\n  border-left: solid 3px #ff940e;\n  width: 100%;\n  height: 38px;\n  padding: 4px;\n  font-weight: 500;\n  font-size: 12px;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap; }\n\n.tittleCal {\n  font-size: 16px;\n  line-height: 20px;\n  text-align: center;\n  padding: 0 10px;\n  width: 100%;\n  -webkit-transform: translateY(0%);\n          transform: translateY(0%);\n  z-index: 100; }\n\n.popOverDate {\n  display: inline-block;\n  text-align: center;\n  min-width: 70px;\n  padding: 5px;\n  border-bottom: 1px solid #c3c1bc !important;\n  border-right: 1px solid #c3c1bc !important;\n  border-top: 1px solid #c3c1bc !important;\n  border-radius: 5px;\n  vertical-align: top; }\n\n.popOverDate span:nth-child(1) {\n  display: block;\n  color: #605f5d;\n  font-size: 14px;\n  line-height: 18px;\n  text-transform: uppercase; }\n\n.popOverDate span:nth-child(2) {\n  display: block;\n  font-size: 30px;\n  line-height: 36px;\n  color: #383734;\n  margin-bottom: 4px; }\n\n.popOverDate span:nth-child(3) {\n  display: block;\n  color: #605f5d;\n  font-size: 11px;\n  line-height: 18px;\n  text-transform: uppercase; }\n\n.tagStaff {\n  color: #00beb7;\n  background: #e5f8f7;\n  font-size: 16px;\n  font-weight: 500;\n  line-height: 13px;\n  text-align: center;\n  text-transform: uppercase;\n  border-radius: 4px;\n  display: block;\n  padding: 7px 22px;\n  min-width: 100px; }\n\n.tagStaff3 {\n  margin-right: 5px;\n  font-size: 13px;\n  font-weight: 400;\n  line-height: 13px;\n  text-align: center;\n  text-transform: lowercase;\n  border-radius: 4px;\n  display: inline-block;\n  padding: 2px 4px;\n  min-width: 100px; }\n\n.tagStaff2 {\n  font-size: 16px;\n  font-weight: 500;\n  line-height: 13px;\n  text-align: center;\n  text-transform: uppercase;\n  border-radius: 4px;\n  display: block;\n  padding: 7px 22px;\n  min-width: 100px; }\n"
 
 /***/ }),
 
@@ -3175,6 +9799,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
 /* harmony import */ var _core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../core/auth/authentication.service */ "./src/app/core/auth/authentication.service.ts");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/index.js");
+/* harmony import */ var rxjs_Rx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/Rx */ "./node_modules/rxjs-compat/_esm5/Rx.js");
+/* harmony import */ var rxjs_Subject__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/Subject */ "./node_modules/rxjs-compat/_esm5/Subject.js");
+/* harmony import */ var rxjs_add_operator_takeUntil__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs/add/operator/takeUntil */ "./node_modules/rxjs-compat/_esm5/add/operator/takeUntil.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3187,6 +9816,13 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var __param = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+
+
+
+
+
+
+
 
 
 
@@ -3245,11 +9881,15 @@ var ModalcalenComponent = /** @class */ (function () {
 }());
 
 var CalendarioComponent = /** @class */ (function () {
-    function CalendarioComponent(authService, cdr, dialog) {
+    function CalendarioComponent(authService, cdr, dialog, router, modalService, location, activatedRoute) {
         var _this = this;
         this.authService = authService;
         this.cdr = cdr;
         this.dialog = dialog;
+        this.router = router;
+        this.modalService = modalService;
+        this.location = location;
+        this.activatedRoute = activatedRoute;
         this.tipoCalendario = 1;
         this.loadingScreen = false;
         this.info = [];
@@ -3276,6 +9916,8 @@ var CalendarioComponent = /** @class */ (function () {
         this.dataCalendarioDia = [];
         this.bests = [];
         this.diasAdelante = [];
+        this.onDestroy$ = new rxjs_Subject__WEBPACK_IMPORTED_MODULE_7__["Subject"]();
+        this.notis = [];
         this.filterUser = function (user) {
             //console.log(parseInt(this.textFilter));
             var buscarPor = parseInt(_this.textFilter);
@@ -3292,7 +9934,37 @@ var CalendarioComponent = /** @class */ (function () {
         this.dateSelected = Object(_angular_common__WEBPACK_IMPORTED_MODULE_3__["formatDate"])(new Date(), 'yyyy/MM/dd', 'en');
         this.todayDate = Object(_angular_common__WEBPACK_IMPORTED_MODULE_3__["formatDate"])(new Date(), 'yyyy/MM/dd', 'en');
         this.diasSemana = {};
+        rxjs_Rx__WEBPACK_IMPORTED_MODULE_6__["Observable"].interval(180000).takeUntil(this.onDestroy$).subscribe(function (x) {
+            if (_this.tipoCalendario == 1) {
+                _this.getCitasCalendario();
+            }
+            if (_this.tipoCalendario == 2) {
+                _this.getCalendarioDia();
+            }
+        });
     }
+    CalendarioComponent.prototype.ngOnDestroy = function () {
+        this.onDestroy$.next();
+    };
+    CalendarioComponent.prototype.open = function (content) {
+        var _this = this;
+        this.modalService.open(content).result.then(function (result) {
+            _this.closeResult = "Closed with: " + result;
+        }, function (reason) {
+            _this.closeResult = "Dismissed " + _this.getDismissReason(reason);
+        });
+    };
+    CalendarioComponent.prototype.getDismissReason = function (reason) {
+        if (reason === _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__["ModalDismissReasons"].ESC) {
+            return 'by pressing ESC';
+        }
+        else if (reason === _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__["ModalDismissReasons"].BACKDROP_CLICK) {
+            return 'by clicking on a backdrop';
+        }
+        else {
+            return "with: " + reason;
+        }
+    };
     CalendarioComponent.prototype.ngOnInit = function () {
         var _this = this;
         //this.getCitasCalendario();
@@ -3308,6 +9980,39 @@ var CalendarioComponent = /** @class */ (function () {
             _this.moverFechas();
             console.log(data);
         }, function (err) {
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+    };
+    CalendarioComponent.prototype.ngAfterViewInit = function () {
+        var _this = this;
+        this.activatedRoute.queryParams.subscribe(function (params) {
+            if (params.p == 1) {
+                setTimeout(function () {
+                    _this.open(_this.content);
+                    _this.location.replaceState('calendario');
+                });
+            }
+        });
+    };
+    CalendarioComponent.prototype.buscarR = function () {
+        var _this = this;
+        this.loadingScreen = true;
+        var dataE = { idCentro: this.idCentro, idCita: this.textFilter2 };
+        console.log(dataE);
+        this.authService.goReserva(dataE)
+            .subscribe(function (data) {
+            console.log(data);
+            if (data !== null && data !== 'null' && data[0] && data[0].idCita) {
+                _this.router.navigate(['/detallecita'], { queryParams: { id: data[0].idCita } });
+            }
+            else {
+                alert('Reserva no encontrada en tu negocio');
+                _this.loadingScreen = false;
+                _this.cdr.detectChanges();
+            }
+        }, function (err) {
+            _this.loadingScreen = false;
             console.log('someError');
             alert('Ups! Algo ha salido mal');
         });
@@ -3423,6 +10128,8 @@ var CalendarioComponent = /** @class */ (function () {
             _this.dataTotal = data.servAll;
             _this.dataCalendarioDia = Object.values(data.servEmp);
             console.log(_this.dataCalendarioDia);
+            _this.budge = data.budge;
+            _this.notis = data.notis;
             _this.cdr.detectChanges();
         }, function (err) {
             _this.loadingScreen = false;
@@ -3439,6 +10146,8 @@ var CalendarioComponent = /** @class */ (function () {
             console.log(data);
             _this.dataCalendario = data.servEmp;
             _this.dataTotal = data.servAll;
+            _this.budge = data.budge;
+            _this.notis = data.notis;
             _this.cdr.detectChanges();
         }, function (err) {
             _this.loadingScreen = false;
@@ -3454,6 +10163,10 @@ var CalendarioComponent = /** @class */ (function () {
         // const dialogRef = this.dialog.open(Modal3Component,{data:this.horarioGuardado});
         var dialogRef = this.dialog.open(ModalcalenComponent, { data: item });
     };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('content'),
+        __metadata("design:type", Object)
+    ], CalendarioComponent.prototype, "content", void 0);
     CalendarioComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'm-calendario',
@@ -3461,7 +10174,9 @@ var CalendarioComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./calendario.component.scss */ "./src/app/content/pages/components/calendario/calendario.component.scss")]
         }),
         __metadata("design:paramtypes", [_core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"],
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"], _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatDialog"]])
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"], _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatDialog"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__["NgbModal"],
+            _angular_common__WEBPACK_IMPORTED_MODULE_3__["Location"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"]])
     ], CalendarioComponent);
     return CalendarioComponent;
 }());
@@ -3477,7 +10192,7 @@ var CalendarioComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 30px;\">Configuración</div>\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" [disabled]='\r\n    !configuracion.parametro1 || !configuracion.parametro2 || !configuracion.parametro3' (click)='editarConf()'>Guardar</button>\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n<div class=\"row\" style=\"    padding: 40px;\">\r\n\r\n <ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\r\n\t\r\n\t<div class=\"col-sm-12\">\r\n\r\n\r\n    <div style='max-width: 600px;\r\n    margin: auto;'>\r\n\r\n\r\n    <div style=\"text-align: center;  padding: 40px;padding-top: 50px !important\">\r\n      <span style=\"color: #383734;    font-size: 24px;\r\n    font-weight: 300;\r\n    line-height: 34px;\r\n    margin-bottom: 10px;\">Configuración de Citas\r\n\r\n</span><br>\r\n<span style=\"color: #605f5d;font-size: 16px\">\r\nAjusta los valores para la configuración de tus citas\r\n</span>\r\n\r\n    </div>\r\n\r\n\r\n\r\n \r\n    <div style=\"    padding: 0px 0px 20px 0px;\">\r\n<!--     <mat-slide-toggle [(ngModel)]=\"isHuman2\" (change)=\"onChange2($event)\" name=\"human2\">I am not a robot</mat-slide-toggle> -->\r\n\r\n    <mat-slide-toggle color='primary' name=\"human2\"  [(ngModel)]='configuracion.confirmacionAutomatica'>\r\n      <span style=\"font-size: 16px !important;\">\r\n        Las citas serán confirmadas automaticamente\r\n      </span>\r\n      </mat-slide-toggle>\r\n\r\n\r\n    </div>\r\n\r\n    <hr>\r\n\r\n    <div style=\"color: #383734;font-size: 19px;font-weight: 400; line-height: 34px;margin-bottom: 30px;\">Configuración de cita</div>\r\n\r\n      <p style=\"display: inline-block;font-size: 16px;\">Los clientes podrán realizar citas</p>\r\n      <mat-select placeholder=\"\" \r\n      class='inputBy selectD' style='border: solid 1px #e1e1e1;padding: 5px;' \r\n      [(ngModel)]='configuracion.parametro1'>\r\n                <mat-option [value]=\"1\">Hasta 1 hora antes de la hora de inicio</mat-option>\r\n                 <mat-option [value]=\"2\">Hasta 2 horas antes de la hora de inicio</mat-option>\r\n           <mat-option [value]=\"3\">Hasta 3 horas antes de la hora de inicio</mat-option>\r\n            <mat-option [value]=\"6\">Hasta 6 horas antes de la hora de inicio</mat-option>\r\n             <mat-option [value]=\"12\">Hasta 12 horas antes de la hora de inicio</mat-option>\r\n\r\n      </mat-select>\r\n\r\n\r\n\r\n      <p style=\"display: inline-block;font-size: 16px;\">Los clientes podrán realizar citas</p>\r\n      <mat-select placeholder=\"\" class='inputBy selectD' \r\n       [(ngModel)]='configuracion.parametro2'>\r\n                  <mat-option [value]=\"1\">Hasta 1 mes en el futuro</mat-option>\r\n                 <mat-option [value]=\"3\">Hasta 3 meses en el futuro</mat-option>\r\n                 <mat-option [value]=\"6\">Hasta 6 meses en el futuro</mat-option>\r\n                 <mat-option [value]=\"12\">Hasta 12 meses en el futuro</mat-option>\r\n      </mat-select>\r\n\r\n\r\n\r\n            <p style=\"display: inline-block;font-size: 16px;\">Permitir Reprogramaciones</p>\r\n      <mat-select placeholder=\"\" class='inputBy selectD' \r\n       [(ngModel)]='configuracion.parametro3'>\r\n                <mat-option [value]=\"12\">Hasta 12 horas antes de la cita</mat-option>\r\n                  <mat-option [value]=\"24\">Hasta 24 horas antes de la cita</mat-option>\r\n          \r\n\r\n      </mat-select>\r\n\r\n\r\n\r\n\r\n</div>\r\n\t</div>\r\n</div>"
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 26px;font-weight: 300;padding-left: 30px;\">Configuración\r\n\r\n         <span style=\"display: block;\r\n    font-size: 14px;\r\n    line-height: 15px;\">Ajusta los valores para la configuración de tus reservas \r\n</span>\r\n\r\n</div>\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" [disabled]='\r\n    !configuracion.parametro1 || !configuracion.parametro2 || !configuracion.parametro3' (click)='editarConf()'>Guardar</button>\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n<div class=\"row\" style=\"    padding: 40px;\">\r\n\r\n <ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\r\n\t\r\n\t<div class=\"col-sm-12\">\r\n\r\n\r\n    <div style='max-width: 600px;\r\n    margin: auto;'>\r\n\r\n\r\n    <div style=\"text-align: center;  padding: 40px;padding-top: 50px !important\">\r\n      <span style=\"color: #383734;    font-size: 24px;\r\n    font-weight: 300;\r\n    line-height: 34px;\r\n    margin-bottom: 10px;\">Configuración de Reservas\r\n\r\n</span><br>\r\n<span style=\"color: #605f5d;font-size: 16px\">\r\nAjusta los valores para la configuración de tus reservas\r\n</span>\r\n\r\n    </div>\r\n\r\n\r\n\r\n \r\n    <div style=\"    padding: 0px 0px 20px 0px;\">\r\n<!--     <mat-slide-toggle [(ngModel)]=\"isHuman2\" (change)=\"onChange2($event)\" name=\"human2\">I am not a robot</mat-slide-toggle> -->\r\n\r\n    <mat-slide-toggle color='primary' name=\"human2\"  [(ngModel)]='configuracion.confirmacionAutomatica'>\r\n      <span style=\"font-size: 16px !important;\">\r\n        Las reservas serán confirmadas automaticamente\r\n      </span>\r\n      </mat-slide-toggle>\r\n\r\n\r\n    </div>\r\n\r\n    <hr>\r\n\r\n    <div style=\"color: #383734;font-size: 19px;font-weight: 400; line-height: 34px;margin-bottom: 30px;\">Configuración de reserva</div>\r\n\r\n      <p style=\"display: inline-block;font-size: 16px;\">Los clientes podrán realizar reservas</p>\r\n      <mat-select placeholder=\"\" \r\n      class='inputBy selectD' style='border: solid 1px #e1e1e1;padding: 5px;' \r\n      [(ngModel)]='configuracion.parametro1'>\r\n                <mat-option [value]=\"1\">Hasta 1 hora antes de la hora de inicio</mat-option>\r\n                 <mat-option [value]=\"2\">Hasta 2 horas antes de la hora de inicio</mat-option>\r\n           <mat-option [value]=\"3\">Hasta 3 horas antes de la hora de inicio</mat-option>\r\n            <mat-option [value]=\"6\">Hasta 6 horas antes de la hora de inicio</mat-option>\r\n             <mat-option [value]=\"12\">Hasta 12 horas antes de la hora de inicio</mat-option>\r\n\r\n      </mat-select>\r\n\r\n\r\n\r\n      <p style=\"display: inline-block;font-size: 16px;\">Los clientes podrán realizar reservas</p>\r\n      <mat-select placeholder=\"\" class='inputBy selectD' \r\n       [(ngModel)]='configuracion.parametro2'>\r\n                  <mat-option [value]=\"1\">Hasta 1 mes en el futuro</mat-option>\r\n                 <mat-option [value]=\"3\">Hasta 3 meses en el futuro</mat-option>\r\n                 <mat-option [value]=\"6\">Hasta 6 meses en el futuro</mat-option>\r\n                 <mat-option [value]=\"12\">Hasta 12 meses en el futuro</mat-option>\r\n      </mat-select>\r\n\r\n\r\n\r\n            <p style=\"display: inline-block;font-size: 16px;\">Permitir Reprogramaciones</p>\r\n      <mat-select placeholder=\"\" class='inputBy selectD' \r\n       [(ngModel)]='configuracion.parametro3'>\r\n                <mat-option [value]=\"12\">Hasta 12 horas antes de la reserva</mat-option>\r\n                  <mat-option [value]=\"24\">Hasta 24 horas antes de la reserva</mat-option>\r\n          \r\n\r\n      </mat-select>\r\n\r\n\r\n\r\n\r\n</div>\r\n\t</div>\r\n</div>"
 
 /***/ }),
 
@@ -3597,7 +10312,7 @@ var ConfiguracionComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px #ebedf2;    display: block;\">\r\n\t\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 30px;\">Cita\r\n\t<!-- \t\t<div class=\"tagStaff\" style=\"font-size: 17px !important;\r\n    padding: 9px !important;\">CONFIRMADA</div> -->\r\n\r\n\t</div>\r\n    <div style=\"margin-left: 66px;\">ID Reserva: #{{selected}}\r\n\r\n    </div>\r\n<!-- \t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" \r\n\t\t[routerLink]=\"['/addstaff']\"  mat-raised-button color=\"primary\" matTooltip=\"Crear nuevo servicio\">Agregar miembro del Staff</button>\r\n -->\r\n\r\n\r\n</div>\r\n\r\n<div class=\"row\">\r\n\r\n\t <ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\r\n\t \r\n\t<div class=\"col-xl-4\" style=\"padding-right: 0px;    border-right: solid 1px #ebedf2;\" >\r\n\r\n\r\n\r\n<div style='padding-top: 0px '>\r\n\r\n  <div style='height: 66px;padding: 10px;    border-bottom: solid 1px #ebedf2;'>\r\n    <img  style=\"display: inline-block;vertical-align: bottom;margin-right: 10px;    height: 50px;\r\n    width: 50px;border-radius: 50px\" \r\n    src=\"http://50.116.17.150:3000/{{clienteInfo?.idFoto}}\" \r\n    onError=\"this.src='assets/app/media/img/userB.png'\"\r\n    >\r\n    <div style=\"display: inline-block;\">\r\n    <span *ngIf='clienteInfo?.idCliente!==0' style=\"    font-weight: 400;font-size: 16px;line-height: 20px;display: inline-block;\">{{clienteInfo?.nombreCliente}}</span>\r\n\r\n    <span *ngIf='clienteInfo?.idCliente==0'>Reservas Manuales</span>\r\n\r\n    <span style=\"display: block;\">\r\n     {{clienteInfo?.email}}\r\n    </span>\r\n\t</div>\r\n  </div>\r\n\r\n\r\n  <div style=\"display: flex;text-align: center;padding: 15px;border-bottom: solid 1px #ebedf2;\">\r\n\r\n  \t<div style=\"display: inline-block;margin: auto;\">\r\n  \t\t<span style=\"display: block\">{{clienteInfo?.programadas}}</span>\r\n  \t\t<span style=\"display: block\">Programadas</span>\r\n  \t</div>\r\n  \t<div style=\"display: inline-block;margin: auto;\">\r\n  \t\t<span style=\"display: block\">{{clienteInfo?.completadas}}</span>\r\n  \t\t<span style=\"display: block\">Completadas</span>\r\n  \t</div>\r\n  \t<div style=\"display: inline-block;margin: auto;\">\r\n  \t\t<span style=\"display: block\">{{clienteInfo?.canceladas}}</span>\r\n  \t\t<span style=\"display: block\">Canceladas</span>\r\n  \t</div>\r\n\r\n  </div>\r\n\r\n\r\n<div style=\"color: #00beb7; margin-top: 12px;  font-size: 14px; padding-left: 22px;font-weight: 400;\">Citas</div>\r\n<hr>\r\n<mat-nav-list style='padding-top: 0px '>\r\n\r\n  <mat-list-item  *ngFor=\"let c of citasCliente; let i = index\"  style='height: 100px !important;' \r\n   [ngClass]=\"{'selectedItem': selected == c.idCita}\" (click)=\"itemSelectedChange2(c)\">\r\n\r\n  \t   <div>\r\n  \t   \t<div class=\"priceS\">${{c.precioEsperado}}</div>\r\n        <div class=\"popOverDate\"  [ngClass]=\"{'citaE3':c.estado == 3,'citaE4':c.estado == 4, 'citaE2': c.estado == 5, 'citaE1':c.estado == 2, 'citaE0':c.estado == 1}\" >\r\n        \t<span>{{ c.fechaCita | date:'MMM' }}</span>\r\n        \t<span>{{ c.fechaCita | date:'dd' }}</span>\r\n        \t<span>{{c.inicioCita}}</span>\r\n        </div>\r\n\r\n\r\n         \r\n\r\n\r\n        <div style=\"     padding-left: 18px;   display: inline-block;\"> \r\n          <div class=\"tagStaff \" [ngClass]=\"{'citaE3sb3':c.estado == 3,'citaE4sb3':c.estado == 4, 'citaE2sb3': c.estado == 5, 'citaE1sb3':c.estado == 2, 'citaE0sb3':c.estado == 1}\">\r\n          {{c.estado == 1 ? 'POR CONFIRMAR' : \r\n            c.estado == 2 ? 'CONFIRMADA' : \r\n            c.estado == 5 ? 'POR CONFIRMAR CLIENTE' : \r\n            c.estado == 3 ? 'COMPLETADA' :\r\n        \tc.estado == 4 ? 'CANCELADA' : 'INVALIDA'}}\r\n\r\n      \t </div>\r\n\r\n\r\n          <div style=\"font-size: 12px;\">\r\n          \t<span>{{c.nombreCliente}}</span><span *ngIf='c.clienteReferencia'>-{{c.clienteReferencia}}</span>\r\n  <!--         \t\r\n\r\n          \t<mat-icon style='color: #888;vertical-align: middle;margin: 0px 3px;'>chevron_right</mat-icon>\r\n          \t<span>Juan perez</span> -->\r\n          </div>   \r\n          <div style=\"font-size: 12px;\">\r\n          \t{{c.cantServicios}} Servicio<span [hidden]='c.cantServicios==1'>s</span>\r\n          </div> \r\n        </div>\r\n      </div>\r\n\r\n  </mat-list-item>\r\n\r\n\r\n\r\n\r\n</mat-nav-list>\r\n\r\n  <!-- \r\n\r\n    <mat-list-item [ngClass]=\"{'selectedItem': selected == 2}\" (click)=\"itemSelectedChange(2)\">\r\n    <img matListAvatar src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\" >\r\n    <h3 matLine> Maria Segura  </h3>\r\n    <p matLine>\r\n        <span class=\"tagStaff\">MIEMBRO ADMINISTRADOR</span>\r\n    </p>\r\n  </mat-list-item>\r\n\r\n      <mat-list-item [ngClass]=\"{'selectedItem': selected == 3}\" (click)=\"itemSelectedChange(3)\">\r\n    <img matListAvatar src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\" >\r\n    <h3 matLine> Luisa Corrales </h3>\r\n    <p matLine>\r\n      <span class=\"tagStaff\">MIEMBRO ADMINISTRADOR</span>\r\n    </p>\r\n  </mat-list-item> -->\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n\t\t\t\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\r\n\r\n\t<div class=\"col-xl-8\" style=\"padding-left: 0px !important\">\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t\t<m-portlet>\r\n\t<!-- use ng-container[mPortletHeadTitle] for the title -->\r\n\t<ng-container mPortletHeadTitle>\r\n\t\t<div class=\"m-portlet__head-title\">\r\n\t\t\t<h3 class=\"m-portlet__head-text\">\r\n\t\t\t\tServicios\r\n\t\t\t</h3>\r\n\r\n\t\t\t\r\n\r\n\t\t\r\n\t\t</div>\r\n\r\n\t</ng-container>\r\n\r\n\t<!-- use ng-container[mPortletBody] for the body content -->\r\n\t<ng-container mPortletBody>\r\n\r\n\t\t <button  class=\"btn btn-sm btn-outline-success\" style=\"\" color=\"primary\" style=\"margin-bottom: 20px;float: right;\" (click)='completarCita()'   \r\n\t\t\t*ngIf='citaSeleccionada?.estado==2'>Completar Cita</button>\r\n\r\n\t<!--\t<perfect-scrollbar class=\"m-scrollable m-scroller\" style=\"height: 40vh;\">\r\n\t\t\tBegin::Timeline 2 -->\r\n\t\t\t<div class=\"m-timeline-2\">\r\n\t\t\t\t<div class=\"m-timeline-2__items  m--padding-top-15 m--padding-bottom-30\">\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t<div  *ngFor=\"let s of serviciosCita; let i = index\" class=\"m-timeline-2__item\"  style=\"width: 100%\">\r\n\t\t\t\t\t\t<span class=\"m-timeline-2__item-time\" >\r\n\r\n\r\n\t\t\t\t\t\t\t<div  class=\"popOverDate\"  [ngClass]=\"{'citaE3':s.estadoServicio == 3, 'citaE2': s.estadoServicio == 2, 'citaE4':s.estadoServicio == 4,'citaE1':s.estadoServicio == 1, 'citaE0':s.estadoServicio == 0}\" style='background: white !important;'>\r\n\t\t\t\t\t\t\t<span *ngIf='i == 0'>{{ s.fechaServicio | date:'MMM' }}</span>\r\n        \t\t\t\t\t<span  *ngIf='i == 0'>{{ s.fechaServicio | date:'dd' }}</span>\r\n\t\t\t\t\t\t\t\t<span>{{s.inicioServicio}}</span>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t</span>\r\n\t<!-- \t\t\t\t\t<div class=\"m-timeline-2__item-cricle\">\r\n\t\t\t\t\t\t\t<i class=\"fa fa-genderless m--font-danger\"></i>\r\n\t\t\t\t\t\t</div> -->\r\n\t\t\t\t\t\t<div class=\"m-timeline-2__item-text  m--padding-top-5\" style=\"    width: 100%;padding-left: 90px !important;\">\r\n\r\n\t\t\t\t\t\t\t<div style=\"background: #faf9f7; border: 1px solid #e1e1e1; border-radius: 4px;padding: 20px 20px 20px 30px; position: relative;\">\r\n\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 16px;margin-bottom: 10px;\">\r\n\t\t\t\t\t\t\t\t\t<span style=\"color:#383734;font-weight: 400\">{{s.nombreServicio}}</span>\r\n\t\t\t\t\t\t\t\t\t<span style=\"color:#383734;float: right;font-weight: 600\"\r\n\t\t\t\t\t\t\t\t\t[ngStyle]=\"{'text-decoration': citaSeleccionada.idPaquete ? 'line-through' : 'inherit' }\">${{s.precioCobrado}}</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 16px;\">\r\n\t\t\t\t\t\t\t\t\t{{s.inicioServicio}} - {{s.finServicio}}\r\n\t\t\t\t\t\t\t\t\t<span style=\"float: right;\">\r\n\t\t\t\t\t\t\t\t\t\t{{getHoras(s.duracion)}}h {{s.duracion % 60}}min\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t\t<div style=\"    margin-top: 23px;\">\r\n\t\t\t\t\t\t\t\t<img style='    display: inline-block; margin: auto; height: 35px;' matListAvatar src=\"assets/app/media/img/userB.png\">\r\n\t\t\t\t\t\t\t\t<span style=\"  color:#383734; margin-left: 5px;font-size: 16px;font-weight: 400; display: inline-block;\">{{s.nombreEmpleado}}</span>\r\n\t\t\t\t\t\t\t\t</div> \r\n\r\n\t\t\t\t\t\t\t\t<div style=\"margin-top: 13px\">\r\n\t\t\t\t\t\t\t\t<button    class=\"btn btn-sm btn-outline-success\" style=\"\" color=\"primary\" (click)='cambiarEstado(s,1)'  \r\n\t\t\t\t\t\t\t\t*ngIf='s.estadoServicio==0 || s.estadoServicio==2' >Confirmar</button>\r\n\r\n\t\t\t\t\t\t\t\t<button  class=\"btn btn-sm btn-outline-success\" style=\"\" color=\"primary\" style=\"margin-left: 10px;\" (click)='cambiarEstado(s,3)'   \r\n\t\t\t\t\t\t\t\t *ngIf='s.estadoServicio==1'>Completar</button>\r\n\r\n\r\n\t\t\t\t\t\t\t\t <button  class=\"btn btn-sm btn-outline-danger\" style=\"\" color=\"primary\" style=\"margin-left: 10px;\" (click)='cambiarEstado(s,4)'   \r\n\t\t\t\t\t\t\t\t *ngIf='s.estadoServicio==1'>Cancelar</button>\r\n\r\n\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</div>\r\n\t\t\r\n\r\n<div style=\"    float: right;\r\n    margin-top: 20px; margin-bottom: 20px;\">\r\n\t<span style=\"font-size: 16px;\">Total</span>\r\n\t<span style=\"    font-size: 30px;\r\n    color: #383734;\r\n    margin-left: 10px;\">${{citaSeleccionada?.precioEsperado}}</span>\r\n</div>\r\n\r\n\r\n\t\t\t\t<!-- \t<div class=\"m-timeline-2__item m--margin-top-30\">\r\n\t\t\t\t\t\t<span class=\"m-timeline-2__item-time\">17:00</span>\r\n\t\t\t\t\t\t<div class=\"m-timeline-2__item-cricle\">\r\n\t\t\t\t\t\t\t<i class=\"fa fa-genderless m--font-info\"></i>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"m-timeline-2__item-text m--padding-top-5\">\r\n\t\t\t\t\t\t\tPlaced a new order in\r\n\t\t\t\t\t\t\t<a href=\"#\" class=\"m-link m-link--brand m--font-bolder\">SIGNATURE MOBILE</a> marketplace.\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</div> -->\r\n\t\r\n\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t\t<!--End::Timeline 2 \r\n\t\t</perfect-scrollbar>-->\r\n\t</ng-container>\r\n</m-portlet>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t\t</div>\r\n<!-- \r\n\t\t<div style=\"    padding: 40px 60px;width: 100%\">\r\n\r\n\t\t\t\r\n\t</div> -->\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n"
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px #ebedf2;    display: block;\">\r\n\t\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 26px;font-weight: 300;padding-left: 30px;\">Reserva\r\n\t<!-- \t\t<div class=\"tagStaff\" style=\"font-size: 17px !important;\r\n    padding: 9px !important;\">CONFIRMADA</div> -->\r\n\r\n\t</div>\r\n    <div style=\"margin-left: 66px;\">ID Reserva: #{{selected}}\r\n\r\n    </div>\r\n<!-- \t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" \r\n\t\t[routerLink]=\"['/addstaff']\"  mat-raised-button color=\"primary\" matTooltip=\"Crear nuevo servicio\">Agregar miembro del Staff</button>\r\n -->\r\n\r\n\r\n</div>\r\n\r\n<div class=\"row\">\r\n\r\n\t <ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\r\n\t \r\n\t<div class=\"col-xl-4\" style=\"padding-right: 0px;    border-right: solid 1px #ebedf2;\" >\r\n\r\n\r\n\r\n<div style='padding-top: 0px '>\r\n\r\n  <div style='height: 66px;padding: 10px;    border-bottom: solid 1px #ebedf2;'>\r\n    <img  style=\"display: inline-block;vertical-align: bottom;margin-right: 10px;    height: 50px;\r\n    width: 50px;border-radius: 50px\" \r\n    src=\"http://50.116.17.150:3000/{{clienteInfo?.idFoto}}\" \r\n    onError=\"this.src='assets/app/media/img/userB.png'\"\r\n    >\r\n    <div style=\"display: inline-block;\">\r\n    <span *ngIf='clienteInfo?.idCliente!==0' style=\"    font-weight: 400;font-size: 16px;line-height: 20px;display: inline-block;\">{{clienteInfo?.nombreCliente}}</span>\r\n\r\n    <span *ngIf='clienteInfo?.idCliente==0'>Reservas Manuales</span>\r\n\r\n    <span style=\"display: block;\">\r\n     {{clienteInfo?.email}}\r\n    </span>\r\n\t</div>\r\n  </div>\r\n\r\n\r\n  <div style=\"display: flex;text-align: center;padding: 15px;border-bottom: solid 1px #ebedf2;\">\r\n\r\n  \t<div style=\"display: inline-block;margin: auto;\">\r\n  \t\t<span style=\"display: block\">{{clienteInfo?.programadas}}</span>\r\n  \t\t<span style=\"display: block\">Programadas</span>\r\n  \t</div>\r\n  \t<div style=\"display: inline-block;margin: auto;\">\r\n  \t\t<span style=\"display: block\">{{clienteInfo?.completadas}}</span>\r\n  \t\t<span style=\"display: block\">Completadas</span>\r\n  \t</div>\r\n  \t<div style=\"display: inline-block;margin: auto;\">\r\n  \t\t<span style=\"display: block\">{{clienteInfo?.canceladas}}</span>\r\n  \t\t<span style=\"display: block\">Canceladas</span>\r\n  \t</div>\r\n\r\n  </div>\r\n\r\n\r\n<div style=\"color: #00beb7; margin-top: 12px;  font-size: 14px; padding-left: 22px;font-weight: 400;\">Reservas</div>\r\n<hr>\r\n<mat-nav-list style='padding-top: 0px '>\r\n\r\n  <mat-list-item  *ngFor=\"let c of citasCliente; let i = index\"  style='height: 100px !important;' \r\n   [ngClass]=\"{'selectedItem': selected == c.idCita}\" (click)=\"itemSelectedChange2(c)\">\r\n\r\n  \t   <div>\r\n  \t   \t<div class=\"priceS\">${{c.precioEsperado}}</div>\r\n        <div class=\"popOverDate\"  [ngClass]=\"{'citaE3':c.estado == 3,'citaE4':c.estado == 4, 'citaE2': c.estado == 5, 'citaE1':c.estado == 2, 'citaE0':c.estado == 1}\" >\r\n        \t<span>{{ c.fechaCita | date:'MMM' }}</span>\r\n        \t<span>{{ c.fechaCita | date:'dd' }}</span>\r\n        \t<span>{{c.inicioCita}}</span>\r\n        </div>\r\n\r\n\r\n         \r\n\r\n\r\n        <div style=\"     padding-left: 18px;   display: inline-block;\"> \r\n          <div class=\"tagStaff \" [ngClass]=\"{'citaE3sb3':c.estado == 3,'citaE4sb3':c.estado == 4, 'citaE2sb3': c.estado == 5, 'citaE1sb3':c.estado == 2, 'citaE0sb3':c.estado == 1}\">\r\n          {{c.estado == 1 ? 'POR CONFIRMAR' : \r\n            c.estado == 2 ? 'CONFIRMADA' : \r\n            c.estado == 5 ? 'POR CONFIRMAR CLIENTE' : \r\n            c.estado == 3 ? 'COMPLETADA' :\r\n        \tc.estado == 4 ? 'CANCELADA' : 'INVALIDA'}}\r\n\r\n      \t </div>\r\n\r\n\r\n          <div style=\"font-size: 12px;    white-space: nowrap;\r\n    text-overflow: ellipsis;\">\r\n          \t<span>{{c.nombreCliente}}</span><span *ngIf='c.clienteReferencia'>-{{c.clienteReferencia}}</span>\r\n  <!--         \t\r\n\r\n          \t<mat-icon style='color: #888;vertical-align: middle;margin: 0px 3px;'>chevron_right</mat-icon>\r\n          \t<span>Juan perez</span> -->\r\n          </div>   \r\n          <div style=\"font-size: 12px;\">\r\n          \t{{c.cantServicios}} Servicio<span [hidden]='c.cantServicios==1'>s</span>\r\n          </div> \r\n        </div>\r\n      </div>\r\n\r\n  </mat-list-item>\r\n\r\n\r\n\r\n\r\n</mat-nav-list>\r\n\r\n  <!-- \r\n\r\n    <mat-list-item [ngClass]=\"{'selectedItem': selected == 2}\" (click)=\"itemSelectedChange(2)\">\r\n    <img matListAvatar src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\" >\r\n    <h3 matLine> Maria Segura  </h3>\r\n    <p matLine>\r\n        <span class=\"tagStaff\">MIEMBRO ADMINISTRADOR</span>\r\n    </p>\r\n  </mat-list-item>\r\n\r\n      <mat-list-item [ngClass]=\"{'selectedItem': selected == 3}\" (click)=\"itemSelectedChange(3)\">\r\n    <img matListAvatar src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\" >\r\n    <h3 matLine> Luisa Corrales </h3>\r\n    <p matLine>\r\n      <span class=\"tagStaff\">MIEMBRO ADMINISTRADOR</span>\r\n    </p>\r\n  </mat-list-item> -->\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n\t\t\t\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\r\n\r\n\t<div class=\"col-xl-8\" style=\"padding-left: 0px !important\">\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t\t<m-portlet>\r\n\t<!-- use ng-container[mPortletHeadTitle] for the title -->\r\n\t<ng-container mPortletHeadTitle>\r\n\t\t<div class=\"m-portlet__head-title\">\r\n\t\t\t<h3 class=\"m-portlet__head-text\">\r\n\t\t\t\tServicios\r\n\t\t\t</h3>\r\n\r\n\t\t\t\r\n\r\n\t\t\r\n\t\t</div>\r\n\r\n\t</ng-container>\r\n\r\n\t<!-- use ng-container[mPortletBody] for the body content -->\r\n\t<ng-container mPortletBody>\r\n\r\n\t\t <button  class=\"btn btn-sm btn-outline-success\" style=\"\" color=\"primary\" style=\"margin-bottom: 20px;float: right;\" (click)='completarCita()'   \r\n\t\t\t*ngIf='citaSeleccionada?.estado==2'>Completar Reserva</button>\r\n\r\n\t<!--\t<perfect-scrollbar class=\"m-scrollable m-scroller\" style=\"height: 40vh;\">\r\n\t\t\tBegin::Timeline 2 -->\r\n\t\t\t<div class=\"m-timeline-2\">\r\n\t\t\t\t<div class=\"m-timeline-2__items  m--padding-top-15 m--padding-bottom-30\">\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t<div  *ngFor=\"let s of serviciosCita; let i = index\" class=\"m-timeline-2__item\"  style=\"width: 100%\">\r\n\t\t\t\t\t\t<span class=\"m-timeline-2__item-time\" >\r\n\r\n\r\n\t\t\t\t\t\t\t<div  class=\"popOverDate\"  [ngClass]=\"{'citaE3':s.estadoServicio == 3, 'citaE2': s.estadoServicio == 2, 'citaE4':s.estadoServicio == 4,'citaE1':s.estadoServicio == 1, 'citaE0':s.estadoServicio == 0}\" style='background: white !important;'>\r\n\t\t\t\t\t\t\t<span *ngIf='i == 0'>{{ s.fechaServicio | date:'MMM' }}</span>\r\n        \t\t\t\t\t<span  *ngIf='i == 0'>{{ s.fechaServicio | date:'dd' }}</span>\r\n\t\t\t\t\t\t\t\t<span>{{s.inicioServicio}}</span>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t</span>\r\n\t<!-- \t\t\t\t\t<div class=\"m-timeline-2__item-cricle\">\r\n\t\t\t\t\t\t\t<i class=\"fa fa-genderless m--font-danger\"></i>\r\n\t\t\t\t\t\t</div> -->\r\n\t\t\t\t\t\t<div class=\"m-timeline-2__item-text  m--padding-top-5\" style=\"    width: 100%;padding-left: 90px !important;\">\r\n\r\n\t\t\t\t\t\t\t<div style=\"background: #faf9f7; border: 1px solid #e1e1e1; border-radius: 4px;padding: 20px 20px 20px 30px; position: relative;\">\r\n\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 16px;margin-bottom: 10px;\">\r\n\t\t\t\t\t\t\t\t\t<span style=\"color:#383734;font-weight: 400\">{{s.nombreServicio}}</span>\r\n\t\t\t\t\t\t\t\t\t<span style=\"color:#383734;float: right;font-weight: 600\"\r\n\t\t\t\t\t\t\t\t\t[ngStyle]=\"{'text-decoration': citaSeleccionada.idPaquete ? 'line-through' : 'inherit' }\">${{s.precioCobrado}}</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 16px;\">\r\n\t\t\t\t\t\t\t\t\t{{s.inicioServicio}} - {{s.finServicio}}\r\n\t\t\t\t\t\t\t\t\t<span style=\"float: right;\">\r\n\t\t\t\t\t\t\t\t\t\t{{getHoras(s.duracion)}}h {{s.duracion % 60}}min\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t\t<div style=\"    margin-top: 23px;\">\r\n\t\t\t\t\t\t\t\t<img style='    display: inline-block; margin: auto; height: 35px;' matListAvatar src=\"assets/app/media/img/userB.png\">\r\n\t\t\t\t\t\t\t\t<span style=\"  color:#383734; margin-left: 5px;font-size: 16px;font-weight: 400; display: inline-block;\">{{s.nombreEmpleado}}</span>\r\n\t\t\t\t\t\t\t\t</div> \r\n\r\n\t\t\t\t\t\t\t\t<div style=\"margin-top: 13px\">\r\n\t\t\t\t\t\t\t\t<button    class=\"btn btn-sm btn-outline-success\" style=\"\" color=\"primary\" (click)='cambiarEstado(s,1)'  \r\n\t\t\t\t\t\t\t\t*ngIf='s.estadoServicio==0 || s.estadoServicio==2' >Confirmar</button>\r\n\r\n\t\t\t\t\t\t\t\t<button  class=\"btn btn-sm btn-outline-success\" style=\"\" color=\"primary\" style=\"margin-left: 10px;\" (click)='cambiarEstado(s,3)'   \r\n\t\t\t\t\t\t\t\t *ngIf='s.estadoServicio==1'>Completar</button>\r\n\r\n\r\n\t\t\t\t\t\t\t\t <button  class=\"btn btn-sm btn-outline-danger\" style=\"\" color=\"primary\" style=\"margin-left: 10px;\" (click)='cambiarEstado(s,4)'   \r\n\t\t\t\t\t\t\t\t *ngIf='s.estadoServicio==1'>Cancelar</button>\r\n\r\n\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</div>\r\n\t\t\r\n\r\n<div style=\"    float: right;\r\n    margin-top: 20px; margin-bottom: 20px;\">\r\n\t<span style=\"font-size: 16px;\">Total</span>\r\n\t<span style=\"    font-size: 30px;\r\n    color: #383734;\r\n    margin-left: 10px;\">${{citaSeleccionada?.precioEsperado}}</span>\r\n</div>\r\n\r\n\r\n\t\t\t\t<!-- \t<div class=\"m-timeline-2__item m--margin-top-30\">\r\n\t\t\t\t\t\t<span class=\"m-timeline-2__item-time\">17:00</span>\r\n\t\t\t\t\t\t<div class=\"m-timeline-2__item-cricle\">\r\n\t\t\t\t\t\t\t<i class=\"fa fa-genderless m--font-info\"></i>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"m-timeline-2__item-text m--padding-top-5\">\r\n\t\t\t\t\t\t\tPlaced a new order in\r\n\t\t\t\t\t\t\t<a href=\"#\" class=\"m-link m-link--brand m--font-bolder\">SIGNATURE MOBILE</a> marketplace.\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</div> -->\r\n\t\r\n\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t\t<!--End::Timeline 2 \r\n\t\t</perfect-scrollbar>-->\r\n\t</ng-container>\r\n</m-portlet>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t\t</div>\r\n<!-- \r\n\t\t<div style=\"    padding: 40px 60px;width: 100%\">\r\n\r\n\t\t\t\r\n\t</div> -->\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -4183,7 +10898,7 @@ var DetallecitaComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 15px;\">Editar Servicio</div>\r\n\r\n\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='editarServicio()'   [disabled]='!firstFormGroup.valid || !servicio.idCategoria || !servicio.idSubcategoria '  >Guardar</button>\r\n\r\n\t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button>\r\n\r\n\t<button  class=\"btn btn-outline-danger\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='eliminarServicio()' >Eliminar</button>\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n <ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\r\n\t\t\t<form [formGroup]=\"firstFormGroup\"  #f2=\"ngForm\" >\r\n\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Nombre del Servicio</label>\r\n\t\t\t\t<input formControlName=\"nombreServicio\" required [(ngModel)]=\"servicio.nombre\" class='inputBy w100' placeholder=\"Cual es el nombre del servicio\"  autocomplete=\"off\"  type=\"text\" name=\"nombre\">\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy'>Categoria y Subcategoria</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\t\t\t\t\r\n\t\t\t\t<mat-select formControlName=\"idCategoria\" required (selectionChange)=\"getSubs($event)\"  [(ngModel)]=\"servicio.idCategoria\" class='inputBy w50'>\r\n\r\n\t\t\t\t <mat-option  *ngFor=\"let c of categorias\" [value]=\"c.idCategoria\" >\r\n              {{c.nombre}}\r\n              </mat-option>\r\n\r\n\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t<mat-select formControlName=\"idSubcategoria\"  required [(ngModel)]=\"servicio.idSubcategoria\" class='inputBy w50'>\r\n\r\n\t\t\t\t<mat-option  *ngFor=\"let sc of subcategorias\" \r\n\t\t\t\t [value]=\"sc.idSubcategoria\" >\r\n              {{sc.nombre}}\r\n              </mat-option>\r\n\r\n\r\n\t\t\t\t</mat-select>\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t<hr>\r\n\r\n\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy'>Duracion</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\t\t\t\t\r\n\t\t\t\t<mat-select formControlName=\"duracionH\"  required [(ngModel)]=\"servicio.duracionH\" class='inputBy w50'>\r\n              <mat-option [value]=\"0\">0 horas</mat-option>\r\n              <mat-option [value]=\"60\">1 hora</mat-option>\r\n              <mat-option [value]=\"120\">2 horas</mat-option>\r\n              <mat-option [value]=\"180\">3 horas</mat-option>\r\n              <mat-option [value]=\"240\">4 horas</mat-option>\r\n              <mat-option [value]=\"300\">5 horas</mat-option>\r\n\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t<mat-select formControlName=\"duracionM\"  required [(ngModel)]=\"servicio.duracionM\" class='inputBy w50'>\r\n              <mat-option [value]=\"0\">0 minutos</mat-option>\r\n              <mat-option [value]=\"5\">5 minutos</mat-option>\r\n              <mat-option [value]=\"10\">10 minutos</mat-option>\r\n              <mat-option [value]=\"15\">15 minutos</mat-option>\r\n              <mat-option [value]=\"20\">20 minutos</mat-option>\r\n              <mat-option [value]=\"25\">25 minutos</mat-option>\r\n              <mat-option [value]=\"30\">30 minutos</mat-option>\r\n              <mat-option [value]=\"35\">35 minutos</mat-option>\r\n              <mat-option [value]=\"40\">40 minutos</mat-option>\r\n              <mat-option [value]=\"45\">45 minutos</mat-option>\r\n              <mat-option [value]=\"50\">50 minutos</mat-option>\r\n              <mat-option [value]=\"55\">55 minutos</mat-option>\r\n\t\t\t\t</mat-select>\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div>\r\n\r\n\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy'>Precio</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\t\t\t\t\r\n\t<!-- \t\t\t<mat-select class='inputBy w50'>\r\n\t\t\t\t<mat-option value=\"option1\" selected>Fijo</mat-option>\r\n\t\t\t\t</mat-select>\r\n -->\r\n\t\t\t\t$<input formControlName=\"precio\" required [(ngModel)]=\"servicio.precio\" class='inputBy w50' placeholder=\"precio del servicio\"  autocomplete=\"off\"  type=\"number\" name=\"precio\">\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div>\r\n\r\n\t\t</form>\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"color:darkgray;font-size: 16px;font-weight: 500 !important;margin-bottom: 20px;\">\r\n\t\t\tEmpleados que dan este servicio</div>\r\n\t\t\t\t\t<div style=\"border: solid 1px lightgray;padding: 20px;\">\r\n\t\t<!-- \t\t\t\t<p><mat-checkbox>\r\n\t\t\t\t\t\t<span class=\"txtF\">Seleccionar todos</span>\r\n\t\t\t\t\t\t</mat-checkbox></p> \r\n\t\t\t\t\t\t<hr>-->\r\n\t\t\t\t\t\t<p *ngFor=\"let e of empleados; let i = index\" >\r\n\r\n\t\t\t\t\t\t<mat-checkbox  color='primary' [(ngModel)]=\"e.checke\" [checked]=\"e.idServicioEmpleado\"  name=\"{{i}}-name\">\r\n\t\t\t\t\t\t<img  class='imgCheckBox' src=\"http://50.116.17.150:3000/{{e.idFoto}}\" \r\n\t\t\t\t\t\t onError=\"this.src='assets/app/media/img/userB.png'\" >\r\n\t\t\t\t\t\t<span class=\"txtF\">{{e.nombre}}</span>\r\n\t\t\t\t\t\t</mat-checkbox></p>\r\n\t\t\t\t\t\t<!-- <p><mat-checkbox>\r\n\t\t\t\t\t\t<img class='imgCheckBox' src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\">\r\n\t\t\t\t\t\t<span class=\"txtF\">Juan de Arco</span>\r\n\t\t\t\t\t\t</mat-checkbox></p>\r\n\t\t\t\t\t\t<p><mat-checkbox>\r\n\t\t\t\t\t\t<img class='imgCheckBox' src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\">\r\n\t\t\t\t\t\t<span class=\"txtF\">Juan de Arco</span>\r\n\t\t\t\t\t\t</mat-checkbox></p> -->\r\n\t\t\t\t\t</div>\r\n\r\n\t\t</div>\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 26px;font-weight: 300;padding-left: 15px;\">Editar Servicio</div>\r\n\r\n\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='editarServicio()'   [disabled]='!firstFormGroup.valid || !servicio.idCategoria || !servicio.idSubcategoria '  >Guardar</button>\r\n\r\n\t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button>\r\n\r\n\t<button  class=\"btn btn-outline-danger\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='eliminarServicio()' >Eliminar</button>\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n <ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\r\n\t\t\t<form [formGroup]=\"firstFormGroup\"  #f2=\"ngForm\" >\r\n\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Nombre del Servicio</label>\r\n\t\t\t\t<input formControlName=\"nombreServicio\" required [(ngModel)]=\"servicio.nombre\" class='inputBy w100' placeholder=\"Cual es el nombre del servicio\"  autocomplete=\"off\"  type=\"text\" name=\"nombre\">\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy'>Categoria y Subcategoria</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\t\t\t\t\r\n\t\t\t\t<mat-select formControlName=\"idCategoria\" required (selectionChange)=\"getSubs($event)\"  [(ngModel)]=\"servicio.idCategoria\" class='inputBy w50'>\r\n\r\n\t\t\t\t <mat-option  *ngFor=\"let c of categorias\" [value]=\"c.idCategoria\" >\r\n              {{c.nombre}}\r\n              </mat-option>\r\n\r\n\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t<mat-select formControlName=\"idSubcategoria\"  required [(ngModel)]=\"servicio.idSubcategoria\" class='inputBy w50'>\r\n\r\n\t\t\t\t<mat-option  *ngFor=\"let sc of subcategorias\" \r\n\t\t\t\t [value]=\"sc.idSubcategoria\" >\r\n              {{sc.nombre}}\r\n              </mat-option>\r\n\r\n\r\n\t\t\t\t</mat-select>\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t<hr>\r\n\r\n\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy'>Duracion</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\t\t\t\t\r\n\t\t\t\t<mat-select formControlName=\"duracionH\"  required [(ngModel)]=\"servicio.duracionH\" class='inputBy w50'>\r\n              <mat-option [value]=\"0\">0 horas</mat-option>\r\n              <mat-option [value]=\"60\">1 hora</mat-option>\r\n              <mat-option [value]=\"120\">2 horas</mat-option>\r\n              <mat-option [value]=\"180\">3 horas</mat-option>\r\n              <mat-option [value]=\"240\">4 horas</mat-option>\r\n              <mat-option [value]=\"300\">5 horas</mat-option>\r\n\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t<mat-select formControlName=\"duracionM\"  required [(ngModel)]=\"servicio.duracionM\" class='inputBy w50'>\r\n              <mat-option [value]=\"0\">0 minutos</mat-option>\r\n              <mat-option [value]=\"5\">5 minutos</mat-option>\r\n              <mat-option [value]=\"10\">10 minutos</mat-option>\r\n              <mat-option [value]=\"15\">15 minutos</mat-option>\r\n              <mat-option [value]=\"20\">20 minutos</mat-option>\r\n              <mat-option [value]=\"25\">25 minutos</mat-option>\r\n              <mat-option [value]=\"30\">30 minutos</mat-option>\r\n              <mat-option [value]=\"35\">35 minutos</mat-option>\r\n              <mat-option [value]=\"40\">40 minutos</mat-option>\r\n              <mat-option [value]=\"45\">45 minutos</mat-option>\r\n              <mat-option [value]=\"50\">50 minutos</mat-option>\r\n              <mat-option [value]=\"55\">55 minutos</mat-option>\r\n\t\t\t\t</mat-select>\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div>\r\n\r\n\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy'>Precio</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\t\t\t\t\r\n\t<!-- \t\t\t<mat-select class='inputBy w50'>\r\n\t\t\t\t<mat-option value=\"option1\" selected>Fijo</mat-option>\r\n\t\t\t\t</mat-select>\r\n -->\r\n\t\t\t\t$<input formControlName=\"precio\" required [(ngModel)]=\"servicio.precio\" class='inputBy w50' placeholder=\"precio del servicio\"  autocomplete=\"off\"  type=\"number\" name=\"precio\">\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div>\r\n\r\n\t\t</form>\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"color:darkgray;font-size: 16px;font-weight: 500 !important;margin-bottom: 20px;\">\r\n\t\t\tEmpleados que dan este servicio</div>\r\n\t\t\t\t\t<div style=\"border: solid 1px lightgray;padding: 20px;\">\r\n\t\t<!-- \t\t\t\t<p><mat-checkbox>\r\n\t\t\t\t\t\t<span class=\"txtF\">Seleccionar todos</span>\r\n\t\t\t\t\t\t</mat-checkbox></p> \r\n\t\t\t\t\t\t<hr>-->\r\n\t\t\t\t\t\t<p *ngFor=\"let e of empleados; let i = index\" >\r\n\r\n\t\t\t\t\t\t<mat-checkbox  color='primary' [(ngModel)]=\"e.checke\" [checked]=\"e.idServicioEmpleado\"  name=\"{{i}}-name\">\r\n\t\t\t\t\t\t<img  class='imgCheckBox' src=\"http://50.116.17.150:3000/{{e.idFoto}}\" \r\n\t\t\t\t\t\t onError=\"this.src='assets/app/media/img/userB.png'\" >\r\n\t\t\t\t\t\t<span class=\"txtF\">{{e.nombre}}</span>\r\n\t\t\t\t\t\t</mat-checkbox></p>\r\n\t\t\t\t\t\t<!-- <p><mat-checkbox>\r\n\t\t\t\t\t\t<img class='imgCheckBox' src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\">\r\n\t\t\t\t\t\t<span class=\"txtF\">Juan de Arco</span>\r\n\t\t\t\t\t\t</mat-checkbox></p>\r\n\t\t\t\t\t\t<p><mat-checkbox>\r\n\t\t\t\t\t\t<img class='imgCheckBox' src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\">\r\n\t\t\t\t\t\t<span class=\"txtF\">Juan de Arco</span>\r\n\t\t\t\t\t\t</mat-checkbox></p> -->\r\n\t\t\t\t\t</div>\r\n\r\n\t\t</div>\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -4392,7 +11107,7 @@ var EditservicioComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 15px;\">Editar Staff</div>\r\n\r\n\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" \r\n    [disabled]='!empleado.nombre || !empleado.email || !empleado.descripcion || !empleado.tipo' \r\n     (click)='guardarStaff()'>Guardar</button>\r\n\r\n\t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button>\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n<ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"text-align: center\">\r\n\t\t\t<img   style='    height: 70px;\r\n    width: 70px;\r\n    border-radius: 100px;\r\n    margin: 5px 11px;' src=\"http://50.116.17.150:3000/{{empleado.idFoto}}\" \r\n    onError=\"this.src='assets/app/media/img/userB.png'\">\r\n</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t\r\n\r\n\t\t\t\t<label class='labelBy'>Nombre*</label>\r\n\t\t\t\t<input [(ngModel)]='empleado.nombre' class='inputBy w100' placeholder=\"nombre del staff\"  autocomplete=\"off\"  type=\"text\" name=\"nombre\">\r\n\t\t\t</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Telefono</label>\r\n\t\t\t\t<input [(ngModel)]='empleado.telefono' class='inputBy w100' placeholder=\"telefono del staff\"  autocomplete=\"off\"  type=\"number\" name=\"telefono\">\r\n\t\t\t</div>\r\n\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Email*</label>\r\n\t\t\t\t<input [(ngModel)]='empleado.email' class='inputBy w100' placeholder=\"email del staff\"  autocomplete=\"off\"  type=\"email\" name=\"enail\">\r\n\t\t\t</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Descripcion*</label>\r\n\t\t\t\t<input [(ngModel)]='empleado.descripcion' class='inputBy w100' placeholder=\"descripcion del staff\"  autocomplete=\"off\"  type=\"text\" name=\"desc\">\r\n\t\t\t</div>\r\n\r\n\r\n\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"color:darkgray;font-size: 16px;font-weight: 500 !important;margin-bottom: 20px;\">Permisos</div>\r\n\t\t\t\t\t<div style=\"border: solid 1px lightgray;padding: 20px;\">\r\n\t\t\t\t\t\t\r\n<label class='labelBy'>Permisos de usuario</label>\r\n\t\t\t\t<mat-select [(ngModel)]='empleado.tipo' class='inputBy w100'>\r\n\t\t\t\r\n\t\t\t\t<mat-option value=\"1\">Miembro Administrador</mat-option>\r\n\t\t\t\t<mat-option value=\"2\">Miembro de Staff</mat-option>\r\n\t\t\t\t<mat-option value=\"3\">Recepcion</mat-option>\r\n\t\t\t\t</mat-select>\r\n\r\n\r\n\t\t\t\t<div style=\"\r\n    margin-top: 40px;\">\r\n\t\t\t\t\t<p><span style=\"font-weight: 500\">Administrador:</span>\r\n\t\t\t\t\tEste usuario tendrá acceso a todas las funciones del panel.</p>\r\n\t\t\t\t\t<p><span style=\"font-weight: 500\">Staff:</span>\r\n\t\t\t\t\tDedicado a los empleados del establecimiento para que tengan acceso a la aplicación y puedan confirmar las citas.</p>\r\n\t\t\t\t\t<p><span style=\"font-weight: 500\">Recepción:</span>\r\n\t\t\t\t\tTendrá acceso a gestionar el calendario y la lista de citas.</p>\r\n\r\n\t\t\t\t</div>\r\n\t\t\t\t<button  (click)='borrarStaff()' \t \r\n\t\t class=\"btn btn-outline-danger\" style=\"margin-top: 50px;\"  mat-raised-button color=\"primary\" >Eliminar miembro del Staff</button>\r\n\r\n\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t\t\t\t\t\r\n\t\t</div>\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 26px;font-weight: 300;padding-left: 15px;\">Editar Staff</div>\r\n\r\n\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" \r\n    [disabled]='!empleado.nombre || !empleado.email || !empleado.descripcion || !empleado.tipo' \r\n     (click)='guardarStaff()'>Guardar</button>\r\n\r\n\t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button>\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n<ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"text-align: center\">\r\n\t\t\t<img   style='    height: 70px;\r\n    width: 70px;\r\n    border-radius: 100px;\r\n    margin: 5px 11px;' src=\"http://50.116.17.150:3000/{{empleado.idFoto}}\" \r\n    onError=\"this.src='assets/app/media/img/userB.png'\">\r\n</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t\r\n\r\n\t\t\t\t<label class='labelBy'>Nombre*</label>\r\n\t\t\t\t<input [(ngModel)]='empleado.nombre' class='inputBy w100' placeholder=\"nombre del staff\"  autocomplete=\"off\"  type=\"text\" name=\"nombre\">\r\n\t\t\t</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Telefono</label>\r\n\t\t\t\t<input [(ngModel)]='empleado.telefono' class='inputBy w100' placeholder=\"telefono del staff\"  autocomplete=\"off\"  type=\"number\" name=\"telefono\">\r\n\t\t\t</div>\r\n\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Email*</label>\r\n\t\t\t\t<input [disabled]='true' [(ngModel)]='empleado.email' class='inputBy w100' placeholder=\"email del staff\"  autocomplete=\"off\"  type=\"email\" name=\"enail\">\r\n\t\t\t</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Descripcion*</label>\r\n\t\t\t\t<input [(ngModel)]='empleado.descripcion' class='inputBy w100' placeholder=\"descripcion del staff\"  autocomplete=\"off\"  type=\"text\" name=\"desc\">\r\n\t\t\t</div>\r\n\r\n\r\n\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"color:darkgray;font-size: 16px;font-weight: 500 !important;margin-bottom: 20px;\">Permisos</div>\r\n\t\t\t\t\t<div style=\"border: solid 1px lightgray;padding: 20px;\">\r\n\t\t\t\t\t\t\r\n<label class='labelBy'>Permisos de usuario</label>\r\n\t\t\t\t<mat-select [(ngModel)]='empleado.tipo' class='inputBy w100'>\r\n\t\t\t\r\n\t\t\t\t<mat-option value=\"1\">Miembro Administrador</mat-option>\r\n\t\t\t\t<mat-option value=\"2\">Miembro de Staff</mat-option>\r\n\t\t\t\t<mat-option value=\"3\">Recepcion</mat-option>\r\n\t\t\t\t</mat-select>\r\n\r\n\r\n\t\t\t\t<div style=\"\r\n    margin-top: 40px;\">\r\n\t\t\t\t\t<p><span style=\"font-weight: 500\">Administrador:</span>\r\n\t\t\t\t\tEste usuario tendrá acceso a todas las funciones del panel.</p>\r\n\t\t\t\t\t<p><span style=\"font-weight: 500\">Staff:</span>\r\n\t\t\t\t\tDedicado a los empleados del establecimiento para que tengan acceso a la aplicación y puedan confirmar las reservas.</p>\r\n\t\t\t\t\t<p><span style=\"font-weight: 500\">Recepción:</span>\r\n\t\t\t\t\tTendrá acceso a gestionar el calendario y la lista de reservas.</p>\r\n\r\n\t\t\t\t</div>\r\n\t\t\t\t<button  (click)='borrarStaff()' \t \r\n\t\t class=\"btn btn-outline-danger\" style=\"margin-top: 50px;\"  mat-raised-button color=\"primary\" >Eliminar miembro del Staff</button>\r\n\r\n\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t\t\t\t\t\r\n\t\t</div>\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -4531,7 +11246,7 @@ var EditstaffComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 30px;\">Estadistica</div>\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n<div class=\"row\" style=\"     padding: 40px;\r\n    padding-top: 20px !important;\">\r\n\r\n <ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\r\n\t\r\n<div class=\"col-sm-12\">\r\n<div class=\"user-card-block card\" style=\" border: none !important;    padding: 0px 60px 25px 60px; border-radius: 0px !important;\">\r\n<div class=\"card-block\" style=\"padding-top: 0px !important;\">\r\n<div class=\"top-card text-center\">\r\n<img  src=\"http://50.116.17.150:3000/{{info.idFoto}}\" \r\n    onError=\"this.src='assets/app/media/img/fotoComercio.png'\" \r\n     class=\"img-responsive\" alt=\"\" style=\"    height: 75px;\r\n    width: 75px;\r\n    border-radius: 70px;\">\r\n</div>\r\n<div class=\"card-contain text-center p-t-40\"  style=\"    padding-top: 40px;\">\r\n<h5 class=\"text-capitalize p-b-10\" style=\"    padding-bottom: 10px;\">{{info.nombre}}</h5>\r\n<p class=\"text-muted\">{{info.direccion}}</p>\r\n</div>\r\n<div class=\"card-data m-t-40\" style=\"    margin-top: 40px;\">\r\n<div class=\"row\">\r\n<div class=\"col-3 b-r-default text-center\">\r\n<p class=\"text-muted\">Total</p>\r\n<span>{{info.total}}</span>\r\n</div>\r\n\r\n<div class=\"col-3 b-r-default text-center\">\r\n<p class=\"text-muted\">Completadas</p>\r\n<span>{{info.completadas}}</span>\r\n</div>\r\n\r\n<div class=\" col-3 b-r-default text-center\">\r\n<p class=\"text-muted\">Canceladas</p>\r\n<span>{{info.canceladas}}</span>\r\n</div>\r\n\r\n<div class=\"col-3 text-center \">\r\n<p class=\"text-muted\">Puntuacion</p>\r\n<span>{{info.rate || 0}}</span>\r\n</div>\r\n\r\n</div>\r\n</div>\r\n\r\n</div>\r\n</div>\r\n</div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n<div class=\"col-md-12 col-xl-4\">\r\n\r\n<div class=\"row\">\r\n<div class=\"col-xl-12 col-md-6\" style=\"    margin-bottom: 20px;\">\r\n<div class=\"card\">\r\n<div class=\"card-block-big card-status\">\r\n<h5>Ingresos Totales</h5>\r\n<div class=\"card-block text-center\">\r\n<h2 class=\"text-primary\">${{ingresos.total || 0}}</h2>\r\n</div>\r\n\r\n</div>\r\n</div>\r\n</div>\r\n<div class=\"col-xl-12 col-md-6\"  style=\"    margin-bottom: 20px;\">\r\n<div class=\"card\">\r\n<div class=\"card-block-big card-status\">\r\n<h5>Reserva promedio</h5>\r\n<div class=\"card-block text-center\">\r\n<h2 class=\"text-warning\">${{ingresos.promedio || 0}}</h2>\r\n</div>\r\n\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n\r\n\r\n<div class=\"col-md-12 col-xl-8\">\r\n<div class=\"card\">\r\n<div class=\"card-block\">\r\n<h5>Servicios mas consumidos</h5>\r\n</div>\r\n\r\n\r\n<div class=\"card-block client-card table-1-card p-t-0\">\r\n<div class=\"table-responsive\">\r\n<table class=\"table\">\r\n<thead>\r\n<tr class=\"text-capitalize\">\r\n<th>Servicio</th>\r\n<th>Categoria</th>\r\n<th>Cantidad</th>\r\n\r\n\r\n</tr>\r\n</thead>\r\n<tbody>\r\n\r\n<tr *ngFor=\"let h of bests; let i = index\"  >\r\n<td class=\"photo-table img\">\r\n<!-- <a href=\"#!\">\r\n\r\n\t<img style=\"border-radius: 0px;\r\nwidth: 27px;\" class=\"img-circle\" src=\"{{globalImage}}{{e.idFoto}}\" onError=\"this.src='assets/categoria.png';\"  alt=\"chat-user\">\r\n\r\n</a> -->\r\n<p>{{h.nombre}}</p>\r\n</td>\r\n<td>{{h.nombreCategoria}}</td>\r\n<td>{{h.cantidad}}</td>\r\n\r\n<!-- <td class=\"text-success\">${{e.total?.toFixed(2)}}</td> -->\r\n</tr>\r\n\r\n\r\n\r\n\r\n</tbody>\r\n</table>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n\r\n"
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 26px;font-weight: 300;padding-left: 30px;\">Estadísticas\r\n\r\n       <span style=\"display: block;\r\n    font-size: 14px;\r\n    line-height: 15px;\">Te brinda información útil para tu negocio!</span>\r\n</div>\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n<div class=\"row\" style=\"     padding: 40px;\r\n    padding-top: 20px !important;\">\r\n\r\n <ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\r\n\t\r\n<div class=\"col-sm-12\">\r\n<div class=\"user-card-block card\" style=\" border: none !important;    padding: 0px 60px 25px 60px; border-radius: 0px !important;\">\r\n<div class=\"card-block\" style=\"padding-top: 0px !important;\">\r\n<div class=\"top-card text-center\">\r\n<img  src=\"http://50.116.17.150:3000/{{info.idFoto}}\" \r\n    onError=\"this.src='assets/app/media/img/fotoComercio.png'\" \r\n     class=\"img-responsive\" alt=\"\" style=\"    height: 75px;\r\n    width: 75px;\r\n    border-radius: 70px;\">\r\n</div>\r\n<div class=\"card-contain text-center p-t-40\"  style=\"    padding-top: 40px;\">\r\n<h5 class=\"text-capitalize p-b-10\" style=\"    padding-bottom: 10px;\">{{info.nombre}}</h5>\r\n<p class=\"text-muted\">{{info.direccion}}</p>\r\n</div>\r\n<div class=\"card-data m-t-40\" style=\"    margin-top: 40px;\">\r\n<div class=\"row\">\r\n<div class=\"col-3 b-r-default text-center\">\r\n<p class=\"text-muted\">Total</p>\r\n<span>{{info.total}}</span>\r\n</div>\r\n\r\n<div class=\"col-3 b-r-default text-center\">\r\n<p class=\"text-muted\">Completadas</p>\r\n<span>{{info.completadas}}</span>\r\n</div>\r\n\r\n<div class=\"col-3 b-r-default text-center \">\r\n<p class=\"text-muted\">Confirmadas</p>\r\n<span>{{info.confirmadas}}</span>\r\n</div>\r\n\r\n<div class=\" col-3  text-center\">\r\n<p class=\"text-muted\">Canceladas</p>\r\n<span>{{info.canceladas}}</span>\r\n</div>\r\n\r\n\r\n</div>\r\n</div>\r\n\r\n</div>\r\n</div>\r\n</div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n<div class=\"col-md-12 col-xl-4\">\r\n\r\n<div class=\"row\">\r\n<div class=\"col-xl-12 col-md-6\" style=\"    margin-bottom: 20px;\">\r\n<div class=\"card\">\r\n<div class=\"card-block-big card-status\">\r\n<h5>Ingresos Totales</h5>\r\n<div class=\"card-block text-center\">\r\n<h2 class=\"text-primary\">${{ingresos.total || 0}}</h2>\r\n</div>\r\n\r\n</div>\r\n</div>\r\n</div>\r\n<div class=\"col-xl-12 col-md-6\"  style=\"    margin-bottom: 20px;\">\r\n<div class=\"card\">\r\n<div class=\"card-block-big card-status\">\r\n<h5>Reserva promedio</h5>\r\n<div class=\"card-block text-center\">\r\n<h2 class=\"text-warning\">${{ingresos.promedio || 0}}</h2>\r\n</div>\r\n\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n\r\n\r\n<div class=\"col-md-12 col-xl-8\">\r\n<div class=\"card\">\r\n<div class=\"card-block\">\r\n<h5>Servicios mas consumidos</h5>\r\n</div>\r\n\r\n\r\n<div class=\"card-block client-card table-1-card p-t-0\">\r\n<div class=\"table-responsive\">\r\n<table class=\"table\">\r\n<thead>\r\n<tr class=\"text-capitalize\">\r\n<th>Servicio</th>\r\n<th>Categoria</th>\r\n<th>Cantidad</th>\r\n\r\n\r\n</tr>\r\n</thead>\r\n<tbody>\r\n\r\n<tr *ngFor=\"let h of bests; let i = index\"  >\r\n<td class=\"photo-table img\">\r\n<!-- <a href=\"#!\">\r\n\r\n\t<img style=\"border-radius: 0px;\r\nwidth: 27px;\" class=\"img-circle\" src=\"{{globalImage}}{{e.idFoto}}\" onError=\"this.src='assets/categoria.png';\"  alt=\"chat-user\">\r\n\r\n</a> -->\r\n<p>{{h.nombre}}</p>\r\n</td>\r\n<td>{{h.nombreCategoria}}</td>\r\n<td>{{h.cantidad}}</td>\r\n\r\n<!-- <td class=\"text-success\">${{e.total?.toFixed(2)}}</td> -->\r\n</tr>\r\n\r\n\r\n\r\n\r\n</tbody>\r\n</table>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -4584,7 +11299,7 @@ var EstadisticaComponent = /** @class */ (function () {
     EstadisticaComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.loadingScreen = true;
-        this.authService.getInfoCentro({ idCentro: this.idCentro })
+        this.authService.getInfoCentroNC({ idCentro: this.idCentro })
             .subscribe(function (data) {
             _this.loadingScreen = false;
             console.log(data);
@@ -4621,7 +11336,7 @@ var EstadisticaComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n<!-- \r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n -->\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 15px;\">Horario de Atención</div>\r\n\r\n<!-- \r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='guardarHorario()' >Guardar</button>\r\n\r\n\t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button> -->\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n<ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style='padding: 30px 45px;'>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\r\n\t\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox color='primary' [(ngModel)]='diasSemana.lunes.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Lunes</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.lunes.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tCERRADO\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.lunes.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.lunes.horaAbrir' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.lunes.horaCerrar' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\r\n\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox color='primary' [(ngModel)]='diasSemana.martes.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Martes</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.martes.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tCERRADO\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.martes.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.martes.horaAbrir' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.martes.horaCerrar' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\r\n\t\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox color='primary' [(ngModel)]='diasSemana.miercoles.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Miercoles</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.miercoles.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tCERRADO\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.miercoles.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.miercoles.horaAbrir' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.miercoles.horaCerrar' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox color='primary' [(ngModel)]='diasSemana.jueves.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Jueves</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.jueves.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tCERRADO\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.jueves.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.jueves.horaAbrir' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.jueves.horaCerrar' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox color='primary' [(ngModel)]='diasSemana.viernes.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Viernes</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.viernes.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tCERRADO\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.viernes.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.viernes.horaAbrir' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.viernes.horaCerrar' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox color='primary' [(ngModel)]='diasSemana.sabado.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Sabado</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.sabado.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tCERRADO\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.sabado.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.sabado.horaAbrir' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select [(ngModel)]='diasSemana.sabado.horaCerrar' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox  color='primary' [(ngModel)]='diasSemana.domingo.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Domingo</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.domingo.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tCERRADO\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.domingo.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.domingo.horaAbrir' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.domingo.horaCerrar' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n\t\t\t\t\t    float: right;\r\n\t\t\t\t\t    margin-right: 10px;\" (click)='guardarHorario()'>Guardar</button>\r\n\r\n\t\t\t\t\t</div>\t\t\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\r\n\t\t\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 20px 20px;\" >\r\n\t<label class='labelBy'>Horario Especial</label>\r\n\t<p>Configure un horario personalizado en días feriados, especiales y otros</p>\r\n\r\n\t\t\t\t\t\t\t<div class=\"conteinInput2\" style=\"margin-top: 20px;margin-bottom: 15px !important;\">\r\n\r\n\t\t\t\t\r\n\t\t\t\t\t\t\t<div>\r\n\r\n\r\n\r\n<!-- \t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t  <mat-form-field style='    margin: auto;' class='inputBy'>\r\n\t\t\t\t\t\t\t\t    <input [(ngModel)]='tiempoLibre.inicio' matInput [matDatepicker]=\"dp3\" placeholder=\"Fecha \" disabled>\r\n\t\t\t\t\t\t\t\t\t<mat-datepicker-toggle matSuffix [for]=\"dp3\">\r\n\t\t\t\t\t\t\t\t  </mat-datepicker-toggle>\r\n\t\t\t\t\t\t\t\t  <mat-datepicker #dp3 disabled=\"false\"></mat-datepicker>\r\n\t\t\t\t\t\t\t\t    </mat-form-field> -->\r\n\r\n\t\t\t\t\t\t\t<div  style=\"\">\r\n\r\n\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t  <mat-form-field style='      width: 140px;  margin: auto;' class='inputBy'>\r\n\t\t\t\t\t\t\t\t    <input [(ngModel)]='tiempoLibre.inicio' matInput [matDatepicker]=\"dp3\" placeholder=\"Inicio\" disabled \r\n\t\t\t\t\t\t\t\t    (dateChange)=\"setDate2()\">\r\n\t\t\t\t\t\t\t\t\t<mat-datepicker-toggle matSuffix [for]=\"dp3\">\r\n\t\t\t\t\t\t\t\t  </mat-datepicker-toggle>\r\n\t\t\t\t\t\t\t\t  <mat-datepicker #dp3 disabled=\"false\"></mat-datepicker>\r\n\t\t\t\t\t\t\t\t    </mat-form-field>\r\n\t\t\t\t\t\t\t\t\r\n\r\n\r\n\t\t\t\t\t\t\t\t<mat-form-field  style='   margin-right: 40px;width: 140px;margin-left: 40px;'  class='inputBy'>\r\n\t\t\t\t\t\t\t\t    <input [(ngModel)]='tiempoLibre.fin' matInput [matDatepicker]=\"dp4\" placeholder=\"Finaliza\" [min]=\"tiempoLibre.inicio\" \r\n\t\t\t\t\t\t\t\t    (dateChange)=\"getDatesBet()\" disabled>\r\n\t\t\t\t\t\t\t\t\t<mat-datepicker-toggle matSuffix [for]=\"dp4\">\r\n\t\t\t\t\t\t\t\t  </mat-datepicker-toggle>\r\n\t\t\t\t\t\t\t\t  <mat-datepicker #dp4 disabled=\"false\"></mat-datepicker>\r\n\t\t\t\t\t\t\t\t    </mat-form-field>\r\n\r\n\t\t\t<!-- \t\t<button [disabled]='!tiempoLibre.fin || !tiempoLibre.inicio' class=\"btn btn-success\" style=\"margin: auto;float: right;margin-right: 20px;\" (click)='agregarBloque()'>Agregar</button> -->\r\n\t\t\t\t\t\t<mat-checkbox style=\" \" color='primary' [(ngModel)]='tiempoLibre.centroCerrado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Cerrado</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\t\t\t\t\t\t\t<!-- \t   \r\n\r\n\t\t\t\t\t\t<mat-checkbox style='margin-left: 42px;' color='primary' [(ngModel)]='tiempoLibre.centroCerrado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Cerrado</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t-->\r\n\r\n\r\n\t\t\t\t\t\t\t<div style=\"  margin-top: 13px;\">\r\n\r\n\t\t\t\t\t\t\t<mat-select [hidden]='tiempoLibre.centroCerrado' [(ngModel)]='tiempoLibre.horaAbrir'  class='inputBy w50' \r\n\t\t\t\t\t\t\tstyle='width: 140px;'>\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t<!-- \t<ngx-mat-select-search [placeholderLabel]=\"'Buscar hora'\" \r\n                       [noEntriesFoundLabel]=\"'no hay horas que coincidan'\" > \r\n                       \t\r\n                       </ngx-mat-select-search>-->\r\n\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t<span [hidden]='tiempoLibre.centroCerrado' style=\"margin: 0px 16px;line-height: 40px;\">-</span>\r\n\t\t\t\t\t\t\t<mat-select  [hidden]='tiempoLibre.centroCerrado' [(ngModel)]='tiempoLibre.horaCerrar' class='inputBy w50' \r\n\t\t\t\t\t\t\tstyle='width: 140px;margin-right: 40px;'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t\t\t\t\t\t\t<button  [disabled]='((!tiempoLibre.inicio || !tiempoLibre.horaAbrir || !tiempoLibre.horaCerrar) && !tiempoLibre.centroCerrado) || (tiempoLibre.centroCerrado && !tiempoLibre.inicio)' class=\"btn btn-success\" style=\"    \" (click)='guardarHS()'>Guardar</button>\r\n\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t<!-- aqui va el butn-->\r\n \r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t    <hr>\r\n\r\n\r\n\t\t\t\t\t    <!-- \tAQUI LOS ITEMNS -->\r\n\r\n\r\n\t\t\t\t\t    <div  *ngFor=\"let h of horarioEspecial; let i = index\"  style=\"border-bottom: solid 1px lightgray;font-size: 16px;padding: 20px\">\r\n\r\n\t\t\t\t\t    <div style=\"display: block;width: 100%\">\r\n\t\t\t\t\t    <span style=\"font-weight: 400; margin-right: 20px\">Fecha:</span>\r\n\t\t\t\t\t\t{{h.fecha.split('T')[0]}}</div>\r\n\t\t\t\t\t\t<div [hidden]='h.abierto == 0'  style=\"display: inline-block;\">\r\n\t\t\t\t\t    <div style=\"display: inline-block;\"><span style=\"font-weight: 400; margin-right: 20px\">Abre:</span>{{h.horaAbrir}}</div> \r\n\t\t\t\t\t    <span style=\"margin-left: 20px;margin-right: 20px\">- </span>\r\n\t\t\t\t\t    <div style=\"display: inline-block;\"><span style=\"font-weight: 400;margin-right: 20px\">Cierra:</span>{{h.horaCerrar}}</div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div [hidden]='h.abierto !== 0' style=\"display: inline-block;\" >\r\n\t\t\t\t\t\t\tCERRADO\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t    \t<mat-icon class='iconGG' (click)='borrarBloque(h.idHorarioEspecial)' style='margin-left: 23px;    float: right;background: darkgray; margin: auto;height: 20px;line-height: 20px;color: white;text-align: center;'>\r\n\t\t\t\t\t    \tclose\r\n\t\t\t\t\t    \t</mat-icon>\r\n\r\n\t\t\t\t\t    </div>\r\n\r\n\r\n\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n<!-- \r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n -->\t<div class=\"\" style=\"display: inline-block;font-size: 26px;font-weight: 300;padding-left: 15px;\">Horario de Atención\r\n\r\n    <span style=\"display: block;\r\n    font-size: 14px;\r\n    line-height: 15px;\">Indica la disponibilidad de tu negocio! </span>\r\n</div>\r\n\r\n<!-- \r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='guardarHorario()' >Guardar</button>\r\n\r\n\t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button> -->\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n<ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style='padding: 30px 45px;'>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\r\n\t\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox color='primary' [(ngModel)]='diasSemana.lunes.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Lunes</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.lunes.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tCERRADO\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.lunes.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.lunes.horaAbrir' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.lunes.horaCerrar' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\r\n\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox color='primary' [(ngModel)]='diasSemana.martes.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Martes</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.martes.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tCERRADO\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.martes.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.martes.horaAbrir' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.martes.horaCerrar' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\r\n\t\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox color='primary' [(ngModel)]='diasSemana.miercoles.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Miercoles</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.miercoles.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tCERRADO\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.miercoles.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.miercoles.horaAbrir' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.miercoles.horaCerrar' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox color='primary' [(ngModel)]='diasSemana.jueves.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Jueves</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.jueves.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tCERRADO\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.jueves.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.jueves.horaAbrir' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.jueves.horaCerrar' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox color='primary' [(ngModel)]='diasSemana.viernes.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Viernes</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.viernes.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tCERRADO\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.viernes.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.viernes.horaAbrir' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.viernes.horaCerrar' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox color='primary' [(ngModel)]='diasSemana.sabado.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Sabado</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.sabado.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tCERRADO\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.sabado.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.sabado.horaAbrir' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select [(ngModel)]='diasSemana.sabado.horaCerrar' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox  color='primary' [(ngModel)]='diasSemana.domingo.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Domingo</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.domingo.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tCERRADO\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.domingo.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.domingo.horaAbrir' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.domingo.horaCerrar' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n\t\t\t\t\t    float: right;\r\n\t\t\t\t\t    margin-right: 10px;\" (click)='guardarHorario()'>Guardar</button>\r\n\r\n\t\t\t\t\t</div>\t\t\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\r\n\t\t\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 20px 20px;\" >\r\n\t<label class='labelBy'>Horario Especial</label>\r\n\t<p>Configure un horario personalizado en días feriados, especiales y otros</p>\r\n\r\n\t\t\t\t\t\t\t<div class=\"conteinInput2\" style=\"margin-top: 20px;margin-bottom: 15px !important;\">\r\n\r\n\t\t\t\t\r\n\t\t\t\t\t\t\t<div>\r\n\r\n\r\n\r\n<!-- \t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t  <mat-form-field style='    margin: auto;' class='inputBy'>\r\n\t\t\t\t\t\t\t\t    <input [(ngModel)]='tiempoLibre.inicio' matInput [matDatepicker]=\"dp3\" placeholder=\"Fecha \" disabled>\r\n\t\t\t\t\t\t\t\t\t<mat-datepicker-toggle matSuffix [for]=\"dp3\">\r\n\t\t\t\t\t\t\t\t  </mat-datepicker-toggle>\r\n\t\t\t\t\t\t\t\t  <mat-datepicker #dp3 disabled=\"false\"></mat-datepicker>\r\n\t\t\t\t\t\t\t\t    </mat-form-field> -->\r\n\r\n\t\t\t\t\t\t\t<div  style=\"\">\r\n\r\n\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t  <mat-form-field style='      width: 140px;  margin: auto;' class='inputBy'>\r\n\t\t\t\t\t\t\t\t    <input [(ngModel)]='tiempoLibre.inicio' matInput [matDatepicker]=\"dp3\" placeholder=\"Inicio\" disabled \r\n\t\t\t\t\t\t\t\t    (dateChange)=\"setDate2()\">\r\n\t\t\t\t\t\t\t\t\t<mat-datepicker-toggle matSuffix [for]=\"dp3\">\r\n\t\t\t\t\t\t\t\t  </mat-datepicker-toggle>\r\n\t\t\t\t\t\t\t\t  <mat-datepicker #dp3 disabled=\"false\"></mat-datepicker>\r\n\t\t\t\t\t\t\t\t    </mat-form-field>\r\n\t\t\t\t\t\t\t\t\r\n\r\n\r\n\t\t\t\t\t\t\t\t<mat-form-field  style='   margin-right: 40px;width: 140px;margin-left: 40px;'  class='inputBy'>\r\n\t\t\t\t\t\t\t\t    <input [(ngModel)]='tiempoLibre.fin' matInput [matDatepicker]=\"dp4\" placeholder=\"Finaliza\" [min]=\"tiempoLibre.inicio\" \r\n\t\t\t\t\t\t\t\t    (dateChange)=\"getDatesBet()\" disabled>\r\n\t\t\t\t\t\t\t\t\t<mat-datepicker-toggle matSuffix [for]=\"dp4\">\r\n\t\t\t\t\t\t\t\t  </mat-datepicker-toggle>\r\n\t\t\t\t\t\t\t\t  <mat-datepicker #dp4 disabled=\"false\"></mat-datepicker>\r\n\t\t\t\t\t\t\t\t    </mat-form-field>\r\n\r\n\t\t\t<!-- \t\t<button [disabled]='!tiempoLibre.fin || !tiempoLibre.inicio' class=\"btn btn-success\" style=\"margin: auto;float: right;margin-right: 20px;\" (click)='agregarBloque()'>Agregar</button> -->\r\n\t\t\t\t\t\t<mat-checkbox style=\" \" color='primary' [(ngModel)]='tiempoLibre.centroCerrado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Cerrado</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\t\t\t\t\t\t\t<!-- \t   \r\n\r\n\t\t\t\t\t\t<mat-checkbox style='margin-left: 42px;' color='primary' [(ngModel)]='tiempoLibre.centroCerrado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Cerrado</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t-->\r\n\r\n\r\n\t\t\t\t\t\t\t<div style=\"  margin-top: 13px;\">\r\n\r\n\t\t\t\t\t\t\t<mat-select [hidden]='tiempoLibre.centroCerrado' [(ngModel)]='tiempoLibre.horaAbrir'  class='inputBy w50' \r\n\t\t\t\t\t\t\tstyle='width: 140px;'>\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t<!-- \t<ngx-mat-select-search [placeholderLabel]=\"'Buscar hora'\" \r\n                       [noEntriesFoundLabel]=\"'no hay horas que coincidan'\" > \r\n                       \t\r\n                       </ngx-mat-select-search>-->\r\n\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t<span [hidden]='tiempoLibre.centroCerrado' style=\"margin: 0px 16px;line-height: 40px;\">-</span>\r\n\t\t\t\t\t\t\t<mat-select  [hidden]='tiempoLibre.centroCerrado' [(ngModel)]='tiempoLibre.horaCerrar' class='inputBy w50' \r\n\t\t\t\t\t\t\tstyle='width: 140px;margin-right: 40px;'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t\t\t\t\t\t\t<button  [disabled]='((!tiempoLibre.inicio || !tiempoLibre.horaAbrir || !tiempoLibre.horaCerrar) && !tiempoLibre.centroCerrado) || (tiempoLibre.centroCerrado && !tiempoLibre.inicio)' class=\"btn btn-success\" style=\"    \" (click)='guardarHS()'>Guardar</button>\r\n\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t<!-- aqui va el butn-->\r\n \r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t    <hr>\r\n\r\n\r\n\t\t\t\t\t    <!-- \tAQUI LOS ITEMNS -->\r\n\r\n\r\n\t\t\t\t\t    <div  *ngFor=\"let h of horarioEspecial; let i = index\"  style=\"border-bottom: solid 1px lightgray;font-size: 16px;padding: 20px\">\r\n\r\n\t\t\t\t\t    <div style=\"display: block;width: 100%\">\r\n\t\t\t\t\t    <span style=\"font-weight: 400; margin-right: 20px\">Fecha:</span>\r\n\t\t\t\t\t\t{{h.fecha.split('T')[0]}}</div>\r\n\t\t\t\t\t\t<div [hidden]='h.abierto == 0'  style=\"display: inline-block;\">\r\n\t\t\t\t\t    <div style=\"display: inline-block;\"><span style=\"font-weight: 400; margin-right: 20px\">Abre:</span>{{h.horaAbrir}}</div> \r\n\t\t\t\t\t    <span style=\"margin-left: 20px;margin-right: 20px\">- </span>\r\n\t\t\t\t\t    <div style=\"display: inline-block;\"><span style=\"font-weight: 400;margin-right: 20px\">Cierra:</span>{{h.horaCerrar}}</div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div [hidden]='h.abierto !== 0' style=\"display: inline-block;\" >\r\n\t\t\t\t\t\t\tCERRADO\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t    \t<mat-icon class='iconGG' (click)='borrarBloque(h.idHorarioEspecial)' style='margin-left: 23px;    float: right;background: darkgray; margin: auto;height: 20px;line-height: 20px;color: white;text-align: center;'>\r\n\t\t\t\t\t    \tclose\r\n\t\t\t\t\t    \t</mat-icon>\r\n\r\n\t\t\t\t\t    </div>\r\n\r\n\r\n\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -5180,7 +11895,7 @@ var InnerComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n \r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 15px;\">Nueva Reserva</div>\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='guardarCita()' \r\n    [disabled]='!cita.fecha || !cita.nombreCliente ||  sinEmpleado()' >Guardar</button>\r\n<!-- \r\n\r\n\r\n\t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button> -->\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n<ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\r\n\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t\r\n\r\n\t\t\t\t<label class='labelBy'>Cliente</label>\r\n\t\t\t\t<input  class='inputBy w100' placeholder=\"nombre del cliente\"  autocomplete=\"off\"  type=\"text\" name=\"nombre\" [(ngModel)]='cita.nombreCliente'>\r\n\t\t\t</div>\r\n\r\n\t\t\t<div class=\"conteinInput\"> \r\n\t\t\t<label class='labelBy'>Fecha</label>\r\n\t\t\t<mat-form-field style='  margin-right: 20px;  width: 100% !important;' >\r\n\t\t\t<input matInput [(ngModel)]='cita.fecha' [matDatepicker]=\"pickerI\" \r\n\t\t\t(dateChange)=\"moveDate($event)\" [matDatepickerFilter]=\"myFilter\" placeholder=\"Fecha\" [min]=\"fechaMin\" autocomplete=\"off\"  (click)=\"pickerI.open()\">\r\n\t\t\t<mat-datepicker-toggle matSuffix [for]=\"pickerI\"></mat-datepicker-toggle>\r\n\t\t\t<mat-datepicker #pickerI></mat-datepicker>\r\n\t\t\t</mat-form-field>\r\n\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t<div class=\"conteinInput\" *ngIf='cita.fecha && horasDisponibles.length>1'> \r\n\t\t\t<label class='labelBy'>Hora de Inicio</label>\r\n\t\t      <mat-select [disabled]='!cita.fecha' placeholder=\"\" class='inputBy selectD' \r\n\t\t       [(ngModel)]='cita.inicio' (selectionChange)=\"changeTime($event)\">\r\n\t\t                  <mat-option \r\n\t\t                  *ngFor=\"let h of horasDisponibles; let i = index\" \r\n\t\t                   [value]=\"h.inicio\">{{getHorasFormat(h.inicio)}}</mat-option>\r\n\t\t      </mat-select>\r\n\r\n\t\t\t</div>\r\n\r\n<!-- \t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Telefono</label>\r\n\t\t\t\t<input  [(ngModel)]='centroInfo.telefono' class='inputBy w100' placeholder=\"cual es el telefono del negocio\"  autocomplete=\"off\"  type=\"number\" name=\"telefono\">\r\n\t\t\t</div> -->\r\n\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\r\n\t\t<div style=\"padding: 20px 25px; \">\r\n\r\n\r\n\t\t\t<div class=\"conteinInput\"> \r\n\r\n\t\t\t\t<div><label class='labelBy'>Servicios</label></div>\r\n\r\n\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy' style=\"    font-size: 14px !important;\r\n    font-weight: 300 !important;\">Categoria - Subcategoria</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\t\t\t\t\r\n\t\t\t\t<mat-select [(ngModel)]=\"idCategoriaS\"  (selectionChange)=\"getSubs($event)\" class='inputBy w50' style='margin-right: 20px'>\r\n\r\n\t\t\t\t\t\t\t <mat-option [value]=\"0\" >\r\n              Todas\r\n              </mat-option>\r\n\r\n\t\t\t\t <mat-option  *ngFor=\"let c of categorias\" [value]=\"c.idCategoria\" >\r\n              {{c.nombre}}\r\n              </mat-option>\r\n\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t<mat-select [(ngModel)]=\"idSubcategoriaS\"    class='inputBy w50'>\r\n\t\t<mat-option  *ngFor=\"let sc of subcategorias\" \r\n\t\t\t\t [value]=\"sc.idSubcategoria\" >\r\n              {{sc.nombre}}\r\n              </mat-option>\r\n\t\t\t\t</mat-select>\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t\t<mat-select placeholder=\"\" \r\n\t\t\t\t [(ngModel)]='servicioSeleccionado' \r\n\t\t\t\t class='inputBy' style=\"    width: 200px;display: inline-block;\">\r\n\r\n\t\t\t\t<mat-option *ngFor=\"let s of serviciosCentro  | callback: filterUser; let i = index\" [value]=\"s.idServicio\">{{s.nombre}} / ${{s.precio}}</mat-option>\r\n\r\n\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t<button  class=\"btn btn-success\" style=\"margin-left: 20px;display: inline-block;\"\r\n\t\t\t\t(click)='addServicio(servicioSeleccionado)' [disabled]='!servicioSeleccionado' >Agregar Servicio\r\n\t\t\t\t</button>\r\n\r\n\t\t\t</div>\r\n\r\n\t\t\t\t\t\r\n\t\t\t\t\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t<div  *ngFor=\"let s of serviciosCita; let i = index\" class=\"m-timeline-2__item\"  style=\"width: 100%\">\r\n\r\n\t<!-- \t\t\t\t\t<div class=\"m-timeline-2__item-cricle\">\r\n\t\t\t\t\t\t\t<i class=\"fa fa-genderless mfont-danger\"></i>\r\n\t\t\t\t\t\t</div> -->\r\n\t\t\t\t\t\t<div class=\"m-timeline-2__item-text  m--padding-top-5\" style=\"    width: 100%;\">\r\n\r\n\t\t\t\t\t\t\t<div style=\"background: #faf9f7; border: 1px solid #e1e1e1; border-radius: 4px;padding: 20px 20px 20px 30px; position: relative;\">\r\n\t\t\t\t\t\t\t\t<mat-icon style='position: absolute; left: 0;top: 0; padding: 2px;background-color: transparent;' (click)='quitarItem(i)'>close</mat-icon>\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 16px;margin-bottom: 10px;\">\r\n\t\t\t\t\t\t\t\t\t<span style=\"color:#383734;font-weight: 400\">{{s.nombre}}</span>\r\n\t\t\t\t\t\t\t\t\t<span style=\"color:#383734;float: right;font-weight: 600\">${{s.precio}}</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t\t<div  style=\"    font-size: 16px;    width: 100%;\r\n    height: 22px;\">\r\n\t\t\t\t\t\t\t\t\t<span *ngIf='s.inicio'>{{getHorasFormat2(s.inicio)}} - {{getHorasFormat2(s.fin)}}</span>\r\n\t\t\t\t\t\t\t\r\n\r\n\r\n\t\t\t\t\t\t\t\t\t<span style=\"float: right;\">\r\n\t\t\t\t\t\t\t\t\t\t{{getHoras(s.duracion)}}h {{s.duracion % 60}}min\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\r\n\r\n\t\t\t\t\t\t\t<span  style=\"     text-align: left;\r\n    display: inline;\r\n    color: lightcoral;\r\n    font-weight: 400;\r\n    font-size: 12px;\" *ngIf='this.fechaSeleccionadaN && (!s.inicio || !s.empleados) && !loadingScreen'>\r\n\t\t\t\t\t\t\t\t\t\tSin staff disponibles. Seleccione otra fecha\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t\t<div *ngIf='s.empleados' style=\"    margin-top: 12px;\">\r\n\t\t<!-- \t\t\t\t\t\t<img style='    display: inline-block; margin: auto; height: 35px;' matListAvatar src=\"assets/app/media/img/userB.png\">\r\n\t\t\t\t\t\t\t\t<span style=\"  color:#383734; margin-left: 5px;font-size: 16px;font-weight: 400; display: inline-block;\">{{s.nombreEmpleado}}</span> -->\r\n\t\t\t\t\t\t\t\t\t<label style=\"    display: block;\r\n    font-weight: 400;\">Staff Asignado</label>\r\n\t\t\t\t\t\t\t\t\t<mat-select placeholder=\"\" class='inputBy' style=\"    width: 200px;display: inline-block;\" \r\n\t\t\t\t\t\t\t\t\t[(ngModel)]='s.empleadoSeleccionado'>\r\n\r\n\t\t\t\t\t\t\t\t\t<mat-option *ngFor=\"let e of s.empleados; let i = index\" [value]=\"e\">\r\n\t\t\t\t\t\t\t\t<img style='    display: inline-block; margin: auto; height: 35px;' matListAvatar src=\"http://50.116.17.150:3000/{{e.idFoto}}\" \r\n    onError=\"this.src='assets/app/media/img/userB.png'\">{{e.nombre}}\r\n\r\n\t\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t\t\t\t\t</div> \r\n\t\t\t\t\t\t\t\t<div *ngIf='!cita.fecha' style=\" \">\r\n\t\t\t\t\t\t\t\t\tSeleccione una fecha en el calendario\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</div>\r\n\t\t\r\n\r\n<!-- <div style=\"    float: right;\r\n    margin-top: 20px; margin-bottom: 20px;\">\r\n\t<span style=\"font-size: 16px;\">Total</span>\r\n\t<span style=\"    font-size: 30px;\r\n    color: #383734;\r\n    margin-left: 10px;\">${{citaSeleccionada?.precioEsperado}}</span>\r\n</div> -->\r\n\r\n\r\n\t\t\t\t<!-- \t<div class=\"m-timeline-2__item m--margin-top-30\">\r\n\t\t\t\t\t\t<span class=\"m-timeline-2__item-time\">17:00</span>\r\n\t\t\t\t\t\t<div class=\"m-timeline-2__item-cricle\">\r\n\t\t\t\t\t\t\t<i class=\"fa fa-genderless m--font-info\"></i>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"m-timeline-2__item-text m--padding-top-5\">\r\n\t\t\t\t\t\t\tPlaced a new order in\r\n\t\t\t\t\t\t\t<a href=\"#\" class=\"m-link m-link--brand m--font-bolder\">SIGNATURE MOBILE</a> marketplace.\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</div> -->\r\n\t\r\n\r\n\t\t\r\n\r\n\r\n\r\n\r\n\r\n\r\n</div>\r\n\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n \r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 26px;font-weight: 300;padding-left: 15px;\">Nueva Reserva</div>\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='guardarCita()' \r\n    [disabled]='!cita.fecha || !cita.nombreCliente ||  sinEmpleado()' >Guardar</button>\r\n<!-- \r\n\r\n\r\n\t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button> -->\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n<ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\r\n\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t\r\n\r\n\t\t\t\t<label class='labelBy'>Cliente</label>\r\n\t\t\t\t<input  class='inputBy w100' placeholder=\"nombre del cliente\"  autocomplete=\"off\"  type=\"text\" name=\"nombre\" [(ngModel)]='cita.nombreCliente'>\r\n\t\t\t</div>\r\n\r\n\t\t\t<div class=\"conteinInput\"> \r\n\t\t\t<label class='labelBy'>Fecha</label>\r\n\t\t\t<mat-form-field style='  margin-right: 20px;  width: 100% !important;' >\r\n\t\t\t<input matInput [(ngModel)]='cita.fecha' [matDatepicker]=\"pickerI\" \r\n\t\t\t(dateChange)=\"moveDate($event)\" [matDatepickerFilter]=\"myFilter\" placeholder=\"Fecha\" [min]=\"fechaMin\" autocomplete=\"off\"  (click)=\"pickerI.open()\">\r\n\t\t\t<mat-datepicker-toggle matSuffix [for]=\"pickerI\"></mat-datepicker-toggle>\r\n\t\t\t<mat-datepicker #pickerI></mat-datepicker>\r\n\t\t\t</mat-form-field>\r\n\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t<div class=\"conteinInput\" *ngIf='cita.fecha && horasDisponibles.length>1'> \r\n\t\t\t<label class='labelBy'>Hora de Inicio</label>\r\n\t\t      <mat-select [disabled]='!cita.fecha' placeholder=\"\" class='inputBy selectD' \r\n\t\t       [(ngModel)]='cita.inicio' (selectionChange)=\"changeTime($event)\">\r\n\t\t                  <mat-option \r\n\t\t                  *ngFor=\"let h of horasDisponibles; let i = index\" \r\n\t\t                   [value]=\"h.inicio\">{{getHorasFormat(h.inicio)}}</mat-option>\r\n\t\t      </mat-select>\r\n\r\n\t\t\t</div>\r\n\r\n<!-- \t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Telefono</label>\r\n\t\t\t\t<input  [(ngModel)]='centroInfo.telefono' class='inputBy w100' placeholder=\"cual es el telefono del negocio\"  autocomplete=\"off\"  type=\"number\" name=\"telefono\">\r\n\t\t\t</div> -->\r\n\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\r\n\t\t<div style=\"padding: 20px 25px; \">\r\n\r\n\r\n\t\t\t<div class=\"conteinInput\"> \r\n\r\n\t\t\t\t<div><label class='labelBy'>Servicios</label></div>\r\n\r\n\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t<label class='labelBy' style=\"    font-size: 14px !important;\r\n    font-weight: 300 !important;\">Categoria - Subcategoria</label>\r\n\t\t\t\t<div style=\"display: flex\">\r\n\t\t\t\t\r\n\t\t\t\t<mat-select [(ngModel)]=\"idCategoriaS\"  (selectionChange)=\"getSubs($event)\" class='inputBy w50' style='margin-right: 20px'>\r\n\r\n\t\t\t\t\t\t\t <mat-option [value]=\"0\" >\r\n              Seleccione Categoría\r\n              </mat-option>\r\n\r\n\t\t\t\t <mat-option  *ngFor=\"let c of categorias\" [value]=\"c.idCategoria\" >\r\n              {{c.nombre}}\r\n              </mat-option>\r\n\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t<mat-select [(ngModel)]=\"idSubcategoriaS\"    class='inputBy w50'>\r\n\t\t<mat-option  *ngFor=\"let sc of subcategorias\" \r\n\t\t\t\t [value]=\"sc.idSubcategoria\" >\r\n              {{sc.nombre}}\r\n              </mat-option>\r\n\t\t\t\t</mat-select>\r\n\t\t\t    </div>\r\n\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t\t<mat-select placeholder=\"\" \r\n\t\t\t\t [(ngModel)]='servicioSeleccionado' \r\n\t\t\t\t class='inputBy' style=\"    width: 200px;display: inline-block;\">\r\n\r\n\t\t\t\t<mat-option *ngFor=\"let s of serviciosCentro  | callback: filterUser; let i = index\" [value]=\"s.idServicio\">{{s.nombre}} / ${{s.precio}}</mat-option>\r\n\r\n\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t<button  class=\"btn btn-success\" style=\"margin-left: 20px;display: inline-block;\"\r\n\t\t\t\t(click)='addServicio(servicioSeleccionado)' [disabled]='!servicioSeleccionado' >Agregar Servicio\r\n\t\t\t\t</button>\r\n\r\n\t\t\t</div>\r\n\r\n\t\t\t\t\t\r\n\t\t\t\t\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t<div  *ngFor=\"let s of serviciosCita; let i = index\" class=\"m-timeline-2__item\"  style=\"width: 100%\">\r\n\r\n\t<!-- \t\t\t\t\t<div class=\"m-timeline-2__item-cricle\">\r\n\t\t\t\t\t\t\t<i class=\"fa fa-genderless mfont-danger\"></i>\r\n\t\t\t\t\t\t</div> -->\r\n\t\t\t\t\t\t<div class=\"m-timeline-2__item-text  m--padding-top-5\" style=\"    width: 100%;\">\r\n\r\n\t\t\t\t\t\t\t<div style=\"background: #faf9f7; border: 1px solid #e1e1e1; border-radius: 4px;padding: 20px 20px 20px 30px; position: relative;\">\r\n\t\t\t\t\t\t\t\t<mat-icon style='position: absolute; left: 0;top: 0; padding: 2px;background-color: transparent;' (click)='quitarItem(i)'>close</mat-icon>\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 16px;margin-bottom: 10px;\">\r\n\t\t\t\t\t\t\t\t\t<span style=\"color:#383734;font-weight: 400\">{{s.nombre}}</span>\r\n\t\t\t\t\t\t\t\t\t<span style=\"color:#383734;float: right;font-weight: 600\">${{s.precio}}</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t\t<div  style=\"    font-size: 16px;    width: 100%;\r\n    height: 22px;\">\r\n\t\t\t\t\t\t\t\t\t<span *ngIf='s.inicio'>{{getHorasFormat2(s.inicio)}} - {{getHorasFormat2(s.fin)}}</span>\r\n\t\t\t\t\t\t\t\r\n\r\n\r\n\t\t\t\t\t\t\t\t\t<span style=\"float: right;\">\r\n\t\t\t\t\t\t\t\t\t\t{{getHoras(s.duracion)}}h {{s.duracion % 60}}min\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\r\n\r\n\t\t\t\t\t\t\t<span  style=\"     text-align: left;\r\n    display: inline;\r\n    color: lightcoral;\r\n    font-weight: 400;\r\n    font-size: 12px;\" *ngIf='this.fechaSeleccionadaN && (!s.inicio || !s.empleados) && !loadingScreen'>\r\n\t\t\t\t\t\t\t\t\t\tSin staff disponibles. Seleccione otra fecha\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t\t<div *ngIf='s.empleados' style=\"    margin-top: 12px;\">\r\n\t\t<!-- \t\t\t\t\t\t<img style='    display: inline-block; margin: auto; height: 35px;' matListAvatar src=\"assets/app/media/img/userB.png\">\r\n\t\t\t\t\t\t\t\t<span style=\"  color:#383734; margin-left: 5px;font-size: 16px;font-weight: 400; display: inline-block;\">{{s.nombreEmpleado}}</span> -->\r\n\t\t\t\t\t\t\t\t\t<label style=\"    display: block;\r\n    font-weight: 400;\">Staff Asignado</label>\r\n\t\t\t\t\t\t\t\t\t<mat-select placeholder=\"\" class='inputBy' style=\"    width: 200px;display: inline-block;\" \r\n\t\t\t\t\t\t\t\t\t[(ngModel)]='s.empleadoSeleccionado'>\r\n\r\n\t\t\t\t\t\t\t\t\t<mat-option *ngFor=\"let e of s.empleados; let i = index\" [value]=\"e\">\r\n\t\t\t\t\t\t\t\t<img style='    display: inline-block; margin: auto; height: 35px;' matListAvatar src=\"http://50.116.17.150:3000/{{e.idFoto}}\" \r\n    onError=\"this.src='assets/app/media/img/userB.png'\">{{e.nombre}}\r\n\r\n\t\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t\t\t\t\t</div> \r\n\t\t\t\t\t\t\t\t<div *ngIf='!cita.fecha' style=\" \">\r\n\t\t\t\t\t\t\t\t\tSeleccione una fecha en el calendario\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</div>\r\n\t\t\r\n\r\n<!-- <div style=\"    float: right;\r\n    margin-top: 20px; margin-bottom: 20px;\">\r\n\t<span style=\"font-size: 16px;\">Total</span>\r\n\t<span style=\"    font-size: 30px;\r\n    color: #383734;\r\n    margin-left: 10px;\">${{citaSeleccionada?.precioEsperado}}</span>\r\n</div> -->\r\n\r\n\r\n\t\t\t\t<!-- \t<div class=\"m-timeline-2__item m--margin-top-30\">\r\n\t\t\t\t\t\t<span class=\"m-timeline-2__item-time\">17:00</span>\r\n\t\t\t\t\t\t<div class=\"m-timeline-2__item-cricle\">\r\n\t\t\t\t\t\t\t<i class=\"fa fa-genderless m--font-info\"></i>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"m-timeline-2__item-text m--padding-top-5\">\r\n\t\t\t\t\t\t\tPlaced a new order in\r\n\t\t\t\t\t\t\t<a href=\"#\" class=\"m-link m-link--brand m--font-bolder\">SIGNATURE MOBILE</a> marketplace.\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</div> -->\r\n\t\r\n\r\n\t\t\r\n\r\n\r\n\r\n\r\n\r\n\r\n</div>\r\n\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -5616,7 +12331,7 @@ var NuevareservaComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n<!-- \r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n -->\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 15px;\">Perfil de Negocio</div>\r\n\r\n\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='editarCentroInfo()' \r\n    [disabled]='!centroInfo.nombre' >Guardar</button>\r\n\r\n<!-- \t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button> -->\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n<ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"text-align: center\">\r\n\t\t\t<img   style='    height: 70px;\r\n    width: 70px;\r\n    margin-bottom: 40px;\r\n\r\n    margin: 5px 11px;' src=\"http://50.116.17.150:3000/{{centroInfo.idFoto}}\" \r\n    onError=\"this.src='assets/app/media/img/fotoComercio.png'\">\r\n\r\n<div style=\"margin-bottom: 15px;\">\r\n    <label style='border: solid 1px lightgray;\r\n    padding: 5px;\r\n    margin-top: 13px;' for=\"filesL\" class=\"btn cambImg\">cambiar logo</label>\r\n  <input [hidden]='true'  id=\"filesL\" style='margin-top: 10px;' type=\"file\" (change)=\"onFileChanged2($event)\">\r\n\r\n</div>\r\n</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t\r\n\r\n\t\t\t\t<label class='labelBy'>Nombre del Negocio</label>\r\n\t\t\t\t<input [(ngModel)]='centroInfo.nombre' class='inputBy w100' placeholder=\"cual es el nombre del negocio\"  autocomplete=\"off\"  type=\"text\" name=\"nombre\">\r\n\t\t\t</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Telefono</label>\r\n\t\t\t\t<input  [(ngModel)]='centroInfo.telefono' class='inputBy w100' placeholder=\"cual es el telefono del negocio\"  autocomplete=\"off\"  type=\"number\" name=\"telefono\">\r\n\t\t\t</div>\r\n\r\n      <div class=\"conteinInput\">\r\n        <label class='labelBy'>Web</label>\r\n        <input  [(ngModel)]='centroInfo.fbLink' class='inputBy w100' placeholder=\"cual es el telefono del negocio\"  autocomplete=\"off\"  type=\"tel\" name=\"telefono\">\r\n      </div>\r\n\r\n      <div class=\"conteinInput\">\r\n        <label class='labelBy'>Descripcion del negocio</label>\r\n        <input  [(ngModel)]='centroInfo.sobreNosotros' class='inputBy w100' placeholder=\"descripcion del negocio\"  autocomplete=\"off\"  type=\"text\" name=\"descripcion\">\r\n      </div>\r\n\r\n\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\r\n<div class=\"conteinInput\">\r\n\t\t\t<div>\t<label class='labelBy'>Imagen de Perfil</label></div>\r\n\t\t\t\t<img   style='       height: 230px;\r\n    width: 375px;' src=\"http://50.116.17.150:3000/{{centroInfo.imagenBanner}}\" \r\n    onError=\"this.src='assets/app/media/img/banner.png'\">\r\n<div style=\"    text-align: center;\">\r\n   <label  style='border: solid 1px lightgray;\r\n    padding: 5px;\r\n    margin-top: 13px;' for=\"filesB\" class=\"btn cambImg\">cambiar foto de Banner</label>\r\n<input id='filesB' [hidden]='true' style='margin-top: 20px;' type=\"file\" (change)=\"onFileChanged($event)\">\r\n</div>\r\n\r\n\r\n\r\n\t\t\t</div>\r\n\r\n\r\n<!-- \r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Telefono</label>\r\n\t\t\t\t<input class='inputBy w100' placeholder=\"cual es el telefono del negocio\"  autocomplete=\"off\"  type=\"tel\" name=\"telefono\">\r\n\t\t\t</div> -->\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n  <div  class=\"form-group row\">\r\n\r\n  \t<div style=\"    padding-left: 15px;\">\t<label class='labelBy'>Ubicacion del Negocio</label></div>\r\n\r\n    <div  class=\"col-sm-10\">\r\n\r\n    <div class=\"form-group\">\r\n        <input [(ngModel)]='centroInfo.direccion' placeholder=\"busca por lugar\" autocorrect=\"off\" autocapitalize=\"off\" spellcheck=\"off\" type=\"text\" class=\"form-control\" #search [formControl]=\"searchControl\" >\r\n      </div>\r\n\r\n<agm-map style='height: 400px; width: 100%' \r\n  [latitude]=\"centroInfo.latitud\"\r\n  [longitude]=\"centroInfo.longitud\"\r\n  [zoom]=\"zoom\"\r\n  [disableDefaultUI]=\"false\"\r\n  [zoomControl]=\"true\"\r\n  [mapDraggable]=\"true\"\r\n  \r\n  (mapClick)=\"mapClicked($event)\">\r\n \r\n  <agm-marker \r\n      *ngFor=\"let m of markers; let i = index\"\r\n      (markerClick)=\"clickedMarker(m.label, i)\"\r\n      [latitude]=\"m.lat\"\r\n      [longitude]=\"m.lng\"\r\n      [label]=\"m.label\"\r\n      [markerDraggable]=\"m.draggable\"\r\n      (dragEnd)=\"markerDragEnd(m, $event)\">\r\n      \r\n    <agm-info-window>\r\n      <strong>InfoWindow content</strong>\r\n    </agm-info-window>\r\n    \r\n  </agm-marker> \r\n  <!--\r\n  <agm-circle [latitude]=\"lat + 0.3\" [longitude]=\"lng\" \r\n      [radius]=\"5000\"\r\n      [fillColor]=\"'red'\"\r\n      [circleDraggable]=\"true\"\r\n      [editable]=\"true\">\r\n  </agm-circle>\r\n-->\r\n</agm-map>\r\n</div>\r\n</div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t\t</div>\r\n\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n<!-- \r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n -->\t<div class=\"\" style=\"display: inline-block;font-size: 25px;font-weight: 300;padding-left: 15px;\">Perfil de Negocio\r\n\r\n  <span style=\"display: block;\r\n    font-size: 14px;\r\n    line-height: 15px;\">Información del perfil de tu negocio!</span>\r\n\r\n  \r\n</div>\r\n\r\n\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='editarCentroInfo()' \r\n    [disabled]='!centroInfo.nombre' >Guardar</button>\r\n\r\n<!-- \t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button> -->\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n<ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t\t<div style=\"text-align: center\">\r\n\t\t\t<img   style='    height: 70px;\r\n    width: 70px;\r\n    margin-bottom: 40px;\r\n\r\n    margin: 5px 11px;' src=\"http://50.116.17.150:3000/{{centroInfo.idFoto}}\" \r\n    onError=\"this.src='assets/app/media/img/fotoComercio.png'\">\r\n\r\n<div style=\"margin-bottom: 15px;\">\r\n    <label style='border: solid 1px lightgray;\r\n    padding: 5px;\r\n    margin-top: 13px;' for=\"filesL\" class=\"btn cambImg\">cambiar logo</label>\r\n  <input [hidden]='true'  id=\"filesL\" style='margin-top: 10px;' type=\"file\" (change)=\"onFileChanged2($event)\">\r\n\r\n</div>\r\n</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t\r\n\r\n\t\t\t\t<label class='labelBy'>Nombre del Negocio</label>\r\n\t\t\t\t<input [(ngModel)]='centroInfo.nombre' class='inputBy w100' placeholder=\"cual es el nombre del negocio\"  autocomplete=\"off\"  type=\"text\" name=\"nombre\">\r\n\t\t\t</div>\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Telefono</label>\r\n\t\t\t\t<input  [(ngModel)]='centroInfo.telefono' class='inputBy w100' placeholder=\"cual es el telefono del negocio\"  autocomplete=\"off\"  type=\"number\" name=\"telefono\">\r\n\t\t\t</div>\r\n\r\n      <div class=\"conteinInput\">\r\n        <label class='labelBy'>Web</label>\r\n        <input  [(ngModel)]='centroInfo.fbLink' class='inputBy w100' placeholder=\"cual es el telefono del negocio\"  autocomplete=\"off\"  type=\"tel\" name=\"telefono\">\r\n      </div>\r\n\r\n      <div class=\"conteinInput\">\r\n        <label class='labelBy'>Descripcion del negocio</label>\r\n        <input  [(ngModel)]='centroInfo.sobreNosotros' class='inputBy w100' placeholder=\"descripcion del negocio\"  autocomplete=\"off\"  type=\"text\" name=\"descripcion\">\r\n      </div>\r\n\r\n\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\r\n<div class=\"conteinInput\">\r\n\t\t\t<div>\t<label class='labelBy'>Imagen de Perfil</label></div>\r\n\t\t\t\t<img   style='       height: 230px;\r\n    width: 375px;' src=\"http://50.116.17.150:3000/{{centroInfo.imagenBanner}}\" \r\n    onError=\"this.src='assets/app/media/img/banner.png'\">\r\n<div style=\"    text-align: center;\">\r\n   <label  style='border: solid 1px lightgray;\r\n    padding: 5px;\r\n    margin-top: 13px;' for=\"filesB\" class=\"btn cambImg\">cambiar foto de Banner</label>\r\n<input id='filesB' [hidden]='true' style='margin-top: 20px;' type=\"file\" (change)=\"onFileChanged($event)\">\r\n</div>\r\n\r\n\r\n\r\n\t\t\t</div>\r\n\r\n\r\n<!-- \r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Telefono</label>\r\n\t\t\t\t<input class='inputBy w100' placeholder=\"cual es el telefono del negocio\"  autocomplete=\"off\"  type=\"tel\" name=\"telefono\">\r\n\t\t\t</div> -->\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n  <div  class=\"form-group row\">\r\n\r\n  \t<div style=\"    padding-left: 15px;\">\t<label class='labelBy'>Ubicacion del Negocio</label></div>\r\n\r\n    <div  class=\"col-sm-10\">\r\n\r\n    <div class=\"form-group\">\r\n        <input [(ngModel)]='centroInfo.direccion' placeholder=\"busca por lugar\" autocorrect=\"off\" autocapitalize=\"off\" spellcheck=\"off\" type=\"text\" class=\"form-control\" #search [formControl]=\"searchControl\" >\r\n      </div>\r\n\r\n<agm-map style='height: 400px; width: 100%' \r\n  [latitude]=\"centroInfo.latitud\"\r\n  [longitude]=\"centroInfo.longitud\"\r\n  [zoom]=\"zoom\"\r\n  [disableDefaultUI]=\"false\"\r\n  [zoomControl]=\"true\"\r\n  [mapDraggable]=\"true\"\r\n  \r\n  (mapClick)=\"mapClicked($event)\">\r\n \r\n  <agm-marker \r\n      *ngFor=\"let m of markers; let i = index\"\r\n      (markerClick)=\"clickedMarker(m.label, i)\"\r\n      [latitude]=\"m.lat\"\r\n      [longitude]=\"m.lng\"\r\n      [label]=\"m.label\"\r\n      [markerDraggable]=\"m.draggable\"\r\n      (dragEnd)=\"markerDragEnd(m, $event)\">\r\n      \r\n    <agm-info-window>\r\n      <strong>InfoWindow content</strong>\r\n    </agm-info-window>\r\n    \r\n  </agm-marker> \r\n  <!--\r\n  <agm-circle [latitude]=\"lat + 0.3\" [longitude]=\"lng\" \r\n      [radius]=\"5000\"\r\n      [fillColor]=\"'red'\"\r\n      [circleDraggable]=\"true\"\r\n      [editable]=\"true\">\r\n  </agm-circle>\r\n-->\r\n</agm-map>\r\n</div>\r\n</div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t\t</div>\r\n\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -5880,7 +12595,7 @@ var PerfilnegocioComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n \r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 15px;\">Reprogramar Reserva</div>\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='guardarCita()' \r\n    [disabled]='!this.datasCita.horaInicio  ||  sinEmpleado()' >Guardar</button>\r\n<!-- \r\n\r\n\r\n\t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button> -->\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n<ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\r\n\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t\r\n\r\n\t\t\t\t<label class='labelBy'>Cliente</label>\r\n\t\t\t\t<div style=\"font-style: 16px\">{{datasCita.nombreCliente}}</div>\r\n\t\t\t</div>\r\n\r\n\t\t\t<div class=\"conteinInput\"> \r\n\t\t\t<label class='labelBy'>Fecha</label>\r\n\t\t\t<mat-form-field style='  margin-right: 20px;  width: 100% !important;' >\r\n\t\t\t<input matInput [(ngModel)]='datasCita.horaInicio' [matDatepicker]=\"pickerI\" \r\n\t\t\t(dateChange)=\"moveDate($event)\" [matDatepickerFilter]=\"myFilter\" placeholder=\"Fecha\" [min]=\"fechaMin\" autocomplete=\"off\">\r\n\t\t\t<mat-datepicker-toggle matSuffix [for]=\"pickerI\"></mat-datepicker-toggle>\r\n\t\t\t<mat-datepicker #pickerI></mat-datepicker>\r\n\t\t\t</mat-form-field>\r\n\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t<div class=\"conteinInput\"> \r\n\t\t\t<label class='labelBy'>Hora de Inicio</label>\r\n\t\t      <mat-select  placeholder=\"\" class='inputBy selectD' \r\n\t\t       (selectionChange)=\"changeTime($event)\">\r\n\t\t                  <mat-option \r\n\t\t                  *ngFor=\"let h of horasDisponibles; let i = index\" \r\n\t\t                   [value]=\"h.inicio\">{{getHorasFormat(h.inicio)}}</mat-option>\r\n\t\t      </mat-select>\r\n\r\n\t\t\t</div>\r\n\r\n<!-- \t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Telefono</label>\r\n\t\t\t\t<input  [(ngModel)]='centroInfo.telefono' class='inputBy w100' placeholder=\"cual es el telefono del negocio\"  autocomplete=\"off\"  type=\"number\" name=\"telefono\">\r\n\t\t\t</div> -->\r\n\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\r\n\t\t<div style=\"padding: 20px 25px; \">\r\n\r\n\r\n\t\t\t<div class=\"conteinInput\"> \r\n\r\n\t\t\t\t<div><label class='labelBy'>Servicios</label></div>\r\n\r\n<!-- \t\t\t\t<mat-select placeholder=\"\" \r\n\t\t\t\t [(ngModel)]='servicioSeleccionado' \r\n\t\t\t\t class='inputBy' style=\"    width: 200px;display: inline-block;\">\r\n\r\n\t\t\t\t<mat-option *ngFor=\"let s of serviciosCentro; let i = index\" [value]=\"s.idServicio\">{{s.nombre}} / ${{s.precio}}</mat-option>\r\n\r\n\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t<button  class=\"btn btn-success\" style=\"margin-left: 20px;display: inline-block;\"\r\n\t\t\t\t(click)='addServicio(servicioSeleccionado)' [disabled]='!servicioSeleccionado' >Agregar Servicio\r\n\t\t\t\t</button> -->\r\n\r\n\t\t\t</div>\r\n\r\n\t\t\t\t\t\r\n\t\t\t\t\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t<div  *ngFor=\"let s of serviciosCita; let i = index\" class=\"m-timeline-2__item\"  style=\"width: 100%\">\r\n\r\n\t<!-- \t\t\t\t\t<div class=\"m-timeline-2__item-cricle\">\r\n\t\t\t\t\t\t\t<i class=\"fa fa-genderless mfont-danger\"></i>\r\n\t\t\t\t\t\t</div> -->\r\n\t\t\t\t\t\t<div class=\"m-timeline-2__item-text  m--padding-top-5\" style=\"    width: 100%;\">\r\n\r\n\t\t\t\t\t\t\t<div style=\"background: #faf9f7; border: 1px solid #e1e1e1; border-radius: 4px;padding: 20px 20px 20px 30px; position: relative;\">\r\n\t\t<!-- \t\t\t\t\t\t<mat-icon style='position: absolute; left: 0;top: 0; padding: 2px;background-color: transparent;' (click)='quitarItem(i)'>close</mat-icon> -->\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 16px;margin-bottom: 10px;\">\r\n\t\t\t\t\t\t\t\t\t<span style=\"color:#383734;font-weight: 400\">{{s.nombre}}</span>\r\n\t\t\t\t\t\t\t\t\t<span style=\"color:#383734;float: right;font-weight: 600\">${{s.precio}}</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t\t<div  style=\"    font-size: 16px;    width: 100%;\r\n    height: 22px;\">\r\n\t\t\t\t\t\t\t\t\t<span *ngIf='s.inicio'>{{getHorasFormat2(s.inicio)}} - {{getHorasFormat2(s.fin)}}</span>\r\n\t\t\t\t\t\t\t\r\n\r\n\r\n\t\t\t\t\t\t\t\t\t<span style=\"float: right;\">\r\n\t\t\t\t\t\t\t\t\t\t{{getHoras(s.duracion)}}h {{s.duracion % 60}}min\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\r\n\r\n\t\t\t\t\t\t\t<span  style=\"    width: 100%;\r\n\t\t\t\t\t\t\t\t    text-align: left;\r\n\t\t\t\t\t\t\t\t    display: block;\r\n\t\t\t\t\t\t\t\t    color: lightcoral;    font-weight: 400;\" *ngIf='this.fechaSeleccionadaN && (!s.inicio || !s.empleados) && !loadingScreen'>\r\n\t\t\t\t\t\t\t\t\t\tNo disponible, intenta otro horario o fecha\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t\t<div *ngIf='s.empleados' style=\"    margin-top: 23px;\">\r\n\t\t<!-- \t\t\t\t\t\t<img style='    display: inline-block; margin: auto; height: 35px;' matListAvatar src=\"assets/app/media/img/userB.png\">\r\n\t\t\t\t\t\t\t\t<span style=\"  color:#383734; margin-left: 5px;font-size: 16px;font-weight: 400; display: inline-block;\">{{s.nombreEmpleado}}</span> -->\r\n\r\n\t\t\t\t\t\t\t\t\t<mat-select placeholder=\"\" class='inputBy' style=\"    width: 200px;display: inline-block;\" \r\n\t\t\t\t\t\t\t\t\t[(ngModel)]='s.empleadoSeleccionado'>\r\n\r\n\t\t\t\t\t\t\t\t\t<mat-option *ngFor=\"let e of s.empleados; let i = index\" [value]=\"e\">\r\n\t\t\t\t\t\t\t\t<img style='    display: inline-block; margin: auto; height: 35px;' matListAvatar src=\"http://50.116.17.150:3000/{{e.idFoto}}\" \r\n    onError=\"this.src='assets/app/media/img/userB.png'\">{{e.nombre}}\r\n\r\n\t\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t\t\t\t\t</div> \r\n\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</div>\r\n\t\t\r\n\r\n<!-- <div style=\"    float: right;\r\n    margin-top: 20px; margin-bottom: 20px;\">\r\n\t<span style=\"font-size: 16px;\">Total</span>\r\n\t<span style=\"    font-size: 30px;\r\n    color: #383734;\r\n    margin-left: 10px;\">${{citaSeleccionada?.precioEsperado}}</span>\r\n</div> -->\r\n\r\n\r\n\t\t\t\t<!-- \t<div class=\"m-timeline-2__item m--margin-top-30\">\r\n\t\t\t\t\t\t<span class=\"m-timeline-2__item-time\">17:00</span>\r\n\t\t\t\t\t\t<div class=\"m-timeline-2__item-cricle\">\r\n\t\t\t\t\t\t\t<i class=\"fa fa-genderless m--font-info\"></i>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"m-timeline-2__item-text m--padding-top-5\">\r\n\t\t\t\t\t\t\tPlaced a new order in\r\n\t\t\t\t\t\t\t<a href=\"#\" class=\"m-link m-link--brand m--font-bolder\">SIGNATURE MOBILE</a> marketplace.\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</div> -->\r\n\t\r\n\r\n\t\t\r\n\r\n\r\n\r\n\r\n\r\n\r\n</div>\r\n\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n \r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 26px;font-weight: 300;padding-left: 15px;\">Reprogramar Reserva</div>\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='guardarCita()' \r\n    [disabled]='!this.datasCita.horaInicio  ||  sinEmpleado()' >Guardar</button>\r\n<!-- \r\n\r\n\r\n\t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button> -->\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n<ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"padding: 40px 60px; \">\r\n\r\n\r\n\t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t\r\n\r\n\t\t\t\t<label class='labelBy'>Cliente</label>\r\n\t\t\t\t<div style=\"font-style: 16px\">{{datasCita.nombreCliente}}</div>\r\n\t\t\t</div>\r\n\r\n\t\t\t<div class=\"conteinInput\"> \r\n\t\t\t<label class='labelBy'>Fecha</label>\r\n\t\t\t<mat-form-field style='  margin-right: 20px;  width: 100% !important;' >\r\n\t\t\t<input matInput [(ngModel)]='datasCita.horaInicio' [matDatepicker]=\"pickerI\" \r\n\t\t\t(dateChange)=\"moveDate($event)\" [matDatepickerFilter]=\"myFilter\" placeholder=\"Fecha\" [min]=\"fechaMin\" autocomplete=\"off\">\r\n\t\t\t<mat-datepicker-toggle matSuffix [for]=\"pickerI\"></mat-datepicker-toggle>\r\n\t\t\t<mat-datepicker #pickerI></mat-datepicker>\r\n\t\t\t</mat-form-field>\r\n\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t<div class=\"conteinInput\"> \r\n\t\t\t<label class='labelBy'>Hora de Inicio</label>\r\n\t\t      <mat-select  placeholder=\"\" class='inputBy selectD' \r\n\t\t       (selectionChange)=\"changeTime($event)\">\r\n\t\t                  <mat-option \r\n\t\t                  *ngFor=\"let h of horasDisponibles; let i = index\" \r\n\t\t                   [value]=\"h.inicio\">{{getHorasFormat(h.inicio)}}</mat-option>\r\n\t\t      </mat-select>\r\n\r\n\t\t\t</div>\r\n\r\n<!-- \t\t\t<div class=\"conteinInput\">\r\n\t\t\t\t<label class='labelBy'>Telefono</label>\r\n\t\t\t\t<input  [(ngModel)]='centroInfo.telefono' class='inputBy w100' placeholder=\"cual es el telefono del negocio\"  autocomplete=\"off\"  type=\"number\" name=\"telefono\">\r\n\t\t\t</div> -->\r\n\r\n\t\t</div>\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\r\n\t\t<div style=\"padding: 20px 25px; \">\r\n\r\n\r\n\t\t\t<div class=\"conteinInput\"> \r\n\r\n\t\t\t\t<div><label class='labelBy'>Servicios</label></div>\r\n\r\n<!-- \t\t\t\t<mat-select placeholder=\"\" \r\n\t\t\t\t [(ngModel)]='servicioSeleccionado' \r\n\t\t\t\t class='inputBy' style=\"    width: 200px;display: inline-block;\">\r\n\r\n\t\t\t\t<mat-option *ngFor=\"let s of serviciosCentro; let i = index\" [value]=\"s.idServicio\">{{s.nombre}} / ${{s.precio}}</mat-option>\r\n\r\n\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t<button  class=\"btn btn-success\" style=\"margin-left: 20px;display: inline-block;\"\r\n\t\t\t\t(click)='addServicio(servicioSeleccionado)' [disabled]='!servicioSeleccionado' >Agregar Servicio\r\n\t\t\t\t</button> -->\r\n\r\n\t\t\t</div>\r\n\r\n\t\t\t\t\t\r\n\t\t\t\t\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t<div  *ngFor=\"let s of serviciosCita; let i = index\" class=\"m-timeline-2__item\"  style=\"width: 100%\">\r\n\r\n\t<!-- \t\t\t\t\t<div class=\"m-timeline-2__item-cricle\">\r\n\t\t\t\t\t\t\t<i class=\"fa fa-genderless mfont-danger\"></i>\r\n\t\t\t\t\t\t</div> -->\r\n\t\t\t\t\t\t<div class=\"m-timeline-2__item-text  m--padding-top-5\" style=\"    width: 100%;\">\r\n\r\n\t\t\t\t\t\t\t<div style=\"background: #faf9f7; border: 1px solid #e1e1e1; border-radius: 4px;padding: 20px 20px 20px 30px; position: relative;\">\r\n\t\t<!-- \t\t\t\t\t\t<mat-icon style='position: absolute; left: 0;top: 0; padding: 2px;background-color: transparent;' (click)='quitarItem(i)'>close</mat-icon> -->\r\n\t\t\t\t\t\t\t\t<div style=\"    font-size: 16px;margin-bottom: 10px;\">\r\n\t\t\t\t\t\t\t\t\t<span style=\"color:#383734;font-weight: 400\">{{s.nombre}}</span>\r\n\t\t\t\t\t\t\t\t\t<span style=\"color:#383734;float: right;font-weight: 600\">${{s.precio}}</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t\t<div  style=\"    font-size: 16px;    width: 100%;\r\n    height: 22px;\">\r\n\t\t\t\t\t\t\t\t\t<span *ngIf='s.inicio'>{{getHorasFormat2(s.inicio)}} - {{getHorasFormat2(s.fin)}}</span>\r\n\t\t\t\t\t\t\t\r\n\r\n\r\n\t\t\t\t\t\t\t\t\t<span style=\"float: right;\">\r\n\t\t\t\t\t\t\t\t\t\t{{getHoras(s.duracion)}}h {{s.duracion % 60}}min\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\r\n\r\n\t\t\t\t\t\t\t<span  style=\"    width: 100%;\r\n\t\t\t\t\t\t\t\t    text-align: left;\r\n\t\t\t\t\t\t\t\t    display: block;\r\n\t\t\t\t\t\t\t\t    color: lightcoral;    font-weight: 400;\" *ngIf='this.fechaSeleccionadaN && (!s.inicio || !s.empleados) && !loadingScreen'>\r\n\t\t\t\t\t\t\t\t\t\tNo disponible, intenta otro horario o fecha\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t\t<div *ngIf='s.empleados' style=\"    margin-top: 23px;\">\r\n\t\t<!-- \t\t\t\t\t\t<img style='    display: inline-block; margin: auto; height: 35px;' matListAvatar src=\"assets/app/media/img/userB.png\">\r\n\t\t\t\t\t\t\t\t<span style=\"  color:#383734; margin-left: 5px;font-size: 16px;font-weight: 400; display: inline-block;\">{{s.nombreEmpleado}}</span> -->\r\n\r\n\t\t\t\t\t\t\t\t\t<mat-select placeholder=\"\" class='inputBy' style=\"    width: 200px;display: inline-block;\" \r\n\t\t\t\t\t\t\t\t\t[(ngModel)]='s.empleadoSeleccionado'>\r\n\r\n\t\t\t\t\t\t\t\t\t<mat-option *ngFor=\"let e of s.empleados; let i = index\" [value]=\"e\">\r\n\t\t\t\t\t\t\t\t<img style='    display: inline-block; margin: auto; height: 35px;' matListAvatar src=\"http://50.116.17.150:3000/{{e.idFoto}}\" \r\n    onError=\"this.src='assets/app/media/img/userB.png'\">{{e.nombre}}\r\n\r\n\t\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t\t\t\t\t</div> \r\n\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</div>\r\n\t\t\r\n\r\n<!-- <div style=\"    float: right;\r\n    margin-top: 20px; margin-bottom: 20px;\">\r\n\t<span style=\"font-size: 16px;\">Total</span>\r\n\t<span style=\"    font-size: 30px;\r\n    color: #383734;\r\n    margin-left: 10px;\">${{citaSeleccionada?.precioEsperado}}</span>\r\n</div> -->\r\n\r\n\r\n\t\t\t\t<!-- \t<div class=\"m-timeline-2__item m--margin-top-30\">\r\n\t\t\t\t\t\t<span class=\"m-timeline-2__item-time\">17:00</span>\r\n\t\t\t\t\t\t<div class=\"m-timeline-2__item-cricle\">\r\n\t\t\t\t\t\t\t<i class=\"fa fa-genderless m--font-info\"></i>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"m-timeline-2__item-text m--padding-top-5\">\r\n\t\t\t\t\t\t\tPlaced a new order in\r\n\t\t\t\t\t\t\t<a href=\"#\" class=\"m-link m-link--brand m--font-bolder\">SIGNATURE MOBILE</a> marketplace.\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</div> -->\r\n\t\r\n\r\n\t\t\r\n\r\n\r\n\r\n\r\n\r\n\r\n</div>\r\n\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -6274,7 +12989,7 @@ var ReprogramacionComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n<!-- \r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n -->\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 15px;\">Valoraciones</div>\r\n\r\n\r\n<!--\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='editarCentroInfo()' \r\n    [disabled]='!centroInfo.nombre' >Guardar</button>\r\n\r\n \t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button> -->\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n<ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;    padding-right: 0px !important;\" >\r\n\r\n\r\n    \r\n<div style=\"    padding: 20px;\"> \r\n    <p>Buscar en periodo</p>\r\n<mat-form-field style='  margin-right: 20px;  width: 120px !important;' >\r\n  <input matInput [(ngModel)]='fechas.inicio' [matDatepicker]=\"pickerI\" \r\n  (dateChange)=\"changeDate2()\" placeholder=\"Inicio\" >\r\n  <mat-datepicker-toggle matSuffix [for]=\"pickerI\"></mat-datepicker-toggle>\r\n  <mat-datepicker #pickerI></mat-datepicker>\r\n</mat-form-field>\r\n\r\n<mat-form-field style='    width: 120px !important;' >\r\n  <input matInput [disabled]='!fechas.inicio' [(ngModel)]='fechas.fin' [min]=\"fechas.inicio\" [matDatepicker]=\"pickerF\" (dateChange)=\"changeDate1()\" placeholder=\"Fin\">\r\n  <mat-datepicker-toggle matSuffix [for]=\"pickerF\"></mat-datepicker-toggle>\r\n  <mat-datepicker #pickerF></mat-datepicker>\r\n</mat-form-field>\r\n\r\n</div>\r\n\r\n\r\n<mat-nav-list style='padding-top: 0px '>\r\n\r\n\t  <mat-list-item   *ngFor=\"let r of reviews; let i = index\" \r\n      style='border-top: solid 1px lightgray;' >\r\n\r\n    <img matListAvatar src=\"http://50.116.17.150:3000/{{r.idFoto}}\" \r\n    onError=\"this.src='assets/app/media/img/userB.png'\">\r\n\r\n  \r\n   <div matLine> \r\n    <span>{{r.nombreCliente}}</span> \r\n    <button matLine style=\"width: 104px;\r\n    display: inline-block;\r\n    margin-left: 10px;\r\n    height: 27px;\r\n    line-height: 0px;\" class=\"btn btn-sm btn-outline-success\"\r\n    [routerLink]=\"['/detallecita']\" [queryParams]=\"{id: r.idCita}\" >ver reserva</button>\r\n\r\n\r\n    <p style=\"float:right;    color: darkgray;\r\n    margin-right: 25px;\">{{r.soloFecha}}</p></div>\r\n    \t\t\t<div matLine>\r\n\r\n\t\t\t\t<mat-icon  \r\n                [ngStyle]=\"{'color': r.puntuacion>0 ? '#FFC107' : '#dcdcdc' }\">\r\n                star</mat-icon>\r\n\r\n\t\t\t\t<mat-icon  \r\n                [ngStyle]=\"{'color': r.puntuacion>1 ? '#FFC107' : '#dcdcdc' }\">\r\n                star</mat-icon>\r\n\r\n                <mat-icon  \r\n                [ngStyle]=\"{'color': r.puntuacion>2 ? '#FFC107' : '#dcdcdc' }\">\r\n                star</mat-icon>\r\n\r\n                <mat-icon  \r\n                [ngStyle]=\"{'color': r.puntuacion>3 ? '#FFC107' : '#dcdcdc' }\">\r\n                star</mat-icon>\r\n\r\n                <mat-icon  \r\n                [ngStyle]=\"{'color': r.puntuacion>4 ? '#FFC107' : '#dcdcdc' }\">\r\n                star</mat-icon>\r\n\r\n<!-- \t\t\t\t<mat-icon style='color: #FFC107;'>star</mat-icon> -->\r\n\r\n\r\n\t\t\t</div>\r\n    <p matLine style=\"    margin-bottom: 10px;\">\r\n\r\n      <span >{{r.comentario}}</span>\r\n \r\n    </p>\r\n\r\n        <div matLine>\r\n    \t<input [(ngModel)]='r.respuestaCentro'   style=\"    width: 80%;\" type=\"text\" name=\"\">\r\n        </div>\r\n        <button matLine style=\"       margin-top: 9px;\r\n    width: 104px;\" class=\"btn btn-sm btn-success\" [disabled]='!r.respuestaCentro' \r\n    (click)='responderCom(r)' >Responder</button>\r\n\r\n  </mat-list-item>\r\n\r\n\r\n\r\n\r\n\r\n</mat-nav-list>\r\n\r\n\r\n\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\r\n\t\t<div *ngIf='dataReview && dataReview.puntuacion' style=\"padding: 20px;\r\n    text-align: center;\r\n    display: inline-block;\">\r\n\t\t\t<div style=\"border-bottom: solid 1px #34bfa3;\r\n    color: #34bfa3;\r\n    background-color: white;\r\n    padding: 7px;\r\n    font-size: 14px;\">Puntuacion del negocio</div>\r\n\t\t\t<div style=\"padding: 20px;\r\n    text-align: center;\r\n    display: inline-block;font-size: 32px\">{{dataReview.puntuacion.toFixed(1)}}</div>\r\n\t\t\t<div>\r\n\r\n\r\n\r\n\r\n                <mat-icon  \r\n                [ngStyle]=\"{'color': dataReview.puntuacion>0 ? '#FFC107' : '#dcdcdc' }\">\r\n                star</mat-icon>\r\n\r\n                <mat-icon  \r\n                [ngStyle]=\"{'color': dataReview.puntuacion>1 ? '#FFC107' : '#dcdcdc' }\">\r\n                star</mat-icon>\r\n\r\n                <mat-icon  \r\n                [ngStyle]=\"{'color': dataReview.puntuacion>2 ? '#FFC107' : '#dcdcdc' }\">\r\n                star</mat-icon>\r\n\r\n                <mat-icon  \r\n                [ngStyle]=\"{'color': dataReview.puntuacion>3 ? '#FFC107' : '#dcdcdc' }\">\r\n                star</mat-icon>\r\n\r\n                <mat-icon  \r\n                [ngStyle]=\"{'color': dataReview.puntuacion>4 ? '#FFC107' : '#dcdcdc' }\">\r\n                star</mat-icon>\r\n\r\n\r\n\t\t\t</div>\r\n\t\t\t<div style=\"color: #6b6b6b;\">Puntuacion basada en {{dataReview.cantidad}} valoraciones de los clientes</div>\r\n\t\t</div>\r\n\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n<!-- \r\n\t<i (click)='goBack()' style=\"font-size: 25px;\r\n    color: lightgray;\r\n    padding-left: 10px;\" class=\"la la-angle-left\"></i>\r\n -->\t<div class=\"\" style=\"display: inline-block;font-size: 26px;font-weight: 300;padding-left: 15px;\">Valoraciones\r\n   <span style=\"display: block;\r\n    font-size: 14px;\r\n    line-height: 15px;\">Conoce la opinión de tus clientes!</span>\r\n</div>\r\n\r\n\r\n<!--\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='editarCentroInfo()' \r\n    [disabled]='!centroInfo.nombre' >Guardar</button>\r\n\r\n \t<button  class=\"btn btn-outline-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" (click)='goBack()' >Cancelar</button> -->\r\n\r\n\r\n</div>\r\n<div class=\"row\">\r\n<ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\t<div class=\"col-xl-6\" style=\"    border-right: solid 1px lightgray;    padding-right: 0px !important;\" >\r\n\r\n\r\n    \r\n<div style=\"    padding: 20px;\"> \r\n    <p>Buscar en periodo</p>\r\n<mat-form-field style='  margin-right: 20px;  width: 120px !important;' >\r\n  <input matInput [(ngModel)]='fechas.inicio' [matDatepicker]=\"pickerI\" \r\n  (dateChange)=\"changeDate2()\" placeholder=\"Inicio\" >\r\n  <mat-datepicker-toggle matSuffix [for]=\"pickerI\"></mat-datepicker-toggle>\r\n  <mat-datepicker #pickerI></mat-datepicker>\r\n</mat-form-field>\r\n\r\n<mat-form-field style='    width: 120px !important;' >\r\n  <input matInput [disabled]='!fechas.inicio' [(ngModel)]='fechas.fin' [min]=\"fechas.inicio\" [matDatepicker]=\"pickerF\" (dateChange)=\"changeDate1()\" placeholder=\"Fin\">\r\n  <mat-datepicker-toggle matSuffix [for]=\"pickerF\"></mat-datepicker-toggle>\r\n  <mat-datepicker #pickerF></mat-datepicker>\r\n</mat-form-field>\r\n\r\n</div>\r\n\r\n\r\n<mat-nav-list style='padding-top: 0px '>\r\n\r\n\t  <mat-list-item   *ngFor=\"let r of reviews; let i = index\" \r\n      style='border-top: solid 1px lightgray;' >\r\n\r\n    <img matListAvatar src=\"http://50.116.17.150:3000/{{r.idFoto}}\" \r\n    onError=\"this.src='assets/app/media/img/userB.png'\">\r\n\r\n  \r\n   <div matLine> \r\n    <span>{{r.nombreCliente}}</span> \r\n    <button matLine style=\"width: 104px;\r\n    display: inline-block;\r\n    margin-left: 10px;\r\n    height: 27px;\r\n    line-height: 0px;\" class=\"btn btn-sm btn-outline-success\"\r\n    [routerLink]=\"['/detallecita']\" [queryParams]=\"{id: r.idCita}\" >ver reserva</button>\r\n\r\n\r\n    <p style=\"float:right;    color: darkgray;\r\n    margin-right: 25px;\">{{r.soloFecha}}</p></div>\r\n    \t\t\t<div matLine>\r\n\r\n\t\t\t\t<mat-icon  \r\n                [ngStyle]=\"{'color': r.puntuacion>0 ? '#FFC107' : '#dcdcdc' }\">\r\n                star</mat-icon>\r\n\r\n\t\t\t\t<mat-icon  \r\n                [ngStyle]=\"{'color': r.puntuacion>1 ? '#FFC107' : '#dcdcdc' }\">\r\n                star</mat-icon>\r\n\r\n                <mat-icon  \r\n                [ngStyle]=\"{'color': r.puntuacion>2 ? '#FFC107' : '#dcdcdc' }\">\r\n                star</mat-icon>\r\n\r\n                <mat-icon  \r\n                [ngStyle]=\"{'color': r.puntuacion>3 ? '#FFC107' : '#dcdcdc' }\">\r\n                star</mat-icon>\r\n\r\n                <mat-icon  \r\n                [ngStyle]=\"{'color': r.puntuacion>4 ? '#FFC107' : '#dcdcdc' }\">\r\n                star</mat-icon>\r\n\r\n<!-- \t\t\t\t<mat-icon style='color: #FFC107;'>star</mat-icon> -->\r\n\r\n\r\n\t\t\t</div>\r\n    <p matLine style=\"    margin-bottom: 10px;\">\r\n\r\n      <span >{{r.comentario}}</span>\r\n \r\n    </p>\r\n\r\n        <div matLine>\r\n    \t<input [(ngModel)]='r.respuestaCentro'   style=\"    width: 80%;\" type=\"text\" name=\"\">\r\n        </div>\r\n        <button matLine style=\"       margin-top: 9px;\r\n    width: 104px;\" class=\"btn btn-sm btn-success\" [disabled]='!r.respuestaCentro' \r\n    (click)='responderCom(r)' >Responder</button>\r\n\r\n  </mat-list-item>\r\n\r\n\r\n\r\n\r\n\r\n</mat-nav-list>\r\n\r\n\r\n\r\n\t\r\n\t</div>\r\n\t<div class=\"col-xl-6\" >\r\n\r\n\t\t<div *ngIf='dataReview && dataReview.puntuacion' style=\"padding: 20px;\r\n    text-align: center;\r\n    display: inline-block;\">\r\n\t\t\t<div style=\"border-bottom: solid 1px #34bfa3;\r\n    color: #34bfa3;\r\n    background-color: white;\r\n    padding: 7px;\r\n    font-size: 14px;\">Puntuacion del negocio</div>\r\n\t\t\t<div style=\"padding: 20px;\r\n    text-align: center;\r\n    display: inline-block;font-size: 32px\">{{dataReview.puntuacion.toFixed(1)}}</div>\r\n\t\t\t<div>\r\n\r\n\r\n\r\n\r\n                <mat-icon  \r\n                [ngStyle]=\"{'color': dataReview.puntuacion>0 ? '#FFC107' : '#dcdcdc' }\">\r\n                star</mat-icon>\r\n\r\n                <mat-icon  \r\n                [ngStyle]=\"{'color': dataReview.puntuacion>1 ? '#FFC107' : '#dcdcdc' }\">\r\n                star</mat-icon>\r\n\r\n                <mat-icon  \r\n                [ngStyle]=\"{'color': dataReview.puntuacion>2 ? '#FFC107' : '#dcdcdc' }\">\r\n                star</mat-icon>\r\n\r\n                <mat-icon  \r\n                [ngStyle]=\"{'color': dataReview.puntuacion>3 ? '#FFC107' : '#dcdcdc' }\">\r\n                star</mat-icon>\r\n\r\n                <mat-icon  \r\n                [ngStyle]=\"{'color': dataReview.puntuacion>4 ? '#FFC107' : '#dcdcdc' }\">\r\n                star</mat-icon>\r\n\r\n\r\n\t\t\t</div>\r\n\t\t\t<div style=\"color: #6b6b6b;\">Puntuacion basada en {{dataReview.cantidad}} valoraciones de los clientes</div>\r\n\t\t</div>\r\n\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -6417,7 +13132,7 @@ var ReviewComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 30px;\">Servicios</div>\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" \r\n\t\t[routerLink]=\"['/agregarservicio']\"    matTooltip=\"Crear nuevo servicio\">Agregar Servicio</button>\r\n\r\n</div>\r\n\r\n<div class=\"row\">\r\n\t <ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\t<div class=\"col-xl-4\" style=\"padding-right: 0px;    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"width: 100%\">\r\n\t\t\t\r\n\t\t\t<div style=\"margin-bottom: 30px;    box-shadow: 0 1px 15px 1px rgba(69,65,78,.08); background-color: #fff;\">\r\n\t\t\t\t<div style=\"display: flex;\r\n    flex-direction: row;\r\n    align-items: stretch;\r\n    justify-content: space-between;\r\n    padding: 16px 20px;\r\n    height: 69px;\r\n    position: relative;\r\n    font-size: 16px;\r\n    font-weight: 500;\r\n    border-bottom: solid 1px lightgray;\">\r\n\r\n\t\t\t\t\t<div style=\"    display: flex;\r\n\t\t\t\t\talign-items: center;\r\n\t\t\t\t\talign-content: flex-start;\">Ofertas</div>\r\n\r\n\t<button  class=\"btn btn-sm btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" color=\"primary\" [routerLink]=\"['/agregaroferta']\" >Agregar Oferta</button>\r\n\r\n\r\n\r\n\t\t\t\t</div>\r\n\r\n\r\n<!-- \t\t\t\t\t\t\t\t\t<div class=\"itemServicios\">\r\n\t\t\t\t\t<div class=\"boxItem\">\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t<div class=\"txtItemServ\">\r\n\t\t\t\t\t\t\t<h3 style=\" font-size: 16px !important;   color: #5f5d5b;\">Corte y Estilo</h3>\r\n\t\t\t\t\t\t\t<p style=\"color: #989794;font-size: 12px;\">\r\n\t\t\t\t\t\t\t\tHasta el 01/01/2018\r\n\t\t\t\t\t\t\t</p>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"txtItemServP\" style=\"color:darkgray !important; text-decoration: line-through;\">$50</div>\r\n\t\t\t\t\t\t<div class=\"txtItemServP\" >$30</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n -->\r\n\t\r\n<div class=\"example-container \" >\r\n  <mat-table #table [dataSource]=\"dataSource\">\r\n    <!-- Position Column -->\r\n    <ng-container matColumnDef=\"nombre\">\r\n      <mat-header-cell *matHeaderCellDef> Servicio </mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element\"> {{element.nombre}} </mat-cell>\r\n    </ng-container>\r\n\r\n        <ng-container matColumnDef=\"precioOferta\">\r\n      <mat-header-cell *matHeaderCellDef> Precio </mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element\"> ${{element.precioOferta}} </mat-cell>\r\n    </ng-container>\r\n\r\n        <ng-container matColumnDef=\"fechaCaducidad\">\r\n      <mat-header-cell *matHeaderCellDef> Caducidad </mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element\"> {{element.fechaCaducidad.split('T')[0]}} </mat-cell>\r\n    </ng-container>\r\n\r\n        <ng-container matColumnDef=\"estado\">\r\n      <mat-header-cell *matHeaderCellDef></mat-header-cell>\r\n\r\n      <mat-cell *matCellDef=\"let element\"> \r\n\r\n     \r\n      <button  *ngIf='element.estado == 1' class=\"btn btn-sm btn-outline-success\" style=\"\" color=\"primary\" (click)='cambiarOferta(0, element.idControlOferta)' >Deshabilitar</button>\r\n      <button  (click)='cambiarOferta(1,element.idControlOferta)' *ngIf='element.estado == 0'  class=\"btn btn-sm btn-outline-success\" style=\"\" color=\"primary\" >Habilitar</button>\r\n  \t\t</mat-cell>\r\n\r\n    </ng-container>\r\n\r\n\r\n\r\n    <mat-header-row *matHeaderRowDef=\"displayedColumns\"></mat-header-row>\r\n    <mat-row *matRowDef=\"let row; columns: displayedColumns;\"></mat-row>\r\n  </mat-table>\r\n  \r\n  <mat-paginator #paginator\r\n    [pageSize]=\"5\"\r\n\r\n    [showFirstLastButtons]=\"true\">\r\n  </mat-paginator>\r\n</div>\r\n\r\n\r\n\r\n\r\n\t\t\t</div>\r\n\r\n\r\n\r\n\t\t\t<div style=\"    box-shadow: 0 1px 15px 1px rgba(69,65,78,.08); background-color: #fff;\">\r\n\t\t\t\t<div style=\"display: flex;\r\n    flex-direction: row;\r\n    align-items: stretch;\r\n    justify-content: space-between;\r\n    padding: 16px 20px;\r\n    height: 69px;\r\n    position: relative;\r\n    font-size: 16px;\r\n    font-weight: 500;\r\n    border-bottom: solid 1px lightgray;border-top: solid 1px lightgray;\">\r\n\r\n\t\t\t\t\t<div style=\"    display: flex;\r\n\t\t\t\t\talign-items: center;\r\n\t\t\t\t\talign-content: flex-start;\">Paquetes</div>\r\n\r\n\t<button  class=\"btn btn-sm btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" color=\"primary\" [routerLink]=\"['/agregarpaquete']\">Agregar Paquete</button>\r\n\r\n\r\n\r\n\t\t\t\t</div>\r\n\r\n\r\n\r\n\r\n<div class=\"example-container \" >\r\n  <mat-table #table5 [dataSource]=\"dataSource5\">\r\n    <!-- Position Column -->\r\n    <ng-container matColumnDef=\"nombre\">\r\n      <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element\"> {{element.nombre}} </mat-cell>\r\n    </ng-container>\r\n\r\n        <ng-container matColumnDef=\"precioTotal\">\r\n      <mat-header-cell *matHeaderCellDef> Precio </mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element\"> ${{element.precioTotal}} </mat-cell>\r\n    </ng-container>\r\n\r\n        <ng-container matColumnDef=\"fechaVencimiento\">\r\n      <mat-header-cell *matHeaderCellDef> Caducidad </mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element\"> {{element.fechaVencimiento.split('T')[0]}} </mat-cell>\r\n    </ng-container>\r\n\r\n        <ng-container matColumnDef=\"estado\">\r\n      <mat-header-cell *matHeaderCellDef></mat-header-cell>\r\n\r\n      <mat-cell *matCellDef=\"let element\"> \r\n\r\n     \r\n      <button  *ngIf='element.estado == 1' class=\"btn btn-sm btn-outline-success\" style=\"\" color=\"primary\" (click)='cambiarPaquete(0, element.idPaqueteCentro)' >Deshabilitar</button>\r\n      <button  (click)='cambiarPaquete(1,element.idPaqueteCentro)' *ngIf='element.estado == 0'  class=\"btn btn-sm btn-outline-success\" style=\"\" color=\"primary\" >Habilitar</button>\r\n  \t\t</mat-cell>\r\n\r\n    </ng-container>\r\n\r\n\r\n\r\n    <mat-header-row *matHeaderRowDef=\"displayedColumns5\"></mat-header-row>\r\n    <mat-row *matRowDef=\"let row; columns: displayedColumns5;\"></mat-row>\r\n  </mat-table>\r\n  \r\n  <mat-paginator #paginator5\r\n    [pageSize]=\"5\"\r\n\r\n    [showFirstLastButtons]=\"true\">\r\n  </mat-paginator>\r\n</div>\r\n\r\n\r\n\r\n\t\t\t</div>\r\n\r\n\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"col-xl-8\" >\r\n\r\n\r\n\t\t<div style=\"    padding: 40px 60px;width: 100%\">\r\n\r\n\t\t\t\t<div style=\"width: 100%; display: table;\">\r\n\t\t\t\t\t<input class='inputBy searchInput' style=\"padding-left: 10px\" placeholder=\"buscar servicios\"  autocomplete=\"off\"  [(ngModel)]=\"textFilter\" type=\"text\" name=\"nombre\">\r\n\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t<div [routerLink]=\"['/editservicio']\" [queryParams]=\"{id: s.idServicio}\" class=\"itemServicios\" *ngFor=\"let s of serviciosC   | callback: filterUser\" >\r\n\t\t\t\t\t<div class=\"boxItem\">\r\n\t\t\t\t\t\t<i class=\"la  la-angle-right iconR\"></i>\r\n\t\t\t\t\t\t<div class=\"txtItemServ\">\r\n\t\t\t\t\t\t\t<h3 style=\" font-size: 16px !important;   color: #5f5d5b;\">\r\n\t\t\t\t\t\t\t{{s.nombre}}</h3>\r\n\t\t\t\t\t\t\t<p style=\"color: #989794;font-size: 12px;\">\r\n\t\t\t\t\t\t\t\t{{s.nombreCategoria}} / {{s.nombreSubcategoria}}\r\n\t\t\t\t\t\t\t</p>\r\n\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t<!-- \t<div class=\"txtItemServP\"> \r\n\t\t\t\t<span >{{s.duracion}}min</span> \r\n\t\t\t\t\t\t</div>\r\n -->\r\n\r\n\t\t\t\t\t<div class=\"txtItemServP\">\r\n\t\t\t\t<span>{{getHoras(s.duracion)}}h</span>\t\t \r\n\t\t\t\t<span style=\"margin-left: 6px\">{{s.duracion % 60}}min</span> \r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t<div [ngClass]=\"{'underl': s.oferta}\" class=\"txtItemServP\">${{s.precio}}</div>\r\n\t\t\t\t\t\t\t<div *ngIf='s.oferta' class=\"txtItemServOferta\">${{s.oferta}}</div>\r\n\r\n\r\n\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\r\n<!-- \t\t\t\t\t\t\t\t<div class=\"itemServicios\">\r\n\t\t\t\t\t<div class=\"boxItem\">\r\n\t\t\t\t\t\t<i class=\"la  la-angle-right iconR\"></i>\r\n\t\t\t\t\t\t<div class=\"txtItemServ\">\r\n\t\t\t\t\t\t\t<h3 style=\" font-size: 16px !important;   color: #5f5d5b;\">Corte y Estilo</h3>\r\n\t\t\t\t\t\t\t<p style=\"color: #989794;font-size: 12px;\">\r\n\t\t\t\t\t\t\t\tPeluqueria / Cortes de Mujer\r\n\t\t\t\t\t\t\t</p>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"txtItemServP\">30min</div>\r\n\t\t\t\t\t\t<div class=\"txtItemServP\">30min</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t\t\t<div class=\"itemServicios\">\r\n\t\t\t\t\t<div class=\"boxItem\">\r\n\t\t\t\t\t\t<i class=\"la  la-angle-right iconR\"></i>\r\n\t\t\t\t\t\t<div class=\"txtItemServ\">\r\n\t\t\t\t\t\t\t<h3 style=\" font-size: 16px !important;   color: #5f5d5b;\">Corte y Estilo</h3>\r\n\t\t\t\t\t\t\t<p style=\"color: #989794;font-size: 12px;\">\r\n\t\t\t\t\t\t\t\tPeluqueria / Cortes de Mujer\r\n\t\t\t\t\t\t\t</p>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"txtItemServP\">30min</div>\r\n\t\t\t\t\t\t<div class=\"txtItemServP\">30min</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div> -->\r\n\r\n\t\t</div>\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 26px;font-weight: 300;padding-left: 30px;\">Servicios\r\n\t\t<span style=\"display: block;\r\n    font-size: 14px;\r\n    line-height: 2px;\">Agrega los servicios de tu negocio</span>\r\n\r\n\t</div>\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" \r\n\t\t[routerLink]=\"['/agregarservicio']\"    matTooltip=\"Crear nuevo servicio\">Agregar Servicio</button>\r\n\r\n</div>\r\n\r\n<div class=\"row\">\r\n\t <ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\t<div class=\"col-xl-4\" style=\"padding-right: 0px;    border-right: solid 1px lightgray;\" >\r\n\r\n\t\t<div style=\"width: 100%\">\r\n\t\t\t\r\n\t\t\t<div style=\"margin-bottom: 30px;    box-shadow: 0 1px 15px 1px rgba(69,65,78,.08); background-color: #fff;\">\r\n\t\t\t\t<div style=\"display: flex;\r\n    flex-direction: row;\r\n    align-items: stretch;\r\n    justify-content: space-between;\r\n    padding: 16px 20px;\r\n    height: 69px;\r\n    position: relative;\r\n    font-size: 16px;\r\n    font-weight: 500;\r\n    border-bottom: solid 1px lightgray;\">\r\n\r\n\t\t\t\t\t<div style=\"    display: flex;\r\n\t\t\t\t\talign-items: center;\r\n\t\t\t\t\talign-content: flex-start;\">Ofertas</div>\r\n\r\n\t<button  class=\"btn btn-sm btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" color=\"primary\" [routerLink]=\"['/agregaroferta']\" >Agregar Oferta</button>\r\n\r\n\r\n\r\n\t\t\t\t</div>\r\n\r\n\r\n<!-- \t\t\t\t\t\t\t\t\t<div class=\"itemServicios\">\r\n\t\t\t\t\t<div class=\"boxItem\">\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t<div class=\"txtItemServ\">\r\n\t\t\t\t\t\t\t<h3 style=\" font-size: 16px !important;   color: #5f5d5b;\">Corte y Estilo</h3>\r\n\t\t\t\t\t\t\t<p style=\"color: #989794;font-size: 12px;\">\r\n\t\t\t\t\t\t\t\tHasta el 01/01/2018\r\n\t\t\t\t\t\t\t</p>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"txtItemServP\" style=\"color:darkgray !important; text-decoration: line-through;\">$50</div>\r\n\t\t\t\t\t\t<div class=\"txtItemServP\" >$30</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n -->\r\n\t\r\n<div class=\"example-container \" >\r\n  <mat-table #table [dataSource]=\"dataSource\">\r\n    <!-- Position Column -->\r\n    <ng-container matColumnDef=\"nombre\">\r\n      <mat-header-cell *matHeaderCellDef> Servicio </mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element\"> {{element.nombre}} </mat-cell>\r\n    </ng-container>\r\n\r\n        <ng-container matColumnDef=\"precioOferta\">\r\n      <mat-header-cell *matHeaderCellDef> Precio </mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element\"> ${{element.precioOferta}} </mat-cell>\r\n    </ng-container>\r\n\r\n        <ng-container matColumnDef=\"fechaCaducidad\">\r\n      <mat-header-cell *matHeaderCellDef> Caducidad </mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element\"> {{element.fechaCaducidad.split('T')[0]}} </mat-cell>\r\n    </ng-container>\r\n\r\n        <ng-container matColumnDef=\"estado\">\r\n      <mat-header-cell *matHeaderCellDef></mat-header-cell>\r\n\r\n      <mat-cell *matCellDef=\"let element\"> \r\n\r\n     \r\n      <button  *ngIf='element.estado == 1' class=\"btn btn-sm btn-outline-success\" style=\"\" color=\"primary\" (click)='cambiarOferta(0, element.idControlOferta)' >Deshabilitar</button>\r\n      <button  (click)='cambiarOferta(1,element.idControlOferta)' *ngIf='element.estado == 0'  class=\"btn btn-sm btn-outline-success\" style=\"\" color=\"primary\" >Habilitar</button>\r\n  \t\t</mat-cell>\r\n\r\n    </ng-container>\r\n\r\n\r\n\r\n    <mat-header-row *matHeaderRowDef=\"displayedColumns\"></mat-header-row>\r\n    <mat-row *matRowDef=\"let row; columns: displayedColumns;\"></mat-row>\r\n  </mat-table>\r\n  \r\n  <mat-paginator #paginator\r\n    [pageSize]=\"5\"\r\n\r\n    [showFirstLastButtons]=\"true\">\r\n  </mat-paginator>\r\n</div>\r\n\r\n\r\n\r\n\r\n\t\t\t</div>\r\n\r\n\r\n\r\n\t\t\t<div style=\"    box-shadow: 0 1px 15px 1px rgba(69,65,78,.08); background-color: #fff;\">\r\n\t\t\t\t<div style=\"display: flex;\r\n    flex-direction: row;\r\n    align-items: stretch;\r\n    justify-content: space-between;\r\n    padding: 16px 20px;\r\n    height: 69px;\r\n    position: relative;\r\n    font-size: 16px;\r\n    font-weight: 500;\r\n    border-bottom: solid 1px lightgray;border-top: solid 1px lightgray;\">\r\n\r\n\t\t\t\t\t<div style=\"    display: flex;\r\n\t\t\t\t\talign-items: center;\r\n\t\t\t\t\talign-content: flex-start;\">Paquetes</div>\r\n\r\n\t<button  class=\"btn btn-sm btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" color=\"primary\" [routerLink]=\"['/agregarpaquete']\">Agregar Paquete</button>\r\n\r\n\r\n\r\n\t\t\t\t</div>\r\n\r\n\r\n\r\n\r\n<div class=\"example-container \" >\r\n  <mat-table #table5 [dataSource]=\"dataSource5\">\r\n    <!-- Position Column -->\r\n    <ng-container matColumnDef=\"nombre\">\r\n      <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element\"> {{element.nombre}} </mat-cell>\r\n    </ng-container>\r\n\r\n        <ng-container matColumnDef=\"precioTotal\">\r\n      <mat-header-cell *matHeaderCellDef> Precio </mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element\"> ${{element.precioTotal}} </mat-cell>\r\n    </ng-container>\r\n\r\n        <ng-container matColumnDef=\"fechaVencimiento\">\r\n      <mat-header-cell *matHeaderCellDef> Caducidad </mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element\"> {{element.fechaVencimiento.split('T')[0]}} </mat-cell>\r\n    </ng-container>\r\n\r\n        <ng-container matColumnDef=\"estado\">\r\n      <mat-header-cell *matHeaderCellDef></mat-header-cell>\r\n\r\n      <mat-cell *matCellDef=\"let element\"> \r\n\r\n     \r\n      <button  *ngIf='element.estado == 1' class=\"btn btn-sm btn-outline-success\" style=\"\" color=\"primary\" (click)='cambiarPaquete(0, element.idPaqueteCentro)' >Deshabilitar</button>\r\n      <button  (click)='cambiarPaquete(1,element.idPaqueteCentro)' *ngIf='element.estado == 0'  class=\"btn btn-sm btn-outline-success\" style=\"\" color=\"primary\" >Habilitar</button>\r\n  \t\t</mat-cell>\r\n\r\n    </ng-container>\r\n\r\n\r\n\r\n    <mat-header-row *matHeaderRowDef=\"displayedColumns5\"></mat-header-row>\r\n    <mat-row *matRowDef=\"let row; columns: displayedColumns5;\"></mat-row>\r\n  </mat-table>\r\n  \r\n  <mat-paginator #paginator5\r\n    [pageSize]=\"5\"\r\n\r\n    [showFirstLastButtons]=\"true\">\r\n  </mat-paginator>\r\n</div>\r\n\r\n\r\n\r\n\t\t\t</div>\r\n\r\n\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"col-xl-8\" >\r\n\r\n\r\n\t\t<div style=\"    padding: 40px 60px;width: 100%\">\r\n\r\n\t\t\t\t<div style=\"width: 100%; display: table;\">\r\n\t\t\t\t\t<input class='inputBy searchInput' style=\"padding-left: 10px\" placeholder=\"buscar servicios\"  autocomplete=\"off\"  [(ngModel)]=\"textFilter\" type=\"text\" name=\"nombre\">\r\n\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t<div [routerLink]=\"['/editservicio']\" [queryParams]=\"{id: s.idServicio}\" class=\"itemServicios\" *ngFor=\"let s of serviciosC   | callback: filterUser\" >\r\n\t\t\t\t\t<div class=\"boxItem\">\r\n\t\t\t\t\t\t<i class=\"la  la-angle-right iconR\"></i>\r\n\t\t\t\t\t\t<div class=\"txtItemServ\">\r\n\t\t\t\t\t\t\t<h3 style=\" font-size: 16px !important;   color: #5f5d5b;\">\r\n\t\t\t\t\t\t\t{{s.nombre}}</h3>\r\n\t\t\t\t\t\t\t<p style=\"color: #989794;font-size: 12px;\">\r\n\t\t\t\t\t\t\t\t{{s.nombreCategoria}} / {{s.nombreSubcategoria}}\r\n\t\t\t\t\t\t\t</p>\r\n\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t<!-- \t<div class=\"txtItemServP\"> \r\n\t\t\t\t<span >{{s.duracion}}min</span> \r\n\t\t\t\t\t\t</div>\r\n -->\r\n\r\n\t\t\t\t\t<div class=\"txtItemServP\">\r\n\t\t\t\t<span>{{getHoras(s.duracion)}}h</span>\t\t \r\n\t\t\t\t<span style=\"margin-left: 6px\">{{s.duracion % 60}}min</span> \r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t<div [ngClass]=\"{'underl': s.oferta}\" class=\"txtItemServP\">${{s.precio}}</div>\r\n\t\t\t\t\t\t\t<div *ngIf='s.oferta' class=\"txtItemServOferta\">${{s.oferta}}</div>\r\n\r\n\r\n\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\r\n<!-- \t\t\t\t\t\t\t\t<div class=\"itemServicios\">\r\n\t\t\t\t\t<div class=\"boxItem\">\r\n\t\t\t\t\t\t<i class=\"la  la-angle-right iconR\"></i>\r\n\t\t\t\t\t\t<div class=\"txtItemServ\">\r\n\t\t\t\t\t\t\t<h3 style=\" font-size: 16px !important;   color: #5f5d5b;\">Corte y Estilo</h3>\r\n\t\t\t\t\t\t\t<p style=\"color: #989794;font-size: 12px;\">\r\n\t\t\t\t\t\t\t\tPeluqueria / Cortes de Mujer\r\n\t\t\t\t\t\t\t</p>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"txtItemServP\">30min</div>\r\n\t\t\t\t\t\t<div class=\"txtItemServP\">30min</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t\t\t<div class=\"itemServicios\">\r\n\t\t\t\t\t<div class=\"boxItem\">\r\n\t\t\t\t\t\t<i class=\"la  la-angle-right iconR\"></i>\r\n\t\t\t\t\t\t<div class=\"txtItemServ\">\r\n\t\t\t\t\t\t\t<h3 style=\" font-size: 16px !important;   color: #5f5d5b;\">Corte y Estilo</h3>\r\n\t\t\t\t\t\t\t<p style=\"color: #989794;font-size: 12px;\">\r\n\t\t\t\t\t\t\t\tPeluqueria / Cortes de Mujer\r\n\t\t\t\t\t\t\t</p>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"txtItemServP\">30min</div>\r\n\t\t\t\t\t\t<div class=\"txtItemServP\">30min</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div> -->\r\n\r\n\t\t</div>\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -6610,6 +13325,106 @@ var ServiciosComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/content/pages/components/soporte/soporte.component.html":
+/*!*************************************************************************!*\
+  !*** ./src/app/content/pages/components/soporte/soporte.component.html ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 26px;font-weight: 300;padding-left: 30px;\">Soporte</div>\r\n<!-- \r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" [disabled]='\r\n    !configuracion.parametro1 || !configuracion.parametro2 || !configuracion.parametro3' (click)='editarConf()'>Guardar</button> -->\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n<div class=\"row\" style=\"    padding: 40px;\">\r\n\r\n <ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\r\n\t\r\n\t<div class=\"col-sm-12\">\r\n\r\n\r\n    <div style='max-width: 600px;\r\n    margin: auto;    text-align: end;'>\r\n\r\n\r\n    <div style=\"text-align: center;  padding: 40px;padding-top: 50px !important\">\r\n      <span style=\"color: #383734;    font-size: 24px;\r\n    font-weight: 300;\r\n    line-height: 34px;\r\n    margin-bottom: 10px;\">Formulario de Soporte\r\n\r\n</span><br>\r\n<span style=\"color: #605f5d;font-size: 16px\">\r\nDéjanos tus dudas en el siguiente formulario y te contactaremos al email relacionado a tu cuenta a la brevedad posible\r\n</span>\r\n\r\n    </div>\r\n\r\n\r\n\r\n \r\n\r\n        \r\n        <textarea [(ngModel)]='mensajeSoporte' style=\"    width: 100%;\r\n    height: 200px;\r\n    resize: none;\r\n    border-color: lightgray;\r\n    border-radius: 4px;padding: 20px;\r\n    color: #444;\r\n    font-size: 15px;\">\r\n        \t\r\n\r\n        </textarea> \r\n\r\n\r\n\t<button  class=\"btn btn-success \" style=\"margin-top: 15px !important;\" [disabled]='!mensajeSoporte || mensajeSoporte.trim().length==0' (click)='enviarMensaje()' >Enviar mensaje</button> \r\n\r\n    \r\n\r\n\r\n\r\n\r\n\r\n\r\n</div>\r\n\t</div>\r\n</div>\r\n\r\n"
+
+/***/ }),
+
+/***/ "./src/app/content/pages/components/soporte/soporte.component.scss":
+/*!*************************************************************************!*\
+  !*** ./src/app/content/pages/components/soporte/soporte.component.scss ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/content/pages/components/soporte/soporte.component.ts":
+/*!***********************************************************************!*\
+  !*** ./src/app/content/pages/components/soporte/soporte.component.ts ***!
+  \***********************************************************************/
+/*! exports provided: SoporteComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SoporteComponent", function() { return SoporteComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../core/auth/authentication.service */ "./src/app/core/auth/authentication.service.ts");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var SoporteComponent = /** @class */ (function () {
+    function SoporteComponent(authService, cdr, _location) {
+        this.authService = authService;
+        this.cdr = cdr;
+        this._location = _location;
+        this.loadingScreen = false;
+        var retrievedObject = JSON.parse(localStorage.getItem('userADby2as'));
+        this.idCentro = retrievedObject.idCentro;
+    }
+    SoporteComponent.prototype.ngOnInit = function () {
+    };
+    SoporteComponent.prototype.enviarMensaje = function () {
+        var _this = this;
+        this.loadingScreen = true;
+        var dataE = { idCentro: this.idCentro, mensaje: this.mensajeSoporte };
+        console.log(dataE);
+        this.authService.mensajeSoporte(dataE)
+            .subscribe(function (data) {
+            console.log(data);
+            if (data !== null && data !== 'null' && data[0] && data[0].email) {
+                alert('su mensaje ha sido enviado con exito');
+                _this.mensajeSoporte = null;
+                _this.loadingScreen = false;
+                _this.cdr.detectChanges();
+            }
+            else {
+                alert('Ups! Algo ha salido mal');
+                _this.loadingScreen = false;
+                _this.cdr.detectChanges();
+            }
+        }, function (err) {
+            _this.loadingScreen = false;
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
+    };
+    SoporteComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'm-soporte',
+            template: __webpack_require__(/*! ./soporte.component.html */ "./src/app/content/pages/components/soporte/soporte.component.html"),
+            styles: [__webpack_require__(/*! ./soporte.component.scss */ "./src/app/content/pages/components/soporte/soporte.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_1__["AuthenticationService"],
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["Location"]])
+    ], SoporteComponent);
+    return SoporteComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/content/pages/components/staff/staff.component.html":
 /*!*********************************************************************!*\
   !*** ./src/app/content/pages/components/staff/staff.component.html ***!
@@ -6617,7 +13432,7 @@ var ServiciosComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 30px;font-weight: 300;padding-left: 30px;\">Staff</div>\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" \r\n\t\t[routerLink]=\"['/addstaff']\"   matTooltip=\"Crear nuevo servicio\">Agregar miembro del Staff</button>\r\n\r\n</div>\r\n\r\n<div class=\"row\">\r\n\r\n\t <ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\r\n\t \r\n\t<div class=\"col-xl-4\" style=\"padding-right: 0px;    border-right: solid 1px lightgray;\" >\r\n\r\n\r\n\r\n<mat-nav-list style='padding-top: 0px '>\r\n\r\n  <mat-list-item *ngFor=\"let e of empleados; let i = index\" [ngClass]=\"{'selectedItem': selected == e.idEmpleado}\" (click)=\"itemSelectedChange(e)\">\r\n    <img matListAvatar src=\"http://50.116.17.150:3000/{{e.idFoto}}\" \r\n    onError=\"this.src='assets/app/media/img/userB.png'\">\r\n    <h3 matLine> {{e.nombre}} </h3>\r\n    <p matLine>\r\n      <span class=\"tagStaff\">{{e.tipo == 1 ? 'MIEMBRO ADMINISTRADOR' : \r\n\t\t\t\t\t  e.tipo == 2 ? 'MIEMBRO BASICO' : 'RECEPCION'}}</span>\r\n \r\n    </p>\r\n  </mat-list-item>\r\n\r\n  <!-- \r\n\r\n    <mat-list-item [ngClass]=\"{'selectedItem': selected == 2}\" (click)=\"itemSelectedChange(2)\">\r\n    <img matListAvatar src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\" >\r\n    <h3 matLine> Maria Segura  </h3>\r\n    <p matLine>\r\n        <span class=\"tagStaff\">MIEMBRO ADMINISTRADOR</span>\r\n    </p>\r\n  </mat-list-item>\r\n\r\n      <mat-list-item [ngClass]=\"{'selectedItem': selected == 3}\" (click)=\"itemSelectedChange(3)\">\r\n    <img matListAvatar src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\" >\r\n    <h3 matLine> Luisa Corrales </h3>\r\n    <p matLine>\r\n      <span class=\"tagStaff\">MIEMBRO ADMINISTRADOR</span>\r\n    </p>\r\n  </mat-list-item> -->\r\n\r\n\r\n\r\n</mat-nav-list>\r\n\r\n\r\n\r\n\r\n\t\t\t\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\r\n\r\n\t<div class=\"col-xl-8\" style=\"padding-left: 0px !important\">\r\n\r\n\t\t<div style=\"\">\r\n\t\t\t<div style=\"    border-bottom: solid 1px lightgray;font-size: 16px;font-weight: 400;line-height: 1.5;color: #383734;background: #fff;\">\r\n\t\t\t\t<div style=\"display: table-cell;padding: 0 10px;vertical-align: middle;\">\r\n\t\t\t\t\t<div style=\"font-size: 70px; width: 72px;min-height: 72px;\">\r\n\t\t\t\t\t\t <img  src=\"http://50.116.17.150:3000/{{miembroSeleccionado.idFoto}}\" \r\n    onError=\"this.src='assets/app/media/img/userB.png'\" style=\"border-radius: 50%;z-index: 1;position: relative;height: 70px;width: 70px;\">\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div style=\"display: table-cell;padding: 0 10px;vertical-align: middle;    width: 100%;\">\r\n\t\t\t\t\t<div style=\"width: 100%;\">{{miembroSeleccionado.nombre}}<span class=\"tagStaff\">{{miembroSeleccionado.tipo == 1 ? 'MIEMBRO ADMINISTRADOR' : \r\n\t\t\t\t\t  miembroSeleccionado.tipo == 2 ? 'MIEMBRO BASICO' : 'RECEPCION'}}</span></div>\r\n\r\n\t\t\t\t\t<div style=\"display: block;vertical-align: top;\">\r\n\t\t\t\t\t\t\t\t\t\t<div style=\"float: right !important;display: inline-block; min-height: 1px;vertical-align: top; margin: 0;padding: 0;\">\r\n\t\t\t\t\t\t\t<button  \t[routerLink]=\"['/editstaff']\"  \r\n\t\t\t\t\t\t\t[queryParams]=miembroSeleccionado \r\n\t\t class=\"btn btn-outline-success\" style=\"margin-top: 3px;float: right;margin-right: 10px;\"  >Editar Perfil</button>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div style=\"float: right !important;display: inline-block; min-height: 1px;vertical-align: top; margin: 0;padding: 0;\">\r\n\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\t\t\r\n\t\t\t\t\t\t    \r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\r\n\r\n\t\t<div class=\"m-section\" style=\"margin-top: 30px\">\r\n\t\t\t<div class=\"m-section__content\">\r\n\t\t\t\t<ngb-tabset>\r\n\t\t\t\t\t<ngb-tab title=\"Servicios\">\r\n\t\t\t\t\t<ng-template ngbTabContent>\r\n\r\n\r\n\r\n\t\t\t\t\t\t\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t<div style=\"color:#EA527D;font-size: 16px;font-weight: 500 !important;margin-bottom: 20px;\">\r\n\t\t\tElige los servicios que el empleado brinda</div>\r\n\t\t\t\t\t<div style=\"border: solid 1px lightgray;padding: 20px;\">\r\n\r\n\t\t\t\t\t\r\n\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t\t<div *ngFor=\"let k of keys;  let m = index\">\r\n\t\t\t\t\t\t\t<div class='tituloCateg'>{{k}}</div>\r\n\r\n\t\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: rgb(250,249,247);padding: 10px 10px;\" *ngFor=\"let item of serviciosValues[m];  let i = index\">\r\n\t\t\t\t\t\t\t<mat-checkbox color='primary' name=\"{{item.idEmpleado}}-name\" (change)=\"OnChange($event,item)\" [checked]=\"item.idServicioEmpleado\">\r\n\t\t\t\t\t\t\t\t<span class=\"txtF\">\r\n\t\t\t\t\t\t\t\t\t{{item.nombre}} / \r\n\t\t\t\t\t\t\t\t\t<span  [ngClass]=\"{'underl': item.oferta}\">${{item.precio}}</span>\r\n\t\t\t\t\t\t\t\t\t<span style=\"margin-left: 10px;font-weight: 500;\" *ngIf='item.oferta' >${{item.oferta}}</span>\r\n\t\t\t\t\t\t\t\t</span>\r\n\r\n\t\t\t\t\t\t\t<div class=\"txtF\" style=\"    margin-left: 6px;display: inline-block;\" >\r\n\t\t\t\t\t\t\t<span> / {{getHoras(item.duracion)}}h</span>\t\t \r\n\t\t\t\t\t\t\t<span style=\"margin-left: 6px\">{{item.duracion % 60}}min</span> \r\n\t\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t</div>\t\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t</div>\r\n\r\n\t\t</div>\r\n\r\n\r\n\t\t\t\t\t</ng-template>\r\n\t\t\t\t\t</ngb-tab>\r\n\t\t\t\t\t<ngb-tab  title=\"Horario\">\r\n\t\t\t\t\t<ng-template ngbTabContent >\r\n\t\t\t\t\t\t<div style='padding: 30px 45px;'>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox color='primary' [(ngModel)]='diasSemana.lunes.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Lunes</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.lunes.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tNO TRABAJA\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.lunes.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.lunes.horaEntrar' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.lunes.horaSalir' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox color='primary' [(ngModel)]='diasSemana.martes.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Martes</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.martes.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tNO TRABAJA\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.martes.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.martes.horaEntrar' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.martes.horaSalir' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox color='primary' [(ngModel)]='diasSemana.miercoles.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Miercoles</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.miercoles.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tNO TRABAJA\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.miercoles.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.miercoles.horaEntrar' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.miercoles.horaSalir' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox color='primary' [(ngModel)]='diasSemana.jueves.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Jueves</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.jueves.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tNO TRABAJA\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.jueves.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.jueves.horaEntrar' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.jueves.horaSalir' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox color='primary' [(ngModel)]='diasSemana.viernes.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Viernes</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.viernes.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tNO TRABAJA\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.viernes.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.viernes.horaEntrar' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.viernes.horaSalir' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox color='primary' [(ngModel)]='diasSemana.sabado.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Sabado</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.sabado.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tNO TRABAJA\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.sabado.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.sabado.horaEntrar' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select [(ngModel)]='diasSemana.sabado.horaSalir' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox color='primary' [(ngModel)]='diasSemana.domingo.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Domingo</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.domingo.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tNO TRABAJA\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.domingo.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.domingo.horaEntrar' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.domingo.horaSalir' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\t\t\t\t\t\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n\t\t\t\t\t    float: right;\r\n\t\t\t\t\t    margin-right: 10px;\" (click)='guardarHorario()'>Guardar</button>\r\n\r\n\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t</ng-template>\r\n\t\t\t\t\t</ngb-tab>\r\n\t\t\t\t\t<ngb-tab title=\"Fechas Especiales\" >\r\n\t\t\t\t\t<ng-template ngbTabContent>\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\r\n\r\n\t\t\t\t\t\t\t<div class=\"conteinInput2\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t<p style=\"    text-align: center;\r\n    font-size: 16px;\r\n    font-weight: 400;\r\n    margin-top: 30px;\r\n    margin-bottom: 30px;\">Agrega un bloque libre para el empleado</p>\r\n\t\t\t\t\r\n\t\t\t\t\t\t\t<div  style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t  <mat-form-field style='    margin: auto;' class='inputBy'>\r\n\t\t\t\t\t\t\t\t    <input [(ngModel)]='tiempoLibre.inicio' matInput [matDatepicker]=\"dp3\" placeholder=\"Inicio\" disabled>\r\n\t\t\t\t\t\t\t\t\t<mat-datepicker-toggle matSuffix [for]=\"dp3\">\r\n\t\t\t\t\t\t\t\t  </mat-datepicker-toggle>\r\n\t\t\t\t\t\t\t\t  <mat-datepicker #dp3 disabled=\"false\"></mat-datepicker>\r\n\t\t\t\t\t\t\t\t    </mat-form-field>\r\n\t\t\t\t\t\t\t\t\r\n\r\n\r\n\t\t\t\t\t\t\t\t<mat-form-field  style='    margin: auto;'  class='inputBy'>\r\n\t\t\t\t\t\t\t\t    <input [(ngModel)]='tiempoLibre.fin' matInput [matDatepicker]=\"dp4\" placeholder=\"Finaliza\" disabled>\r\n\t\t\t\t\t\t\t\t\t<mat-datepicker-toggle matSuffix [for]=\"dp4\">\r\n\t\t\t\t\t\t\t\t  </mat-datepicker-toggle>\r\n\t\t\t\t\t\t\t\t  <mat-datepicker #dp4 disabled=\"false\"></mat-datepicker>\r\n\t\t\t\t\t\t\t\t    </mat-form-field>\r\n\r\n\t\t\t\t\t<button [disabled]='!tiempoLibre.fin || !tiempoLibre.inicio' class=\"btn btn-success\" style=\"margin: auto;float: right;margin-right: 20px;\" (click)='agregarBloque()'>Agregar</button>\r\n\r\n\t\t\t\t\t\t\t\t\r\n<!-- \t\t\t\t\t\t\t<mat-select [(ngModel)]='diasSemana.sabado.horaSalir' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select> -->\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t    <hr>\r\n\r\n\r\n\t\t\t\t\t    <!-- \tAQUI LOS ITEMNS -->\r\n\r\n\r\n\t\t\t\t\t    <div  *ngFor=\"let h of horarioEspecial; let i = index\"  style=\"border-bottom: solid 1px lightgray;display: flex;font-size: 16px;padding: 20px\"> \r\n\t\t\t\t\t    <div><span style=\"font-weight: 400; margin-right: 20px\">Inicia:</span>{{h.fechaInicio}}</div> \r\n\t\t\t\t\t    <span style=\"margin-left: 20px;margin-right: 20px\">- </span>\r\n\t\t\t\t\t    <div><span style=\"font-weight: 400;margin-right: 20px\">Finaliza:</span>{{h.fechaFinal}}</div>\r\n\r\n\t\t\t\t\t    \t<mat-icon class='iconGG' (click)='borrarBloque(h.idEmpleadoBloqueLibre)' style='margin-left: 23px;background: darkgray; margin: auto;height: 20px;line-height: 20px;color: white;text-align: center;'>\r\n\t\t\t\t\t    \tclose\r\n\t\t\t\t\t    \t</mat-icon>\r\n\r\n\t\t\t\t\t    </div>\r\n\r\n\r\n\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t</ng-template>\r\n\t\t\t\t\t</ngb-tab>\r\n\r\n\t\t\t\t\t<ngb-tab title=\"Detalle Contacto\" >\r\n\t\t\t\t\t<ng-template ngbTabContent>\r\n\r\n\t\t\t\t\t\t\t<div style='padding: 30px 45px;'>\r\n\r\n\t\t\t\t\t\t\t\t<div style=\"margin: 20px 0px;\">\r\n\t\t\t\t\t\t\t\t\t<span style=\"font-weight: 600;display: block;margin-bottom: 15px;\">Email</span>\r\n\t\t\t\t\t\t\t\t\t<span>{{miembroSeleccionado.email}}</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t<hr>\r\n\r\n\t\t\t\t\t\t\t\t<div  style=\"margin: 20px 0px;\">\r\n\t\t\t\t\t\t\t\t\t<span style=\"font-weight: 600;display: block;margin-bottom: 15px;\">Descripcion</span>\r\n\t\t\t\t\t\t\t\t\t<span>{{miembroSeleccionado.descripcion}}</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t</ng-template>\r\n\t\t\t\t\t</ngb-tab>\r\n\r\n\t\t\t\t</ngb-tabset>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\r\n\r\n\r\n\t\t</div>\r\n<!-- \r\n\t\t<div style=\"    padding: 40px 60px;width: 100%\">\r\n\r\n\t\t\t\r\n\t</div> -->\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n</div>\r\n\r\n"
+module.exports = "<div class=\"row  m-subheader\" style=\"background: rgb(250,249,247) !important;\r\n    padding: 20px !important;\r\ntext-align: left !important;\r\nborder-bottom: solid 1px lightgray;    display: block;\">\r\n\t\r\n\t<div class=\"\" style=\"display: inline-block;font-size: 26px;font-weight: 300;padding-left: 30px;\">Staff\r\n\t<span style=\"display: block;\r\n    font-size: 14px;\r\n    line-height: 2px;\">Edita cada miembro indicando servicios y horario que ofrece</span>\r\n\t</div>\r\n\r\n\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n    float: right;\r\n    margin-right: 10px;\" \r\n\t\t[routerLink]=\"['/addstaff']\"   matTooltip=\"Crear nuevo servicio\">Agregar miembro del Staff</button>\r\n\r\n</div>\r\n\r\n<div class=\"row\">\r\n\r\n\t <ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\r\n\r\n\t \r\n\t<div class=\"col-xl-4\" style=\"padding-right: 0px;    border-right: solid 1px lightgray;\" >\r\n\r\n\r\n\r\n<mat-nav-list style='padding-top: 0px '>\r\n\r\n  <mat-list-item *ngFor=\"let e of empleados; let i = index\" [ngClass]=\"{'selectedItem': selected == e.idEmpleado}\" (click)=\"itemSelectedChange(e)\">\r\n    <img matListAvatar src=\"http://50.116.17.150:3000/{{e.idFoto}}\" \r\n    onError=\"this.src='assets/app/media/img/userB.png'\">\r\n    <h3 matLine> {{e.nombre}} </h3>\r\n    <p matLine>\r\n      <span class=\"tagStaff\">{{e.tipo == 1 ? 'MIEMBRO ADMINISTRADOR' : \r\n\t\t\t\t\t  e.tipo == 2 ? 'MIEMBRO BASICO' : 'RECEPCION'}}</span>\r\n \r\n    </p>\r\n  </mat-list-item>\r\n\r\n  <!-- \r\n\r\n    <mat-list-item [ngClass]=\"{'selectedItem': selected == 2}\" (click)=\"itemSelectedChange(2)\">\r\n    <img matListAvatar src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\" >\r\n    <h3 matLine> Maria Segura  </h3>\r\n    <p matLine>\r\n        <span class=\"tagStaff\">MIEMBRO ADMINISTRADOR</span>\r\n    </p>\r\n  </mat-list-item>\r\n\r\n      <mat-list-item [ngClass]=\"{'selectedItem': selected == 3}\" (click)=\"itemSelectedChange(3)\">\r\n    <img matListAvatar src=\"https://booksy.com/media/us/2015/11/23/21f309ce4859db0374e7fdb085bc776d_50x50.png\" >\r\n    <h3 matLine> Luisa Corrales </h3>\r\n    <p matLine>\r\n      <span class=\"tagStaff\">MIEMBRO ADMINISTRADOR</span>\r\n    </p>\r\n  </mat-list-item> -->\r\n\r\n\r\n\r\n</mat-nav-list>\r\n\r\n\r\n\r\n\r\n\t\t\t\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\r\n\r\n\t<div class=\"col-xl-8\" style=\"padding-left: 0px !important\">\r\n\r\n\t\t<div style=\"\">\r\n\t\t\t<div style=\"    border-bottom: solid 1px lightgray;font-size: 16px;font-weight: 400;line-height: 1.5;color: #383734;background: #fff;\">\r\n\t\t\t\t<div style=\"display: table-cell;padding: 0 10px;vertical-align: middle;\">\r\n\t\t\t\t\t<div style=\"font-size: 70px; width: 72px;min-height: 72px;\">\r\n\t\t\t\t\t\t <img  src=\"http://50.116.17.150:3000/{{miembroSeleccionado.idFoto}}\" \r\n    onError=\"this.src='assets/app/media/img/userB.png'\" style=\"border-radius: 50%;z-index: 1;position: relative;height: 70px;width: 70px;\">\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div style=\"display: table-cell;padding: 0 10px;vertical-align: middle;    width: 100%;\">\r\n\t\t\t\t\t<div style=\"width: 100%;\">{{miembroSeleccionado.nombre}}<span class=\"tagStaff\">{{miembroSeleccionado.tipo == 1 ? 'MIEMBRO ADMINISTRADOR' : \r\n\t\t\t\t\t  miembroSeleccionado.tipo == 2 ? 'MIEMBRO BASICO' : 'RECEPCION'}}</span></div>\r\n\r\n\t\t\t\t\t<div style=\"display: block;vertical-align: top;\">\r\n\t\t\t\t\t\t\t\t\t\t<div style=\"float: right !important;display: inline-block; min-height: 1px;vertical-align: top; margin: 0;padding: 0;\">\r\n\t\t\t\t\t\t\t<button  \t[routerLink]=\"['/editstaff']\"  \r\n\t\t\t\t\t\t\t[queryParams]=miembroSeleccionado \r\n\t\t class=\"btn btn-outline-success\" style=\"margin-top: 3px;float: right;margin-right: 10px;\"  >Editar Perfil</button>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div style=\"float: right !important;display: inline-block; min-height: 1px;vertical-align: top; margin: 0;padding: 0;\">\r\n\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\t\t\r\n\t\t\t\t\t\t    \r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\r\n\r\n\t\t<div class=\"m-section\" style=\"margin-top: 30px\">\r\n\t\t\t<div class=\"m-section__content\">\r\n\t\t\t\t<ngb-tabset>\r\n\t\t\t\t\t<ngb-tab title=\"Servicios\">\r\n\t\t\t\t\t<ng-template ngbTabContent>\r\n\r\n\r\n\r\n\t\t\t\t\t\t\t\t<div style=\"padding: 40px 60px; \">\r\n\t\t<div style=\"color:#EA527D;font-size: 16px;font-weight: 500 !important;margin-bottom: 20px;\">\r\n\t\t\tElige los servicios que el empleado brinda</div>\r\n\t\t\t\t\t<div style=\"border: solid 1px lightgray;padding: 20px;\">\r\n\r\n\t\t\t\t\t\r\n\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t\t<div *ngFor=\"let k of keys;  let m = index\">\r\n\t\t\t\t\t\t\t<div class='tituloCateg'>{{k}}</div>\r\n\r\n\t\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: rgb(250,249,247);padding: 10px 10px;\" *ngFor=\"let item of serviciosValues[m];  let i = index\">\r\n\t\t\t\t\t\t\t<mat-checkbox color='primary' name=\"{{item.idEmpleado}}-name\" (change)=\"OnChange($event,item)\" [checked]=\"item.idServicioEmpleado\">\r\n\t\t\t\t\t\t\t\t<span class=\"txtF\">\r\n\t\t\t\t\t\t\t\t\t{{item.nombre}} / \r\n\t\t\t\t\t\t\t\t\t<span  [ngClass]=\"{'underl': item.oferta}\">${{item.precio}}</span>\r\n\t\t\t\t\t\t\t\t\t<span style=\"margin-left: 10px;font-weight: 500;\" *ngIf='item.oferta' >${{item.oferta}}</span>\r\n\t\t\t\t\t\t\t\t</span>\r\n\r\n\t\t\t\t\t\t\t<div class=\"txtF\" style=\"    margin-left: 6px;display: inline-block;\" >\r\n\t\t\t\t\t\t\t<span> / {{getHoras(item.duracion)}}h</span>\t\t \r\n\t\t\t\t\t\t\t<span style=\"margin-left: 6px\">{{item.duracion % 60}}min</span> \r\n\t\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t</div>\t\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t</div>\r\n\r\n\t\t</div>\r\n\r\n\r\n\t\t\t\t\t</ng-template>\r\n\t\t\t\t\t</ngb-tab>\r\n\t\t\t\t\t<ngb-tab  title=\"Horario\">\r\n\t\t\t\t\t<ng-template ngbTabContent >\r\n\t\t\t\t\t\t<div style='padding: 30px 45px;'>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox color='primary' [(ngModel)]='diasSemana.lunes.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Lunes</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.lunes.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tNO TRABAJA\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.lunes.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.lunes.horaEntrar' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.lunes.horaSalir' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox color='primary' [(ngModel)]='diasSemana.martes.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Martes</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.martes.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tNO TRABAJA\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.martes.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.martes.horaEntrar' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.martes.horaSalir' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox color='primary' [(ngModel)]='diasSemana.miercoles.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Miercoles</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.miercoles.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tNO TRABAJA\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.miercoles.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.miercoles.horaEntrar' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.miercoles.horaSalir' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox color='primary' [(ngModel)]='diasSemana.jueves.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Jueves</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.jueves.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tNO TRABAJA\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.jueves.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.jueves.horaEntrar' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.jueves.horaSalir' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox color='primary' [(ngModel)]='diasSemana.viernes.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Viernes</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.viernes.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tNO TRABAJA\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.viernes.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.viernes.horaEntrar' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.viernes.horaSalir' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox color='primary' [(ngModel)]='diasSemana.sabado.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Sabado</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.sabado.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tNO TRABAJA\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.sabado.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.sabado.horaEntrar' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select [(ngModel)]='diasSemana.sabado.horaSalir' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"contentSupe\">\r\n\t\t\t\t\t\t<mat-checkbox color='primary' [(ngModel)]='diasSemana.domingo.estado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Domingo</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"conteinInput\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<div [hidden]='diasSemana.domingo.estado' style=\"display: flex\">\r\n\t\t\t\t\t\t\t\tNO TRABAJA\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div [hidden]='!diasSemana.domingo.estado' style=\"display: flex\">\r\n\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.domingo.horaEntrar' class='inputBy w50'>\r\n\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n<span class=\"separadorHoras\"> - </span>\r\n\t\t\t\t\t\t\t<mat-select  [(ngModel)]='diasSemana.domingo.horaSalir' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\t\t\t\t\t\t<button  class=\"btn btn-success\" style=\"    margin-top: 3px;\r\n\t\t\t\t\t    float: right;\r\n\t\t\t\t\t    margin-right: 10px;\" (click)='guardarHorario()'>Guardar</button>\r\n\r\n\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t</ng-template>\r\n\t\t\t\t\t</ngb-tab>\r\n\t\t\t\t\t<ngb-tab title=\"Fechas Especiales\" >\r\n\t\t\t\t\t<ng-template ngbTabContent>\r\n\r\n\r\n\r\n\t\t\t\t\t\t<div style=\"margin-bottom:3px;background: white;padding: 0px 0px;\" >\r\n\r\n\r\n\t\t\t\t\t\t\t<div class=\"conteinInput2\" style=\"margin-top: 20px\">\r\n\t\t\t\t\t\t\t<p style=\"    text-align: center;\r\n    font-size: 16px;\r\n    font-weight: 400;\r\n    margin-top: 30px;\r\n    margin-bottom: 30px;\">Agrega un bloque libre para el empleado</p>\r\n\t\t\t\t\r\n\t\t\t\t\t\t\t<div  style=\"margin-left: 20px\">\r\n\r\n\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t  <mat-form-field style='        margin-right: 25px;' class='inputBy'>\r\n\t\t\t\t\t\t\t\t    <input [(ngModel)]='tiempoLibre.inicio' matInput [matDatepicker]=\"dp3\" (dateChange)=\"setDate2()\" placeholder=\"Inicio\" disabled>\r\n\t\t\t\t\t\t\t\t\t<mat-datepicker-toggle matSuffix [for]=\"dp3\">\r\n\t\t\t\t\t\t\t\t  </mat-datepicker-toggle>\r\n\t\t\t\t\t\t\t\t  <mat-datepicker #dp3 disabled=\"false\"></mat-datepicker>\r\n\t\t\t\t\t\t\t\t    </mat-form-field>\r\n\t\t\t\t\t\t\t\t\r\n\r\n\r\n\t\t\t\t\t\t\t\t<mat-form-field  style='       margin-right: 25px;'  class='inputBy'>\r\n\t\t\t\t\t\t\t\t    <input [(ngModel)]='tiempoLibre.fin' matInput [matDatepicker]=\"dp4\" placeholder=\"Finaliza\" disabled [min]=\"tiempoLibre.inicio\" \r\n\t\t\t\t\t\t\t\t    (dateChange)=\"getDatesBet()\" [disabled]='!tiempoLibre.inicio'>\r\n\t\t\t\t\t\t\t\t\t<mat-datepicker-toggle matSuffix [for]=\"dp4\">\r\n\t\t\t\t\t\t\t\t  </mat-datepicker-toggle >\r\n\t\t\t\t\t\t\t\t  <mat-datepicker #dp4 disabled=\"false\"></mat-datepicker>\r\n\t\t\t\t\t\t\t\t    </mat-form-field>\r\n\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t\t<mat-checkbox style=\" \" color='primary' [(ngModel)]='tiempoLibre.centroCerrado'>\r\n\t\t\t\t\t\t\t<span class='labelBy' style='margin-bottom: 0px !important;'>Dia Libre</span>\r\n\t\t\t\t\t\t\t\t</mat-checkbox>\r\n<!-- \t\t\t\t\t\t\t<mat-select [(ngModel)]='diasSemana.sabado.horaSalir' class='inputBy w50'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select> -->\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div style=\"  margin-top: 13px;    margin-left: 20px;\">\r\n\r\n\t\t\t\t\t\t\t<mat-select [hidden]='tiempoLibre.centroCerrado' [(ngModel)]='tiempoLibre.horaAbrir'  class='inputBy w50' \r\n\t\t\t\t\t\t\tstyle='width: 140px;'>\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\t\t\t\t\t\t\t<span [hidden]='tiempoLibre.centroCerrado' style=\"margin: 0px 16px;line-height: 40px;\">-</span>\r\n\t\t\t\t\t\t\t<mat-select  [hidden]='tiempoLibre.centroCerrado' [(ngModel)]='tiempoLibre.horaCerrar' class='inputBy w50' \r\n\t\t\t\t\t\t\tstyle='width: 140px;margin-right: 40px;'>\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<mat-option  *ngFor=\"let h of horarioHoras; let ii = index\" value=\"{{h.valor}}\">\r\n\t\t\t\t\t\t\t\t{{h.text}}\r\n\t\t\t\t\t\t\t\t</mat-option>\r\n\r\n\t\t\t\t\t\t\t</mat-select>\r\n\r\n\t\t\t\t\t\t\t\t\t\t<button  [disabled]='((!tiempoLibre.inicio || !tiempoLibre.horaAbrir || !tiempoLibre.horaCerrar) && !tiempoLibre.centroCerrado) || (tiempoLibre.centroCerrado && !tiempoLibre.inicio)' class=\"btn btn-success\" style=\"    \" (click)='agregarBloque()'>Guardar</button>\r\n\r\n\t\t\t\t\t\t\t</div>\r\n\r\n<!-- \r\n\t\t\t\t\t\t\t<div>\r\n\t\t\t\t\t\t\t\t<button [disabled]='!tiempoLibre.fin || !tiempoLibre.inicio' class=\"btn btn-success\" style=\"margin: auto;float: right;margin-right: 20px;\" (click)='agregarBloque()'>Agregar</button>\r\n\r\n\t\t\t\t\t\t\t</div> -->\r\n\t\t\t\t\t\t\t</div>\t\r\n\t\t\t\t\t    <hr>\r\n\r\n\r\n\t\t\t\t\t    <!-- \tAQUI LOS ITEMNS -->\r\n\r\n\r\n\t\t\t\t\t    <div  *ngFor=\"let h of horarioEspecial; let i = index\"  style=\"border-bottom: solid 1px lightgray;display: flex;font-size: 16px;padding: 20px\"> \r\n\r\n\t\t\t\t\t    <div style=\"font-weight :500; display: inline-block;        margin-right: 16px;\">{{h.fecha.split('T')[0]}}  </div>\t\r\n\t\t\t\t\t    <div *ngIf='h.abierto==1' style=\"display: inline-block;\">\t\r\n\t\t\t\t\t    <span style=\"font-weight: 400; margin-right: 20px\">{{h.horaFI}}</span> \r\n\t\t\t\t\t    <span style=\"margin-left: 10px;margin-right:10px\"> - </span>\r\n\t\t\t\t\t    <span style=\"font-weight: 400;margin-right: 20px\">{{h.horaFF}}</span>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div *ngIf='h.abierto==0' style=\"display: inline-block;\">\r\n\t\t\t\t\t\t\tDia Libre\r\n\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t    \t<mat-icon class='iconGG' (click)='borrarBloque(h.idHorarioEspecialEmpleado)' style='margin-left: 23px;background: darkgray; margin: auto;height: 20px;line-height: 20px;color: white;text-align: center;'>\r\n\t\t\t\t\t    \tclose\r\n\t\t\t\t\t    \t</mat-icon>\r\n\r\n\t\t\t\t\t    </div>\r\n\r\n\r\n\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t\t\t\t\t</ng-template>\r\n\t\t\t\t\t</ngb-tab>\r\n\r\n\t\t\t\t\t<ngb-tab title=\"Detalle Contacto\" >\r\n\t\t\t\t\t<ng-template ngbTabContent>\r\n\r\n\t\t\t\t\t\t\t<div style='padding: 30px 45px;'>\r\n\r\n\t\t\t\t\t\t\t\t<div style=\"margin: 20px 0px;\">\r\n\t\t\t\t\t\t\t\t\t<span style=\"font-weight: 600;display: block;margin-bottom: 15px;\">Email</span>\r\n\t\t\t\t\t\t\t\t\t<span>{{miembroSeleccionado.email}}</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t<hr>\r\n\r\n\t\t\t\t\t\t\t\t<div  style=\"margin: 20px 0px;\">\r\n\t\t\t\t\t\t\t\t\t<span style=\"font-weight: 600;display: block;margin-bottom: 15px;\">Descripcion</span>\r\n\t\t\t\t\t\t\t\t\t<span>{{miembroSeleccionado.descripcion}}</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t</ng-template>\r\n\t\t\t\t\t</ngb-tab>\r\n\r\n\t\t\t\t</ngb-tabset>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\r\n\r\n\r\n\t\t</div>\r\n<!-- \r\n\t\t<div style=\"    padding: 40px 60px;width: 100%\">\r\n\r\n\t\t\t\r\n\t</div> -->\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -6933,6 +13748,7 @@ var StaffComponent = /** @class */ (function () {
         this.miembroSeleccionado = {};
         this.keys = [];
         this.serviciosValues = [];
+        this.dateArray = [];
         this.horarioEmpleado = [];
         this.horarioEspecial = [];
         this.typesOfShoes = ['Juan Mario', 'Clogs Leys', 'Loafers Ramires', 'Juana R', 'Ines Sacnes'];
@@ -6969,7 +13785,7 @@ var StaffComponent = /** @class */ (function () {
     };
     StaffComponent.prototype.borrarBloque = function (id) {
         var _this = this;
-        this.authService.deleteLibresNC({ idEmpleadoBloqueLibre: id })
+        this.authService.eliminarHE({ id: id })
             .subscribe(function (data) {
             console.log(data);
             _this.itemSelectedChange(_this.miembroSeleccionado);
@@ -6978,15 +13794,43 @@ var StaffComponent = /** @class */ (function () {
             alert('Ups! Algo ha salido mal');
         });
     };
+    StaffComponent.prototype.setDate2 = function () {
+        this.tiempoLibre.fin = this.tiempoLibre.inicio;
+        this.getDatesBet();
+    };
+    StaffComponent.prototype.getDatesBet = function () {
+        //JSON.parse(JSON.stringify(this.tiempoLibre.inicio));
+        var fromDate = new Date(this.tiempoLibre.inicio);
+        var toDate = new Date(this.tiempoLibre.fin);
+        this.dateArray = [];
+        var nextDate = fromDate;
+        while (nextDate <= toDate) {
+            var da = nextDate.getFullYear() + '-' + ('0' + (nextDate.getMonth() + 1)).slice(-2) + '-' + ('0' + nextDate.getDate()).slice(-2);
+            this.dateArray.push(da);
+            nextDate.setDate(fromDate.getDate() + 1);
+        }
+        //console.log(dateArray);
+    };
     StaffComponent.prototype.agregarBloque = function () {
         var _this = this;
         var inicio = this.tiempoLibre.inicio.getFullYear() + '-' + ('0' + (this.tiempoLibre.inicio.getMonth() + 1)).slice(-2) + '-' + ('0' + this.tiempoLibre.inicio.getDate()).slice(-2);
         var fin = this.tiempoLibre.fin.getFullYear() + '-' + ('0' + (this.tiempoLibre.fin.getMonth() + 1)).slice(-2) + '-' + ('0' + this.tiempoLibre.fin.getDate()).slice(-2);
-        console.log(inicio, fin);
-        this.authService.addDiasLibresNC({ idEmpleado: this.selected, inicio: inicio, fin: fin })
+        var dataE = {
+            fecha: this.dateArray,
+            idEmpleado: this.selected,
+            estado: this.tiempoLibre.centroCerrado ? 0 : 1,
+            horaAbrir: this.tiempoLibre.horaAbrir ? this.tiempoLibre.horaAbrir.slice(0, -3) : '00:00',
+            horaCerrar: this.tiempoLibre.horaCerrar ? this.tiempoLibre.horaCerrar.slice(0, -3) : '00:00'
+        };
+        console.log(dataE);
+        this.authService.agregarHEENC(dataE)
             .subscribe(function (data) {
             _this.tiempoLibre.inicio = undefined;
             _this.tiempoLibre.fin = undefined;
+            _this.tiempoLibre.horaCerrar = undefined;
+            _this.tiempoLibre.horaAbrir = undefined;
+            _this.tiempoLibre.centroCerrado = undefined;
+            _this.dateArray = [];
             _this.itemSelectedChange(_this.miembroSeleccionado);
             console.log(data);
         }, function (err) {
@@ -7304,20 +14148,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_estadistica_estadistica_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/estadistica/estadistica.component */ "./src/app/content/pages/components/estadistica/estadistica.component.ts");
 /* harmony import */ var _components_agregarservicio_agregarservicio_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/agregarservicio/agregarservicio.component */ "./src/app/content/pages/components/agregarservicio/agregarservicio.component.ts");
 /* harmony import */ var _components_agregarpaquete_agregarpaquete_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/agregarpaquete/agregarpaquete.component */ "./src/app/content/pages/components/agregarpaquete/agregarpaquete.component.ts");
-/* harmony import */ var _components_configuracion_configuracion_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/configuracion/configuracion.component */ "./src/app/content/pages/components/configuracion/configuracion.component.ts");
-/* harmony import */ var _components_addstaff_addstaff_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/addstaff/addstaff.component */ "./src/app/content/pages/components/addstaff/addstaff.component.ts");
-/* harmony import */ var _components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/calendario/calendario.component */ "./src/app/content/pages/components/calendario/calendario.component.ts");
-/* harmony import */ var _components_detallecita_detallecita_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/detallecita/detallecita.component */ "./src/app/content/pages/components/detallecita/detallecita.component.ts");
-/* harmony import */ var _components_review_review_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/review/review.component */ "./src/app/content/pages/components/review/review.component.ts");
-/* harmony import */ var _components_nuevareserva_nuevareserva_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/nuevareserva/nuevareserva.component */ "./src/app/content/pages/components/nuevareserva/nuevareserva.component.ts");
-/* harmony import */ var _auth_register_register_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./auth/register/register.component */ "./src/app/content/pages/auth/register/register.component.ts");
-/* harmony import */ var _components_reprogramacion_reprogramacion_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/reprogramacion/reprogramacion.component */ "./src/app/content/pages/components/reprogramacion/reprogramacion.component.ts");
+/* harmony import */ var _components_soporte_soporte_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/soporte/soporte.component */ "./src/app/content/pages/components/soporte/soporte.component.ts");
+/* harmony import */ var _components_configuracion_configuracion_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/configuracion/configuracion.component */ "./src/app/content/pages/components/configuracion/configuracion.component.ts");
+/* harmony import */ var _components_addstaff_addstaff_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/addstaff/addstaff.component */ "./src/app/content/pages/components/addstaff/addstaff.component.ts");
+/* harmony import */ var _components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/calendario/calendario.component */ "./src/app/content/pages/components/calendario/calendario.component.ts");
+/* harmony import */ var _components_detallecita_detallecita_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/detallecita/detallecita.component */ "./src/app/content/pages/components/detallecita/detallecita.component.ts");
+/* harmony import */ var _components_review_review_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/review/review.component */ "./src/app/content/pages/components/review/review.component.ts");
+/* harmony import */ var _components_nuevareserva_nuevareserva_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/nuevareserva/nuevareserva.component */ "./src/app/content/pages/components/nuevareserva/nuevareserva.component.ts");
+/* harmony import */ var _auth_register_register_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./auth/register/register.component */ "./src/app/content/pages/auth/register/register.component.ts");
+/* harmony import */ var _components_reprogramacion_reprogramacion_component__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/reprogramacion/reprogramacion.component */ "./src/app/content/pages/components/reprogramacion/reprogramacion.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -7368,7 +14214,7 @@ var routes = [
             },
             {
                 path: 'nuevareserva',
-                component: _components_nuevareserva_nuevareserva_component__WEBPACK_IMPORTED_MODULE_23__["NuevareservaComponent"]
+                component: _components_nuevareserva_nuevareserva_component__WEBPACK_IMPORTED_MODULE_24__["NuevareservaComponent"]
             },
             {
                 path: 'horario',
@@ -7376,11 +14222,15 @@ var routes = [
             },
             {
                 path: 'addstaff',
-                component: _components_addstaff_addstaff_component__WEBPACK_IMPORTED_MODULE_19__["AddstaffComponent"]
+                component: _components_addstaff_addstaff_component__WEBPACK_IMPORTED_MODULE_20__["AddstaffComponent"]
             },
             {
                 path: 'reprogramacion',
-                component: _components_reprogramacion_reprogramacion_component__WEBPACK_IMPORTED_MODULE_25__["ReprogramacionComponent"]
+                component: _components_reprogramacion_reprogramacion_component__WEBPACK_IMPORTED_MODULE_26__["ReprogramacionComponent"]
+            },
+            {
+                path: 'soporte',
+                component: _components_soporte_soporte_component__WEBPACK_IMPORTED_MODULE_18__["SoporteComponent"]
             },
             {
                 path: 'estadistica',
@@ -7388,11 +14238,11 @@ var routes = [
             },
             {
                 path: 'review',
-                component: _components_review_review_component__WEBPACK_IMPORTED_MODULE_22__["ReviewComponent"]
+                component: _components_review_review_component__WEBPACK_IMPORTED_MODULE_23__["ReviewComponent"]
             },
             {
                 path: 'configuracion',
-                component: _components_configuracion_configuracion_component__WEBPACK_IMPORTED_MODULE_18__["ConfiguracionComponent"]
+                component: _components_configuracion_configuracion_component__WEBPACK_IMPORTED_MODULE_19__["ConfiguracionComponent"]
             },
             {
                 path: 'staff',
@@ -7404,7 +14254,7 @@ var routes = [
             },
             {
                 path: 'detallecita',
-                component: _components_detallecita_detallecita_component__WEBPACK_IMPORTED_MODULE_21__["DetallecitaComponent"]
+                component: _components_detallecita_detallecita_component__WEBPACK_IMPORTED_MODULE_22__["DetallecitaComponent"]
             },
             {
                 path: 'perfilnegocio',
@@ -7412,7 +14262,7 @@ var routes = [
             },
             {
                 path: 'calendario',
-                component: _components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_20__["CalendarioComponent"]
+                component: _components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_21__["CalendarioComponent"]
             },
             {
                 path: 'editstaff',
@@ -7466,7 +14316,7 @@ var routes = [
         path: 'registro',
         // canActivate: [NgxPermissionsGuard],
         //loadChildren: './auth/auth.module#AuthModule',
-        component: _auth_register_register_component__WEBPACK_IMPORTED_MODULE_24__["RegisterComponent"],
+        component: _auth_register_register_component__WEBPACK_IMPORTED_MODULE_25__["RegisterComponent"],
         data: {
             permissions: {
                 except: 'ADMIN'
@@ -7704,36 +14554,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_core_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../core/core.module */ "./src/app/core/core.module.ts");
 /* harmony import */ var _kolkov_angular_editor__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @kolkov/angular-editor */ "./node_modules/@kolkov/angular-editor/fesm5/kolkov-angular-editor.js");
 /* harmony import */ var ngx_loading__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ngx-loading */ "./node_modules/ngx-loading/ngx-loading/ngx-loading.es5.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var _snippets_error_page_error_page_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./snippets/error-page/error-page.component */ "./src/app/content/pages/snippets/error-page/error-page.component.ts");
-/* harmony import */ var _components_inner_inner_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/inner/inner.component */ "./src/app/content/pages/components/inner/inner.component.ts");
-/* harmony import */ var _components_servicios_servicios_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/servicios/servicios.component */ "./src/app/content/pages/components/servicios/servicios.component.ts");
-/* harmony import */ var _components_editservicio_editservicio_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/editservicio/editservicio.component */ "./src/app/content/pages/components/editservicio/editservicio.component.ts");
-/* harmony import */ var _components_agregaroferta_agregaroferta_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/agregaroferta/agregaroferta.component */ "./src/app/content/pages/components/agregaroferta/agregaroferta.component.ts");
-/* harmony import */ var _components_agregarpaquete_agregarpaquete_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/agregarpaquete/agregarpaquete.component */ "./src/app/content/pages/components/agregarpaquete/agregarpaquete.component.ts");
-/* harmony import */ var _components_configuracion_configuracion_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/configuracion/configuracion.component */ "./src/app/content/pages/components/configuracion/configuracion.component.ts");
-/* harmony import */ var _components_staff_staff_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/staff/staff.component */ "./src/app/content/pages/components/staff/staff.component.ts");
-/* harmony import */ var _components_editstaff_editstaff_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/editstaff/editstaff.component */ "./src/app/content/pages/components/editstaff/editstaff.component.ts");
-/* harmony import */ var _components_perfilnegocio_perfilnegocio_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/perfilnegocio/perfilnegocio.component */ "./src/app/content/pages/components/perfilnegocio/perfilnegocio.component.ts");
-/* harmony import */ var _components_agregarservicio_agregarservicio_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/agregarservicio/agregarservicio.component */ "./src/app/content/pages/components/agregarservicio/agregarservicio.component.ts");
-/* harmony import */ var _components_addstaff_addstaff_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/addstaff/addstaff.component */ "./src/app/content/pages/components/addstaff/addstaff.component.ts");
-/* harmony import */ var _components_detallecita_detallecita_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/detallecita/detallecita.component */ "./src/app/content/pages/components/detallecita/detallecita.component.ts");
-/* harmony import */ var _components_review_review_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/review/review.component */ "./src/app/content/pages/components/review/review.component.ts");
-/* harmony import */ var _components_reprogramacion_reprogramacion_component__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/reprogramacion/reprogramacion.component */ "./src/app/content/pages/components/reprogramacion/reprogramacion.component.ts");
-/* harmony import */ var ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ngx-perfect-scrollbar */ "./node_modules/ngx-perfect-scrollbar/dist/ngx-perfect-scrollbar.es5.js");
-/* harmony import */ var ngx_mat_select_search__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ngx-mat-select-search */ "./node_modules/ngx-mat-select-search/esm5/ngx-mat-select-search.js");
-/* harmony import */ var _components_horario_horario_component__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./components/horario/horario.component */ "./src/app/content/pages/components/horario/horario.component.ts");
-/* harmony import */ var _components_estadistica_estadistica_component__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./components/estadistica/estadistica.component */ "./src/app/content/pages/components/estadistica/estadistica.component.ts");
-/* harmony import */ var _components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./components/calendario/calendario.component */ "./src/app/content/pages/components/calendario/calendario.component.ts");
-/* harmony import */ var _components_nuevareserva_nuevareserva_component__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./components/nuevareserva/nuevareserva.component */ "./src/app/content/pages/components/nuevareserva/nuevareserva.component.ts");
-/* harmony import */ var _agm_core__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! @agm/core */ "./node_modules/@agm/core/index.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/index.js");
-/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var _custom_date_adapter__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./custom-date-adapter */ "./src/app/content/pages/custom-date-adapter.ts");
-/* harmony import */ var _auth_register_register_component__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./auth/register/register.component */ "./src/app/content/pages/auth/register/register.component.ts");
-/* harmony import */ var _angular_common_locales_es__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! @angular/common/locales/es */ "./node_modules/@angular/common/locales/es.js");
-/* harmony import */ var _angular_common_locales_es__WEBPACK_IMPORTED_MODULE_39___default = /*#__PURE__*/__webpack_require__.n(_angular_common_locales_es__WEBPACK_IMPORTED_MODULE_39__);
+/* harmony import */ var angular_custom_dropdown__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! angular-custom-dropdown */ "./node_modules/angular-custom-dropdown/angular-custom-dropdown.es5.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _snippets_error_page_error_page_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./snippets/error-page/error-page.component */ "./src/app/content/pages/snippets/error-page/error-page.component.ts");
+/* harmony import */ var _components_inner_inner_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/inner/inner.component */ "./src/app/content/pages/components/inner/inner.component.ts");
+/* harmony import */ var _components_servicios_servicios_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/servicios/servicios.component */ "./src/app/content/pages/components/servicios/servicios.component.ts");
+/* harmony import */ var _components_editservicio_editservicio_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/editservicio/editservicio.component */ "./src/app/content/pages/components/editservicio/editservicio.component.ts");
+/* harmony import */ var _components_agregaroferta_agregaroferta_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/agregaroferta/agregaroferta.component */ "./src/app/content/pages/components/agregaroferta/agregaroferta.component.ts");
+/* harmony import */ var _components_agregarpaquete_agregarpaquete_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/agregarpaquete/agregarpaquete.component */ "./src/app/content/pages/components/agregarpaquete/agregarpaquete.component.ts");
+/* harmony import */ var _components_configuracion_configuracion_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/configuracion/configuracion.component */ "./src/app/content/pages/components/configuracion/configuracion.component.ts");
+/* harmony import */ var _components_staff_staff_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/staff/staff.component */ "./src/app/content/pages/components/staff/staff.component.ts");
+/* harmony import */ var _components_editstaff_editstaff_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/editstaff/editstaff.component */ "./src/app/content/pages/components/editstaff/editstaff.component.ts");
+/* harmony import */ var _components_perfilnegocio_perfilnegocio_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/perfilnegocio/perfilnegocio.component */ "./src/app/content/pages/components/perfilnegocio/perfilnegocio.component.ts");
+/* harmony import */ var _components_agregarservicio_agregarservicio_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/agregarservicio/agregarservicio.component */ "./src/app/content/pages/components/agregarservicio/agregarservicio.component.ts");
+/* harmony import */ var _components_addstaff_addstaff_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/addstaff/addstaff.component */ "./src/app/content/pages/components/addstaff/addstaff.component.ts");
+/* harmony import */ var _components_detallecita_detallecita_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/detallecita/detallecita.component */ "./src/app/content/pages/components/detallecita/detallecita.component.ts");
+/* harmony import */ var _components_review_review_component__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/review/review.component */ "./src/app/content/pages/components/review/review.component.ts");
+/* harmony import */ var _components_reprogramacion_reprogramacion_component__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./components/reprogramacion/reprogramacion.component */ "./src/app/content/pages/components/reprogramacion/reprogramacion.component.ts");
+/* harmony import */ var _components_soporte_soporte_component__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./components/soporte/soporte.component */ "./src/app/content/pages/components/soporte/soporte.component.ts");
+/* harmony import */ var ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ngx-perfect-scrollbar */ "./node_modules/ngx-perfect-scrollbar/dist/ngx-perfect-scrollbar.es5.js");
+/* harmony import */ var ngx_mat_select_search__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ngx-mat-select-search */ "./node_modules/ngx-mat-select-search/esm5/ngx-mat-select-search.js");
+/* harmony import */ var _components_horario_horario_component__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./components/horario/horario.component */ "./src/app/content/pages/components/horario/horario.component.ts");
+/* harmony import */ var _components_estadistica_estadistica_component__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./components/estadistica/estadistica.component */ "./src/app/content/pages/components/estadistica/estadistica.component.ts");
+/* harmony import */ var _components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./components/calendario/calendario.component */ "./src/app/content/pages/components/calendario/calendario.component.ts");
+/* harmony import */ var _components_nuevareserva_nuevareserva_component__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./components/nuevareserva/nuevareserva.component */ "./src/app/content/pages/components/nuevareserva/nuevareserva.component.ts");
+/* harmony import */ var _agm_core__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! @agm/core */ "./node_modules/@agm/core/index.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/index.js");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
+/* harmony import */ var _custom_date_adapter__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./custom-date-adapter */ "./src/app/content/pages/custom-date-adapter.ts");
+/* harmony import */ var _auth_register_register_component__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./auth/register/register.component */ "./src/app/content/pages/auth/register/register.component.ts");
+/* harmony import */ var _angular_common_locales_es__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! @angular/common/locales/es */ "./node_modules/@angular/common/locales/es.js");
+/* harmony import */ var _angular_common_locales_es__WEBPACK_IMPORTED_MODULE_41___default = /*#__PURE__*/__webpack_require__.n(_angular_common_locales_es__WEBPACK_IMPORTED_MODULE_41__);
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7788,67 +14640,71 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-Object(_angular_common__WEBPACK_IMPORTED_MODULE_2__["registerLocaleData"])(_angular_common_locales_es__WEBPACK_IMPORTED_MODULE_39___default.a);
+
+
+Object(_angular_common__WEBPACK_IMPORTED_MODULE_2__["registerLocaleData"])(_angular_common_locales_es__WEBPACK_IMPORTED_MODULE_41___default.a);
 var PagesModule = /** @class */ (function () {
     function PagesModule() {
     }
     PagesModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
             declarations: [
-                _auth_register_register_component__WEBPACK_IMPORTED_MODULE_38__["Modal3Component"],
-                _components_servicios_servicios_component__WEBPACK_IMPORTED_MODULE_14__["CallbackPipe"],
-                _auth_register_register_component__WEBPACK_IMPORTED_MODULE_38__["ModalContentComponent"], _auth_register_register_component__WEBPACK_IMPORTED_MODULE_38__["Modal4Component"],
-                _auth_register_register_component__WEBPACK_IMPORTED_MODULE_38__["RegisterComponent"],
+                _auth_register_register_component__WEBPACK_IMPORTED_MODULE_40__["Modal3Component"],
+                _components_servicios_servicios_component__WEBPACK_IMPORTED_MODULE_15__["CallbackPipe"],
+                _auth_register_register_component__WEBPACK_IMPORTED_MODULE_40__["ModalContentComponent"], _auth_register_register_component__WEBPACK_IMPORTED_MODULE_40__["Modal4Component"],
+                _auth_register_register_component__WEBPACK_IMPORTED_MODULE_40__["RegisterComponent"],
                 _pages_component__WEBPACK_IMPORTED_MODULE_4__["PagesComponent"],
                 _header_action_action_component__WEBPACK_IMPORTED_MODULE_6__["ActionComponent"],
-                _components_configuracion_configuracion_component__WEBPACK_IMPORTED_MODULE_18__["ConfiguracionComponent"],
+                _components_configuracion_configuracion_component__WEBPACK_IMPORTED_MODULE_19__["ConfiguracionComponent"],
                 _header_profile_profile_component__WEBPACK_IMPORTED_MODULE_7__["ProfileComponent"],
-                _snippets_error_page_error_page_component__WEBPACK_IMPORTED_MODULE_12__["ErrorPageComponent"],
-                _components_inner_inner_component__WEBPACK_IMPORTED_MODULE_13__["InnerComponent"],
-                _components_servicios_servicios_component__WEBPACK_IMPORTED_MODULE_14__["ServiciosComponent"],
-                _components_editservicio_editservicio_component__WEBPACK_IMPORTED_MODULE_15__["EditservicioComponent"],
-                _components_agregaroferta_agregaroferta_component__WEBPACK_IMPORTED_MODULE_16__["AgregarofertaComponent"],
-                _components_agregarpaquete_agregarpaquete_component__WEBPACK_IMPORTED_MODULE_17__["AgregarpaqueteComponent"],
-                _components_agregaroferta_agregaroferta_component__WEBPACK_IMPORTED_MODULE_16__["DialogOverviewExampleDialog"],
-                _components_agregarpaquete_agregarpaquete_component__WEBPACK_IMPORTED_MODULE_17__["DialogOverviewExampleDialog2"],
-                _components_staff_staff_component__WEBPACK_IMPORTED_MODULE_19__["StaffComponent"], _components_addstaff_addstaff_component__WEBPACK_IMPORTED_MODULE_23__["AddstaffComponent"],
-                _components_agregarservicio_agregarservicio_component__WEBPACK_IMPORTED_MODULE_22__["AgregarservicioComponent"],
-                _components_editstaff_editstaff_component__WEBPACK_IMPORTED_MODULE_20__["EditstaffComponent"],
-                _components_nuevareserva_nuevareserva_component__WEBPACK_IMPORTED_MODULE_32__["NuevareservaComponent"],
-                _components_reprogramacion_reprogramacion_component__WEBPACK_IMPORTED_MODULE_26__["ReprogramacionComponent"],
-                _components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_31__["CalendarioComponent"],
-                _components_perfilnegocio_perfilnegocio_component__WEBPACK_IMPORTED_MODULE_21__["PerfilnegocioComponent"],
-                _components_review_review_component__WEBPACK_IMPORTED_MODULE_25__["ReviewComponent"],
-                _components_detallecita_detallecita_component__WEBPACK_IMPORTED_MODULE_24__["DetallecitaComponent"],
-                _components_horario_horario_component__WEBPACK_IMPORTED_MODULE_29__["HorarioComponent"], _components_estadistica_estadistica_component__WEBPACK_IMPORTED_MODULE_30__["EstadisticaComponent"], _components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_31__["ModalcalenComponent"]
+                _snippets_error_page_error_page_component__WEBPACK_IMPORTED_MODULE_13__["ErrorPageComponent"],
+                _components_inner_inner_component__WEBPACK_IMPORTED_MODULE_14__["InnerComponent"],
+                _components_servicios_servicios_component__WEBPACK_IMPORTED_MODULE_15__["ServiciosComponent"],
+                _components_editservicio_editservicio_component__WEBPACK_IMPORTED_MODULE_16__["EditservicioComponent"],
+                _components_agregaroferta_agregaroferta_component__WEBPACK_IMPORTED_MODULE_17__["AgregarofertaComponent"],
+                _components_agregarpaquete_agregarpaquete_component__WEBPACK_IMPORTED_MODULE_18__["AgregarpaqueteComponent"],
+                _components_agregaroferta_agregaroferta_component__WEBPACK_IMPORTED_MODULE_17__["DialogOverviewExampleDialog"],
+                _components_agregarpaquete_agregarpaquete_component__WEBPACK_IMPORTED_MODULE_18__["DialogOverviewExampleDialog2"],
+                _components_staff_staff_component__WEBPACK_IMPORTED_MODULE_20__["StaffComponent"], _components_addstaff_addstaff_component__WEBPACK_IMPORTED_MODULE_24__["AddstaffComponent"],
+                _components_agregarservicio_agregarservicio_component__WEBPACK_IMPORTED_MODULE_23__["AgregarservicioComponent"],
+                _components_editstaff_editstaff_component__WEBPACK_IMPORTED_MODULE_21__["EditstaffComponent"],
+                _components_nuevareserva_nuevareserva_component__WEBPACK_IMPORTED_MODULE_34__["NuevareservaComponent"],
+                _components_reprogramacion_reprogramacion_component__WEBPACK_IMPORTED_MODULE_27__["ReprogramacionComponent"],
+                _components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_33__["CalendarioComponent"],
+                _components_perfilnegocio_perfilnegocio_component__WEBPACK_IMPORTED_MODULE_22__["PerfilnegocioComponent"],
+                _components_review_review_component__WEBPACK_IMPORTED_MODULE_26__["ReviewComponent"],
+                _components_detallecita_detallecita_component__WEBPACK_IMPORTED_MODULE_25__["DetallecitaComponent"],
+                _components_soporte_soporte_component__WEBPACK_IMPORTED_MODULE_28__["SoporteComponent"],
+                _components_horario_horario_component__WEBPACK_IMPORTED_MODULE_31__["HorarioComponent"], _components_estadistica_estadistica_component__WEBPACK_IMPORTED_MODULE_32__["EstadisticaComponent"], _components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_33__["ModalcalenComponent"]
             ],
             imports: [
-                _angular_material__WEBPACK_IMPORTED_MODULE_36__["MatButtonModule"], _angular_material__WEBPACK_IMPORTED_MODULE_36__["MatCardModule"], _angular_material__WEBPACK_IMPORTED_MODULE_36__["MatSlideToggleModule"],
-                ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_27__["PerfectScrollbarModule"],
-                ngx_mat_select_search__WEBPACK_IMPORTED_MODULE_28__["NgxMatSelectSearchModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_38__["MatButtonModule"], _angular_material__WEBPACK_IMPORTED_MODULE_38__["MatCardModule"], _angular_material__WEBPACK_IMPORTED_MODULE_38__["MatSlideToggleModule"],
+                ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_29__["PerfectScrollbarModule"],
+                ngx_mat_select_search__WEBPACK_IMPORTED_MODULE_30__["NgxMatSelectSearchModule"],
                 _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_36__["MatSelectModule"],
-                _angular_common_http__WEBPACK_IMPORTED_MODULE_11__["HttpClientModule"],
-                _angular_forms__WEBPACK_IMPORTED_MODULE_34__["FormsModule"],
+                angular_custom_dropdown__WEBPACK_IMPORTED_MODULE_11__["DropdownModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_38__["MatSelectModule"],
+                _angular_common_http__WEBPACK_IMPORTED_MODULE_12__["HttpClientModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_36__["FormsModule"],
                 _pages_routing_module__WEBPACK_IMPORTED_MODULE_3__["PagesRoutingModule"],
                 _core_core_module__WEBPACK_IMPORTED_MODULE_8__["CoreModule"],
-                ngx_loading__WEBPACK_IMPORTED_MODULE_10__["LoadingModule"], _angular_material__WEBPACK_IMPORTED_MODULE_36__["MatInputModule"],
-                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_35__["NgbModule"],
-                _layout_layout_module__WEBPACK_IMPORTED_MODULE_0__["LayoutModule"], _angular_material__WEBPACK_IMPORTED_MODULE_36__["MatNativeDateModule"],
+                ngx_loading__WEBPACK_IMPORTED_MODULE_10__["LoadingModule"], _angular_material__WEBPACK_IMPORTED_MODULE_38__["MatInputModule"],
+                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_37__["NgbModule"],
+                _layout_layout_module__WEBPACK_IMPORTED_MODULE_0__["LayoutModule"], _angular_material__WEBPACK_IMPORTED_MODULE_38__["MatNativeDateModule"],
                 _partials_partials_module__WEBPACK_IMPORTED_MODULE_5__["PartialsModule"],
-                _kolkov_angular_editor__WEBPACK_IMPORTED_MODULE_9__["AngularEditorModule"], _angular_material__WEBPACK_IMPORTED_MODULE_36__["MatDialogModule"], _angular_material__WEBPACK_IMPORTED_MODULE_36__["MatProgressSpinnerModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_36__["MatStepperModule"], _angular_material__WEBPACK_IMPORTED_MODULE_36__["MatFormFieldModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_36__["MatCheckboxModule"], _angular_material__WEBPACK_IMPORTED_MODULE_36__["MatTableModule"], _angular_material__WEBPACK_IMPORTED_MODULE_36__["MatPaginatorModule"], _angular_material__WEBPACK_IMPORTED_MODULE_36__["MatListModule"], _angular_material__WEBPACK_IMPORTED_MODULE_36__["MatDatepickerModule"],
-                _angular_forms__WEBPACK_IMPORTED_MODULE_34__["ReactiveFormsModule"], _angular_material__WEBPACK_IMPORTED_MODULE_36__["MatIconModule"],
-                _agm_core__WEBPACK_IMPORTED_MODULE_33__["AgmCoreModule"].forRoot({
+                _kolkov_angular_editor__WEBPACK_IMPORTED_MODULE_9__["AngularEditorModule"], _angular_material__WEBPACK_IMPORTED_MODULE_38__["MatDialogModule"], _angular_material__WEBPACK_IMPORTED_MODULE_38__["MatProgressSpinnerModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_38__["MatStepperModule"], _angular_material__WEBPACK_IMPORTED_MODULE_38__["MatFormFieldModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_38__["MatCheckboxModule"], _angular_material__WEBPACK_IMPORTED_MODULE_38__["MatTableModule"], _angular_material__WEBPACK_IMPORTED_MODULE_38__["MatPaginatorModule"], _angular_material__WEBPACK_IMPORTED_MODULE_38__["MatListModule"], _angular_material__WEBPACK_IMPORTED_MODULE_38__["MatDatepickerModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_36__["ReactiveFormsModule"], _angular_material__WEBPACK_IMPORTED_MODULE_38__["MatIconModule"],
+                _agm_core__WEBPACK_IMPORTED_MODULE_35__["AgmCoreModule"].forRoot({
                     apiKey: 'AIzaSyAT-tTbOja69paXaiAgAtNi9nGHRh75bzk',
                     libraries: ['geometry', 'places']
                 })
             ],
-            entryComponents: [_components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_31__["ModalcalenComponent"], _auth_register_register_component__WEBPACK_IMPORTED_MODULE_38__["Modal3Component"],
-                _auth_register_register_component__WEBPACK_IMPORTED_MODULE_38__["ModalContentComponent"], _auth_register_register_component__WEBPACK_IMPORTED_MODULE_38__["Modal4Component"], _components_agregaroferta_agregaroferta_component__WEBPACK_IMPORTED_MODULE_16__["DialogOverviewExampleDialog"], _components_agregarpaquete_agregarpaquete_component__WEBPACK_IMPORTED_MODULE_17__["DialogOverviewExampleDialog2"]],
-            providers: [{ provide: _angular_core__WEBPACK_IMPORTED_MODULE_1__["LOCALE_ID"], useValue: 'es' }, { provide: _angular_material__WEBPACK_IMPORTED_MODULE_36__["MAT_DATE_LOCALE"], useValue: 'es-MX' },
-                { provide: _angular_material__WEBPACK_IMPORTED_MODULE_36__["DateAdapter"], useClass: _custom_date_adapter__WEBPACK_IMPORTED_MODULE_37__["CustomDateAdapter"] }]
+            entryComponents: [_components_calendario_calendario_component__WEBPACK_IMPORTED_MODULE_33__["ModalcalenComponent"], _auth_register_register_component__WEBPACK_IMPORTED_MODULE_40__["Modal3Component"],
+                _auth_register_register_component__WEBPACK_IMPORTED_MODULE_40__["ModalContentComponent"], _auth_register_register_component__WEBPACK_IMPORTED_MODULE_40__["Modal4Component"], _components_agregaroferta_agregaroferta_component__WEBPACK_IMPORTED_MODULE_17__["DialogOverviewExampleDialog"], _components_agregarpaquete_agregarpaquete_component__WEBPACK_IMPORTED_MODULE_18__["DialogOverviewExampleDialog2"]],
+            providers: [{ provide: _angular_core__WEBPACK_IMPORTED_MODULE_1__["LOCALE_ID"], useValue: 'es' }, { provide: _angular_material__WEBPACK_IMPORTED_MODULE_38__["MAT_DATE_LOCALE"], useValue: 'es-MX' },
+                { provide: _angular_material__WEBPACK_IMPORTED_MODULE_38__["DateAdapter"], useClass: _custom_date_adapter__WEBPACK_IMPORTED_MODULE_39__["CustomDateAdapter"] }]
         })
     ], PagesModule);
     return PagesModule;

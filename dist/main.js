@@ -1596,6 +1596,21 @@ var MenuConfig = /** @class */ (function () {
                         page: '/configuracion'
                     },
                     {
+                        title: 'Soporte',
+                        desc: 'sopor',
+                        root: true,
+                        icon: 'flaticon-support',
+                        page: '/soporte'
+                    },
+                    {
+                        title: 'FAQ',
+                        desc: 'cerrar sesion',
+                        root: true,
+                        icon: 'flaticon-questions-circular-button',
+                        page: 'https://www.google.com',
+                        function: 'faq'
+                    },
+                    {
                         title: 'Cerrar Sesion',
                         desc: 'cerrar sesion',
                         root: true,
@@ -1673,6 +1688,9 @@ var PagesConfig = /** @class */ (function () {
             editstaff: {
                 page: { title: 'edit staff', desc: 'edit staff' }
             },
+            soporte: {
+                page: { title: 'soporte', desc: 'soporte' }
+            },
             builder: {
                 page: { title: 'Layout Builder', desc: 'Layout builder' }
             },
@@ -1703,7 +1721,7 @@ var PagesConfig = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- BEGIN: Left Aside -->\r\n\r\n<!-- <div mMenuAsideOffcanvas id=\"m_aside_left\" class=\"m-grid__item m-aside-left\" [ngClass]=\"asideLeftClasses\"> -->\r\n<!-- BEGIN: Aside Menu -->\r\n<div mMenuAside (mouseenter)=\"mouseEnter($event)\" (mouseleave)=\"mouseLeave($event)\" id=\"m_ver_menu\" class=\"m-aside-menu \" m-menu-vertical=\"1\" [ngClass]=\"classInitService.onClassesUpdated$ | async | mGetObject:'aside_menu' | mJoin\" [attr.m-menu-dropdown]=\"menuAsideService.isDropdown\" [attr.m-menu-dropdown-timeout]=\"menuAsideService.dropdownTimeout\" [attr.m-menu-scrollable]=\"menuAsideService.isScrollable\">\r\n\r\n<!-- \t<span *ngIf='getValueSideMenu()' style=\"display: block;color: white;text-align: center;padding: 20px;\">YourBeauty</span> -->\r\n\r\n\t<ul class=\"m-menu__nav\" [ngClass]=\"classInitService.onClassesUpdated$ | async | mGetObject:'aside_menu_nav' | mJoin\">\r\n\t\t<ng-container [ngTemplateOutlet]=\"mMenuListing\"></ng-container>\r\n\t</ul>\r\n</div>\r\n<!-- END: Aside Menu -->\r\n<!-- </div> -->\r\n\r\n<ng-template #mMenuListing>\r\n\t<ng-container *ngFor=\"let child of menuAsideService.menuList$ | async\">\r\n\t\t<m-menu-section *ngIf=\"child.section\" [item]=\"child\"></m-menu-section>\r\n\t\t<ng-container *ngIf=\"child.title\" [ngTemplateOutlet]=\"mMenuItem\" [ngTemplateOutletContext]=\"{ item: child, parentItem: item }\"></ng-container>\r\n\t</ng-container>\r\n</ng-template>\r\n\r\n<ng-template #mMenuItem let-item=\"item\" let-parentItem=\"parentItem\">\r\n\t<li class=\"m-menu__item\" [ngClass]=\"{ 'm-menu__item--submenu': item.submenu, 'm-menu__item--active' : !item.submenu && isMenuItemIsActive(item), 'm-menu__item--open' : item.submenu && isMenuItemIsActive(item) }\" aria-haspopup=\"true\">\r\n\r\n\t\t<!-- if menu item hasn't submenu -->\r\n\t\t<a [hidden]='item.function' *ngIf=\"!item.submenu\" [routerLink]=\"item.page\" class=\"m-menu__link m-menu__toggle\" [matTooltip]=\"item.tooltip\" matTooltipPosition=\"left\">\r\n\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItemText\" [ngTemplateOutletContext]=\"{ item: item, parentItem: parentItem }\"></ng-container>\r\n\t\t</a>\r\n\r\n\t\t<a *ngIf=\"!item.submenu && item.function=='logout'\" (click)='logout()' class=\"m-menu__link m-menu__toggle\" [matTooltip]=\"item.tooltip\" matTooltipPosition=\"left\">\r\n\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItemText\" [ngTemplateOutletContext]=\"{ item: item, parentItem: parentItem }\"></ng-container>\r\n\t\t</a>\r\n\t<a *ngIf=\"!item.submenu && item.function=='logo'\"  class=\"m-menu__link m-menu__toggle\" [matTooltip]=\"item.tooltip\" matTooltipPosition=\"left\">\r\n\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItemText\" [ngTemplateOutletContext]=\"{ item: item, parentItem: parentItem }\"></ng-container>\r\n\t\t</a>\r\n\r\n\r\n\r\n\t\t<!-- if menu item has sumnenu child  -->\r\n\t\t<a href=\"javascript:;\" *ngIf=\"item.submenu\" class=\"m-menu__link m-menu__toggle\">\r\n\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItemText\" [ngTemplateOutletContext]=\"{ item: item, parentItem: parentItem }\"></ng-container>\r\n\t\t</a>\r\n\r\n\t\t<!-- if menu item has submenu child then recursively call new menu item component -->\r\n\t\t<div *ngIf=\"item.submenu\" class=\"m-menu__submenu\">\r\n\t\t\t<span class=\"m-menu__arrow\"></span>\r\n\t\t\t<ul class=\"m-menu__subnav\">\r\n\t\t\t\t<ng-container *ngFor=\"let child of item.submenu\">\r\n\t\t\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItem\" [ngTemplateOutletContext]=\"{ item: child, parentItem: item }\"></ng-container>\r\n\t\t\t\t</ng-container>\r\n\t\t\t</ul>\r\n\t\t</div>\r\n\t</li>\r\n</ng-template>\r\n\r\n<ng-template #mMenuItemText let-item=\"item\" let-parentItem=\"parentItem\">\r\n\t<!-- if menu item has icon -->\r\n\t<i *ngIf=\"item.icon\" class=\"m-menu__link-icon\" [ngClass]=\"item.icon\"></i>\r\n\r\n\t<!-- if menu item using bullet -->\r\n\t<i *ngIf=\"parentItem && parentItem.bullet === 'dot'\" class=\"m-menu__link-bullet m-menu__link-bullet--dot\">\r\n\t\t<span></span>\r\n\t</i>\r\n\t<i *ngIf=\"parentItem && parentItem.bullet === 'line'\" class=\"m-menu__link-bullet m-menu__link-bullet--line\">\r\n\t\t<span></span>\r\n\t</i>\r\n\r\n\t<ng-container *ngIf=\"!item.badge; else mMenuLinkBadge\">\r\n\t\t<!-- menu item title text -->\r\n\t\t<span class=\"m-menu__link-text\" [translate]=\"item.translate\" \r\n\t\t[ngStyle]=\"{'color': item.function == 'logo' ? 'white' : 'normal', \r\n\t'font-weight': item.function == '400' ? 'white' : 'normal'}\">\r\n\t\t\t{{item.title}}\r\n\t\t</span>\r\n\r\n\r\n\r\n\t</ng-container>\r\n\r\n\t<ng-template #mMenuLinkBadge>\r\n\t\t<!-- menu item with badge -->\r\n\t\t<span class=\"m-menu__link-title\">\r\n\t\t\t<span class=\"m-menu__link-wrap\">\r\n\t\t\t\t<span class=\"m-menu__link-text\" [translate]=\"item.translate\">{{item.title}}</span>\r\n\t\t\t\t<span class=\"m-menu__link-badge\">\r\n\t\t\t\t\t<span class=\"m-badge\" [ngClass]=\"item.badge.type\">{{item.badge.value}}</span>\r\n\t\t\t\t</span>\r\n\t\t\t</span>\r\n\t\t</span>\r\n\t</ng-template>\r\n\r\n\t<!-- if menu item has submenu child then put arrow icon -->\r\n\t<i *ngIf=\"item.submenu\" class=\"m-menu__ver-arrow la la-angle-right\"></i>\r\n</ng-template>\r\n<!-- END: Left Aside -->\r\n"
+module.exports = "<!-- BEGIN: Left Aside -->\r\n\r\n<!-- <div mMenuAsideOffcanvas id=\"m_aside_left\" class=\"m-grid__item m-aside-left\" [ngClass]=\"asideLeftClasses\"> -->\r\n<!-- BEGIN: Aside Menu -->\r\n<div mMenuAside (mouseenter)=\"mouseEnter($event)\" (mouseleave)=\"mouseLeave($event)\" id=\"m_ver_menu\" class=\"m-aside-menu \" m-menu-vertical=\"1\" [ngClass]=\"classInitService.onClassesUpdated$ | async | mGetObject:'aside_menu' | mJoin\" [attr.m-menu-dropdown]=\"menuAsideService.isDropdown\" [attr.m-menu-dropdown-timeout]=\"menuAsideService.dropdownTimeout\" [attr.m-menu-scrollable]=\"menuAsideService.isScrollable\">\r\n\r\n<!-- \t<span *ngIf='getValueSideMenu()' style=\"display: block;color: white;text-align: center;padding: 20px;\">YourBeauty</span> -->\r\n\r\n\t<ul class=\"m-menu__nav\" [ngClass]=\"classInitService.onClassesUpdated$ | async | mGetObject:'aside_menu_nav' | mJoin\">\r\n\t\t<ng-container [ngTemplateOutlet]=\"mMenuListing\"></ng-container>\r\n\t</ul>\r\n</div>\r\n<!-- END: Aside Menu -->\r\n<!-- </div> -->\r\n\r\n<ng-template #mMenuListing>\r\n\t<ng-container *ngFor=\"let child of menuAsideService.menuList$ | async\">\r\n\t\t<m-menu-section *ngIf=\"child.section\" [item]=\"child\"></m-menu-section>\r\n\t\t<ng-container *ngIf=\"child.title\" [ngTemplateOutlet]=\"mMenuItem\" [ngTemplateOutletContext]=\"{ item: child, parentItem: item }\"></ng-container>\r\n\t</ng-container>\r\n</ng-template>\r\n\r\n<ng-template #mMenuItem let-item=\"item\" let-parentItem=\"parentItem\">\r\n\t<li class=\"m-menu__item\" [ngClass]=\"{ 'm-menu__item--submenu': item.submenu, 'm-menu__item--active' : !item.submenu && isMenuItemIsActive(item), 'm-menu__item--open' : item.submenu && isMenuItemIsActive(item) }\" aria-haspopup=\"true\">\r\n\r\n\t\t<!-- if menu item hasn't submenu -->\r\n\t\t<a [hidden]='item.function' *ngIf=\"!item.submenu\" [routerLink]=\"item.page\" class=\"m-menu__link m-menu__toggle\" [matTooltip]=\"item.tooltip\" matTooltipPosition=\"left\">\r\n\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItemText\" [ngTemplateOutletContext]=\"{ item: item, parentItem: parentItem }\"></ng-container>\r\n\t\t</a>\r\n\r\n\t\t<a *ngIf=\"!item.submenu && item.function=='logout'\" (click)='logout()' class=\"m-menu__link m-menu__toggle\" [matTooltip]=\"item.tooltip\" matTooltipPosition=\"left\">\r\n\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItemText\" [ngTemplateOutletContext]=\"{ item: item, parentItem: parentItem }\"></ng-container>\r\n\t\t</a>\r\n\r\n\t\t\t\t<a *ngIf=\"!item.submenu && item.function=='faq'\" (click)='gofaq(item.page)' class=\"m-menu__link m-menu__toggle\" [matTooltip]=\"item.tooltip\" matTooltipPosition=\"left\">\r\n\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItemText\" [ngTemplateOutletContext]=\"{ item: item, parentItem: parentItem }\"></ng-container>\r\n\t\t</a>\r\n\r\n\r\n\r\n\r\n\t<a *ngIf=\"!item.submenu && item.function=='logo'\"  class=\"m-menu__link m-menu__toggle\" [matTooltip]=\"item.tooltip\" matTooltipPosition=\"left\">\r\n\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItemText\" [ngTemplateOutletContext]=\"{ item: item, parentItem: parentItem }\"></ng-container>\r\n\t\t</a>\r\n\r\n\r\n\r\n\t\t<!-- if menu item has sumnenu child  -->\r\n\t\t<a href=\"javascript:;\" *ngIf=\"item.submenu\" class=\"m-menu__link m-menu__toggle\">\r\n\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItemText\" [ngTemplateOutletContext]=\"{ item: item, parentItem: parentItem }\"></ng-container>\r\n\t\t</a>\r\n\r\n\t\t<!-- if menu item has submenu child then recursively call new menu item component -->\r\n\t\t<div *ngIf=\"item.submenu\" class=\"m-menu__submenu\">\r\n\t\t\t<span class=\"m-menu__arrow\"></span>\r\n\t\t\t<ul class=\"m-menu__subnav\">\r\n\t\t\t\t<ng-container *ngFor=\"let child of item.submenu\">\r\n\t\t\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItem\" [ngTemplateOutletContext]=\"{ item: child, parentItem: item }\"></ng-container>\r\n\t\t\t\t</ng-container>\r\n\t\t\t</ul>\r\n\t\t</div>\r\n\t</li>\r\n</ng-template>\r\n\r\n<ng-template #mMenuItemText let-item=\"item\" let-parentItem=\"parentItem\">\r\n\t<!-- if menu item has icon -->\r\n\t<i *ngIf=\"item.icon\" class=\"m-menu__link-icon\" [ngClass]=\"item.icon\"></i>\r\n\r\n\t<!-- if menu item using bullet -->\r\n\t<i *ngIf=\"parentItem && parentItem.bullet === 'dot'\" class=\"m-menu__link-bullet m-menu__link-bullet--dot\">\r\n\t\t<span></span>\r\n\t</i>\r\n\t<i *ngIf=\"parentItem && parentItem.bullet === 'line'\" class=\"m-menu__link-bullet m-menu__link-bullet--line\">\r\n\t\t<span></span>\r\n\t</i>\r\n\r\n\t<ng-container *ngIf=\"!item.badge; else mMenuLinkBadge\">\r\n\t\t<!-- menu item title text -->\r\n\t\t<span class=\"m-menu__link-text\" [translate]=\"item.translate\" \r\n\t\t[ngStyle]=\"{'color': item.function == 'logo' ? 'white' : 'normal', \r\n\t'font-weight': item.function == '400' ? 'white' : 'normal'}\">\r\n\t\t\t{{item.title}}\r\n\t\t</span>\r\n\r\n\r\n\r\n\t</ng-container>\r\n\r\n\t<ng-template #mMenuLinkBadge>\r\n\t\t<!-- menu item with badge -->\r\n\t\t<span class=\"m-menu__link-title\">\r\n\t\t\t<span class=\"m-menu__link-wrap\">\r\n\t\t\t\t<span class=\"m-menu__link-text\" [translate]=\"item.translate\">{{item.title}}</span>\r\n\t\t\t\t<span class=\"m-menu__link-badge\">\r\n\t\t\t\t\t<span class=\"m-badge\" [ngClass]=\"item.badge.type\">{{item.badge.value}}</span>\r\n\t\t\t\t</span>\r\n\t\t\t</span>\r\n\t\t</span>\r\n\t</ng-template>\r\n\r\n\t<!-- if menu item has submenu child then put arrow icon -->\r\n\t<i *ngIf=\"item.submenu\" class=\"m-menu__ver-arrow la la-angle-right\"></i>\r\n</ng-template>\r\n<!-- END: Left Aside -->\r\n"
 
 /***/ }),
 
@@ -1788,6 +1806,9 @@ var AsideLeftComponent = /** @class */ (function () {
     };
     AsideLeftComponent.prototype.logout = function () {
         this.authService.logout(true);
+    };
+    AsideLeftComponent.prototype.gofaq = function (link) {
+        window.open(link, "_blank");
     };
     AsideLeftComponent.prototype.isMenuItemIsActive = function (item) {
         if (item.submenu) {
@@ -6063,8 +6084,20 @@ var AuthenticationService = /** @class */ (function () {
     AuthenticationService.prototype.getCategoriasCentro = function (data) {
         return this.http.post(this.API_URL + '/getCategoriasCentro', data);
     };
+    AuthenticationService.prototype.goReserva = function (data) {
+        return this.http.post(this.API_URL + '/goReserva', data);
+    };
     AuthenticationService.prototype.getSubcategoriasCentro = function (data) {
         return this.http.post(this.API_URL + '/getSubcategoriasCentro', data);
+    };
+    AuthenticationService.prototype.configuracionPrecioNC = function (data) {
+        return this.http.post(this.API_URL + '/configuracionPrecioNC', data);
+    };
+    AuthenticationService.prototype.agregarHEENC = function (data) {
+        return this.http.post(this.API_URL + '/agregarHEENC', data);
+    };
+    AuthenticationService.prototype.eliminarHE = function (data) {
+        return this.http.post(this.API_URL + '/eliminarHE', data);
     };
     AuthenticationService.prototype.getDataCita = function (data) {
         return this.http.post(this.API_URL + '/getDataCita', data);
@@ -6089,6 +6122,9 @@ var AuthenticationService = /** @class */ (function () {
     };
     AuthenticationService.prototype.recuperarPassNC = function (data) {
         return this.http.post(this.API_URL + '/recuperarPassNC', data);
+    };
+    AuthenticationService.prototype.mensajeSoporte = function (data) {
+        return this.http.post(this.API_URL + '/mensajeSoporte', data);
     };
     AuthenticationService.prototype.cambiarOfertaNC = function (data) {
         return this.http.post(this.API_URL + '/cambiarOfertaNC', data);
@@ -6195,6 +6231,9 @@ var AuthenticationService = /** @class */ (function () {
     AuthenticationService.prototype.borrarFechaEspecial = function (data) {
         return this.http.post(this.API_URL + '/borrarFechaEspecial', data);
     };
+    AuthenticationService.prototype.getInfoCentroNC = function (data) {
+        return this.http.post(this.API_URL + '/getInfoCentroNC', data);
+    };
     AuthenticationService.prototype.getInfoCentro = function (data) {
         return this.http.post(this.API_URL + '/getInfoCentro', data);
     };
@@ -6206,6 +6245,9 @@ var AuthenticationService = /** @class */ (function () {
     };
     AuthenticationService.prototype.verificarEmail = function (data) {
         return this.http.post(this.API_URL + '/verificarEmail', data);
+    };
+    AuthenticationService.prototype.verificarEmail2 = function (data) {
+        return this.http.post(this.API_URL + '/verificarEmail2', data);
     };
     AuthenticationService.prototype.getCitaDetalleNC = function (data) {
         return this.http.post(this.API_URL + '/getCitaDetalleNC', data);
