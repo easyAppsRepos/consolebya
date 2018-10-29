@@ -1607,7 +1607,7 @@ var MenuConfig = /** @class */ (function () {
                         desc: 'cerrar sesion',
                         root: true,
                         icon: 'flaticon-questions-circular-button',
-                        page: 'https://www.google.com',
+                        page: 'https://yourbeauty.ladesk.com/',
                         function: 'faq'
                     },
                     {
