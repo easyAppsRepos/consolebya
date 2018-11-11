@@ -12310,7 +12310,7 @@ var PerfilnegocioComponent = /** @class */ (function () {
         var uploadData = new FormData();
         uploadData.append('idCentro', this.centroInfo.idCentro);
         uploadData.append('imageU', this.selectedFile, this.selectedFile.name);
-        this.authService.actualizarBannerNC(uploadData)
+        this.authService.actualizarBannerNC21(uploadData)
             .subscribe(function (data) {
             _this.loadingScreen = false;
             _this.ngOnInit();

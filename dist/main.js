@@ -6063,6 +6063,9 @@ var AuthenticationService = /** @class */ (function () {
     AuthenticationService.prototype.actualizarBannerNC = function (image) {
         return this.http.post(this.API_URL + '/actualizarBannerNC', image);
     };
+    AuthenticationService.prototype.actualizarBannerNC21 = function (image) {
+        return this.http.post(this.API_URL + '/actualizarBannerNC21', image);
+    };
     AuthenticationService.prototype.actualizarBannerNC2 = function (image) {
         return this.http.post(this.API_URL + '/actualizarBannerNC2', image);
     };
