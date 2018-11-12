@@ -2,11 +2,21 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const http = require('http');
+var fs = require('fs');
+var https = require('https');
 const app = express();
 
 // API file for interacting with MongoDB
 //const api = require('./server/routes/api');
+var https_options = {
+  key: fs.readFileSync("../private.key"),
+  cert: fs.readFileSync("../_yourbeauty_com_pa.crt"),
+  ca: [
+          fs.readFileSync('../COMODO_RSA_Certification_Authority.crt'),
+          fs.readFileSync('../AddTrust_External_CA_Root.crt') 
+       ]
 
+};
 // Parsers
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
@@ -54,4 +64,13 @@ app.set('port', port);
 
 const server = http.createServer(app);
 
+const serverHttps = https.createServer(options,app);
+
+serverHttps.listen(8443, () => console.log(`Running on localhost:8443`));
+
+
 server.listen(port, () => console.log(`Running on localhost:${port}`));
+
+
+
+
