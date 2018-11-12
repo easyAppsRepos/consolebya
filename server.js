@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: false}));
 var cors = require('cors');
 
 // use it before all route definitions
-app.use(cors({origin: 'http://localhost:3003'}));
+//app.use(cors({origin: 'https://localhost:3003'}));
 
 
 
