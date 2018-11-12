@@ -10,7 +10,7 @@ const app = express();
 //const api = require('./server/routes/api');
 var https_options = {
   key: fs.readFileSync("../private.key"),
-  cert: fs.readFileSync("../_yosurbeauty_com_pa.crt"),
+  cert: fs.readFileSync("../_yourbeauty_com_pa.crt"),
   ca: [
           fs.readFileSync('../COMODO_RSA_Certification_Authority.crt'),
           fs.readFileSync('../AddTrust_External_CA_Root.crt') 
