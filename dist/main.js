@@ -290,20 +290,16 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 var map = {
 	"./auth/auth.module": [
 		"./src/app/content/pages/auth/auth.module.ts",
-		"app-content-pages-pages-module~auth-auth-module",
+		"common",
 		"auth-auth-module"
 	],
 	"./builder/builder.module": [
 		"./src/app/content/pages/builder/builder.module.ts",
 		"builder-builder-module"
 	],
-	"./components/dashboard/dashboard.module": [
-		"./src/app/content/pages/components/dashboard/dashboard.module.ts",
-		"components-dashboard-dashboard-module"
-	],
 	"app/content/pages/pages.module": [
 		"./src/app/content/pages/pages.module.ts",
-		"app-content-pages-pages-module~auth-auth-module",
+		"common",
 		"app-content-pages-pages-module"
 	]
 };
@@ -1582,7 +1578,7 @@ var MenuConfig = /** @class */ (function () {
                         page: '/horario'
                     },
                     {
-                        title: 'estadistica',
+                        title: 'Estadística',
                         desc: 'estadistica',
                         root: true,
                         icon: 'flaticon-statistics',
@@ -1597,10 +1593,10 @@ var MenuConfig = /** @class */ (function () {
                     },
                     {
                         title: 'Soporte',
-                        desc: 'sopor',
+                        desc: 'soporte',
                         root: true,
                         icon: 'flaticon-support',
-                        page: '/soporte'
+                        function: 'sopor'
                     },
                     {
                         title: 'FAQ',
@@ -1721,7 +1717,7 @@ var PagesConfig = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- BEGIN: Left Aside -->\r\n\r\n<!-- <div mMenuAsideOffcanvas id=\"m_aside_left\" class=\"m-grid__item m-aside-left\" [ngClass]=\"asideLeftClasses\"> -->\r\n<!-- BEGIN: Aside Menu -->\r\n<div mMenuAside (mouseenter)=\"mouseEnter($event)\" (mouseleave)=\"mouseLeave($event)\" id=\"m_ver_menu\" class=\"m-aside-menu \" m-menu-vertical=\"1\" [ngClass]=\"classInitService.onClassesUpdated$ | async | mGetObject:'aside_menu' | mJoin\" [attr.m-menu-dropdown]=\"menuAsideService.isDropdown\" [attr.m-menu-dropdown-timeout]=\"menuAsideService.dropdownTimeout\" [attr.m-menu-scrollable]=\"menuAsideService.isScrollable\">\r\n\r\n<!-- \t<span *ngIf='getValueSideMenu()' style=\"display: block;color: white;text-align: center;padding: 20px;\">YourBeauty</span> -->\r\n\r\n\t<ul class=\"m-menu__nav\" [ngClass]=\"classInitService.onClassesUpdated$ | async | mGetObject:'aside_menu_nav' | mJoin\">\r\n\t\t<ng-container [ngTemplateOutlet]=\"mMenuListing\"></ng-container>\r\n\t</ul>\r\n</div>\r\n<!-- END: Aside Menu -->\r\n<!-- </div> -->\r\n\r\n<ng-template #mMenuListing>\r\n\t<ng-container *ngFor=\"let child of menuAsideService.menuList$ | async\">\r\n\t\t<m-menu-section *ngIf=\"child.section\" [item]=\"child\"></m-menu-section>\r\n\t\t<ng-container *ngIf=\"child.title\" [ngTemplateOutlet]=\"mMenuItem\" [ngTemplateOutletContext]=\"{ item: child, parentItem: item }\"></ng-container>\r\n\t</ng-container>\r\n</ng-template>\r\n\r\n<ng-template #mMenuItem let-item=\"item\" let-parentItem=\"parentItem\">\r\n\t<li class=\"m-menu__item\" [ngClass]=\"{ 'm-menu__item--submenu': item.submenu, 'm-menu__item--active' : !item.submenu && isMenuItemIsActive(item), 'm-menu__item--open' : item.submenu && isMenuItemIsActive(item) }\" aria-haspopup=\"true\">\r\n\r\n\t\t<!-- if menu item hasn't submenu -->\r\n\t\t<a [hidden]='item.function' *ngIf=\"!item.submenu\" [routerLink]=\"item.page\" class=\"m-menu__link m-menu__toggle\" [matTooltip]=\"item.tooltip\" matTooltipPosition=\"left\">\r\n\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItemText\" [ngTemplateOutletContext]=\"{ item: item, parentItem: parentItem }\"></ng-container>\r\n\t\t</a>\r\n\r\n\t\t<a *ngIf=\"!item.submenu && item.function=='logout'\" (click)='logout()' class=\"m-menu__link m-menu__toggle\" [matTooltip]=\"item.tooltip\" matTooltipPosition=\"left\">\r\n\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItemText\" [ngTemplateOutletContext]=\"{ item: item, parentItem: parentItem }\"></ng-container>\r\n\t\t</a>\r\n\r\n\t\t\t\t<a *ngIf=\"!item.submenu && item.function=='faq'\" (click)='gofaq(item.page)' class=\"m-menu__link m-menu__toggle\" [matTooltip]=\"item.tooltip\" matTooltipPosition=\"left\">\r\n\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItemText\" [ngTemplateOutletContext]=\"{ item: item, parentItem: parentItem }\"></ng-container>\r\n\t\t</a>\r\n\r\n\r\n\r\n\r\n\t<a *ngIf=\"!item.submenu && item.function=='logo'\"  class=\"m-menu__link m-menu__toggle\" [matTooltip]=\"item.tooltip\" matTooltipPosition=\"left\">\r\n\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItemText\" [ngTemplateOutletContext]=\"{ item: item, parentItem: parentItem }\"></ng-container>\r\n\t\t</a>\r\n\r\n\r\n\r\n\t\t<!-- if menu item has sumnenu child  -->\r\n\t\t<a href=\"javascript:;\" *ngIf=\"item.submenu\" class=\"m-menu__link m-menu__toggle\">\r\n\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItemText\" [ngTemplateOutletContext]=\"{ item: item, parentItem: parentItem }\"></ng-container>\r\n\t\t</a>\r\n\r\n\t\t<!-- if menu item has submenu child then recursively call new menu item component -->\r\n\t\t<div *ngIf=\"item.submenu\" class=\"m-menu__submenu\">\r\n\t\t\t<span class=\"m-menu__arrow\"></span>\r\n\t\t\t<ul class=\"m-menu__subnav\">\r\n\t\t\t\t<ng-container *ngFor=\"let child of item.submenu\">\r\n\t\t\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItem\" [ngTemplateOutletContext]=\"{ item: child, parentItem: item }\"></ng-container>\r\n\t\t\t\t</ng-container>\r\n\t\t\t</ul>\r\n\t\t</div>\r\n\t</li>\r\n</ng-template>\r\n\r\n<ng-template #mMenuItemText let-item=\"item\" let-parentItem=\"parentItem\">\r\n\t<!-- if menu item has icon -->\r\n\t<i *ngIf=\"item.icon\" class=\"m-menu__link-icon\" [ngClass]=\"item.icon\"></i>\r\n\r\n\t<!-- if menu item using bullet -->\r\n\t<i *ngIf=\"parentItem && parentItem.bullet === 'dot'\" class=\"m-menu__link-bullet m-menu__link-bullet--dot\">\r\n\t\t<span></span>\r\n\t</i>\r\n\t<i *ngIf=\"parentItem && parentItem.bullet === 'line'\" class=\"m-menu__link-bullet m-menu__link-bullet--line\">\r\n\t\t<span></span>\r\n\t</i>\r\n\r\n\t<ng-container *ngIf=\"!item.badge; else mMenuLinkBadge\">\r\n\t\t<!-- menu item title text -->\r\n\t\t<span class=\"m-menu__link-text\" [translate]=\"item.translate\" \r\n\t\t[ngStyle]=\"{'color': item.function == 'logo' ? 'white' : 'normal', \r\n\t'font-weight': item.function == '400' ? 'white' : 'normal'}\">\r\n\t\t\t{{item.title}}\r\n\t\t</span>\r\n\r\n\r\n\r\n\t</ng-container>\r\n\r\n\t<ng-template #mMenuLinkBadge>\r\n\t\t<!-- menu item with badge -->\r\n\t\t<span class=\"m-menu__link-title\">\r\n\t\t\t<span class=\"m-menu__link-wrap\">\r\n\t\t\t\t<span class=\"m-menu__link-text\" [translate]=\"item.translate\">{{item.title}}</span>\r\n\t\t\t\t<span class=\"m-menu__link-badge\">\r\n\t\t\t\t\t<span class=\"m-badge\" [ngClass]=\"item.badge.type\">{{item.badge.value}}</span>\r\n\t\t\t\t</span>\r\n\t\t\t</span>\r\n\t\t</span>\r\n\t</ng-template>\r\n\r\n\t<!-- if menu item has submenu child then put arrow icon -->\r\n\t<i *ngIf=\"item.submenu\" class=\"m-menu__ver-arrow la la-angle-right\"></i>\r\n</ng-template>\r\n<!-- END: Left Aside -->\r\n"
+module.exports = "<!-- BEGIN: Left Aside -->\r\n\r\n<!-- <div mMenuAsideOffcanvas id=\"m_aside_left\" class=\"m-grid__item m-aside-left\" [ngClass]=\"asideLeftClasses\"> -->\r\n<!-- BEGIN: Aside Menu -->\r\n\r\n\r\n  <ng-template #content let-c=\"close\" let-d=\"dismiss\">\r\n <ngx-loading [show]=\"loadingScreen\" [config]=\"{ backdropBorderRadius: '4px' }\"></ngx-loading>\r\n\r\n\r\n      <div class=\"modal-header\" style=\"display: block !important;\">\r\n      \t<div>\r\n        <h4 class=\"modal-title\" style=\"    font-weight: 500;\r\n    color: #555;\">Formulario de Soporte</h4>   \r\n\r\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\r\n          <span aria-hidden=\"true\">&times;</span>\r\n        </button>\r\n</div>\r\n<div>\r\n    <span style=\"color: #605f5d;font-size: 13px\">\r\nDéjanos tus dudas en el siguiente formulario y te contactaremos al email relacionado a tu cuenta a la brevedad posible\r\n</span>\r\n</div>\r\n     \r\n      </div>\r\n      <div class=\"modal-body\">\r\n\r\n\r\n        <label style=\"    float: left;\r\n    font-size: 15px;\">Asunto</label>\r\n        <input type=\"text\" [(ngModel)]='asuntoSoporte' name=\"asunto\" placeholder=\"asunto\" \r\n        style=\"width: 100%;padding: 5px; margin-bottom: 15px\">\r\n        \r\n        <label  style=\"    float: left;\r\n    font-size: 15px;\">Descripción</label>\r\n        <textarea [(ngModel)]='mensajeSoporte' style=\"    width: 100%;\r\n    height: 200px;\r\n    resize: none;\r\n    border-color: lightgray;\r\n    border-radius: 4px;padding: 20px;\r\n    color: #444;\r\n    font-size: 15px;\">\r\n        \t\r\n\r\n        </textarea> \r\n\r\n                       \r\n      </div>\r\n      <div class=\"modal-footer\">\r\n\r\n      <button type=\"button\" class=\"btn btn-success\" (click)=\"enviarMensaje(c)\">Enviar</button>\r\n\r\n        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"c('Close click')\">Cerrar</button>\r\n<!--         <button type=\"button\" class=\"btn btn-primary\">Save changes</button> -->\r\n      </div>\r\n    </ng-template>\r\n\r\n\r\n\r\n<div mMenuAside (mouseenter)=\"mouseEnter($event)\" (mouseleave)=\"mouseLeave($event)\" id=\"m_ver_menu\" class=\"m-aside-menu \" m-menu-vertical=\"1\" [ngClass]=\"classInitService.onClassesUpdated$ | async | mGetObject:'aside_menu' | mJoin\" [attr.m-menu-dropdown]=\"menuAsideService.isDropdown\" [attr.m-menu-dropdown-timeout]=\"menuAsideService.dropdownTimeout\" [attr.m-menu-scrollable]=\"menuAsideService.isScrollable\">\r\n\r\n<!-- \t<span *ngIf='getValueSideMenu()' style=\"display: block;color: white;text-align: center;padding: 20px;\">YourBeauty</span> -->\r\n\r\n\t<ul class=\"m-menu__nav\" [ngClass]=\"classInitService.onClassesUpdated$ | async | mGetObject:'aside_menu_nav' | mJoin\">\r\n\t\t<ng-container [ngTemplateOutlet]=\"mMenuListing\"></ng-container>\r\n\t</ul>\r\n</div>\r\n<!-- END: Aside Menu -->\r\n<!-- </div> -->\r\n\r\n<ng-template #mMenuListing>\r\n\t<ng-container *ngFor=\"let child of menuAsideService.menuList$ | async\">\r\n\t\t<m-menu-section *ngIf=\"child.section\" [item]=\"child\"></m-menu-section>\r\n\t\t<ng-container *ngIf=\"child.title\" [ngTemplateOutlet]=\"mMenuItem\" [ngTemplateOutletContext]=\"{ item: child, parentItem: item }\"></ng-container>\r\n\t</ng-container>\r\n</ng-template>\r\n\r\n<ng-template #mMenuItem let-item=\"item\" let-parentItem=\"parentItem\">\r\n\t<li class=\"m-menu__item\" [ngClass]=\"{ 'm-menu__item--submenu': item.submenu, 'm-menu__item--active' : !item.submenu && isMenuItemIsActive(item), 'm-menu__item--open' : item.submenu && isMenuItemIsActive(item) }\" aria-haspopup=\"true\">\r\n\r\n\t\t<!-- if menu item hasn't submenu -->\r\n\t\t<a [hidden]='item.function' *ngIf=\"!item.submenu\" [routerLink]=\"item.page\" class=\"m-menu__link m-menu__toggle\" [matTooltip]=\"item.tooltip\" matTooltipPosition=\"left\">\r\n\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItemText\" [ngTemplateOutletContext]=\"{ item: item, parentItem: parentItem }\"></ng-container>\r\n\t\t</a>\r\n\r\n\t\t<a *ngIf=\"!item.submenu && item.function=='logout'\" (click)='logout()' class=\"m-menu__link m-menu__toggle\" [matTooltip]=\"item.tooltip\" matTooltipPosition=\"left\">\r\n\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItemText\" [ngTemplateOutletContext]=\"{ item: item, parentItem: parentItem }\"></ng-container>\r\n\t\t</a>\r\n\r\n\t\t\t\t<a *ngIf=\"!item.submenu && item.function=='faq'\" (click)='gofaq(item.page)' class=\"m-menu__link m-menu__toggle\" [matTooltip]=\"item.tooltip\" matTooltipPosition=\"left\">\r\n\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItemText\" [ngTemplateOutletContext]=\"{ item: item, parentItem: parentItem }\"></ng-container>\r\n\t\t</a>\r\n\r\n\t\t\t\t<a *ngIf=\"!item.submenu && item.function=='sopor'\" (click)='sopor(content)' class=\"m-menu__link m-menu__toggle\" [matTooltip]=\"item.tooltip\" matTooltipPosition=\"left\">\r\n\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItemText\" [ngTemplateOutletContext]=\"{ item: item, parentItem: parentItem }\"></ng-container>\r\n\t\t</a>\r\n\r\n\r\n\t<a *ngIf=\"!item.submenu && item.function=='logo'\"  class=\"m-menu__link m-menu__toggle\" [matTooltip]=\"item.tooltip\" matTooltipPosition=\"left\">\r\n\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItemText\" [ngTemplateOutletContext]=\"{ item: item, parentItem: parentItem }\"></ng-container>\r\n\t\t</a>\r\n\r\n\r\n\r\n\t\t<!-- if menu item has sumnenu child  -->\r\n\t\t<a href=\"javascript:;\" *ngIf=\"item.submenu\" class=\"m-menu__link m-menu__toggle\">\r\n\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItemText\" [ngTemplateOutletContext]=\"{ item: item, parentItem: parentItem }\"></ng-container>\r\n\t\t</a>\r\n\r\n\t\t<!-- if menu item has submenu child then recursively call new menu item component -->\r\n\t\t<div *ngIf=\"item.submenu\" class=\"m-menu__submenu\">\r\n\t\t\t<span class=\"m-menu__arrow\"></span>\r\n\t\t\t<ul class=\"m-menu__subnav\">\r\n\t\t\t\t<ng-container *ngFor=\"let child of item.submenu\">\r\n\t\t\t\t\t<ng-container [ngTemplateOutlet]=\"mMenuItem\" [ngTemplateOutletContext]=\"{ item: child, parentItem: item }\"></ng-container>\r\n\t\t\t\t</ng-container>\r\n\t\t\t</ul>\r\n\t\t</div>\r\n\t</li>\r\n</ng-template>\r\n\r\n<ng-template #mMenuItemText let-item=\"item\" let-parentItem=\"parentItem\">\r\n\t<!-- if menu item has icon -->\r\n\t<i *ngIf=\"item.icon\" class=\"m-menu__link-icon\" [ngClass]=\"item.icon\"></i>\r\n\r\n\t<!-- if menu item using bullet -->\r\n\t<i *ngIf=\"parentItem && parentItem.bullet === 'dot'\" class=\"m-menu__link-bullet m-menu__link-bullet--dot\">\r\n\t\t<span></span>\r\n\t</i>\r\n\t<i *ngIf=\"parentItem && parentItem.bullet === 'line'\" class=\"m-menu__link-bullet m-menu__link-bullet--line\">\r\n\t\t<span></span>\r\n\t</i>\r\n\r\n\t<ng-container *ngIf=\"!item.badge; else mMenuLinkBadge\">\r\n\t\t<!-- menu item title text -->\r\n\t\t<span class=\"m-menu__link-text\" [translate]=\"item.translate\" \r\n\t\t[ngStyle]=\"{'color': item.function == 'logo' ? 'white' : 'normal', \r\n\t'font-weight': item.function == '400' ? 'white' : 'normal'}\">\r\n\t\t\t{{item.title}}\r\n\t\t</span>\r\n\r\n\r\n\r\n\t</ng-container>\r\n\r\n\t<ng-template #mMenuLinkBadge>\r\n\t\t<!-- menu item with badge -->\r\n\t\t<span class=\"m-menu__link-title\">\r\n\t\t\t<span class=\"m-menu__link-wrap\">\r\n\t\t\t\t<span class=\"m-menu__link-text\" [translate]=\"item.translate\">{{item.title}}</span>\r\n\t\t\t\t<span class=\"m-menu__link-badge\">\r\n\t\t\t\t\t<span class=\"m-badge\" [ngClass]=\"item.badge.type\">{{item.badge.value}}</span>\r\n\t\t\t\t</span>\r\n\t\t\t</span>\r\n\t\t</span>\r\n\t</ng-template>\r\n\r\n\t<!-- if menu item has submenu child then put arrow icon -->\r\n\t<i *ngIf=\"item.submenu\" class=\"m-menu__ver-arrow la la-angle-right\"></i>\r\n</ng-template>\r\n<!-- END: Left Aside -->\r\n"
 
 /***/ }),
 
@@ -1738,13 +1734,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 /* harmony import */ var _core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../core/auth/authentication.service */ "./src/app/core/auth/authentication.service.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _core_directives_menu_aside_offcanvas_directive__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../core/directives/menu-aside-offcanvas.directive */ "./src/app/core/directives/menu-aside-offcanvas.directive.ts");
-/* harmony import */ var _core_services_class_init_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../core/services/class-init.service */ "./src/app/core/services/class-init.service.ts");
-/* harmony import */ var _core_services_layout_config_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../core/services/layout-config.service */ "./src/app/core/services/layout-config.service.ts");
-/* harmony import */ var _core_services_layout_layout_ref_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../core/services/layout/layout-ref.service */ "./src/app/core/services/layout/layout-ref.service.ts");
-/* harmony import */ var _core_services_layout_menu_aside_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../core/services/layout/menu-aside.service */ "./src/app/core/services/layout/menu-aside.service.ts");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/index.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _core_directives_menu_aside_offcanvas_directive__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../core/directives/menu-aside-offcanvas.directive */ "./src/app/core/directives/menu-aside-offcanvas.directive.ts");
+/* harmony import */ var _core_services_class_init_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../core/services/class-init.service */ "./src/app/core/services/class-init.service.ts");
+/* harmony import */ var _core_services_layout_config_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../core/services/layout-config.service */ "./src/app/core/services/layout-config.service.ts");
+/* harmony import */ var _core_services_layout_layout_ref_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../core/services/layout/layout-ref.service */ "./src/app/core/services/layout/layout-ref.service.ts");
+/* harmony import */ var _core_services_layout_menu_aside_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../core/services/layout/menu-aside.service */ "./src/app/core/services/layout/menu-aside.service.ts");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1767,30 +1764,37 @@ var __param = (undefined && undefined.__param) || function (paramIndex, decorato
 
 
 
+
+
 var AsideLeftComponent = /** @class */ (function () {
-    function AsideLeftComponent(el, classInitService, menuAsideService, authService, layoutConfigService, router, layoutRefService, document) {
+    function AsideLeftComponent(el, modalService, classInitService, menuAsideService, authService, layoutConfigService, router, cdr, layoutRefService, document) {
         var _this = this;
         this.el = el;
+        this.modalService = modalService;
         this.classInitService = classInitService;
         this.menuAsideService = menuAsideService;
         this.authService = authService;
         this.layoutConfigService = layoutConfigService;
         this.router = router;
+        this.cdr = cdr;
         this.layoutRefService = layoutRefService;
         this.document = document;
         this.classes = 'm-grid__item m-aside-left';
         this.id = 'm_aside_left';
         this.currentRouteUrl = '';
+        this.loadingScreen = false;
         // subscribe to menu classes update
         this.classInitService.onClassesUpdated$.subscribe(function (classes) {
             // join the classes array and pass to variable
             _this.classes = 'm-grid__item m-aside-left ' + classes.aside_left.join(' ');
         });
+        var retrievedObject = JSON.parse(localStorage.getItem('userADby2as'));
+        this.idCentro = retrievedObject.idCentro;
     }
     AsideLeftComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
         setTimeout(function () {
-            _this.mMenuAsideOffcanvas = new _core_directives_menu_aside_offcanvas_directive__WEBPACK_IMPORTED_MODULE_4__["MenuAsideOffcanvasDirective"](_this.el);
+            _this.mMenuAsideOffcanvas = new _core_directives_menu_aside_offcanvas_directive__WEBPACK_IMPORTED_MODULE_5__["MenuAsideOffcanvasDirective"](_this.el);
             // manually call the directives' lifecycle hook method
             _this.mMenuAsideOffcanvas.ngAfterViewInit();
             // keep aside left element reference
@@ -1801,7 +1805,7 @@ var AsideLeftComponent = /** @class */ (function () {
         var _this = this;
         this.currentRouteUrl = this.router.url.split(/[?#]/)[0];
         this.router.events
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["filter"])(function (event) { return event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_3__["NavigationEnd"]; }))
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["filter"])(function (event) { return event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_4__["NavigationEnd"]; }))
             .subscribe(function (event) { return _this.currentRouteUrl = _this.router.url.split(/[?#]/)[0]; });
     };
     AsideLeftComponent.prototype.logout = function () {
@@ -1809,6 +1813,53 @@ var AsideLeftComponent = /** @class */ (function () {
     };
     AsideLeftComponent.prototype.gofaq = function (link) {
         window.open(link, "_blank");
+    };
+    AsideLeftComponent.prototype.sopor = function (content) {
+        var _this = this;
+        this.modalService.open(content).result.then(function (result) {
+            _this.closeResult = "Closed with: " + result;
+        }, function (reason) {
+            _this.closeResult = "Dismissed " + _this.getDismissReason(reason);
+        });
+    };
+    AsideLeftComponent.prototype.getDismissReason = function (reason) {
+        if (reason === _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_3__["ModalDismissReasons"].ESC) {
+            return 'by pressing ESC';
+        }
+        else if (reason === _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_3__["ModalDismissReasons"].BACKDROP_CLICK) {
+            return 'by clicking on a backdrop';
+        }
+        else {
+            return "with: " + reason;
+        }
+    };
+    AsideLeftComponent.prototype.enviarMensaje = function (cerrar) {
+        var _this = this;
+        var asunt = this.asuntoSoporte || 'Sin asunto - Soporte Yourbeauty';
+        this.loadingScreen = true;
+        var dataE = { idCentro: this.idCentro, mensaje: this.mensajeSoporte, asunto: asunt };
+        console.log(dataE);
+        this.authService.mensajeSoporte(dataE)
+            .subscribe(function (data) {
+            console.log(data);
+            if (data !== null && data !== 'null' && data[0] && data[0].email) {
+                alert('su mensaje ha sido enviado con exito');
+                _this.mensajeSoporte = null;
+                _this.asuntoSoporte = null;
+                _this.loadingScreen = false;
+                _this.cdr.detectChanges();
+                cerrar('close modal');
+            }
+            else {
+                alert('Ups! Algo ha salido mal');
+                _this.loadingScreen = false;
+                _this.cdr.detectChanges();
+            }
+        }, function (err) {
+            _this.loadingScreen = false;
+            console.log('someError');
+            alert('Ups! Algo ha salido mal');
+        });
     };
     AsideLeftComponent.prototype.isMenuItemIsActive = function (item) {
         if (item.submenu) {
@@ -1892,22 +1943,28 @@ var AsideLeftComponent = /** @class */ (function () {
     ], AsideLeftComponent.prototype, "id", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostBinding"])('attr.mMenuAsideOffcanvas'),
-        __metadata("design:type", _core_directives_menu_aside_offcanvas_directive__WEBPACK_IMPORTED_MODULE_4__["MenuAsideOffcanvasDirective"])
+        __metadata("design:type", _core_directives_menu_aside_offcanvas_directive__WEBPACK_IMPORTED_MODULE_5__["MenuAsideOffcanvasDirective"])
     ], AsideLeftComponent.prototype, "mMenuAsideOffcanvas", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('content'),
+        __metadata("design:type", Object)
+    ], AsideLeftComponent.prototype, "content", void 0);
     AsideLeftComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'm-aside-left',
             template: __webpack_require__(/*! ./aside-left.component.html */ "./src/app/content/layout/aside/aside-left.component.html"),
             changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectionStrategy"].OnPush
         }),
-        __param(7, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"])(_angular_common__WEBPACK_IMPORTED_MODULE_9__["DOCUMENT"])),
+        __param(9, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"])(_angular_common__WEBPACK_IMPORTED_MODULE_10__["DOCUMENT"])),
         __metadata("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"],
-            _core_services_class_init_service__WEBPACK_IMPORTED_MODULE_5__["ClassInitService"],
-            _core_services_layout_menu_aside_service__WEBPACK_IMPORTED_MODULE_8__["MenuAsideService"],
+            _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_3__["NgbModal"],
+            _core_services_class_init_service__WEBPACK_IMPORTED_MODULE_6__["ClassInitService"],
+            _core_services_layout_menu_aside_service__WEBPACK_IMPORTED_MODULE_9__["MenuAsideService"],
             _core_auth_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"],
-            _core_services_layout_config_service__WEBPACK_IMPORTED_MODULE_6__["LayoutConfigService"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"],
-            _core_services_layout_layout_ref_service__WEBPACK_IMPORTED_MODULE_7__["LayoutRefService"],
+            _core_services_layout_config_service__WEBPACK_IMPORTED_MODULE_7__["LayoutConfigService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"],
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"],
+            _core_services_layout_layout_ref_service__WEBPACK_IMPORTED_MODULE_8__["LayoutRefService"],
             Document])
     ], AsideLeftComponent);
     return AsideLeftComponent;
@@ -3411,15 +3468,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ngx-perfect-scrollbar */ "./node_modules/ngx-perfect-scrollbar/dist/ngx-perfect-scrollbar.es5.js");
 /* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/index.js");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
-/* harmony import */ var _ngx_loading_bar_core__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @ngx-loading-bar/core */ "./node_modules/@ngx-loading-bar/core/esm5/ngx-loading-bar-core.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var ngx_loading__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ngx-loading */ "./node_modules/ngx-loading/ngx-loading/ngx-loading.es5.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+/* harmony import */ var _ngx_loading_bar_core__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @ngx-loading-bar/core */ "./node_modules/@ngx-loading-bar/core/esm5/ngx-loading-bar-core.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -3508,14 +3567,15 @@ var LayoutModule = /** @class */ (function () {
                 _core_core_module__WEBPACK_IMPORTED_MODULE_11__["CoreModule"],
                 ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_21__["PerfectScrollbarModule"],
                 _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_22__["NgbModule"],
-                _angular_forms__WEBPACK_IMPORTED_MODULE_26__["FormsModule"],
+                ngx_loading__WEBPACK_IMPORTED_MODULE_24__["LoadingModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_27__["FormsModule"],
                 _partials_layout_quick_sidebar_list_timeline_list_timeline_module__WEBPACK_IMPORTED_MODULE_0__["ListTimelineModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_23__["MatProgressBarModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_23__["MatTabsModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_23__["MatButtonModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_23__["MatTooltipModule"],
-                _ngx_translate_core__WEBPACK_IMPORTED_MODULE_24__["TranslateModule"].forChild(),
-                _ngx_loading_bar_core__WEBPACK_IMPORTED_MODULE_25__["LoadingBarModule"].forRoot(),
+                _ngx_translate_core__WEBPACK_IMPORTED_MODULE_25__["TranslateModule"].forChild(),
+                _ngx_loading_bar_core__WEBPACK_IMPORTED_MODULE_26__["LoadingBarModule"].forRoot(),
             ]
         })
     ], LayoutModule);
