@@ -46,9 +46,7 @@ app.get('*', (req, res) => {
 
 app.get('*', (req, res) => {
 
-	      if ((req.get('X-Forwarded-Proto') !== 'https')) {
-        res.redirect('https://' + req.get('Host') + req.url);
-      } else{next();}
+
         
 
 
@@ -76,7 +74,13 @@ http.createServer((req, res) => {
   res.end();
 });
 */
-const server = http.createServer(app);
+//const server = http.createServer(app);
+
+var server = http.createServer((req, res) => {
+  res.writeHead(301,{Location: 'https://${req.headers.host}${req.url}'});
+  res.end();
+});
+
 
 const serverHttps = https.createServer(https_options,app);
 
