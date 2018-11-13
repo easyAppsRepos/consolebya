@@ -28,12 +28,7 @@ var cors = require('cors');
 // use it before all route definitions
 //app.use(cors({origin: 'https://localhost:3003'}));
 
-app.use(function(req, res, next) {
-      if ((req.get('X-Forwarded-Proto') !== 'https')) {
-        res.redirect('https://' + req.get('Host') + req.url);
-      } else
-        next();
-    });
+
 
 // Angular DIST output folder
 app.use(express.static(path.join(__dirname, 'dist')));
@@ -50,6 +45,13 @@ app.get('*', (req, res) => {
 */
 
 app.get('*', (req, res) => {
+
+	      if ((req.get('X-Forwarded-Proto') !== 'https')) {
+        res.redirect('https://' + req.get('Host') + req.url);
+      } else{next();}
+        
+
+
 			console.log(req.subdomains);
 		console.log(req.subdomains[1] == 'gestion');
 
