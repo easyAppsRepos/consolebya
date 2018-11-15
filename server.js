@@ -75,23 +75,19 @@ http.createServer((req, res) => {
 });
 */
 //const server = http.createServer(app);
-/*
+
 var server = http.createServer((req, res) => {
   res.writeHead(301,{Location: 'https://'+req.headers.host.replace(/^www\./, '')+req.url});
   res.end();
 });
-*/
 
-const serverHttps = https.createServer(https_options,(req, res) => {
-  res.writeHead(301,{Location: 'https://'+req.headers.host.replace(/^www\./, '')+req.url});
-  res.end();
-  
-});
+
+const serverHttps = https.createServer(https_options,app);
 
 serverHttps.listen(443, () => console.log(`Running on localhost:8443`));
 
 
-//server.listen(port, () => console.log(`Running on localhost:${port}`));
+server.listen(port, () => console.log(`Running on localhost:${port}`));
 
 
 
