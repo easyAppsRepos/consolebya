@@ -34,15 +34,7 @@ var cors = require('cors');
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use(express.static(path.join(__dirname, './gestion/dist')));
 
-app.use(function (req, res, next) {
-  var str = "www.";
 
-  if (req.host.indexOf(str) === 0) {
-    res.redirect(301, req.protocol + "://" + req.hostname.slice(str.length) + ":443" + req.originalUrl);
-  } else {
-    next();
-  }
-});
 
 // Send all other requests to the Angular app
 /*
