@@ -77,10 +77,10 @@ http.createServer((req, res) => {
 //const server = http.createServer(app);
 
 var server = http.createServer((req, res) => {
-  res.writeHead(301,{Location: `https://${req.headers.host}${req.url}`});
+  res.writeHead(301,{Location: `https://`+req.headers.host.replace(/^www\./, '')+`${req.url}`});
   res.end();
 });
-
+//.replace(/^www\./, '')
 
 const serverHttps = https.createServer(https_options,app);
 
