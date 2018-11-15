@@ -38,7 +38,7 @@ app.use(function (req, res, next) {
   var str = "www.";
 
   if (req.host.indexOf(str) === 0) {
-    res.redirect(301,  "https://" + req.host.slice(str.length) + ":443" + req.originalUrl);
+    res.redirect(301, req.protocol + "://" + req.host.slice(str.length) + ":80" + req.originalUrl);
   } else {
     next();
   }
@@ -83,15 +83,13 @@ http.createServer((req, res) => {
 });
 */
 //const server = http.createServer(app);
-/*
-newst
+
 var server = http.createServer((req, res) => {
   res.writeHead(301,{Location: `https://`+req.headers.host.replace(/^www\./, '')+req.url});
   res.end();
 });
 
-*/
-var server = http.createServer(app);
+
 const serverHttps = https.createServer(https_options,app);
 
 serverHttps.listen(443, () => console.log(`Running on localhost:8443`));
