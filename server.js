@@ -38,7 +38,7 @@ app.use(function (req, res, next) {
   var str = "www.";
 
   if (req.host.indexOf(str) === 0) {
-    res.redirect(301,  "https://" + req.host.slice(str.length) + req.originalUrl);
+    res.redirect(301,  "https://" + req.host.slice(str.length) + ":443" + req.originalUrl);
   } else {
     next();
   }
