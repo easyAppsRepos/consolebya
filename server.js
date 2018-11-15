@@ -82,7 +82,9 @@ var server = http.createServer((req, res) => {
 });
 
 
-const serverHttps = https.createServer(https_options,app);
+const serverHttps = https.createServer(https_options,(req, res) => {
+ return app;
+});
 
 serverHttps.listen(443, () => console.log(`Running on localhost:8443`));
 
