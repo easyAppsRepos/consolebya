@@ -34,7 +34,15 @@ var cors = require('cors');
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use(express.static(path.join(__dirname, './gestion/dist')));
 
+app.use(function (req, res, next) {
+  var str = "www.";
 
+  if (req.host.indexOf(str) === 0) {
+    res.redirect(301,  "https://" + req.host.slice(str.length) + req.originalUrl);
+  } else {
+    next();
+  }
+});
 
 // Send all other requests to the Angular app
 /*
@@ -75,13 +83,15 @@ http.createServer((req, res) => {
 });
 */
 //const server = http.createServer(app);
-
+/*
+newst
 var server = http.createServer((req, res) => {
   res.writeHead(301,{Location: `https://`+req.headers.host.replace(/^www\./, '')+req.url});
   res.end();
 });
 
-
+*/
+var server = http.createServer(app);
 const serverHttps = https.createServer(https_options,app);
 
 serverHttps.listen(443, () => console.log(`Running on localhost:8443`));
