@@ -9,10 +9,31 @@ const app = express();
   httpApp = express();
 
 	httpApp.set('port', 80);
+	/*
 	httpApp.get("*", function (req, res, next) {
-	res.redirect("https://" + (req.headers.host || '').replace(/^www\./, '') + req.path);
-	});
 
+		  var str = "www.";
+
+  if (req.host.indexOf(str) === 0) {
+    res.redirect(301,  "https://" + req.host.slice(str.length) + ":80" + req.originalUrl);
+  } else {
+    res.redirect("https://" + (req.headers.host)+ req.path);
+  }
+
+
+	
+	});
+*/
+
+httpApp.use(function (req, res, next) {
+  var str = "www.";
+
+  if (req.host && req.host.indexOf(str) === 0) {
+    res.redirect(301, "https://" + req.host.slice(str.length) + req.originalUrl);
+  } else {
+    res.redirect(301,"https://" + (req.headers.host)+ req.originalUrl);
+  }
+});
 
 
 // API file for interacting with MongoDB
