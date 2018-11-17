@@ -79,8 +79,12 @@ app.get('*', (req, res) => {
 app.get('*', (req, res) => {
 
 
-        
+  var str = "www.";
 
+  if (req.hostname && req.hostname.indexOf(str) === 0) {
+    res.redirect(301, "https://" + req.hostname.slice(str.length) + req.originalUrl);
+    console.log('arr2'+req.hostname);
+  } else {
 
 			console.log(req.subdomains);
 		console.log(req.subdomains[1] == 'gestion');
@@ -92,6 +96,7 @@ app.get('*', (req, res) => {
 	else{
 		res.sendFile(path.join(__dirname, './dist/index.html'));
 	}
+  }
 
     
 });
