@@ -25,7 +25,7 @@ const app = express();
 	});
 */
 
-httpApp.use(function (req, res, next) {
+	httpApp.get("*", (req, res, next) => {
   var str = "www.";
 
   if (req.host && req.host.indexOf(str) === 0) {
