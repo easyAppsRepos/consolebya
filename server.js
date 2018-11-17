@@ -78,7 +78,7 @@ app.get('*', (req, res) => {
 
 app.get('*', (req, res) => {
 
-
+ console.log('arr6'+req.hostname);
   var str = "www.";
 
   if (req.hostname && req.hostname.indexOf(str) === 0) {
