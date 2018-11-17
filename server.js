@@ -30,8 +30,10 @@ httpApp.use(function (req, res, next) {
 
   if (req.host && req.host.indexOf(str) === 0) {
     res.redirect(301, "https://" + req.host.slice(str.length) + req.originalUrl);
+    console.log('arr'+req.host);
   } else {
     res.redirect(301,"https://" + (req.headers.host)+ req.originalUrl);
+      console.log('aba'+req.host);
   }
 });
 
