@@ -8663,7 +8663,8 @@ var RegisterComponent = /** @class */ (function () {
         if (this.firstFormGroup.valid) {
             this.loadingScreen = true;
             var ddd = this.firstFormGroup.value;
-            ddd.accesoweb = this.firstFormGroup.value.nombreNegocio.split(' ').join('');
+            //ddd.accesoweb = this.firstFormGroup.value.nombreNegocio.split(' ').join('');
+            ddd.accesoweb = this.getVal22(this.firstFormGroup.value.nombreNegocio);
             this.authService.nuevoUsuarioNC(ddd)
                 .subscribe(function (data) {
                 _this.loadingScreen = false;
