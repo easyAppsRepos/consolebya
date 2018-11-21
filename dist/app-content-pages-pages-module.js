@@ -8255,7 +8255,7 @@ var RegisterComponent = /** @class */ (function () {
         this.stepper.selectedIndex = index;
     };
     RegisterComponent.prototype.getVal22 = function (text) {
-        return text.split(' ').join('');
+        return text.split(' ').join('').replace(/á|Á/gi, 'a').replace(/é|É/gi, 'e').replace(/í|Í/gi, 'i').replace(/ó|Ó/gi, 'o').replace(/ú|Ú/gi, 'u').replace(/[^a-zA-Z0-9-_]/g, '');
     };
     RegisterComponent.prototype.setValueInp = function () {
         return this.firstFormGroup.value.accesoweb + '@.com';
