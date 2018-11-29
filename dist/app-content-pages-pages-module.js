@@ -8045,15 +8045,16 @@ var Modal4Component = /** @class */ (function () {
         this.authService.getCategorias()
             .subscribe(function (data) {
             _this.categorias = data;
-            console.log(data);
+            _this.cdr.detectChanges();
         }, function (err) {
             console.log('someError');
             alert('Ups! Algo ha salido mal');
         });
         this.authService.getStaff({ idCentro: this.idCentro })
             .subscribe(function (data) {
-            _this.empleados = data;
             console.log(data);
+            _this.empleados = data;
+            _this.cdr.detectChanges();
         }, function (err) {
             console.log('someError');
             alert('Ups! Algo ha salido mal');
