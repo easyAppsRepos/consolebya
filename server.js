@@ -25,6 +25,34 @@ const app = express();
 	});
 */
 
+app.all('*', (req, res) => {
+
+ console.log('arr6'+req.hostname);
+  var str = "www.";
+
+  if (req.hostname && req.hostname.indexOf(str) === 0) {
+    res.redirect(301, "https://" + req.hostname.slice(str.length) + req.originalUrl);
+    console.log('arr2'+req.hostname);
+  } else {
+
+			console.log(req.subdomains);
+		console.log(req.subdomains[1] == 'gestion');
+
+
+	if(req.subdomains[1]=='gestion'){
+		res.sendFile(path.join(__dirname, './gestion/dist/index.html'));
+	}
+	else{
+		res.sendFile(path.join(__dirname, './dist/index.html'));
+	}
+  }
+
+    
+});
+
+
+
+
 	httpApp.get("*", (req, res, next) => {
   var str = "www.";
 console.log(req.hostname);
@@ -76,30 +104,6 @@ app.get('*', (req, res) => {
 });
 */
 
-app.all('*', (req, res) => {
-
- console.log('arr6'+req.hostname);
-  var str = "www.";
-
-  if (req.hostname && req.hostname.indexOf(str) === 0) {
-    res.redirect(301, "https://" + req.hostname.slice(str.length) + req.originalUrl);
-    console.log('arr2'+req.hostname);
-  } else {
-
-			console.log(req.subdomains);
-		console.log(req.subdomains[1] == 'gestion');
-
-
-	if(req.subdomains[1]=='gestion'){
-		res.sendFile(path.join(__dirname, './gestion/dist/index.html'));
-	}
-	else{
-		res.sendFile(path.join(__dirname, './dist/index.html'));
-	}
-  }
-
-    
-});
 
 
 //Set Port
