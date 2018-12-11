@@ -37,7 +37,7 @@ function wwwRedirect(req, res, next) {
 app.set('trust proxy', true);
 app.use(wwwRedirect);
 
-
+/*
 app.all('*', (req, res) => {
 
  console.log('arr6'+req.hostname);
@@ -62,7 +62,7 @@ app.all('*', (req, res) => {
 
     
 });
-
+*/
 
 
 
