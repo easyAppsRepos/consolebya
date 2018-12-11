@@ -8,7 +8,7 @@ const app = express();
 
   httpApp = express();
 
-	
+	httpApp.set('port', 80);
 	/*
 	httpApp.get("*", function (req, res, next) {
 
@@ -24,11 +24,10 @@ const app = express();
 	
 	});
 */
-/* NEW 
-	httpApp.get("*", (req, res, next) => {
-  	var str = "www.";
-	console.log(req.hostname);
 
+	httpApp.get("*", (req, res, next) => {
+  var str = "www.";
+console.log(req.hostname);
   if (req.hostname && req.hostname.indexOf(str) === 0) {
     res.redirect(301, "https://" + req.hostname.slice(str.length) + req.originalUrl);
     console.log('arr'+req.hostname);
@@ -37,7 +36,7 @@ const app = express();
       console.log('aba'+req.hostname);
   }
 });
-*/
+
 
 // API file for interacting with MongoDB
 //const api = require('./server/routes/api');
@@ -122,20 +121,6 @@ var server = http.createServer((req, res) => {
 server.listen(port, () => console.log(`Running on localhost:${port}`));
 
 */
-
-function wwwRedirect(req, res, next) {
-	console.log('d');
-    if (req.headers.host.slice(0, 4) === 'www.') {
-        var newHost = req.headers.host.slice(4);
-        return res.redirect(301, req.protocol + '://' + newHost + req.originalUrl);
-    }
-    next();
-};
-app.set('trust proxy', true);
-app.use(wwwRedirect);
-
-httpApp.set('trust proxy', true);
-httpApp.use(wwwRedirect);
 
 http.createServer(httpApp).listen(80, function() {
     console.log('Express HTTP server listening on port ' + httpApp.get('port'));
