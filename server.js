@@ -25,19 +25,6 @@ const app = express();
 	});
 */
 
-
-function wwwRedirect(req, res, next) {
-	console.log('d');
-    if (req.headers.host.slice(0, 4) === 'www.') {
-        var newHost = req.headers.host.slice(4);
-        return res.redirect(301, req.protocol + '://' + newHost + req.originalUrl);
-    }
-    next();
-};
-app.set('trust proxy', true);
-app.use(wwwRedirect);
-
-/*
 app.all('*', (req, res) => {
 
  console.log('arr6'+req.hostname);
@@ -62,7 +49,7 @@ app.all('*', (req, res) => {
 
     
 });
-*/
+
 
 
 
