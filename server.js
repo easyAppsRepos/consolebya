@@ -76,7 +76,7 @@ app.get('*', (req, res) => {
 });
 */
 
-app.get('*', (req, res) => {
+app.all('*', (req, res) => {
 
  console.log('arr6'+req.hostname);
   var str = "www.";
@@ -121,7 +121,7 @@ var server = http.createServer((req, res) => {
 server.listen(port, () => console.log(`Running on localhost:${port}`));
 
 */
-
+/*
 function wwwRedirect(req, res, next) {
 	console.log('d');
     if (req.headers.host.slice(0, 4) === 'www.') {
@@ -132,7 +132,7 @@ function wwwRedirect(req, res, next) {
 };
 app.set('trust proxy', true);
 app.use(wwwRedirect);
-
+*/
 
 
 http.createServer(httpApp).listen(80, function() {
