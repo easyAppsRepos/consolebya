@@ -26,7 +26,8 @@ const app = express();
 */
 
 	httpApp.get("*", (req, res, next) => {
-  var str = "www.";
+  	var str = "www.";
+	console.log(req.hostname);
 
   if (req.hostname && req.hostname.indexOf(str) === 0) {
     res.redirect(301, "https://" + req.hostname.slice(str.length) + req.originalUrl);
