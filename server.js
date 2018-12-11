@@ -131,8 +131,12 @@ function wwwRedirect(req, res, next) {
     }
     next();
 };
+app.set('trust proxy', true);
+app.use(wwwRedirect);
+
 httpApp.set('trust proxy', true);
 httpApp.use(wwwRedirect);
+
 http.createServer(httpApp).listen(80, function() {
     console.log('Express HTTP server listening on port ' + httpApp.get('port'));
 });
