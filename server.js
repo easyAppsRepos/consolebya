@@ -24,6 +24,7 @@ const app = express();
 	
 	});
 */
+app.set('trust proxy', true);
 
 app.all('*', (req, res) => {
 
