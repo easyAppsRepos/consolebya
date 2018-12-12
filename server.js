@@ -24,39 +24,10 @@ const app = express();
 	
 	});
 */
-app.set('trust proxy', true);
-
-app.all('*', (req, res) => {
-
- console.log('arr6'+req.hostname);
-  var str = "www.";
-
-  if (req.hostname && req.hostname.indexOf(str) === 0) {
-    res.redirect(301, "https://" + req.hostname.slice(str.length) + req.originalUrl);
-    console.log('arr2'+req.hostname);
-  } else {
-
-			console.log(req.subdomains);
-		console.log(req.subdomains[1] == 'gestion');
-
-
-	if(req.subdomains[1]=='gestion'){
-		res.sendFile(path.join(__dirname, './gestion/dist/index.html'));
-	}
-	else{
-		res.sendFile(path.join(__dirname, './dist/index.html'));
-	}
-  }
-
-    
-});
-
-
-
 
 	httpApp.get("*", (req, res, next) => {
   var str = "www.";
-console.log(req.hostname);
+
   if (req.hostname && req.hostname.indexOf(str) === 0) {
     res.redirect(301, "https://" + req.hostname.slice(str.length) + req.originalUrl);
     console.log('arr'+req.hostname);
@@ -79,7 +50,7 @@ var https_options = {
 
 };
 
-//process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 // Parsers
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
@@ -105,6 +76,30 @@ app.get('*', (req, res) => {
 });
 */
 
+app.get('*', (req, res) => {
+
+ console.log('arr6'+req.hostname);
+  var str = "www.";
+
+  if (req.hostname && req.hostname.indexOf(str) === 0) {
+    res.redirect(301, "https://" + req.hostname.slice(str.length) + req.originalUrl);
+    console.log('arr2'+req.hostname);
+  } else {
+
+			console.log(req.subdomains);
+		console.log(req.subdomains[1] == 'gestion');
+
+
+	if(req.subdomains[1]=='gestion'){
+		res.sendFile(path.join(__dirname, './gestion/dist/index.html'));
+	}
+	else{
+		res.sendFile(path.join(__dirname, './dist/index.html'));
+	}
+  }
+
+    
+});
 
 
 //Set Port
@@ -126,19 +121,6 @@ var server = http.createServer((req, res) => {
 server.listen(port, () => console.log(`Running on localhost:${port}`));
 
 */
-/*
-function wwwRedirect(req, res, next) {
-	console.log('d');
-    if (req.headers.host.slice(0, 4) === 'www.') {
-        var newHost = req.headers.host.slice(4);
-        return res.redirect(301, req.protocol + '://' + newHost + req.originalUrl);
-    }
-    next();
-};
-app.set('trust proxy', true);
-app.use(wwwRedirect);
-*/
-
 
 http.createServer(httpApp).listen(80, function() {
     console.log('Express HTTP server listening on port ' + httpApp.get('port'));
