@@ -6164,6 +6164,9 @@ var AuthenticationService = /** @class */ (function () {
     AuthenticationService.prototype.getActualizacionMes = function (data) {
         return this.http.post(this.API_URL + '/getActualizacionMes', data);
     };
+    AuthenticationService.prototype.getActualizacionMes2 = function (data) {
+        return this.http.post(this.API_URL + '/getActualizacionMes2', data);
+    };
     AuthenticationService.prototype.getSubcategoriasCentro = function (data) {
         return this.http.post(this.API_URL + '/getSubcategoriasCentro', data);
     };
